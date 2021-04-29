@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const Header = () => {
     return (
         <div>
+            <h1>공다다</h1>
             <Link to="/"> 홈 </Link>
             <Link to="/auth"> 로그인 </Link>
             <Link to="/myprofile"> 마이프로필 </Link>
