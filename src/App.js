@@ -9,7 +9,7 @@ const Header = () => {
     return (
         <div className="App-header">
             <h1 className="App-header-title">공다다</h1>
-            <div>
+            <div className="App-header-router-wrapper">
                 <Link to="/" className="App-header-route">
                     홈
                 </Link>
@@ -31,13 +31,15 @@ function App() {
     return (
         <div className="App">
             <Header></Header>
-            <Switch className="App-body">
-                <Route path="/" component={Home} exact />
-                <Route path="/auth" component={Auth} />
-                <Route path="/myprofile" component={MyProfile} />
-                <Route path="/main" component={Main} />
-                <Route component={NotFound} />
-            </Switch>
+            <div className="App-body">
+                <Switch>
+                    <Route path="/" component={Home} exact />
+                    <Route path="/auth" component={Auth} />
+                    <Route path="/myprofile" component={MyProfile} />
+                    <Route path="/main" component={Main} />
+                    <Route component={NotFound} />
+                </Switch>
+            </div>
         </div>
     );
 }
