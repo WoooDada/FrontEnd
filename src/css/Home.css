@@ -1,0 +1,25 @@
+.Home {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+}
+
+.Home-route {
+    margin-left: 10px;
+    width: 30vmin;
+    background-color: grey;
+    border-width: 0;
+    margin: 0 auto 0 10vmin;
+    padding: 2vmin 3vmin;
+    text-decoration: none;
+    text-align: center;
+
+    color: white;
+    font-size: 3vmin;
+    font-weight: 700;
+    transition: background-color 1s;
+}
+
+.Home-route:hover {
+    background-color: rgb(128, 128, 128, 0.5);
+}

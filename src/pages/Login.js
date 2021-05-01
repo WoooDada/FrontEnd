@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import LoginForm from "../components/LoginForm";
 import "../css/Login.css";
 
-const Auth = () => {
+const Login = () => {
     const adminUser = {
         // user example
         email: "woojung@love.com",
@@ -45,4 +45,4 @@ const Auth = () => {
     );
 };
 
-export default Auth;
+export default Login;

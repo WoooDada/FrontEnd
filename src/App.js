@@ -1,9 +1,10 @@
 import { Switch, Route, Link } from "react-router-dom";
 
 // Page 로딩
-import { Main, Auth, MyProfile, NotFound, Home, Signup } from "./pages";
+import { Main, MyProfile, NotFound, Home, Signup } from "./pages";
 // import Header from "./components/Header";
 import "./App.css";
+import Login from "./pages/Login";
 
 const Header = () => {
     return (
@@ -27,6 +28,14 @@ const Header = () => {
     );
 };
 
+const Footer = () => {
+    return (
+        <div className="App-footer">
+            <p>개발자들: 이진 전우정 김다현</p>
+        </div>
+    );
+};
+
 function App() {
     return (
         <div className="App">
@@ -34,13 +43,14 @@ function App() {
             <div className="App-body">
                 <Switch>
                     <Route path="/" component={Home} exact />
-                    <Route path="/login" component={Auth} />
+                    <Route path="/login" component={Login} />
                     <Route path="/signup" component={Signup} />
                     <Route path="/myprofile" component={MyProfile} />
                     <Route path="/main" component={Main} />
                     <Route component={NotFound} />
                 </Switch>
             </div>
+            <Footer></Footer>
         </div>
     );
 }

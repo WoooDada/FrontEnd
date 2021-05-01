@@ -33,4 +33,14 @@
 .App-body {
     flex: 8;
     padding: 3vmin;
+    min-height: 80vmin;
+}
+
+.App-footer {
+    flex: 1;
+    background-color: #282c34;
+    color: white;
+    font-size: 1.2vmin;
+    padding: 1vmin;
+    text-align: end;
 }
