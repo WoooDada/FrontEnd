@@ -5,8 +5,11 @@ import { Main, MyProfile, NotFound, Home, Signup } from "./pages";
 // import Header from "./components/Header";
 import "./App.css";
 import Login from "./pages/Login";
+import { useReducer, createContext, useContext } from "react";
 
+//////////////////////////////////////////////////////////////////////////////////
 const Header = () => {
+    const authContext = useContext(AuthContext);
     return (
         <div className="App-header">
             <h1 className="App-header-title">공다다</h1>
@@ -14,9 +17,13 @@ const Header = () => {
                 <Link to="/" className="App-header-route">
                     홈
                 </Link>
-                <Link to="/login" className="App-header-route">
-                    로그인
-                </Link>
+                {authContext.state.uid ? (
+                    <></>
+                ) : (
+                    <Link to="/login" className="App-header-route">
+                        로그인
+                    </Link>
+                )}
                 <Link to="/myprofile" className="App-header-route">
                     마이프로필
                 </Link>
@@ -29,28 +36,53 @@ const Header = () => {
 };
 
 const Footer = () => {
+    const authContext = useContext(AuthContext);
     return (
         <div className="App-footer">
             <p>개발자들: 이진 전우정 김다현</p>
+            <p>
+                {authContext.state.uid
+                    ? authContext.state.uid
+                    : "로그인해주세요"}
+            </p>
         </div>
     );
 };
 
+export const AuthContext = createContext();
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case "login":
+            return { uid: action.payload };
+        case "logout":
+            return { uid: null };
+        default:
+            return state;
+    }
+};
+
+//////////////////////////////////////////////////////////////////////////////////
 function App() {
+    const [state, dispatch] = useReducer(reducer, {
+        uid: null,
+    });
     return (
         <div className="App">
-            <Header></Header>
-            <div className="App-body">
-                <Switch>
-                    <Route path="/" component={Home} exact />
-                    <Route path="/login" component={Login} />
-                    <Route path="/signup" component={Signup} />
-                    <Route path="/myprofile" component={MyProfile} />
-                    <Route path="/main" component={Main} />
-                    <Route component={NotFound} />
-                </Switch>
-            </div>
-            <Footer></Footer>
+            <AuthContext.Provider value={{ state, dispatch }}>
+                <Header></Header>
+                <div className="App-body">
+                    <Switch>
+                        <Route path="/" component={Home} exact />
+                        <Route path="/login" component={Login} />
+                        <Route path="/signup" component={Signup} />
+                        <Route path="/myprofile" component={MyProfile} />
+                        <Route path="/main" component={Main} />
+                        <Route component={NotFound} />
+                    </Switch>
+                </div>
+                <Footer></Footer>
+            </AuthContext.Provider>
         </div>
     );
 }
