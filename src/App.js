@@ -48,7 +48,7 @@ const Footer = () => {
         </div>
     );
 };
-
+//////////////////////////////////////////////////////////////////////////////////
 export const AuthContext = createContext();
 
 const reducer = (state, action) => {
