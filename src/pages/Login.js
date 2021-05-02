@@ -12,7 +12,7 @@ const Login = () => {
 
     const [user, setUser] = useState({ email: "", password: "" });
 
-    const Login = (details) => {
+    const LoginFunc = (details) => {
         console.log(details);
         // user example과 일치하면 login success
         if (
@@ -30,14 +30,14 @@ const Login = () => {
         }
     };
 
-    const Logout = () => {
+    const LogoutFunc = () => {
         // 혹시 몰라서 넣어둔 코드..
         setUser({ email: "", password: "" });
     };
 
     return (
-        <div className="outer-loginform">
-            <LoginForm Login={Login} />
+        <div className="Login-signupBtn">
+            <LoginForm Login={LoginFunc} />
             <button type="button">
                 <Link to="/signup">SignUp</Link>
             </button>
