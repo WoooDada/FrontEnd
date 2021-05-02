@@ -1,14 +1,48 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Logo from "../constants/imgs/Logo.jpg";
 import "../css/Login.css";
+import { AuthContext } from "../App";
+import axios from "axios";
 
-function LoginForm({ Login }) {
-    const [details, setDetails] = useState({ email: "", password: "" });
+function LoginForm({ history }) {
+    const [details, setDetails] = useState({ uid: "", password: "" });
+    const [loginErrorMsg, setLoginErrorMsg] = useState("");
+    const authContext = useContext(AuthContext);
 
     const submitHandler = (e) => {
         e.preventDefault();
 
-        Login(details);
+        // * 실제 데이터 가져오기
+        // const { status, data } = await axios.post(
+        //     "http://localhost:8000/login",
+        //     details,
+        //     {
+        //         headers: {
+        //             "Content-type": "application/json",
+        //             Accept: "application/json",
+        //         },
+        //     }
+        // );
+
+        // * 허구(실험) 데이터
+        const { status, data } = {
+            status: 200,
+            data: { uid: "EXAMPLE" },
+        };
+        // const { status, data } = { status: 400, data: { message: "no uid" } };
+        // const { status, data } = { status: 400, data: { message: "wrong pw" } };
+
+        if (status === 200) {
+            authContext.dispatch({ type: "login", payload: "EXAMPLE" });
+            history.push("/main");
+        } else {
+            // 에러 메시지 송출
+            if (data.message === "no uid") {
+                setLoginErrorMsg("존재하지 않는 아이디입니다.");
+            } else if (data.message === "wrong pw") {
+                setLoginErrorMsg("비밀번호가 일치하지 않습니다.");
+            }
+        }
     };
 
     return (
@@ -18,12 +52,12 @@ function LoginForm({ Login }) {
             <div className="form-group">
                 <h5>ID</h5>
                 <input
-                    name="email"
-                    placeholder="Input your e-mail"
+                    name="uid"
+                    placeholder="Input your uid"
                     onChange={(e) =>
-                        setDetails({ ...details, email: e.target.value })
+                        setDetails({ ...details, uid: e.target.value })
                     }
-                    value={details.email}
+                    value={details.uid}
                 />
             </div>
             <div className="form-group">
@@ -38,6 +72,7 @@ function LoginForm({ Login }) {
                     value={details.password}
                 />
             </div>
+            <p>{loginErrorMsg}</p>
             <br></br>
             <button type="submit">Login</button>
             <br />
