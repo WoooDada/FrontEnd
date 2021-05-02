@@ -1,9 +1,10 @@
 import React from "react";
+import "../css/Login.css";
 import Logo from "../constants/imgs/Logo.jpg";
 
 function SignupForm() {
     return (
-        <form>
+        <form className="Signup-outer-form">
             <img src={Logo} width="100" alt="logo" />
             <h1>Study With Us!!!</h1>
             <div className="form-group">

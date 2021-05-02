@@ -12,7 +12,7 @@ function LoginForm({ Login }) {
     };
 
     return (
-        <form onSubmit={submitHandler}>
+        <form className="Login-outer-form" onSubmit={submitHandler}>
             <img src={Logo} width="100" alt="logo" />
             <h1>Study With Us!!!</h1>
             <div className="form-group">

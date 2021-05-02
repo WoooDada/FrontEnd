@@ -1,13 +1,15 @@
-.outer-loginform {
+.Login-signupBtn {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-form {
+.Login-outer-form,
+.Signup-outer-form {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
+
