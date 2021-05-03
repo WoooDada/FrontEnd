@@ -5,9 +5,9 @@ import { AuthContext } from "../App";
 import axios from "axios";
 
 function LoginForm({ history }) {
-    const [details, setDetails] = useState({ uid: "", password: "" }); /// useState 정보 : id, password
+    const [details, setDetails] = useState({ uid: "", password: "" }); // useState 정보 : id, password
     const [loginErrorMsg, setLoginErrorMsg] = useState(""); 
-    const authContext = useContext(AuthContext); /// useContext
+    const authContext = useContext(AuthContext);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -32,14 +32,14 @@ function LoginForm({ history }) {
         // const { status, data } = { status: 400, data: { message: "no uid" } };
         // const { status, data } = { status: 400, data: { message: "wrong pw" } };
 
-        if (status === 200) { /// 성공 시 useReducer에 넣어두기.
-            authContext.dispatch({ type: "login", payload: "EXAMPLE" }); ///useContext 처리
-            history.push("/main"); /// 성공 시 main으로 이동
-        } else { /// 실패 시
+        if (status === 200) { // 성공 시 useReducer에 넣어두기.
+            authContext.dispatch({ type: "login", payload: "EXAMPLE" }); // useContext 처리
+            history.push("/main"); // 성공 시 main으로 이동
+        } else { // 실패 시
             // 에러 메시지 송출
-            if (data.message === "no uid") { /// id가 없는 경우
+            if (data.message === "no uid") { // id가 없는 경우
                 setLoginErrorMsg("존재하지 않는 아이디입니다.");
-            } else if (data.message === "wrong pw") { /// id는 존재하는데 pw가 매치하지 않는 경우
+            } else if (data.message === "wrong pw") { // id는 존재하는데 pw가 매치하지 않는 경우
                 setLoginErrorMsg("비밀번호가 일치하지 않습니다.");
             }
         }
