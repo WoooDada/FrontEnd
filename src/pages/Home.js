@@ -8,7 +8,8 @@ import "../css/Home.css";
 
 const Home = () => {
     const authContext = useContext(AuthContext);
-    const path = authContext.state.uid ? "/main" : "/login";
+    // authContext.state.uid 존재하면 /main, 존재하지않으면 /login으로. 
+    const path = authContext.state.uid ? "/main" : "/login"; 
     return (
         <div className="Home">
             <img src={Logo} width="38%" alt="Logo" />

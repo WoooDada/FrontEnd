@@ -17,6 +17,7 @@ const Header = () => {
                 <Link to="/" className="App-header-route">
                     홈
                 </Link>
+                {/* 로그인 여부에 따라 header에 login or myprofile 출력 */}
                 {authContext.state.uid ? (
                     <></>
                 ) : (

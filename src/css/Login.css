@@ -13,7 +13,8 @@
     justify-content: center;
 }
 
-.Login-outer-form p {
+.Login-outer-form p,
+.Signup-outer-form p {
     font-size: small;
     color: red;
 }
