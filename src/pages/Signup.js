@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import SignupForm from "../components/SignupForm";
 
-const Signup = () => {
-    return (
+const Signup = (props) => {
+    return ( 
         <div>
-            <SignupForm />
+            <SignupForm history={props.history} />
         </div>
     );
 };
