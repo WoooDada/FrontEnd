@@ -1,7 +1,7 @@
 import { Switch, Route, Link } from "react-router-dom";
 
 // Page 로딩
-import { Main, MyProfile, NotFound, Home, Signup } from "./pages";
+import { Main, MyProfile, NotFound, Home, Signup, Study } from "./pages";
 // import Header from "./components/Header";
 import "./App.css";
 import Login from "./pages/Login";
@@ -79,6 +79,7 @@ function App() {
                         <Route path="/signup" component={Signup} />
                         <Route path="/myprofile" component={MyProfile} />
                         <Route path="/main" component={Main} />
+                        <Route path="/study" component={Study} />
                         <Route component={NotFound} />
                     </Switch>
                 </div>
