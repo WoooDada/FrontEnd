@@ -6,13 +6,19 @@ import {
     WeeklyComp,
 } from "../components";
 
+import "../css/Main.css";
+
 const Main = () => {
     return (
-        <div>
-            <BadgeComp></BadgeComp>
-            <ConcentGraphComp></ConcentGraphComp>
-            <MonthlyComp></MonthlyComp>
-            <WeeklyComp></WeeklyComp>
+        <div className="Main">
+            <div className="Main-UpperComp">
+                <BadgeComp></BadgeComp>
+                <ConcentGraphComp></ConcentGraphComp>
+            </div>
+            <div className="Main-LowerComp">
+                <MonthlyComp></MonthlyComp>
+                <WeeklyComp></WeeklyComp>
+            </div>
         </div>
     );
 };

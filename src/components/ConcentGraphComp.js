@@ -8,12 +8,13 @@ import {
     YAxis,
 } from "react-vis";
 import "../../node_modules/react-vis/dist/style.css";
+import "../css/Main.css";
 
 const ConcentGraphComp = () => {
     return (
-        <div>
+        <div className="Main-ContentGraphComp">
             <p>ConcentGraphComp</p>
-            <XYPlot height={300} width={300} stackBy="y">
+            <XYPlot height={150} width={300} stackBy="y">
                 <VerticalGridLines />
                 <HorizontalGridLines />
                 <XAxis />

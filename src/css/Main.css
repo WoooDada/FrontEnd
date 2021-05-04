@@ -1,0 +1,58 @@
+.Main {
+    display: flex;
+    flex-direction: column;
+    /* background-color: pink; */
+}
+
+.Main .Main-UpperComp,
+.Main .Main-LowerComp {
+    display: flex;
+    flex-direction: row;
+}
+
+.Main .Main-UpperComp {
+    flex: 1;
+}
+
+.Main .Main-LowerComp {
+    flex: 3;
+}
+
+.Main-BadgeComp {
+    /* background-color: antiquewhite; */
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2vmin 0;
+    border: 2px solid rgba(0, 0, 0, 0.178);
+    border-radius: 15%;
+    margin: 0 2vmin 2vmin 0;
+}
+
+.Main-BadgeComp .icon {
+    margin: 1vmin 0 0;
+}
+
+.Main-BadgeComp .button {
+    text-decoration: none;
+    background-color: black;
+    color: white;
+    padding: 1vmin 2vmin;
+    transition: background-color 1s;
+}
+
+.Main-BadgeComp .button:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.Main-ContentGraphComp {
+    /* background-color: bisque; */
+    flex: 3;
+}
+
+.Main-MonthlyComp {
+}
+
+.Main-WeeklyComp {
+}
