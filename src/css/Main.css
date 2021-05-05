@@ -52,7 +52,10 @@
 }
 
 .Main-MonthlyComp {
+    width: 50%;
+    height: 100%;
 }
 
 .Main-WeeklyComp {
 }
+
