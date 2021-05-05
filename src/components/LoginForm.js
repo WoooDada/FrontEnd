@@ -25,12 +25,12 @@ function LoginForm({ history }) {
         // );
 
         // * 허구(실험) 데이터
-        const { status, data } = {
-            status: 200,
-            data: { uid: "EXAMPLE" },
-        };
-        // const { status, data } = { status: 400, data: { message: "no uid" } };
-        // const { status, data } = { status: 400, data: { message: "wrong pw" } };
+        // const { status, data } = {
+        //     status: 200,
+        //     data: { uid: "EXAMPLE" },
+        // };
+        const { status, data } = { status: 400, data: { message: "uid or pw wrong" } };
+        
 
         if (status === 200) {
             // 성공 시 useReducer에 넣어두기.
@@ -39,13 +39,10 @@ function LoginForm({ history }) {
         } else {
             // 실패 시
             // 에러 메시지 송출
-            if (data.message === "no uid") {
+            if (data.message === "uid or pw wrong") {
                 // id가 없는 경우
-                setLoginErrorMsg("존재하지 않는 아이디입니다.");
-            } else if (data.message === "wrong pw") {
-                // id는 존재하는데 pw가 매치하지 않는 경우
-                setLoginErrorMsg("비밀번호가 일치하지 않습니다.");
-            }
+                setLoginErrorMsg("아이디나 비밀번호가 일치하지 않습니다.");
+            } 
         }
     };
 
