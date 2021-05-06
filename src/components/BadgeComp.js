@@ -6,7 +6,6 @@ import axios from "axios";
 import "../css/Main.css";
 import { AuthContext } from "../App";
 
-////////////////////////////////////////////////////////////////////
 const getBadgeColor = (badge) => {
     switch (badge) {
         case "B":
@@ -23,7 +22,7 @@ const getBadgeColor = (badge) => {
             return "#000000";
     }
 };
-////////////////////////////////////////////////////////////////////
+
 const BadgeComp = () => {
     const authContext = useContext(AuthContext);
     const [userData, setUserData] = useState({ nickname: "", badge_color: "" });
