@@ -31,7 +31,6 @@ function LoginForm({ history }) {
         // };
         const { status, data } = { status: 400, data: { message: "uid or pw wrong" } };
         
-
         if (status === 200) {
             // 성공 시 useReducer에 넣어두기.
             authContext.dispatch({ type: "login", payload: "EXAMPLE" }); // useContext 처리
