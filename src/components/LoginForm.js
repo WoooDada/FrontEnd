@@ -12,17 +12,17 @@ function LoginForm({ history }) {
     const submitHandler = async (e) => {
         e.preventDefault();
 
-        // * 실제 데이터 가져오기
-        // const { status, data } = await axios.post(
-        //     "http://13.209.194.64:8080/api/login/",
-        //     details,
-        //     {
-        //         headers: {
-        //             "Content-type": "application/json",
-        //             Accept: "application/json",
-        //         },
-        //     }
-        // );
+        // * 실제 데이터 가져오기: 성공(서버 켰을 때만 해야 함.)
+        const { status, data } = await axios.post(
+            "http://13.209.194.64:8080/api/login/",
+            details,
+            {
+                headers: {
+                    "Content-type": "application/json",
+                    Accept: "application/json",
+                },
+            }
+        );
 
         // * 허구(실험) 데이터
         // const { status, data } = {
@@ -30,10 +30,10 @@ function LoginForm({ history }) {
         //     data: { uid: "EXAMPLE" },
         // };
 
-        const { status, data } = {
-            status: 400,
-            data: { message: "uid or pw wrong" },
-        };
+        // const { status, data } = {
+        //     status: 400,
+        //     data: { message: "uid or pw wrong" },
+        // };
 
         if (status === 200) {
             // 성공 시 useReducer에 넣어두기.
