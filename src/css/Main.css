@@ -24,14 +24,10 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 2vmin 0;
+    padding: 4vmin 0;
     border: 2px solid rgba(0, 0, 0, 0.178);
-    border-radius: 15%;
-    margin: 0 2vmin 2vmin 0;
-}
-
-.Main-BadgeComp .icon {
-    margin: 1vmin 0 0;
+    /* border-radius: 15%; */
+    margin: 0 2vmin 0 0;
 }
 
 .Main-BadgeComp .button {
@@ -49,6 +45,18 @@
 .Main-ContentGraphComp {
     /* background-color: bisque; */
     flex: 3;
+    border: 2px solid rgba(0, 0, 0, 0.178);
+    margin-left: 0 1vmin;
+    padding: 0 3vmin;
+    /* border-radius: 50%; */
+    /* background-color: pink; */
+    /* text-align: center; */
+}
+
+.Main-ContentGraphComp .graph {
+    padding-left: 15vmin;
+    /* padding-top: 0vmin; */
+    align-self: center;
 }
 
 .Main-MonthlyComp {
@@ -61,4 +69,3 @@
     width: 50%;
     height: 100%;
 }
-

@@ -1,21 +1,19 @@
 import React, { useContext, useState } from "react";
 import "../css/Login.css";
 import Logo from "../constants/imgs/Logo.jpg";
-import { AuthContext } from "../App";
 import axios from "axios";
 
 function SignupForm({ history }) {
     const [details, setDetails] = useState({
         uid: "",
-        password: "",
         nickname: "",
+        password: "",
     }); // useState 정보 : id, password, nickname
     const [signupErrorMsg, setSignupErrorMsg] = useState("");
-    const authContext = useContext(AuthContext);
 
-    const submitHandler = async(e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
-
+        await console.log("서브밋 불림");
         // * 실제 데이터 가져오기
         // const { status, data } = await axios.post(
         //     "http://13.209.194.64:8080/api/signup",
@@ -33,6 +31,7 @@ function SignupForm({ history }) {
             status: 200,
             data: { uid: "EXAMPLE" },
         };
+
         // signup 실패하는 경우 : 1. uid 중복 2. nickname 중복
         // const { status, data } = {
         //     status: 400,
@@ -42,17 +41,17 @@ function SignupForm({ history }) {
 
         if (status === 200) {
             // signup 성공 시
-            history.push("/login"); // 성공 시 login으로 이동
+            await history.push("/login"); // 성공 시 login으로 이동
             alert("회원가입 성공!");
         } else {
             // 실패 시
             // 에러 메시지 송출
             if (data.message === "uid 중복") {
                 // uid 중복
-                setSignupErrorMsg("이미 가입된 회원입니다.");
+                await setSignupErrorMsg("이미 가입된 회원입니다.");
             } else if (data.message === "nickname 중복") {
                 // nickname 중복
-                setSignupErrorMsg(
+                await setSignupErrorMsg(
                     "이미 존재하는 닉네임입니다. 다른 닉네임을 입력해주세요."
                 );
             }

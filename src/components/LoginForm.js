@@ -9,12 +9,12 @@ function LoginForm({ history }) {
     const [loginErrorMsg, setLoginErrorMsg] = useState("");
     const authContext = useContext(AuthContext);
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
 
         // * 실제 데이터 가져오기
         // const { status, data } = await axios.post(
-        //     "http://localhost:8000/login",
+        //     "http://13.209.194.64:8080/api/login/",
         //     details,
         //     {
         //         headers: {
@@ -29,11 +29,15 @@ function LoginForm({ history }) {
         //     status: 200,
         //     data: { uid: "EXAMPLE" },
         // };
-        const { status, data } = { status: 400, data: { message: "uid or pw wrong" } };
-        
+
+        const { status, data } = {
+            status: 400,
+            data: { message: "uid or pw wrong" },
+        };
+
         if (status === 200) {
             // 성공 시 useReducer에 넣어두기.
-            authContext.dispatch({ type: "login", payload: "EXAMPLE" }); // useContext 처리
+            authContext.dispatch({ type: "login", payload: details.uid }); // useContext 처리
             history.push("/main"); // 성공 시 main으로 이동
         } else {
             // 실패 시
@@ -41,7 +45,7 @@ function LoginForm({ history }) {
             if (data.message === "uid or pw wrong") {
                 // id가 없는 경우
                 setLoginErrorMsg("아이디나 비밀번호가 일치하지 않습니다.");
-            } 
+            }
         }
     };
 
