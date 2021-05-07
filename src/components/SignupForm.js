@@ -16,25 +16,22 @@ function SignupForm({ history }) {
         await console.log("서브밋 불림");
         // * 실제 데이터 가져오기
         // const { status, data } = await axios.post(
-        const response = await axios.post(
-            "http://13.209.194.64:8080/api/signup/",
-            details,
-            {
-                headers: {
-                    "Content-type": "application/json",
-                    Accept: "application/json",
-                },
-            }
-        );
-
-        await console.log("response", response);
-        const { status, data } = await response;
+        //     "http://13.209.194.64:8080/api/signup",
+        //     details,
+        //     {
+        //         headers: {
+        //             "Content-type": "application/json",
+        //             Accept: "application/json",
+        //         },
+        //     }
+        // );
 
         //* 허구(실험) 데이터
-        // const { status, data } = {
-        //     status: 200,
-        //     data: { uid: "EXAMPLE" },
-        // };
+        const { status, data } = {
+            status: 200,
+            data: { uid: "EXAMPLE" },
+        };
+
         // signup 실패하는 경우 : 1. uid 중복 2. nickname 중복
         // const { status, data } = {
         //     status: 400,
