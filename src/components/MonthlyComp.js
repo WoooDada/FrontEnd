@@ -1,19 +1,56 @@
 import React, { useRef, useEffect, useState, useContext, useReducer } from "react";
 import reactDom from "react-dom";
 import "../css/Main.css";
-// import { AuthContext } from "../App";
+import { AuthContext } from "../App";
+import axios from "axios";
+import getApi from "../api/getApi";
 
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from "@fullcalendar/interaction";
 
 const MonthlyComp = () => {
+    const authContext = useContext(AuthContext);
+    // GET
+    useEffect(() => { 
+        const getMtodos = async () => {
+            const { status, data } = await getApi(
+                {
+                    uid: authContext.state.uid,
+                },
+                "/tdl/monthly"
+            );
+            if (status === 200) { // map을 사용해 여러개의 데이터 처리
+                // data : [m_todo_id, stt_date, end_date, m_content] 배열 여러개.
+                // map으로 각각 setMtodos로 id, start, end, title에 넣어주기
+                
+                // data.map((mdata, i) => ({
+                //     setMtodos({
+                //         id: mdata.m_todo_id,
+                //         start: mdata.stt_date,
+                //         end: mdata.end_date,
+                //         title: mdata.m_content,
+                // }));
+                
+                // setMtodos({
+                //     id: data.map((v, i) => ({
+
+                //     }))
+                // })
+            } else {
+                alert("인터넷 연결이 불안정합니다.");
+            }
+        };
+        // getMtodos();
+    }, []);
+
+
     const reducer = (state, action) => { // 이벤트 클릭시 버튼 다르게 출력하기 위한 reducer
         switch (action.type) {
             case "eventclick":
-                return { isClicked: true, eventId: action.payload};
+                return { isClicked: true, eventId: action.payload };
             case "event-not-click":
-                return { isClicked: false, eventId: null};
+                return { isClicked: false, eventId: null };
             default:
                 return { isClicked: false, eventId: null };
         }
@@ -21,11 +58,11 @@ const MonthlyComp = () => {
     const [state, dispatch] = useReducer(reducer, { isClicked: false, eventId: null });
     const [inputs, setInputs] = useState({ // input data from input form
         title: "",
-        start: "", 
+        start: "",
         end: ""
     });
-    const {title, start, end} = inputs;
-    const [mtodos, setMtodos] = useState([ // mtodos 배열 데이터. 
+    const { title, start, end } = inputs;
+    const [mtodos, setMtodos] = useState([ // mtodos 배열 데이터. dummy data
         {
             id: 1,
             title: 'Test1',
@@ -39,9 +76,9 @@ const MonthlyComp = () => {
             end: '2021-05-09'
         }
     ]);
-    
+
     const nextId = useRef(3);
-    const onCreate = (e) => { // 일정 추가 함수
+    const onCreate = async (e) => { // 일정 추가 함수
         e.preventDefault();
         const mtodo = { id: nextId.current, title, start, end };
         setMtodos(mtodos.concat(mtodo));
@@ -51,14 +88,40 @@ const MonthlyComp = () => {
             end: ""
         });
         nextId.current += 1;
+
+        // POST
+        // const { status, data } = await axios.post( 
+        //     "http://13.209.194.64:8080/tdl/monthly",
+        //     { 
+        //         uid: authContext.state.uid, 
+        //         mtodos 
+        //     },
+        //     {
+        //         headers: {
+        //             "Content-type": "application/json",
+        //             Accept: "application/json",
+        //         },
+        //     }
+        // );
+
+        // * 허구(실험) 데이터
+        const { status, data } = {
+            status: 200,
+        };
+        // const { status, data } = {
+        //     status: 400,
+        //     data: { message: "mtdl post fail" },
+        // };
     };
 
-    const handleDateClick = (arg) => { // bind with an arrow function
+
+    const handleDateClick = (arg) => { // 빈 날짜 클릭 시
         dispatch({ type: "event-not-click", payload: "" });
-        setInputs({ title: "", start: "", end: "" }); // 입력폼 빈칸으로
+        setInputs({ title: "", start: arg.dateStr, end: arg.dateStr }); // 입력폼 빈칸으로
+        console.log(arg.dateStr);
     }
-    
-    function handleEventClick(eventInfo) { 
+
+    function handleEventClick(eventInfo) {
         // 버튼 : 일정변경, 일정삭제 두 개 나타나는걸로 변경
         const event_title = eventInfo.event.title;
         const event_start = eventInfo.event.start;
@@ -75,10 +138,10 @@ const MonthlyComp = () => {
         });
     }
     // 일정변경(UPDATE) : mtodos배열에서 해당 id의 event 변경해줌
-    const updateEvent = (e) => {
+    const updateEvent = async (e) => {
         e.preventDefault();
         dispatch({ type: "event-not-click", payload: "" });
-        
+
         setMtodos(
             mtodos.map(mtodo =>
                 mtodo.id == state.eventId ? { ...mtodo, title: inputs.title, start: inputs.start, end: inputs.end } : mtodo
@@ -86,19 +149,70 @@ const MonthlyComp = () => {
         );
 
         setInputs({ title: "", start: "", end: "" }); // 입력폼 빈칸으로
+
+        // const { status, data } = await axios.post( 
+        //     "http://13.209.194.64:8080/tdl/monthly",
+        //     ({
+        //         m_todo_id: state.eventId, 
+        //         stt_date: inputs.start, 
+        //         end_date: inputs.end, 
+        //         m_content: inputs.title}),
+        //     {
+        //         headers: {
+        //             "Content-type": "application/json",
+        //             Accept: "application/json",
+        //         },
+        //     }
+        // );
+        // * 허구(실험) 데이터
+        const { status, data } = {
+            status: 200,
+            data: { message: "mtdl update success" }
+        };
+        // const { status, data } = {
+        //     status: 400,
+        //     data: { message: "mtdl update fail" },
+        // };
+        if (status === 200) {
+            console.log('update success');
+        }
     }
-    
+
     // 일정삭제(DELETE) : mtodos배열에서 해당 id의 event 삭제
-    const deleteEvent = (e) => {
+    const deleteEvent = async (e) => {
         e.preventDefault();
         setInputs({ title: "", start: "", end: "" }); // 입력폼 빈칸으로
         dispatch({ type: "event-not-click", payload: "" });
 
         setMtodos(mtodos.filter(mtodos => mtodos.id != state.eventId)); // mtodos 배열에 해당 event 삭제
-        
+
+        // const { status, data } = await axios.post( 
+        //     "http://13.209.194.64:8080/tdl/monthly",
+        //     { 
+        //         m_todo_id: state.eventId
+        //     },
+        //     {
+        //         headers: {
+        //             "Content-type": "application/json",
+        //             Accept: "application/json",
+        //         },
+        //     }
+        // );
+        // * 허구(실험) 데이터
+        const { status, data } = {
+            status: 200,
+            data: { message: "mtdl delete success" }
+        };
+        // const { status, data } = {
+        //     status: 400,
+        //     data: { message: "mtdl delete fail" },
+        // };
+        if (status === 200) {
+            console.log('delete success');
+        }
     }
-    
-    function dateFormat(start, end){ // 날짜는 yyyy-mm-dd형식으로 바꿔줌
+
+    function dateFormat(start, end) { // 날짜는 yyyy-mm-dd형식으로 바꿔줌
         var temp1 = start.toString().split(' ');
         var temp2 = 0;
         if (end === null) { // 하루일 경우 end=null이므로 start와 같게 처리
@@ -108,88 +222,91 @@ const MonthlyComp = () => {
         }
         var s_year = temp1[3]; var s_month = temp1[1]; var s_day = temp1[2];
         var e_year = temp2[3]; var e_month = temp2[1]; var e_day = temp2[2];
-        
+
         var s_date = 0; var e_date = 0;
-        s_date = s_year+'-'+monthChange(s_month)+'-'+s_day;
-        e_date = e_year+'-'+monthChange(e_month)+'-'+e_day;
+        s_date = s_year + '-' + monthChange(s_month) + '-' + s_day;
+        e_date = e_year + '-' + monthChange(e_month) + '-' + e_day;
         return [s_date.toString(), e_date.toString()]; // 배열로 리턴
     }
-    function monthChange(month){
-        var ss_month = '';
-        switch(month){
-            case 'Jan': ss_month = '01'; break;
-            case 'Feb': ss_month = '02'; break;
-            case 'Mar': ss_month = '03'; break; 
-            case 'Apr': ss_month = '04'; break;
-            case 'May': ss_month = '05'; break;
-            case 'Jun': ss_month = '06'; break;
-            case 'Jul': ss_month = '07'; break; 
-            case 'Aug': ss_month = '08'; break;
-            case 'Sep': ss_month = '09'; break;
-            case 'Oct': ss_month = '10'; break;
-            case 'Nov': ss_month = '11'; break; 
-            case 'Dec': ss_month = '12'; break;
+    function monthChange(month) {
+        var intmonth = '';
+        switch (month) {
+            case 'Jan': intmonth = '01'; break;
+            case 'Feb': intmonth = '02'; break;
+            case 'Mar': intmonth = '03'; break;
+            case 'Apr': intmonth = '04'; break;
+            case 'May': intmonth = '05'; break;
+            case 'Jun': intmonth = '06'; break;
+            case 'Jul': intmonth = '07'; break;
+            case 'Aug': intmonth = '08'; break;
+            case 'Sep': intmonth = '09'; break;
+            case 'Oct': intmonth = '10'; break;
+            case 'Nov': intmonth = '11'; break;
+            case 'Dec': intmonth = '12'; break;
         }
-        return ss_month;
+        return intmonth;
     }
-    
-    
+
     return (
-        <div className="Main-MonthlyComp"> 
+        <div className="Main-MonthlyComp">
             <FullCalendar
-                plugins={[ dayGridPlugin, interactionPlugin ]}
+                plugins={[dayGridPlugin, interactionPlugin]}
                 initialView="dayGridMonth"
                 events={mtodos}
                 editable="true"
                 eventStartEditable="true"
                 eventDurationEditable="true"
-                dateClick={handleDateClick} // 아직 쓸일 X
-                // selectable='true'
+                dateClick={handleDateClick}
+                selectable='true'
                 eventClick={handleEventClick}
             />
-
-            <form className="Monthly-inputform">
-                <div>내용:
-                    <input
-                        className="input-title"
-                        name="title"
-                        onChange={(e) =>
-                            setInputs({ ...inputs, title: e.target.value })
-                        }
-                        value={inputs.title}
-                    />
+            <div className="Main-Monthly-input">
+                <form className="Main-Monthly-inputform">
+                    <div>
+                        <label>내용</label>
+                        <input
+                            className="input-title"
+                            name="title"
+                            onChange={(e) =>
+                                setInputs({ ...inputs, title: e.target.value })
+                            }
+                            value={inputs.title}
+                        />
+                    </div>
+                    <div>
+                        <label>시작날짜</label>
+                        <input
+                            type="date"
+                            onChange={(e) =>
+                                setInputs({ ...inputs, start: e.target.value })
+                            }
+                            value={inputs.start}
+                            name="start"
+                        />
+                    </div>
+                    <div>
+                        <label>끝날짜</label>
+                        <input
+                            type="date"
+                            onChange={(e) =>
+                                setInputs({ ...inputs, end: e.target.value })
+                            }
+                            value={inputs.end}
+                            name="end"
+                        />
+                    </div>
+                </form>
+                <div className="Main-Monthly-Btns">
+                    {state.isClicked ? (
+                        <>
+                            <button className="Main-Monthly-changeBtn" onClick={updateEvent}>일정변경</button>
+                            <button className="Main-Monthly-deleteBtn" onClick={deleteEvent}>일정삭제</button>
+                        </>
+                    ) : (
+                        <button className="Main-Monthly-createBtn" onClick={onCreate}>일정추가</button>
+                    )}
                 </div>
-                <div>시작날짜:
-                    <input
-                        type="date"
-                        onChange={(e) =>
-                            setInputs({ ...inputs, start: e.target.value })
-                        }
-                        value={inputs.start}
-                        name="start"
-                    />
-                </div>
-                <div>끝날짜:
-                    <input
-                        type="date"
-                        onChange={(e) =>
-                            setInputs({ ...inputs, end: e.target.value })
-                        }
-                        value={inputs.end}
-                        name="end"
-                    />
-                </div>
-                
-                {state.isClicked ? (
-                    <>
-                    <button onClick={updateEvent}>일정변경</button>
-                    <button onClick={deleteEvent}>일정삭제</button>
-                    </>
-                ) : (
-                    <button onClick={onCreate}>일정추가</button>
-                )}
-                
-            </form>
+            </div>
         </div>
     );
 };
