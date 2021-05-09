@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState, useContext, useReducer } from "react";
-import reactDom from "react-dom";
 import "../css/Main.css";
 import { AuthContext } from "../App";
 import axios from "axios";
@@ -11,40 +10,20 @@ import interactionPlugin from "@fullcalendar/interaction";
 
 const MonthlyComp = () => {
     const authContext = useContext(AuthContext);
-    // GET
-    useEffect(() => { 
-        const getMtodos = async () => {
-            const { status, data } = await getApi(
-                {
-                    uid: authContext.state.uid,
-                },
-                "/tdl/monthly"
-            );
-            if (status === 200) { // map을 사용해 여러개의 데이터 처리
-                // data : [m_todo_id, stt_date, end_date, m_content] 배열 여러개.
-                // map으로 각각 setMtodos로 id, start, end, title에 넣어주기
-                
-                // data.map((mdata, i) => ({
-                //     setMtodos({
-                //         id: mdata.m_todo_id,
-                //         start: mdata.stt_date,
-                //         end: mdata.end_date,
-                //         title: mdata.m_content,
-                // }));
-                
-                // setMtodos({
-                //     id: data.map((v, i) => ({
-
-                //     }))
-                // })
-            } else {
-                alert("인터넷 연결이 불안정합니다.");
-            }
-        };
-        // getMtodos();
-    }, []);
-
-
+    const [mtodos, setMtodos] = useState([ // mtodos 배열 데이터. dummy data
+        {
+            id: 1,
+            title: 'Test1',
+            start: '2021-05-22',
+            end: '2021-05-22'
+        },
+        {
+            id: 2,
+            title: 'Test2',
+            start: '2021-05-06',
+            end: '2021-05-09'
+        }
+    ]);
     const reducer = (state, action) => { // 이벤트 클릭시 버튼 다르게 출력하기 위한 reducer
         switch (action.type) {
             case "eventclick":
@@ -62,22 +41,37 @@ const MonthlyComp = () => {
         end: ""
     });
     const { title, start, end } = inputs;
-    const [mtodos, setMtodos] = useState([ // mtodos 배열 데이터. dummy data
-        {
-            id: 1,
-            title: 'Test1',
-            start: '2021-05-22',
-            end: '2021-05-22'
-        },
-        {
-            id: 2,
-            title: 'Test2',
-            start: '2021-05-06',
-            end: '2021-05-09'
-        }
-    ]);
+    // GET
+    useEffect(() => { 
+        const getMtodos = async () => {
+            const { status, data } = await getApi(
+                {
+                    uid: authContext.state.uid,
+                },
+                "/tdl/monthly"
+            );
+            if (status === 200) { 
+                // data : [m_todo_id, stt_date, end_date, m_content] 배열 여러개.
+                // map으로 각각 setMtodos로 id, start, end, title에 넣어주기
+                data.m_todo_list.map((mdata, i) => {
+                    setMtodos([
+                        ...mtodos,
+                        {
+                            id: mdata.m_todo_id,
+                            start: mdata.stt_date,
+                            end: mdata.end_date,
+                            title: mdata.m_content,
+                        }
+                    ]);
+                });
+            } else {
+                alert("인터넷 연결이 불안정합니다.");
+            }
+        };
+        // getMtodos();
+    }, []);
 
-    const nextId = useRef(3);
+    const nextId = useRef(mtodos.length); // length: 마지막 원소의 인덱스 값보다 1 큰 수를 반환
     const onCreate = async (e) => { // 일정 추가 함수
         e.preventDefault();
         const mtodo = { id: nextId.current, title, start, end };
@@ -87,14 +81,16 @@ const MonthlyComp = () => {
             start: "",
             end: ""
         });
-        nextId.current += 1;
 
         // POST
         // const { status, data } = await axios.post( 
         //     "http://13.209.194.64:8080/tdl/monthly",
         //     { 
         //         uid: authContext.state.uid, 
-        //         mtodos 
+        //         m_todo_id: nextId.current, 
+        //         stt_date: start,
+        //         end_date: end,
+        //         m_content: title, 
         //     },
         //     {
         //         headers: {
@@ -107,11 +103,18 @@ const MonthlyComp = () => {
         // * 허구(실험) 데이터
         const { status, data } = {
             status: 200,
+            data: { m_todo_id: "1" },
         };
         // const { status, data } = {
         //     status: 400,
         //     data: { message: "mtdl post fail" },
         // };
+        if (status === 200) {
+            console.log('mtdl post success');
+        } else {
+            console.log('mtdl post fail');
+        }
+        nextId.current += 1;
     };
 
 
@@ -127,7 +130,6 @@ const MonthlyComp = () => {
         const event_start = eventInfo.event.start;
         const event_end = eventInfo.event.end;
         const event_id = eventInfo.event.id;
-        console.log(event_id);
         dispatch({ type: "eventclick", payload: event_id });
         // 이벤트 클릭 시 아래 입력폼에 내용 나타남. 
         const event_dates = dateFormat(event_start, event_end);
@@ -137,59 +139,28 @@ const MonthlyComp = () => {
             end: event_dates[1]
         });
     }
-    // 일정변경(UPDATE) : mtodos배열에서 해당 id의 event 변경해줌
-    const updateEvent = async (e) => {
-        e.preventDefault();
-        dispatch({ type: "event-not-click", payload: "" });
+    function handleEventDrop(eventInfo) {
+        const event_title = eventInfo.event.title;
+        const event_start = eventInfo.event.start;
+        const event_end = eventInfo.event.end;
+        const event_id = eventInfo.event.id;
+        dispatch({ type: "eventclick", payload: event_id });
+        // 이벤트 클릭 시 아래 입력폼에 내용 나타남. 
+        const event_dates = dateFormat(event_start, event_end);
+        setInputs({
+            title: event_title,
+            start: event_dates[0],
+            end: event_dates[1]
+        });
 
-        setMtodos(
-            mtodos.map(mtodo =>
-                mtodo.id == state.eventId ? { ...mtodo, title: inputs.title, start: inputs.start, end: inputs.end } : mtodo
-            )
-        );
-
-        setInputs({ title: "", start: "", end: "" }); // 입력폼 빈칸으로
-
+        //UPDATE
         // const { status, data } = await axios.post( 
         //     "http://13.209.194.64:8080/tdl/monthly",
-        //     ({
+        //     {
         //         m_todo_id: state.eventId, 
         //         stt_date: inputs.start, 
         //         end_date: inputs.end, 
-        //         m_content: inputs.title}),
-        //     {
-        //         headers: {
-        //             "Content-type": "application/json",
-        //             Accept: "application/json",
-        //         },
-        //     }
-        // );
-        // * 허구(실험) 데이터
-        const { status, data } = {
-            status: 200,
-            data: { message: "mtdl update success" }
-        };
-        // const { status, data } = {
-        //     status: 400,
-        //     data: { message: "mtdl update fail" },
-        // };
-        if (status === 200) {
-            console.log('update success');
-        }
-    }
-
-    // 일정삭제(DELETE) : mtodos배열에서 해당 id의 event 삭제
-    const deleteEvent = async (e) => {
-        e.preventDefault();
-        setInputs({ title: "", start: "", end: "" }); // 입력폼 빈칸으로
-        dispatch({ type: "event-not-click", payload: "" });
-
-        setMtodos(mtodos.filter(mtodos => mtodos.id != state.eventId)); // mtodos 배열에 해당 event 삭제
-
-        // const { status, data } = await axios.post( 
-        //     "http://13.209.194.64:8080/tdl/monthly",
-        //     { 
-        //         m_todo_id: state.eventId
+        //         m_content: inputs.title,
         //     },
         //     {
         //         headers: {
@@ -201,14 +172,98 @@ const MonthlyComp = () => {
         // * 허구(실험) 데이터
         const { status, data } = {
             status: 200,
-            data: { message: "mtdl delete success" }
+            data: { m_todo_id: "1" },
+        };
+        // const { status, data } = {
+        //     status: 400,
+        //     data: { message: "mtdl update fail" },
+        // };
+
+        if (status === 200) {
+            console.log('update success');
+        } else {
+            console.log('mtdl update fail');
+        }
+        
+    }
+    // 일정변경(UPDATE) : mtodos배열에서 해당 id의 event 변경해줌
+    const updateEvent = async (e) => {
+        e.preventDefault();
+        dispatch({ type: "event-not-click", payload: "" });
+
+        setMtodos(
+            mtodos.map(mtodo =>
+                mtodo.id == state.eventId ? { ...mtodo, title: inputs.title, start: inputs.start, end: inputs.end } : mtodo
+            )
+        );
+        setInputs({ title: "", start: "", end: "" }); // 입력폼 빈칸으로
+        //UPDATE
+        // const { status, data } = await axios.post( 
+        //     "http://13.209.194.64:8080/tdl/monthly",
+        //     {
+        //         m_todo_id: state.eventId, 
+        //         stt_date: inputs.start, 
+        //         end_date: inputs.end, 
+        //         m_content: inputs.title,
+        //     },
+        //     {
+        //         headers: {
+        //             "Content-type": "application/json",
+        //             Accept: "application/json",
+        //         },
+        //     }
+        // );
+        // * 허구(실험) 데이터
+        const { status, data } = {
+            status: 200,
+            data: { m_todo_id: "1" },
+        };
+        // const { status, data } = {
+        //     status: 400,
+        //     data: { message: "mtdl update fail" },
+        // };
+
+        if (status === 200) {
+            console.log('update success');
+        } else {
+            console.log('mtdl update fail');
+        }
+    }
+
+    // 일정삭제(DELETE) : mtodos배열에서 해당 id의 event 삭제
+    const deleteEvent = async (e) => {
+        e.preventDefault();
+        setInputs({ title: "", start: "", end: "" }); // 입력폼 빈칸으로
+        dispatch({ type: "event-not-click", payload: "" });
+
+        setMtodos(mtodos.filter(mtodos => mtodos.id != state.eventId)); // mtodos 배열에 해당 event 삭제
+
+        // DELETE
+        // const { status, data } = await axios.post( 
+        //     "http://13.209.194.64:8080/tdl/monthly",
+        //     { 
+        //         m_todo_id: state.eventId,
+        //     },
+        //     {
+        //         headers: {
+        //             "Content-type": "application/json",
+        //             Accept: "application/json",
+        //         },
+        //     }
+        // );
+        // * 허구(실험) 데이터
+        const { status, data } = {
+            status: 200,
+            data: { m_todo_id: "2" }
         };
         // const { status, data } = {
         //     status: 400,
         //     data: { message: "mtdl delete fail" },
         // };
         if (status === 200) {
-            console.log('delete success');
+            console.log('mtdl delete success');
+        } else {
+            console.log('mtdl delete fail');
         }
     }
 
@@ -220,8 +275,8 @@ const MonthlyComp = () => {
         } else {
             temp2 = end.toString().split(' ');
         }
-        var s_year = temp1[3]; var s_month = temp1[1]; var s_day = temp1[2];
-        var e_year = temp2[3]; var e_month = temp2[1]; var e_day = temp2[2];
+        var s_month = temp1[1]; var s_day = temp1[2]; var s_year = temp1[3];
+        var e_month = temp2[1]; var e_day = temp2[2]; var e_year = temp2[3]; 
 
         var s_date = 0; var e_date = 0;
         s_date = s_year + '-' + monthChange(s_month) + '-' + s_day;
@@ -254,11 +309,13 @@ const MonthlyComp = () => {
                 initialView="dayGridMonth"
                 events={mtodos}
                 editable="true"
+                droppable="false"
                 eventStartEditable="true"
                 eventDurationEditable="true"
                 dateClick={handleDateClick}
                 selectable='true'
                 eventClick={handleEventClick}
+                eventDrop={handleEventDrop}
             />
             <div className="Main-Monthly-input">
                 <form className="Main-Monthly-inputform">
