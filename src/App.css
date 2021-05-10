@@ -1,7 +1,9 @@
 .App {
     /* text-align: center; */
+    /* height: 127vh; */
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .App-header {
@@ -12,7 +14,7 @@
     justify-content: space-between;
     font-size: calc(10px + 2vmin);
     color: white;
-    flex: 1;
+    flex: 0.5;
 }
 
 .App-header-title {
@@ -33,11 +35,11 @@
 .App-body {
     flex: 8;
     padding: 3vmin;
-    min-height: 80vmin;
+    overflow: hidden;
 }
 
 .App-footer {
-    flex: 1;
+    flex: 0.5;
     background-color: #282c34;
     color: white;
     font-size: 1.2vmin;

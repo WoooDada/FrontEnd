@@ -1,6 +1,7 @@
 .Main {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     /* background-color: pink; */
 }
 
@@ -8,14 +9,15 @@
 .Main .Main-LowerComp {
     display: flex;
     flex-direction: row;
+    overflow: hidden;
 }
 
 .Main .Main-UpperComp {
-    flex: 1;
+    height: 30vh;
 }
 
 .Main .Main-LowerComp {
-    flex: 3;
+    height: 75vh;
 }
 
 .Main-BadgeComp {
@@ -54,7 +56,7 @@
 }
 
 .Main-ContentGraphComp .graph {
-    padding-left: 15vmin;
+    padding-left: 20vmin;
     /* padding-top: 0vmin; */
     align-self: center;
 }
@@ -63,23 +65,15 @@
     padding: 2vmin;
     margin: 2vmin 0 0 0;
     width: 40%;
-    height: 100%;
-    border: 2px solid rgba(0, 0, 0, 0.178);
-}
-
-.Main-WeeklyComp {
-    padding: 2vmin;
-    margin: 2vmin 0 0 2vmin;
-    width: 60%;
-    height: 100%;
+    height: 90%;
     border: 2px solid rgba(0, 0, 0, 0.178);
 }
 
 /* row: 가로 column: 세로 */
-.Main-MonthlyComp {
-    /* display: flex;
+/* .Main-MonthlyComp { */
+/* display: flex;
     flex-direction: column; */
-}
+/* } */
 .Main-Monthly-input {
     display: flex;
     flex-direction: row;
@@ -97,5 +91,74 @@
 }
 .Main-Monthly-inputform label {
     width: 13vmin;
-    display:inline-block
+    display: inline-block;
+}
+
+.Main-WeeklyComp {
+    margin: 2vmin 0 0 2vmin;
+    width: 60%;
+    height: 90%;
+    border: 2px solid rgba(0, 0, 0, 0.178);
+    padding: 2vmin 3vmin;
+    /* overflow: hidden; */
+}
+
+.Main-WeeklyComp .DowComp {
+    overflow: auto;
+    flex: 1;
+}
+.Main-WeeklyComp .Weekly-container {
+    height: 60vh; /* or position:absolute; height:100%; */
+    display: flex;
+    flex-direction: column;
+    padding: 0 5vh;
+}
+
+.Main-WeeklyComp .Weekly-wrapper {
+    display: flex;
+    flex: 1;
+    min-height: 0px;
+}
+
+.Main-WeeklyComp .Weekly-content {
+    flex: 1;
+    overflow: auto;
+}
+
+.Main-WeeklyComp .Dow-wrapper {
+    display: flex;
+    flex-direction: row;
+    padding: 1vh 0;
+    width: 100%;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.178);
+    /* border-top: solid 1px rgba(0, 0, 0, 0.178); */
+}
+
+.Main-WeeklyComp .Dow-wrapper h4 {
+    flex: 1;
+    text-align: center;
+    align-self: center;
+}
+.Main-WeeklyComp .Dow-todos {
+    flex: 10;
+    padding: 0 1vh;
+    border-left: solid 1px rgba(0, 0, 0, 0.178);
+}
+
+.Main-WeeklyComp .Dow-todos-item {
+    font-size: small;
+    /* background-color: antiquewhite; */
+    display: flex;
+}
+.Main-WeeklyComp .Dow-todos-item .checkbox {
+    flex: 0.5;
+    align-self: center;
+    justify-self: center;
+}
+.Main-WeeklyComp .Dow-todos-item input {
+    border: none;
+    flex: 10;
+}
+.Main-WeeklyComp .Dow-todos-item button {
+    flex: 0.3;
 }
