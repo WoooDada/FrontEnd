@@ -9,24 +9,11 @@ const MyProfile = (props) => {
         const onClickHandler = (e) => {
             e.preventDefault();
 
-            // * 실제 데이터 가져오기
-            // const { status, data } = await axios.post(
-            //     "http://localhost:8000/login",
-            //     details,
-            //     {
-            //         headers: {
-            //             "Content-type": "application/json",
-            //             Accept: "application/json",
-            //         },
-            //     }
-            // );
-
             // * 허구(실험) 데이터
             const { status, data } = {
                 status: 200,
                 data: { uid: "EXAMPLE" },
             };
-            // const { status, data } = { status: 400, data: { message: "logout fail" } };
 
             if (status === 200) {
                 // logout 성공
