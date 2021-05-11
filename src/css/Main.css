@@ -162,3 +162,20 @@
 .Main-WeeklyComp .Dow-todos-item button {
     flex: 0.3;
 }
+
+.Main-WeeklyComp .New-input-wrapper {
+    display: flex;
+    margin-top: 1vh;
+    align-items: center;
+    justify-items: center;
+}
+
+.Main-WeeklyComp .New-input-wrapper .add-button {
+    flex: 0.3;
+}
+.Main-WeeklyComp .New-input-wrapper .new-input {
+    border: none;
+    flex: 10.5;
+    height: 20%;
+    margin-left: 1vh;
+}
