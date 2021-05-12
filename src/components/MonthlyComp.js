@@ -85,22 +85,23 @@ const MonthlyComp = () => {
             start: "",
             end: ""
         });
-
+        nextId.current += 1;
+        console.log('created id :', nextId.current);
+        console.log(mtodos);
         // POST
-        const { status, data } = await postApi(
-            { 
-                uid: authContext.state.uid, 
-                m_todo_id: nextId.current, 
-                stt_date: start,
-                end_date: end,
-                m_content: title, 
-            }, '/tdl/monthly');
-            
+        // const { status, data } = await postApi(
+        //     { 
+        //         uid: authContext.state.uid, 
+        //         m_todo_id: nextId.current, 
+        //         stt_date: start,
+        //         end_date: end,
+        //         m_content: title, 
+        //     }, '/tdl/monthly');
         // * dummy code
-        // const { status, data } = {
-        //     status: 200,
-        //     data: { m_todo_id: "1" },
-        // };
+        const { status, data } = {
+            status: 200,
+            data: { m_todo_id: "1" },
+        };
         // const { status, data } = {
         //     status: 400,
         //     data: { message: "mtdl post fail" },
@@ -110,13 +111,15 @@ const MonthlyComp = () => {
         } else {
             console.log('mtdl post fail');
         }
-        nextId.current += 1;
+        
     };
 
     const handleDateClick = (arg) => { // 빈 날짜 클릭 시
         dispatch({ type: "event-not-click", payload: "" });
-        setInputs({ title: "", start: arg.dateStr, end: arg.dateStr }); // 입력폼 빈칸으로
-        console.log(arg.dateStr);
+        setInputs({ title: "", start: arg.dateStr, end: arg.dateStr }); // start, end 날짜 모두 클릭한 날짜로
+        // (확장) 한번 클릭하면 start, 그 상태로 start 이후의 다른 날짜 클릭하면 end로 입력
+
+
     }
 
     function handleEventClick(eventInfo) {
@@ -150,20 +153,20 @@ const MonthlyComp = () => {
         });
 
         //UPDATE
-        const { status, data } = putApi( 
-            {
-                uid: authContext.state.uid,
-                m_todo_id: state.eventId, 
-                stt_date: inputs.start, 
-                end_date: inputs.end, 
-                m_content: inputs.title,
-            }, '/mtdl/monthly'
-        );
+        // const { status, data } = putApi( 
+        //     {
+        //         uid: authContext.state.uid,
+        //         m_todo_id: state.eventId, 
+        //         stt_date: inputs.start, 
+        //         end_date: inputs.end, 
+        //         m_content: inputs.title,
+        //     }, '/mtdl/monthly'
+        // );
         // * dummy date
-        // const { status, data } = {
-        //     status: 200,
-        //     data: { m_todo_id: "1" },
-        // };
+        const { status, data } = {
+            status: 200,
+            data: { m_todo_id: "1" },
+        };
         // const { status, data } = {
         //     status: 400,
         //     data: { message: "mtdl update fail" },
@@ -177,10 +180,9 @@ const MonthlyComp = () => {
         
     }
     // 일정변경(UPDATE) : mtodos배열에서 해당 id의 event 변경해줌
-    const updateEvent = async (e) => {
+    const handleClickUpdateBtn = async (e) => {
         e.preventDefault();
         dispatch({ type: "event-not-click", payload: "" });
-
         setMtodos(
             mtodos.map(mtodo =>
                 mtodo.id == state.eventId ? { ...mtodo, title: inputs.title, start: inputs.start, end: inputs.end } : mtodo
@@ -188,20 +190,20 @@ const MonthlyComp = () => {
         );
         setInputs({ title: "", start: "", end: "" }); // 입력폼 빈칸으로
         //UPDATE
-        const { status, data } = putApi( 
-            {
-                uid: authContext.state.uid,
-                m_todo_id: state.eventId, 
-                stt_date: inputs.start, 
-                end_date: inputs.end, 
-                m_content: inputs.title,
-            }, '/mtdl/monthly'
-        );
+        // const { status, data } = putApi( 
+        //     {
+        //         uid: authContext.state.uid,
+        //         m_todo_id: state.eventId, 
+        //         stt_date: inputs.start, 
+        //         end_date: inputs.end, 
+        //         m_content: inputs.title,
+        //     }, '/mtdl/monthly'
+        // );
         // * dummy data
-        // const { status, data } = {
-        //     status: 200,
-        //     data: { m_todo_id: "1" },
-        // };
+        const { status, data } = {
+            status: 200,
+            data: { m_todo_id: "1" },
+        };
         // const { status, data } = {
         //     status: 400,
         //     data: { message: "mtdl update fail" },
@@ -215,7 +217,7 @@ const MonthlyComp = () => {
     }
 
     // 일정삭제(DELETE) : mtodos배열에서 해당 id의 event 삭제
-    const deleteEvent = async (e) => {
+    const handleClickDeleteBtn = async (e) => {
         e.preventDefault();
         setInputs({ title: "", start: "", end: "" }); // 입력폼 빈칸으로
         dispatch({ type: "event-not-click", payload: "" });
@@ -223,17 +225,17 @@ const MonthlyComp = () => {
         setMtodos(mtodos.filter(mtodos => mtodos.id != state.eventId)); // mtodos 배열에 해당 event 삭제
 
         // DELETE
-        const { status, data } = await deleteApi(
-            {
-                uid: authContext.state.uid,
-                m_todo_id: state.eventId,
-            }, '/tdl/monthly'
-        );
+        // const { status, data } = await deleteApi(
+        //     {
+        //         uid: authContext.state.uid,
+        //         m_todo_id: state.eventId,
+        //     }, '/tdl/monthly'
+        // );
         // * dummy date
-        // const { status, data } = {
-        //     status: 200,
-        //     data: { m_todo_id: "2" }
-        // };
+        const { status, data } = {
+            status: 200,
+            data: { m_todo_id: "2" }
+        };
         // const { status, data } = {
         //     status: 400,
         //     data: { message: "mtdl delete fail" },
@@ -293,6 +295,8 @@ const MonthlyComp = () => {
                 dateClick={handleDateClick}
                 eventClick={handleEventClick}
                 eventDrop={handleEventDrop}
+                eventBackgroundColor='#C4C4C4'
+                eventBorderColor='#C4C4C4'
             />
             <div className="Main-Monthly-input">
                 <form className="Main-Monthly-inputform">
@@ -333,8 +337,8 @@ const MonthlyComp = () => {
                 <div className="Main-Monthly-Btns">
                     {state.isClicked ? (
                         <>
-                            <button className="Main-Monthly-changeBtn" onClick={updateEvent}>일정변경</button>
-                            <button className="Main-Monthly-deleteBtn" onClick={deleteEvent}>일정삭제</button>
+                            <button className="Main-Monthly-changeBtn" onClick={handleClickUpdateBtn}>일정변경</button>
+                            <button className="Main-Monthly-deleteBtn" onClick={handleClickDeleteBtn}>일정삭제</button>
                         </>
                     ) : (
                         <button className="Main-Monthly-createBtn" onClick={onCreate}>일정추가</button>
