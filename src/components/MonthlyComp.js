@@ -118,8 +118,13 @@ const MonthlyComp = () => {
         dispatch({ type: "event-not-click", payload: "" });
         setInputs({ title: "", start: arg.dateStr, end: arg.dateStr }); // start, end 날짜 모두 클릭한 날짜로
         // (확장) 한번 클릭하면 start, 그 상태로 start 이후의 다른 날짜 클릭하면 end로 입력
+        console.log(arg.dateStr);
 
+    }
 
+    const isDateSelected = (arg) => {
+        // dispatch({ type: "eventclick", payload: "" });
+        // console.log({start: arg.dateStr, end: arg.dateStr});
     }
 
     function handleEventClick(eventInfo) {
@@ -292,6 +297,7 @@ const MonthlyComp = () => {
                 droppable='true'
                 eventStartEditable='true'
                 selectable='true'
+                select={isDateSelected}
                 dateClick={handleDateClick}
                 eventClick={handleEventClick}
                 eventDrop={handleEventDrop}

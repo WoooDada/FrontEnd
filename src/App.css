@@ -36,6 +36,7 @@
     flex: 8;
     padding: 3vmin;
     overflow: hidden;
+    min-height: 80vh; /* 최소높이 지정 -> footer 하단에 고정 */
 }
 
 .App-footer {
