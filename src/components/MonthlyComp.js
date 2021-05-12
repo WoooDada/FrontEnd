@@ -1,8 +1,7 @@
 import React, { useRef, useEffect, useState, useContext, useReducer } from "react";
 import "../css/Main.css";
 import { AuthContext } from "../App";
-import axios from "axios";
-import getApi from "../api/getApi";
+import { getApi, postApi, putApi, deleteApi } from "../api";
 
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -10,20 +9,25 @@ import interactionPlugin from "@fullcalendar/interaction";
 
 const MonthlyComp = () => {
     const authContext = useContext(AuthContext);
-    const [mtodos, setMtodos] = useState([ // mtodos 배열 데이터. dummy data
-        {
-            id: 1,
-            title: 'Test1',
-            start: '2021-05-22',
-            end: '2021-05-22'
-        },
-        {
-            id: 2,
-            title: 'Test2',
-            start: '2021-05-06',
-            end: '2021-05-09'
-        }
+    const [mtodos, setMtodos] = useState([
     ]);
+    // dummy date
+    // const [mtodos, setMtodos] = useState([
+    //     // mtodos 배열 데이터. 
+    //     // dummy data
+    //     {
+    //         id: 1,
+    //         title: 'Test1',
+    //         start: '2021-05-22',
+    //         end: '2021-05-22'
+    //     },
+    //     {
+    //         id: 2,
+    //         title: 'Test2',
+    //         start: '2021-05-06',
+    //         end: '2021-05-09'
+    //     }
+    // ]);
     const reducer = (state, action) => { // 이벤트 클릭시 버튼 다르게 출력하기 위한 reducer
         switch (action.type) {
             case "eventclick":
@@ -83,28 +87,20 @@ const MonthlyComp = () => {
         });
 
         // POST
-        // const { status, data } = await axios.post( 
-        //     "http://13.209.194.64:8080/tdl/monthly",
-        //     { 
-        //         uid: authContext.state.uid, 
-        //         m_todo_id: nextId.current, 
-        //         stt_date: start,
-        //         end_date: end,
-        //         m_content: title, 
-        //     },
-        //     {
-        //         headers: {
-        //             "Content-type": "application/json",
-        //             Accept: "application/json",
-        //         },
-        //     }
-        // );
-
-        // * 허구(실험) 데이터
-        const { status, data } = {
-            status: 200,
-            data: { m_todo_id: "1" },
-        };
+        const { status, data } = await postApi(
+            { 
+                uid: authContext.state.uid, 
+                m_todo_id: nextId.current, 
+                stt_date: start,
+                end_date: end,
+                m_content: title, 
+            }, '/tdl/monthly');
+            
+        // * dummy code
+        // const { status, data } = {
+        //     status: 200,
+        //     data: { m_todo_id: "1" },
+        // };
         // const { status, data } = {
         //     status: 400,
         //     data: { message: "mtdl post fail" },
@@ -116,7 +112,6 @@ const MonthlyComp = () => {
         }
         nextId.current += 1;
     };
-
 
     const handleDateClick = (arg) => { // 빈 날짜 클릭 시
         dispatch({ type: "event-not-click", payload: "" });
@@ -139,6 +134,7 @@ const MonthlyComp = () => {
             end: event_dates[1]
         });
     }
+
     function handleEventDrop(eventInfo) {
         const event_title = eventInfo.event.title;
         const event_start = eventInfo.event.start;
@@ -154,33 +150,27 @@ const MonthlyComp = () => {
         });
 
         //UPDATE
-        // const { status, data } = await axios.post( 
-        //     "http://13.209.194.64:8080/tdl/monthly",
-        //     {
-        //         m_todo_id: state.eventId, 
-        //         stt_date: inputs.start, 
-        //         end_date: inputs.end, 
-        //         m_content: inputs.title,
-        //     },
-        //     {
-        //         headers: {
-        //             "Content-type": "application/json",
-        //             Accept: "application/json",
-        //         },
-        //     }
-        // );
-        // * 허구(실험) 데이터
-        const { status, data } = {
-            status: 200,
-            data: { m_todo_id: "1" },
-        };
+        const { status, data } = putApi( 
+            {
+                uid: authContext.state.uid,
+                m_todo_id: state.eventId, 
+                stt_date: inputs.start, 
+                end_date: inputs.end, 
+                m_content: inputs.title,
+            }, '/mtdl/monthly'
+        );
+        // * dummy date
+        // const { status, data } = {
+        //     status: 200,
+        //     data: { m_todo_id: "1" },
+        // };
         // const { status, data } = {
         //     status: 400,
         //     data: { message: "mtdl update fail" },
         // };
 
         if (status === 200) {
-            console.log('update success');
+            console.log('mtdl update success');
         } else {
             console.log('mtdl update fail');
         }
@@ -198,26 +188,20 @@ const MonthlyComp = () => {
         );
         setInputs({ title: "", start: "", end: "" }); // 입력폼 빈칸으로
         //UPDATE
-        // const { status, data } = await axios.post( 
-        //     "http://13.209.194.64:8080/tdl/monthly",
-        //     {
-        //         m_todo_id: state.eventId, 
-        //         stt_date: inputs.start, 
-        //         end_date: inputs.end, 
-        //         m_content: inputs.title,
-        //     },
-        //     {
-        //         headers: {
-        //             "Content-type": "application/json",
-        //             Accept: "application/json",
-        //         },
-        //     }
-        // );
-        // * 허구(실험) 데이터
-        const { status, data } = {
-            status: 200,
-            data: { m_todo_id: "1" },
-        };
+        const { status, data } = putApi( 
+            {
+                uid: authContext.state.uid,
+                m_todo_id: state.eventId, 
+                stt_date: inputs.start, 
+                end_date: inputs.end, 
+                m_content: inputs.title,
+            }, '/mtdl/monthly'
+        );
+        // * dummy data
+        // const { status, data } = {
+        //     status: 200,
+        //     data: { m_todo_id: "1" },
+        // };
         // const { status, data } = {
         //     status: 400,
         //     data: { message: "mtdl update fail" },
@@ -239,23 +223,17 @@ const MonthlyComp = () => {
         setMtodos(mtodos.filter(mtodos => mtodos.id != state.eventId)); // mtodos 배열에 해당 event 삭제
 
         // DELETE
-        // const { status, data } = await axios.post( 
-        //     "http://13.209.194.64:8080/tdl/monthly",
-        //     { 
-        //         m_todo_id: state.eventId,
-        //     },
-        //     {
-        //         headers: {
-        //             "Content-type": "application/json",
-        //             Accept: "application/json",
-        //         },
-        //     }
-        // );
-        // * 허구(실험) 데이터
-        const { status, data } = {
-            status: 200,
-            data: { m_todo_id: "2" }
-        };
+        const { status, data } = await deleteApi(
+            {
+                uid: authContext.state.uid,
+                m_todo_id: state.eventId,
+            }, '/tdl/monthly'
+        );
+        // * dummy date
+        // const { status, data } = {
+        //     status: 200,
+        //     data: { m_todo_id: "2" }
+        // };
         // const { status, data } = {
         //     status: 400,
         //     data: { message: "mtdl delete fail" },
@@ -308,12 +286,11 @@ const MonthlyComp = () => {
                 plugins={[dayGridPlugin, interactionPlugin]}
                 initialView="dayGridMonth"
                 events={mtodos}
-                editable="true"
-                droppable="false"
-                eventStartEditable="true"
-                eventDurationEditable="true"
-                dateClick={handleDateClick}
+                // editable='true' //eventStartEditable(dragging) & eventDurationEditable(기간 늘리기)
+                droppable='true'
+                eventStartEditable='true'
                 selectable='true'
+                dateClick={handleDateClick}
                 eventClick={handleEventClick}
                 eventDrop={handleEventDrop}
             />
