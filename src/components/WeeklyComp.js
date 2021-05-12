@@ -1,23 +1,37 @@
 // TODO 컴포넌트 정리 및 리팩토링(reducer => immer 작성하기)
+// 1. w_date 추가하기
 import React from "react";
 import { useState } from "react";
 import "../css/Main.css";
 import { GrCheckbox, GrCheckboxSelected } from "react-icons/gr";
 import { useReducer, createContext, useContext } from "react";
+import { useEffect } from "react";
+import { getApi, postApi, putApi, deleteApi } from "../api";
+import { AuthContext } from "../App";
 
 const WeeklyContext = createContext();
 
 const reducer = (state, action) => {
     switch (action.type) {
+        case "GET_ALL":
+            return action.w_todo_list.map((d, i) => ({
+                dow: state[i].dow,
+                date: d.w_date,
+                tasks: d.w_todos.map((t) => ({
+                    id: t.w_id,
+                    content: t.w_content,
+                    checked: t.w_checked,
+                })),
+            }));
+
         case "ADD_NEW":
-            // TODO: post api 작성하기
             return state.map((s, i) => {
                 if (s.dow === action.dow) {
                     return {
                         ...s,
                         tasks: s.tasks.concat({
                             // TODO post api로 받은 id로.
-                            id: 4,
+                            id: action.id,
                             content: action.newTodo,
                             checked: false,
                         }),
@@ -27,7 +41,6 @@ const reducer = (state, action) => {
             });
 
         case "UPDATE_CHECK":
-            // TODO put api 작성
             return state.map((s, i) => {
                 if (s.dow === action.dow) {
                     return {
@@ -43,7 +56,6 @@ const reducer = (state, action) => {
                 return s;
             });
         case "UPDATE_CONTENT":
-            // TODO put api 작성
             return state.map((s, i) => {
                 if (s.dow === action.dow) {
                     return {
@@ -60,7 +72,6 @@ const reducer = (state, action) => {
             });
 
         case "DELETE":
-            // TODO delete api 작성
             // delete api 작성
             return state.map((s, i) => {
                 if (s.dow === action.dow) {
@@ -77,6 +88,7 @@ const reducer = (state, action) => {
 const initialData = [
     {
         dow: "월",
+        date: "",
         tasks: [
             { id: 1, content: "설거지", checked: true },
             { id: 2, content: "설거지", checked: true },
@@ -85,6 +97,7 @@ const initialData = [
     },
     {
         dow: "화",
+        date: "",
         tasks: [
             { id: 1, content: "설거지", checked: true },
             { id: 2, content: "설거지", checked: true },
@@ -93,6 +106,7 @@ const initialData = [
     },
     {
         dow: "수",
+        date: "",
         tasks: [
             { id: 1, content: "설거지", checked: true },
             { id: 2, content: "설거지", checked: true },
@@ -101,6 +115,7 @@ const initialData = [
     },
     {
         dow: "목",
+        date: "",
         tasks: [
             { id: 1, content: "설거지", checked: true },
             { id: 2, content: "설거지", checked: true },
@@ -109,6 +124,7 @@ const initialData = [
     },
     {
         dow: "금",
+        date: "",
         tasks: [
             { id: 1, content: "설거지", checked: true },
             { id: 2, content: "설거지", checked: true },
@@ -117,6 +133,7 @@ const initialData = [
     },
     {
         dow: "토",
+        date: "",
         tasks: [
             { id: 1, content: "설거지", checked: true },
             { id: 2, content: "설거지", checked: true },
@@ -125,6 +142,7 @@ const initialData = [
     },
     {
         dow: "일",
+        date: "",
         tasks: [
             { id: 1, content: "설거지", checked: true },
             { id: 2, content: "설거지", checked: true },
@@ -133,14 +151,100 @@ const initialData = [
     },
 ];
 
-const TaskItem = ({ dow, id, checked, content }) => {
+const reverse = (a, b) => {
+    return b - a;
+};
+
+const getTheDate = (a, b, now, temp, isReverse) => {
+    let arr = [...Array(a).keys()];
+    arr = isReverse ? arr.sort(reverse) : arr;
+
+    return arr.map((j) => {
+        const dd = isReverse ? -1 * j + b : j;
+        return new Date(temp.setDate(now.getDate() + dd))
+            .toISOString()
+            .substring(0, 10);
+    });
+};
+
+const calTheDates = () => {
+    // output: date string(2021-02-03 꼴)의 배열: 그 주의 월-일까지의 일자
+    // 일, 월, 화, 수, 목, 금, 토
+    const now = new Date();
+    const temp = new Date();
+    const i = now.getDay();
+    let dates = [];
+    if (i !== 0) {
+        dates = getTheDate(i - 1, -1, now, temp, true);
+        dates.concat(getTheDate(8 - i, 0, now, temp, false));
+        // dates = [...Array(i - 1).keys()]
+        //     .sort(reverse)
+        //     .map((j) =>
+        //         new Date(temp.setDate(now.getDate() - j - 1))
+        //             .toISOString()
+        //             .substring(0, 10)
+        //     );
+        // dates.concat(
+        //     [...Array(8 - i).keys()].map((j) =>
+        //         new Date(temp.setDate(now.getDate() + j))
+        //             .toISOString()
+        //             .substring(0, 10)
+        //     )
+        // );
+    } else {
+        dates = getTheDate(7, 0, now, temp, true);
+        // dates = [...Array(7).keys()]
+        //     .sort(reverse)
+        //     .map((j) =>
+        //         new Date(now.setDate(now.getDate() - j))
+        //             .toISOString()
+        //             .substring(0, 10)
+        //     );
+    }
+    return dates;
+};
+
+const TaskItem = ({ dow, id, date, checked, content }) => {
     const weeklyContext = useContext(WeeklyContext);
+    const authContext = useContext(AuthContext);
     const [todo, setTodo] = useState(content);
     const handleCheck = () => {
+        // * 실제 api
+        // const { status, data } = putApi({
+        //     uid: authContext.state.uid,
+        //     w_todo_id: id,
+        //     w_content: content,
+        //     w_check: (!checked === false) ? "F": "T",
+        //     w_date: date,
+        // }, '/tdl/weekly');
+        // if (status === 200){
+        //     weeklyContext.dispatch({ type: "UPDATE_CHECK", id, dow });
+        // } else {
+        //     alert("인터넷 연결 불안정")
+        // }
+        // * dummy
         weeklyContext.dispatch({ type: "UPDATE_CHECK", id, dow });
     };
     const handleUpdateButton = () => {
-        // todo update만.
+        // * 실제 api
+        // const { status, data } = putApi({
+        //     uid: authContext.state.uid,
+        //     w_todo_id: id,
+        //     w_content: todo,
+        //     w_check: checked,
+        //     w_date: date,
+        // }, '/tdl/weekly');
+        // if (status === 200) {
+        //     weeklyContext.dispatch({
+        //         type: "UPDATE_CONTENT",
+        //         id,
+        //         dow,
+        //         content: todo,
+        //     });
+        // } else {
+        //     alert("인터넷 연결 불안정");
+        // }
+        // * dummy data
         weeklyContext.dispatch({
             type: "UPDATE_CONTENT",
             id,
@@ -149,6 +253,7 @@ const TaskItem = ({ dow, id, checked, content }) => {
         });
     };
     const handleDeleteButton = () => {
+        const { status, data } = deleteApi({}, "/tdl/weekly");
         weeklyContext.dispatch({
             type: "DELETE",
             id,
@@ -175,13 +280,37 @@ const TaskItem = ({ dow, id, checked, content }) => {
     );
 };
 
-const DayOfWeekComp = ({ dow, tasks }) => {
+const DayOfWeekComp = ({ dow, date, tasks }) => {
     // dow = day of week(요일)
     const [newTodo, setNewTodo] = useState("");
     const weeklyContext = useContext(WeeklyContext);
-    const handleAddButtonClick = () => {
-        // TODO: POST 들어가기
-        weeklyContext.dispatch({ type: "ADD_NEW", dow, newTodo });
+    const authContext = useContext(AuthContext);
+
+    const handleAddButtonClick = async () => {
+        // * 실제 쓰이는 코드
+        // const { status, data } = await postApi({
+        //     uid: authContext.state.uid,
+        //     w_date: date,
+        //     w_content: newTodo,
+        //     w_check: "F",
+        // }, '/tdl/weekly');
+        // if (status === 200) {
+        //     weeklyContext.dispatch({
+        //         type: "ADD_NEW",
+        //         dow,
+        //         newTodo,
+        //         id: data.w_todo_id,
+        //     });
+        // } else {
+        //     alert("인터넷 연결이 불안정합니다.");
+        // }
+        // dummy code
+        weeklyContext.dispatch({
+            type: "ADD_NEW",
+            dow,
+            newTodo,
+            id: 4,
+        });
         setNewTodo("");
     };
     const handleNewChange = (e) => {
@@ -196,6 +325,7 @@ const DayOfWeekComp = ({ dow, tasks }) => {
                         dow={dow}
                         key={t.id}
                         id={t.id}
+                        date={date}
                         checked={t.checked}
                         content={t.content}
                     />
@@ -220,6 +350,24 @@ const DayOfWeekComp = ({ dow, tasks }) => {
 
 const WeeklyComp = () => {
     const [weeklyData, dispatch] = useReducer(reducer, initialData);
+    const authContext = useContext(AuthContext);
+    useEffect(() => {
+        const getWeeklyData = async () => {
+            const { status, data } = await getApi(
+                {
+                    uid: authContext.state.uid,
+                    dates: calTheDates(),
+                },
+                "/tdl/weekly"
+            );
+            if (status === 200) {
+                dispatch({ type: "GET_ALL", w_todo_list: data.w_todo_list });
+            } else {
+                alert("인터넷 연결이 불안정합니다.");
+            }
+        };
+        // getWeeklyData();
+    });
     return (
         <div className="Main-WeeklyComp">
             <h3>주간 일정</h3>
@@ -231,6 +379,7 @@ const WeeklyComp = () => {
                                 <DayOfWeekComp
                                     key={d.dow}
                                     dow={d.dow}
+                                    date={d.date}
                                     tasks={d.tasks}
                                 ></DayOfWeekComp>
                             ))}
