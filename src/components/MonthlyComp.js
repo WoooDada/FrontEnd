@@ -6,6 +6,7 @@ import { getApi, postApi, putApi, deleteApi } from "../api";
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from "@fullcalendar/interaction";
+import moment from "moment";
 
 const MonthlyComp = () => {
     const authContext = useContext(AuthContext);
@@ -72,7 +73,7 @@ const MonthlyComp = () => {
                 alert("인터넷 연결이 불안정합니다.");
             }
         };
-        // getMtodos();
+        getMtodos();
     }, []);
 
     const nextId = useRef(mtodos.length); // length: 마지막 원소의 인덱스 값보다 1 큰 수를 반환
@@ -85,23 +86,21 @@ const MonthlyComp = () => {
             start: "",
             end: ""
         });
-        nextId.current += 1;
-        console.log('created id :', nextId.current);
         console.log(mtodos);
         // POST
-        // const { status, data } = await postApi(
-        //     { 
-        //         uid: authContext.state.uid, 
-        //         m_todo_id: nextId.current, 
-        //         stt_date: start,
-        //         end_date: end,
-        //         m_content: title, 
-        //     }, '/tdl/monthly');
+        const { status, data } = await postApi(
+            { 
+                uid: authContext.state.uid, 
+                m_todo_id: nextId.current, 
+                stt_date: start,
+                end_date: end,
+                m_content: title, 
+            }, '/tdl/monthly');
         // * dummy code
-        const { status, data } = {
-            status: 200,
-            data: { m_todo_id: "1" },
-        };
+        // const { status, data } = {
+        //     status: 200,
+        //     data: { m_todo_id: "1" },
+        // };
         // const { status, data } = {
         //     status: 400,
         //     data: { message: "mtdl post fail" },
@@ -111,79 +110,142 @@ const MonthlyComp = () => {
         } else {
             console.log('mtdl post fail');
         }
-        
+
+        nextId.current += 1;
     };
 
     const handleDateClick = (arg) => { // 빈 날짜 클릭 시
         dispatch({ type: "event-not-click", payload: "" });
         setInputs({ title: "", start: arg.dateStr, end: arg.dateStr }); // start, end 날짜 모두 클릭한 날짜로
-        // (확장) 한번 클릭하면 start, 그 상태로 start 이후의 다른 날짜 클릭하면 end로 입력
-        console.log(arg.dateStr);
-
     }
 
-    const isDateSelected = (arg) => {
-        // dispatch({ type: "eventclick", payload: "" });
-        // console.log({start: arg.dateStr, end: arg.dateStr});
+    const isDateSelected = (arg) => { // drag를 통해 여러 date 지정
+        dispatch({ type: "event-not-click", payload: "" });
+        setInputs({ title: "", start: arg.startStr, end: arg.endStr });
     }
 
     function handleEventClick(eventInfo) {
         // 버튼 : 일정변경, 일정삭제 두 개 나타나는걸로 변경
-        const event_title = eventInfo.event.title;
-        const event_start = eventInfo.event.start;
-        const event_end = eventInfo.event.end;
         const event_id = eventInfo.event.id;
+        var event_end = '';
         dispatch({ type: "eventclick", payload: event_id });
         // 이벤트 클릭 시 아래 입력폼에 내용 나타남. 
-        const event_dates = dateFormat(event_start, event_end);
+        if (eventInfo.event.end === null) {
+            event_end = eventInfo.event.startStr;
+        } else{
+            event_end = eventInfo.event.endStr;
+        }
         setInputs({
-            title: event_title,
-            start: event_dates[0],
-            end: event_dates[1]
+            title: eventInfo.event.title,
+            start: eventInfo.event.startStr,
+            end: event_end,
         });
     }
 
     function handleEventDrop(eventInfo) {
-        const event_title = eventInfo.event.title;
-        const event_start = eventInfo.event.start;
-        const event_end = eventInfo.event.end;
         const event_id = eventInfo.event.id;
         dispatch({ type: "eventclick", payload: event_id });
-        // 이벤트 클릭 시 아래 입력폼에 내용 나타남. 
-        const event_dates = dateFormat(event_start, event_end);
+        const newStart =  moment(eventInfo.oldEvent.startStr).add(eventInfo.delta.days, 'd').format('YYYY-MM-DD');
+        var newEnd = '';
+        if (eventInfo.oldEvent.end === null){
+            newEnd = moment(eventInfo.oldEvent.startStr).add(eventInfo.delta.days+1, 'd').format('YYYY-MM-DD');
+        } else {
+            newEnd = moment(eventInfo.oldEvent.endStr).add(eventInfo.delta.days, 'd').format('YYYY-MM-DD');
+        }
+        
         setInputs({
-            title: event_title,
-            start: event_dates[0],
-            end: event_dates[1]
+            title: eventInfo.oldEvent.title,
+            start: newStart,
+            end: newEnd,
         });
 
+        setMtodos( // mtodos 배열에  반영
+            mtodos.map(mtodo =>
+                mtodo.id == event_id ? { 
+                    ...mtodo, 
+                    title: eventInfo.oldEvent.title,
+                    start: newStart,
+                    end: newEnd,
+                } : mtodo
+            )
+        );
+
         //UPDATE
-        // const { status, data } = putApi( 
-        //     {
-        //         uid: authContext.state.uid,
-        //         m_todo_id: state.eventId, 
-        //         stt_date: inputs.start, 
-        //         end_date: inputs.end, 
-        //         m_content: inputs.title,
-        //     }, '/mtdl/monthly'
-        // );
+        const { status, data } = putApi( 
+            {
+                uid: authContext.state.uid,
+                m_todo_id: event_id,  // state.eventI ?
+                stt_date: newStart, 
+                end_date: newEnd, 
+                m_content: eventInfo.oldEvent.title,
+            }, '/mtdl/monthly'
+        );
         // * dummy date
-        const { status, data } = {
-            status: 200,
-            data: { m_todo_id: "1" },
-        };
+        // const { status, data } = {
+        //     status: 200,
+        //     data: { m_todo_id: "1" },
+        // };
         // const { status, data } = {
         //     status: 400,
         //     data: { message: "mtdl update fail" },
         // };
-
         if (status === 200) {
             console.log('mtdl update success');
         } else {
             console.log('mtdl update fail');
         }
-        
     }
+
+    function handleEventResize(eventInfo) {
+        const event_id = eventInfo.event.id;
+        var newEnd = '';
+        if (eventInfo.oldEvent.end === null){
+            newEnd = moment(eventInfo.oldEvent.startStr).add(eventInfo.endDelta.days+1, 'd').format('YYYY-MM-DD');
+        } else {
+            newEnd = moment(eventInfo.oldEvent.endStr).add(eventInfo.endDelta.days, 'd').format('YYYY-MM-DD');
+        }
+        
+        setInputs({
+            title: eventInfo.oldEvent.title,
+            start: eventInfo.oldEvent.startStr,
+            end: newEnd,
+        });
+        setMtodos( // mtodos 배열에  반영
+            mtodos.map(mtodo =>
+                mtodo.id == event_id ? { 
+                    ...mtodo, 
+                    title: eventInfo.oldEvent.title, 
+                    start: eventInfo.oldEvent.startStr, 
+                    end: newEnd, 
+                } : mtodo
+            )
+        );
+        //UPDATE
+        const { status, data } = putApi( 
+            {
+                uid: authContext.state.uid,
+                m_todo_id: event_id,  // state.eventI ?
+                stt_date: eventInfo.oldEvent.startStr, 
+                end_date: newEnd, 
+                m_content: eventInfo.oldEvent.title,
+            }, '/mtdl/monthly'
+        );
+        // * dummy date
+        // const { status, data } = {
+        //     status: 200,
+        //     data: { m_todo_id: "1" },
+        // };
+        // const { status, data } = {
+        //     status: 400,
+        //     data: { message: "mtdl update fail" },
+        // };
+        if (status === 200) {
+            console.log('mtdl update success');
+        } else {
+            console.log('mtdl update fail');
+        }
+    }
+
     // 일정변경(UPDATE) : mtodos배열에서 해당 id의 event 변경해줌
     const handleClickUpdateBtn = async (e) => {
         e.preventDefault();
@@ -195,20 +257,20 @@ const MonthlyComp = () => {
         );
         setInputs({ title: "", start: "", end: "" }); // 입력폼 빈칸으로
         //UPDATE
-        // const { status, data } = putApi( 
-        //     {
-        //         uid: authContext.state.uid,
-        //         m_todo_id: state.eventId, 
-        //         stt_date: inputs.start, 
-        //         end_date: inputs.end, 
-        //         m_content: inputs.title,
-        //     }, '/mtdl/monthly'
-        // );
+        const { status, data } = putApi( 
+            {
+                uid: authContext.state.uid,
+                m_todo_id: state.eventId, 
+                stt_date: inputs.start, 
+                end_date: inputs.end, 
+                m_content: inputs.title,
+            }, '/mtdl/monthly'
+        );
         // * dummy data
-        const { status, data } = {
-            status: 200,
-            data: { m_todo_id: "1" },
-        };
+        // const { status, data } = {
+        //     status: 200,
+        //     data: { m_todo_id: "1" },
+        // };
         // const { status, data } = {
         //     status: 400,
         //     data: { message: "mtdl update fail" },
@@ -230,17 +292,17 @@ const MonthlyComp = () => {
         setMtodos(mtodos.filter(mtodos => mtodos.id != state.eventId)); // mtodos 배열에 해당 event 삭제
 
         // DELETE
-        // const { status, data } = await deleteApi(
-        //     {
-        //         uid: authContext.state.uid,
-        //         m_todo_id: state.eventId,
-        //     }, '/tdl/monthly'
-        // );
+        const { status, data } = await deleteApi(
+            {
+                uid: authContext.state.uid,
+                m_todo_id: state.eventId,
+            }, '/tdl/monthly'
+        );
         // * dummy date
-        const { status, data } = {
-            status: 200,
-            data: { m_todo_id: "2" }
-        };
+        // const { status, data } = {
+        //     status: 200,
+        //     data: { m_todo_id: "2" }
+        // };
         // const { status, data } = {
         //     status: 400,
         //     data: { message: "mtdl delete fail" },
@@ -252,41 +314,6 @@ const MonthlyComp = () => {
         }
     }
 
-    function dateFormat(start, end) { // 날짜는 yyyy-mm-dd형식으로 바꿔줌
-        var temp1 = start.toString().split(' ');
-        var temp2 = 0;
-        if (end === null) { // 하루일 경우 end=null이므로 start와 같게 처리
-            temp2 = temp1;
-        } else {
-            temp2 = end.toString().split(' ');
-        }
-        var s_month = temp1[1]; var s_day = temp1[2]; var s_year = temp1[3];
-        var e_month = temp2[1]; var e_day = temp2[2]; var e_year = temp2[3]; 
-
-        var s_date = 0; var e_date = 0;
-        s_date = s_year + '-' + monthChange(s_month) + '-' + s_day;
-        e_date = e_year + '-' + monthChange(e_month) + '-' + e_day;
-        return [s_date.toString(), e_date.toString()]; // 배열로 리턴
-    }
-    function monthChange(month) {
-        var intmonth = '';
-        switch (month) {
-            case 'Jan': intmonth = '01'; break;
-            case 'Feb': intmonth = '02'; break;
-            case 'Mar': intmonth = '03'; break;
-            case 'Apr': intmonth = '04'; break;
-            case 'May': intmonth = '05'; break;
-            case 'Jun': intmonth = '06'; break;
-            case 'Jul': intmonth = '07'; break;
-            case 'Aug': intmonth = '08'; break;
-            case 'Sep': intmonth = '09'; break;
-            case 'Oct': intmonth = '10'; break;
-            case 'Nov': intmonth = '11'; break;
-            case 'Dec': intmonth = '12'; break;
-        }
-        return intmonth;
-    }
-
     return (
         <div className="Main-MonthlyComp">
             <FullCalendar
@@ -296,13 +323,16 @@ const MonthlyComp = () => {
                 // editable='true' //eventStartEditable(dragging) & eventDurationEditable(기간 늘리기)
                 droppable='true'
                 eventStartEditable='true'
+                eventDurationEditable='true'
                 selectable='true'
                 select={isDateSelected}
                 dateClick={handleDateClick}
                 eventClick={handleEventClick}
                 eventDrop={handleEventDrop}
+                eventResize={handleEventResize}
                 eventBackgroundColor='#C4C4C4'
                 eventBorderColor='#C4C4C4'
+
             />
             <div className="Main-Monthly-input">
                 <form className="Main-Monthly-inputform">
@@ -357,3 +387,37 @@ const MonthlyComp = () => {
 
 export default MonthlyComp;
 
+// function dateFormat(start, end) { // 날짜는 yyyy-mm-dd형식으로 바꿔줌
+//     var temp1 = start.toString().split(' ');
+//     var temp2 = 0;
+//     if (end === null) { // 하루일 경우 end=null이므로 start와 같게 처리
+//         temp2 = temp1;
+//     } else {
+//         temp2 = end.toString().split(' ');
+//     }
+//     var s_month = temp1[1]; var s_day = temp1[2]; var s_year = temp1[3];
+//     var e_month = temp2[1]; var e_day = temp2[2]; var e_year = temp2[3]; 
+
+//     var s_date = 0; var e_date = 0;
+//     s_date = s_year + '-' + monthChange(s_month) + '-' + s_day;
+//     e_date = e_year + '-' + monthChange(e_month) + '-' + e_day;
+//     return [s_date.toString(), e_date.toString()]; // 배열로 리턴
+// }
+// function monthChange(month) {
+//     var intmonth = '';
+//     switch (month) {
+//         case 'Jan': intmonth = '01'; break;
+//         case 'Feb': intmonth = '02'; break;
+//         case 'Mar': intmonth = '03'; break;
+//         case 'Apr': intmonth = '04'; break;
+//         case 'May': intmonth = '05'; break;
+//         case 'Jun': intmonth = '06'; break;
+//         case 'Jul': intmonth = '07'; break;
+//         case 'Aug': intmonth = '08'; break;
+//         case 'Sep': intmonth = '09'; break;
+//         case 'Oct': intmonth = '10'; break;
+//         case 'Nov': intmonth = '11'; break;
+//         case 'Dec': intmonth = '12'; break;
+//     }
+//     return intmonth;
+// }
