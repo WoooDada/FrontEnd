@@ -1,7 +1,7 @@
 import axios from "axios";
 const deleteApi = async (params, end_url) => {
     const config = {
-        params: params,
+        data: params,
         headers: {
             "Content-type": "application/json",
             Accept: "application/json",

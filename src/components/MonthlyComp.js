@@ -63,41 +63,38 @@ const MonthlyComp = () => {
                 {
                     uid: authContext.state.uid,
                 },
-                "/tdl/monthly"
+                "/tdl/monthly/"
             );
+            await console.log("아아아아아ㅏ");
             if (status === 200) {
                 // data : [m_todo_id, stt_date, end_date, m_content] 배열 여러개.
                 // map으로 각각 setMtodos로 id, start, end, title에 넣어주기
-                data.m_todo_list.map((mdata, i) => {
-                    setMtodos([
-                        ...mtodos,
-                        {
-                            id: mdata.m_todo_id,
-                            start: mdata.stt_date,
-                            end: mdata.end_date,
-                            title: mdata.m_content,
-                        },
-                    ]);
-                });
+                await console.log(data.m_todo_list);
+                await setMtodos(
+                    data.m_todo_list.map((mdata, i) => ({
+                        id: mdata.m_todo_id,
+                        start: mdata.stt_date,
+                        end: mdata.end_date,
+                        title: mdata.m_content,
+                    }))
+                );
+                await console.log("mtodos:", mtodos);
             } else {
                 alert("인터넷 연결이 불안정합니다.");
             }
         };
-        // getMtodos();
+        getMtodos();
     }, []);
 
     const nextId = useRef(mtodos.length); // length: 마지막 원소의 인덱스 값보다 1 큰 수를 반환
     const onCreate = async (e) => {
+        // TODO nextId, m_todo_id 없애고 받아오는 m_todo_id로 설정해주기.
         // 일정 추가 함수
         e.preventDefault();
         const mtodo = { id: nextId.current, title, start, end };
         setMtodos(mtodos.concat(mtodo));
-        setInputs({
-            title: "",
-            start: "",
-            end: "",
-        });
-        console.log(mtodos);
+
+        console.log(mtodo);
         // POST
         const { status, data } = await postApi(
             {
@@ -107,8 +104,9 @@ const MonthlyComp = () => {
                 end_date: end,
                 m_content: title,
             },
-            "/tdl/monthly"
+            "/tdl/monthly/"
         );
+
         // * dummy code
         // const { status, data } = {
         //     status: 200,
@@ -123,7 +121,11 @@ const MonthlyComp = () => {
         } else {
             console.log("mtdl post fail");
         }
-
+        setInputs({
+            title: "",
+            start: "",
+            end: "",
+        });
         nextId.current += 1;
     };
 
@@ -203,7 +205,7 @@ const MonthlyComp = () => {
                 end_date: newEnd,
                 m_content: eventInfo.oldEvent.title,
             },
-            "/mtdl/monthly"
+            "/tdl/monthly/"
         );
         // * dummy date
         // const { status, data } = {
@@ -261,7 +263,7 @@ const MonthlyComp = () => {
                 end_date: newEnd,
                 m_content: eventInfo.oldEvent.title,
             },
-            "/mtdl/monthly"
+            "/tdl/monthly/"
         );
         // * dummy date
         // const { status, data } = {
@@ -305,7 +307,7 @@ const MonthlyComp = () => {
                 end_date: inputs.end,
                 m_content: inputs.title,
             },
-            "/mtdl/monthly"
+            "/tdl/monthly/"
         );
         // * dummy data
         // const { status, data } = {
@@ -329,16 +331,15 @@ const MonthlyComp = () => {
         e.preventDefault();
         setInputs({ title: "", start: "", end: "" }); // 입력폼 빈칸으로
         dispatch({ type: "event-not-click", payload: "" });
-
         setMtodos(mtodos.filter((mtodos) => mtodos.id != state.eventId)); // mtodos 배열에 해당 event 삭제
-
+        console.log("delete id:", state.eventId);
         // DELETE
         const { status, data } = await deleteApi(
             {
                 uid: authContext.state.uid,
                 m_todo_id: state.eventId,
             },
-            "/tdl/monthly"
+            "/tdl/monthly/"
         );
         // * dummy date
         // const { status, data } = {
