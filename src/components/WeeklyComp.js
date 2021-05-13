@@ -18,9 +18,9 @@ const reducer = (state, action) => {
                 dow: state[i].dow,
                 date: d.w_date,
                 tasks: d.w_todos.map((t) => ({
-                    id: t.w_id,
+                    id: t.w_todo_id,
                     content: t.w_content,
-                    checked: t.w_checked,
+                    checked: t.w_check,
                 })),
             }));
 
@@ -89,65 +89,37 @@ const initialData = [
     {
         dow: "월",
         date: "",
-        tasks: [
-            { id: 1, content: "설거지", checked: true },
-            { id: 2, content: "설거지", checked: true },
-            { id: 3, content: "설거지", checked: false },
-        ],
+        tasks: [],
     },
     {
         dow: "화",
         date: "",
-        tasks: [
-            { id: 1, content: "설거지", checked: true },
-            { id: 2, content: "설거지", checked: true },
-            { id: 3, content: "설거지", checked: true },
-        ],
+        tasks: [],
     },
     {
         dow: "수",
         date: "",
-        tasks: [
-            { id: 1, content: "설거지", checked: true },
-            { id: 2, content: "설거지", checked: true },
-            { id: 3, content: "설거지", checked: true },
-        ],
+        tasks: [],
     },
     {
         dow: "목",
         date: "",
-        tasks: [
-            { id: 1, content: "설거지", checked: true },
-            { id: 2, content: "설거지", checked: true },
-            { id: 3, content: "설거지", checked: true },
-        ],
+        tasks: [],
     },
     {
         dow: "금",
         date: "",
-        tasks: [
-            { id: 1, content: "설거지", checked: true },
-            { id: 2, content: "설거지", checked: true },
-            { id: 3, content: "설거지", checked: true },
-        ],
+        tasks: [],
     },
     {
         dow: "토",
         date: "",
-        tasks: [
-            { id: 1, content: "설거지", checked: true },
-            { id: 2, content: "설거지", checked: true },
-            { id: 3, content: "설거지", checked: true },
-        ],
+        tasks: [],
     },
     {
         dow: "일",
         date: "",
-        tasks: [
-            { id: 1, content: "설거지", checked: true },
-            { id: 2, content: "설거지", checked: true },
-            { id: 3, content: "설거지", checked: true },
-        ],
+        tasks: [],
     },
 ];
 
@@ -175,42 +147,22 @@ const calTheDates = () => {
     const i = now.getDay();
     let dates = [];
     if (i !== 0) {
-        dates = getTheDate(i - 1, -1, now, temp, true);
-        dates.concat(getTheDate(8 - i, 0, now, temp, false));
-        // dates = [...Array(i - 1).keys()]
-        //     .sort(reverse)
-        //     .map((j) =>
-        //         new Date(temp.setDate(now.getDate() - j - 1))
-        //             .toISOString()
-        //             .substring(0, 10)
-        //     );
-        // dates.concat(
-        //     [...Array(8 - i).keys()].map((j) =>
-        //         new Date(temp.setDate(now.getDate() + j))
-        //             .toISOString()
-        //             .substring(0, 10)
-        //     )
-        // );
+        dates = getTheDate(i - 1, -1, now, temp, true).concat(
+            getTheDate(8 - i, 0, now, temp, false)
+        );
     } else {
         dates = getTheDate(7, 0, now, temp, true);
-        // dates = [...Array(7).keys()]
-        //     .sort(reverse)
-        //     .map((j) =>
-        //         new Date(now.setDate(now.getDate() - j))
-        //             .toISOString()
-        //             .substring(0, 10)
-        //     );
     }
-    return dates;
+    return dates.join("|");
 };
 
 const TaskItem = ({ dow, id, date, checked, content }) => {
     const weeklyContext = useContext(WeeklyContext);
     const authContext = useContext(AuthContext);
     const [todo, setTodo] = useState(content);
-    const handleCheck = () => {
+    const handleCheck = async () => {
         // * 실제 api
-        const { status, data } = putApi(
+        const { status, data } = await putApi(
             {
                 uid: authContext.state.uid,
                 w_todo_id: id,
@@ -218,19 +170,19 @@ const TaskItem = ({ dow, id, date, checked, content }) => {
                 w_check: !checked === false ? "F" : "T",
                 w_date: date,
             },
-            "/tdl/weekly"
+            "/tdl/weekly/"
         );
         if (status === 200) {
-            weeklyContext.dispatch({ type: "UPDATE_CHECK", id, dow });
+            await weeklyContext.dispatch({ type: "UPDATE_CHECK", id, dow });
         } else {
             alert("인터넷 연결 불안정");
         }
         // * dummy
         // weeklyContext.dispatch({ type: "UPDATE_CHECK", id, dow });
     };
-    const handleUpdateButton = () => {
+    const handleUpdateButton = async () => {
         // * 실제 api
-        const { status, data } = putApi(
+        const { status, data } = await putApi(
             {
                 uid: authContext.state.uid,
                 w_todo_id: id,
@@ -238,17 +190,17 @@ const TaskItem = ({ dow, id, date, checked, content }) => {
                 w_check: checked,
                 w_date: date,
             },
-            "/tdl/weekly"
+            "/tdl/weekly/"
         );
         if (status === 200) {
-            weeklyContext.dispatch({
+            await weeklyContext.dispatch({
                 type: "UPDATE_CONTENT",
                 id,
                 dow,
                 content: todo,
             });
         } else {
-            alert("인터넷 연결 불안정");
+            await alert("인터넷 연결 불안정");
         }
         // * dummy data
         // weeklyContext.dispatch({
@@ -258,13 +210,29 @@ const TaskItem = ({ dow, id, date, checked, content }) => {
         //     content: todo,
         // });
     };
-    const handleDeleteButton = () => {
-        const { status, data } = deleteApi({}, "/tdl/weekly");
-        weeklyContext.dispatch({
-            type: "DELETE",
+    const handleDeleteButton = async () => {
+        console.log("미쳐버리겠다");
+        console.log(
+            "auth uid, id, content",
+            authContext.state.uid,
             id,
-            dow,
-        });
+            content
+        );
+        const { status, data } = await deleteApi(
+            { uid: authContext.state.uid, w_todo_id: id },
+            "/tdl/weekly/"
+        );
+
+        if (status === 200) {
+            await weeklyContext.dispatch({
+                type: "DELETE",
+                id,
+                dow,
+            });
+        } else {
+            // console.log(data.message);
+            await alert("네트워크 불안정");
+        }
     };
     const handleChange = (e) => {
         setTodo(e.target.value);
@@ -301,7 +269,7 @@ const DayOfWeekComp = ({ dow, date, tasks }) => {
                 w_content: newTodo,
                 w_check: "F",
             },
-            "/tdl/weekly"
+            "/tdl/weekly/"
         );
         if (status === 200) {
             weeklyContext.dispatch({
@@ -329,16 +297,19 @@ const DayOfWeekComp = ({ dow, date, tasks }) => {
         <div className="Dow-wrapper">
             <h4>{dow}</h4>
             <div className="Dow-todos">
-                {tasks.map((t, i) => (
-                    <TaskItem
-                        dow={dow}
-                        key={t.id}
-                        id={t.id}
-                        date={date}
-                        checked={t.checked}
-                        content={t.content}
-                    />
-                ))}
+                {tasks.map((t, i) => {
+                    // console.log(t.id)
+                    return (
+                        <TaskItem
+                            dow={dow}
+                            key={t.id}
+                            id={t.id}
+                            date={date}
+                            checked={t.checked}
+                            content={t.content}
+                        />
+                    );
+                })}
                 <div className="New-input-wrapper">
                     <input
                         value={newTodo}
@@ -369,10 +340,8 @@ const WeeklyComp = () => {
                 },
                 "/tdl/weekly"
             );
-            await console.log("실패했나 안했나");
+            // await console.log("실패했나 안했나");
             if (status === 200) {
-                await console.log(status, data);
-                await console.log(data.w_todo_list);
                 await dispatch({
                     type: "GET_ALL",
                     w_todo_list: data.w_todo_list,
@@ -383,7 +352,7 @@ const WeeklyComp = () => {
             }
         };
         getWeeklyData();
-        console.log("use effect");
+        console.log("use effect", calTheDates());
     }, []);
     return (
         <div className="Main-WeeklyComp">
