@@ -62,11 +62,16 @@
 }
 
 .Main-MonthlyComp {
+    flex: 2;
     padding: 2vmin;
     margin: 2vmin 0 0 0;
     width: 40%;
     height: 90%;
     border: 2px solid rgba(0, 0, 0, 0.178);
+    overflow: auto;
+}
+.Main-MonthlyComp::-webkit-scrollbar {
+    display: none;
 }
 
 /* row: 가로 column: 세로 */
@@ -95,6 +100,7 @@
 }
 
 .Main-WeeklyComp {
+    flex: 3;
     margin: 2vmin 0 0 2vmin;
     width: 60%;
     height: 90%;
