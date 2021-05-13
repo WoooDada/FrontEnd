@@ -61,7 +61,7 @@ const ConcentGraphComp = () => {
                 alert("인터넷 연결이 불안정합니다.");
             }
         };
-        // getGraphData();
+        getGraphData();
     }, []);
     return (
         <div className="Main-ContentGraphComp">

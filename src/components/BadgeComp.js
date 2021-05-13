@@ -5,6 +5,7 @@ import axios from "axios";
 
 import "../css/Main.css";
 import { AuthContext } from "../App";
+import { getApi } from "../api";
 
 const getBadgeColor = (badge) => {
     switch (badge) {
@@ -28,17 +29,25 @@ const BadgeComp = () => {
     const [userData, setUserData] = useState({ nickname: "", badge_color: "" });
     useEffect(() => {
         const getNickName = async () => {
-            // const result = await axios.get(``, params: {uid: authContext.state.uid});
-            const { status, data } = {
-                status: 200,
-                data: { nickname: "우정", badge: "B" },
-            };
+            const { status, data } = await getApi(
+                {
+                    uid: authContext.state.uid,
+                },
+                "/home/badge_profile"
+            );
+            // const { status, data } = {
+            //     status: 200,
+            //     data: { nickname: "우정", badge: "B" },
+            // };
 
             if (status === 200) {
-                return setUserData({
-                    ...data,
+                console.log(data);
+                await setUserData({
+                    nickname: data.nickname,
                     badge_color: getBadgeColor(data.badge),
                 });
+            } else {
+                alert("네트워크 불안정");
             }
         };
         getNickName();

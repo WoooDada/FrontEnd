@@ -210,47 +210,53 @@ const TaskItem = ({ dow, id, date, checked, content }) => {
     const [todo, setTodo] = useState(content);
     const handleCheck = () => {
         // * 실제 api
-        // const { status, data } = putApi({
-        //     uid: authContext.state.uid,
-        //     w_todo_id: id,
-        //     w_content: content,
-        //     w_check: (!checked === false) ? "F": "T",
-        //     w_date: date,
-        // }, '/tdl/weekly');
-        // if (status === 200){
-        //     weeklyContext.dispatch({ type: "UPDATE_CHECK", id, dow });
-        // } else {
-        //     alert("인터넷 연결 불안정")
-        // }
+        const { status, data } = putApi(
+            {
+                uid: authContext.state.uid,
+                w_todo_id: id,
+                w_content: content,
+                w_check: !checked === false ? "F" : "T",
+                w_date: date,
+            },
+            "/tdl/weekly"
+        );
+        if (status === 200) {
+            weeklyContext.dispatch({ type: "UPDATE_CHECK", id, dow });
+        } else {
+            alert("인터넷 연결 불안정");
+        }
         // * dummy
-        weeklyContext.dispatch({ type: "UPDATE_CHECK", id, dow });
+        // weeklyContext.dispatch({ type: "UPDATE_CHECK", id, dow });
     };
     const handleUpdateButton = () => {
         // * 실제 api
-        // const { status, data } = putApi({
-        //     uid: authContext.state.uid,
-        //     w_todo_id: id,
-        //     w_content: todo,
-        //     w_check: checked,
-        //     w_date: date,
-        // }, '/tdl/weekly');
-        // if (status === 200) {
-        //     weeklyContext.dispatch({
-        //         type: "UPDATE_CONTENT",
-        //         id,
-        //         dow,
-        //         content: todo,
-        //     });
-        // } else {
-        //     alert("인터넷 연결 불안정");
-        // }
+        const { status, data } = putApi(
+            {
+                uid: authContext.state.uid,
+                w_todo_id: id,
+                w_content: todo,
+                w_check: checked,
+                w_date: date,
+            },
+            "/tdl/weekly"
+        );
+        if (status === 200) {
+            weeklyContext.dispatch({
+                type: "UPDATE_CONTENT",
+                id,
+                dow,
+                content: todo,
+            });
+        } else {
+            alert("인터넷 연결 불안정");
+        }
         // * dummy data
-        weeklyContext.dispatch({
-            type: "UPDATE_CONTENT",
-            id,
-            dow,
-            content: todo,
-        });
+        // weeklyContext.dispatch({
+        //     type: "UPDATE_CONTENT",
+        //     id,
+        //     dow,
+        //     content: todo,
+        // });
     };
     const handleDeleteButton = () => {
         const { status, data } = deleteApi({}, "/tdl/weekly");
@@ -288,29 +294,32 @@ const DayOfWeekComp = ({ dow, date, tasks }) => {
 
     const handleAddButtonClick = async () => {
         // * 실제 쓰이는 코드
-        // const { status, data } = await postApi({
-        //     uid: authContext.state.uid,
-        //     w_date: date,
-        //     w_content: newTodo,
-        //     w_check: "F",
-        // }, '/tdl/weekly');
-        // if (status === 200) {
-        //     weeklyContext.dispatch({
-        //         type: "ADD_NEW",
-        //         dow,
-        //         newTodo,
-        //         id: data.w_todo_id,
-        //     });
-        // } else {
-        //     alert("인터넷 연결이 불안정합니다.");
-        // }
+        const { status, data } = await postApi(
+            {
+                uid: authContext.state.uid,
+                w_date: date,
+                w_content: newTodo,
+                w_check: "F",
+            },
+            "/tdl/weekly"
+        );
+        if (status === 200) {
+            weeklyContext.dispatch({
+                type: "ADD_NEW",
+                dow,
+                newTodo,
+                id: data.w_todo_id,
+            });
+        } else {
+            alert("인터넷 연결이 불안정합니다.");
+        }
         // dummy code
-        weeklyContext.dispatch({
-            type: "ADD_NEW",
-            dow,
-            newTodo,
-            id: 4,
-        });
+        // weeklyContext.dispatch({
+        //     type: "ADD_NEW",
+        //     dow,
+        //     newTodo,
+        //     id: 4,
+        // });
         setNewTodo("");
     };
     const handleNewChange = (e) => {
@@ -360,14 +369,22 @@ const WeeklyComp = () => {
                 },
                 "/tdl/weekly"
             );
+            await console.log("실패했나 안했나");
             if (status === 200) {
-                dispatch({ type: "GET_ALL", w_todo_list: data.w_todo_list });
+                await console.log(status, data);
+                await console.log(data.w_todo_list);
+                await dispatch({
+                    type: "GET_ALL",
+                    w_todo_list: data.w_todo_list,
+                });
             } else {
+                await console.log(status, data);
                 alert("인터넷 연결이 불안정합니다.");
             }
         };
-        // getWeeklyData();
-    });
+        getWeeklyData();
+        console.log("use effect");
+    }, []);
     return (
         <div className="Main-WeeklyComp">
             <h3>주간 일정</h3>
