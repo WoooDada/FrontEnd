@@ -84,27 +84,27 @@ const MonthlyComp = () => {
                 alert("인터넷 연결이 불안정합니다.");
             }
         };
-        // getMtodos();
+        getMtodos();
     }, []);
 
     const onCreate = async (e) => {
         // 일정 추가 함수
         e.preventDefault();
         // POST
-        // const { status, data } = await postApi(
-        //     {
-        //         uid: authContext.state.uid,
-        //         stt_date: start,
-        //         end_date: end,
-        //         m_content: title,
-        //     },
-        //     "/tdl/monthly/"
-        // );
+        const { status, data } = await postApi(
+            {
+                uid: authContext.state.uid,
+                stt_date: start,
+                end_date: end,
+                m_content: title,
+            },
+            "/tdl/monthly/"
+        );
         // * dummy code
-        const { status, data } = {
-            status: 200,
-            data: { m_todo_id: "1" },
-        };
+        // const { status, data } = {
+        //     status: 200,
+        //     data: { m_todo_id: "1" },
+        // };
         // const { status, data } = {
         //     status: 400,
         //     data: { message: "mtdl post fail" },
@@ -128,11 +128,12 @@ const MonthlyComp = () => {
     const handleDateClick = (dateInfo) => {
         // 빈 날짜 클릭 시
         dispatch({ type: "event-not-click", payload: "" });
+
         setInputs({
             title: "",
             start: dateInfo.dateStr,
             end: dateInfo.dateStr,
-        }); // start, end 날짜 모두 클릭한 날짜로
+        });
     };
 
     const isDateSelected = (dateInfo) => {
@@ -163,7 +164,7 @@ const MonthlyComp = () => {
         });
     }
 
-    function handleEventDrop(eventInfo) {
+    const handleEventDrop = async (eventInfo) => {
         const eventId = eventInfo.event.id;
         dispatch({ type: "eventclick", payload: eventId }); // payload로 event 고유 아이디 전달
         const newStart = moment(eventInfo.oldEvent.startStr)
@@ -201,7 +202,7 @@ const MonthlyComp = () => {
         );
 
         //UPDATE
-        const { status, data } = putApi(
+        const { status, data } = await putApi(
             {
                 uid: authContext.state.uid,
                 m_todo_id: eventId,
@@ -225,9 +226,9 @@ const MonthlyComp = () => {
         } else {
             console.log("mtdl update fail");
         }
-    }
+    };
 
-    function handleEventResize(eventInfo) {
+    const handleEventResize = async (eventInfo) => {
         const eventId = eventInfo.event.id;
         var newEnd = "";
         if (eventInfo.oldEvent.end === null) {
@@ -259,7 +260,7 @@ const MonthlyComp = () => {
             )
         );
         //UPDATE
-        const { status, data } = putApi(
+        const { status, data } = await putApi(
             {
                 uid: authContext.state.uid,
                 m_todo_id: eventId,
@@ -283,7 +284,7 @@ const MonthlyComp = () => {
         } else {
             console.log("mtdl update fail");
         }
-    }
+    };
 
     // 일정변경(UPDATE) : mtodos배열에서 해당 id의 event 변경해줌
     const handleClickUpdateBtn = async (e) => {
@@ -303,7 +304,7 @@ const MonthlyComp = () => {
         );
 
         //UPDATE
-        const { status, data } = putApi(
+        const { status, data } = await putApi(
             {
                 uid: authContext.state.uid,
                 m_todo_id: state.eventId,
