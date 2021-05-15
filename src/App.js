@@ -31,6 +31,10 @@ const Header = () => {
                 <Link to="/main" className="App-header-route">
                     메인
                 </Link>
+                {/* 스터디는 임시임다 */}
+                <Link to="/study" className="App-header-route">
+                    스터디
+                </Link>
             </div>
         </div>
     );

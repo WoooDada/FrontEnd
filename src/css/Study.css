@@ -1,0 +1,14 @@
+.StudyPage {
+    display: flex;
+    flex-direction: row;
+    min-height: 100%;
+}
+
+.StudyPage .LeftComp {
+    flex: 1;
+    border-right: 1px solid black;
+}
+
+.StudyPage .RightComp {
+    flex: 1;
+}

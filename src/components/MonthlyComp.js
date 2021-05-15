@@ -87,7 +87,8 @@ const MonthlyComp = () => {
         getMtodos();
     }, []);
 
-    const onCreate = async (e) => { // 일정 추가 함수
+    const onCreate = async (e) => {
+        // 일정 추가 함수
         e.preventDefault();
         // POST
         const { status, data } = await postApi(
@@ -116,7 +117,7 @@ const MonthlyComp = () => {
         } else {
             console.log("mtdl post fail");
         }
-        
+
         setInputs({
             title: "",
             start: "",
@@ -124,14 +125,25 @@ const MonthlyComp = () => {
         });
     };
 
-    const handleDateClick = (dateInfo) => { // 빈 날짜 클릭 시
+    const handleDateClick = (dateInfo) => {
+        // 빈 날짜 클릭 시
         dispatch({ type: "event-not-click", payload: "" });
-        setInputs({ title: "", start: dateInfo.dateStr, end: dateInfo.dateStr });
+
+        setInputs({
+            title: "",
+            start: dateInfo.dateStr,
+            end: dateInfo.dateStr,
+        });
     };
 
-    const isDateSelected = (dateInfo) => { // drag를 통해 여러 date 지정
+    const isDateSelected = (dateInfo) => {
+        // drag를 통해 여러 date 지정
         dispatch({ type: "event-not-click", payload: "" });
-        setInputs({ title: "", start: dateInfo.startStr, end: dateInfo.endStr });
+        setInputs({
+            title: "",
+            start: dateInfo.startStr,
+            end: dateInfo.endStr,
+        });
     };
 
     function handleEventClick(eventInfo) {
@@ -214,7 +226,7 @@ const MonthlyComp = () => {
         } else {
             console.log("mtdl update fail");
         }
-    }
+    };
 
     const handleEventResize = async (eventInfo) => {
         const eventId = eventInfo.event.id;
@@ -251,7 +263,7 @@ const MonthlyComp = () => {
         const { status, data } = await putApi(
             {
                 uid: authContext.state.uid,
-                m_todo_id: eventId, 
+                m_todo_id: eventId,
                 stt_date: eventInfo.oldEvent.startStr,
                 end_date: newEnd,
                 m_content: eventInfo.oldEvent.title,
@@ -272,12 +284,12 @@ const MonthlyComp = () => {
         } else {
             console.log("mtdl update fail");
         }
-    }
+    };
 
     // 일정변경(UPDATE) : mtodos배열에서 해당 id의 event 변경해줌
     const handleClickUpdateBtn = async (e) => {
         e.preventDefault();
-        
+
         setMtodos(
             mtodos.map((mtodo) =>
                 mtodo.id == state.eventId
@@ -290,7 +302,7 @@ const MonthlyComp = () => {
                     : mtodo
             )
         );
-        
+
         //UPDATE
         const { status, data } = await putApi(
             {
@@ -325,9 +337,7 @@ const MonthlyComp = () => {
     // 일정삭제(DELETE) : mtodos배열에서 해당 id의 event 삭제
     const handleClickDeleteBtn = async (e) => {
         e.preventDefault();
-        
         setMtodos(mtodos.filter((mtodos) => mtodos.id != state.eventId)); // mtodos 배열에 해당 event 삭제
-        console.log('delete id:',state.eventId);
         // DELETE
         const { status, data } = await deleteApi(
             {
@@ -441,4 +451,3 @@ const MonthlyComp = () => {
 };
 
 export default MonthlyComp;
-
