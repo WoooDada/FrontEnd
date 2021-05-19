@@ -13,7 +13,6 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import moment from "moment";
-import { ContinuousColorLegend } from "react-vis";
 
 const MonthlyComp = () => {
     const authContext = useContext(AuthContext);
@@ -397,7 +396,7 @@ const MonthlyComp = () => {
                             value={inputs.title}
                         />
                     </div>
-                    <div>
+                    <div style={{display:"none"}}>
                         <label>시작날짜</label>
                         <input
                             type="date"
@@ -408,7 +407,7 @@ const MonthlyComp = () => {
                             name="start"
                         />
                     </div>
-                    <div>
+                    <div style={{display:"none"}}>
                         <label>끝날짜</label>
                         <input
                             type="date"

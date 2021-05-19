@@ -8,7 +8,7 @@ const LeftStudyComp = () => {
     
     return (
         <div className="LeftComp">
-            <div>여기는 왼쪽 스터디페이지: 컴포넌트</div>
+            
             <Router>
                 <div className="LeftComp-router">
                     <div>

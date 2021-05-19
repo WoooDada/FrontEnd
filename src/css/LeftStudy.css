@@ -1,0 +1,60 @@
+.daily-comp {
+    display: flex;
+    flex-direction: column;
+}
+
+.daily-study-comp {
+    display: flex;
+    flex-direction: row;
+}
+.daily-planner { 
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-top: 1vmin;
+    border-right: 1px solid rgba(0, 0, 0, 0.377);
+    border-left: 1px solid rgba(0, 0, 0, 0.377);
+}
+
+.daily-tenmin {
+    flex: 1;
+    margin: 3vmin 1vmin;
+}
+.daily-lower-input {
+    display: flex;
+    flex-direction: column;
+    min-height: 60vmin;
+}
+
+.daily-todo-input {
+    flex: 1;
+    align-items: flex-end;
+    display: flex;
+    flex-direction: row;
+    border-top: 1px solid rgba(0, 0, 0, 0.377);
+}
+hr {
+    border: 1;
+    height: 1px;
+    color: black;
+} 
+.daily-todo-input-tag {
+    width: 30%;
+}
+.daily-todo-input-context {
+    width: 70%;
+}
+.daily-todo-tag {
+    width: 30%;
+}
+.daily-todo-content {
+    width: 50%;
+}
+.daily-todo-check {
+    width: 5%;
+}
+.daily-todo-delete {
+    padding-left: 1vmin;
+    width: 5%;
+}
+
