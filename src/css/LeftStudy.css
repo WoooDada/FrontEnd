@@ -13,6 +13,8 @@
     flex: 1;
     margin-top: 1vmin;
     border: 1px solid rgba(0, 0, 0, 0.377);
+    background-color: cornsilk;
+    
 }
 
 .daily-tenmin {

@@ -19,33 +19,33 @@ const TenMinPlanner = () => {
 
 const DailyContext = createContext(null);
 
-// const initialData = {
-//     dtodos: [],
-// }
-// dummy data
 const initialData = {
-    dtodos: [
-        {
-            id: 1,
-            d_date: '2021-05-20',
-            d_content: '졸작회의',
-            d_check: true,
-            d_tag: '3~5',
-        },
-        {
-            id: 2,
-            d_date: '2021-05-20',
-            d_content: '졸작회의',
-            d_check: false,
-            d_tag: '',
-        },
-    ]
-};
+    dtodos: [],
+}
+// dummy data
+// const initialData = {
+//     dtodos: [
+//         {
+//             id: 1,
+//             d_date: '2021-05-20',
+//             d_content: '졸작회의',
+//             d_check: true,
+//             d_tag: '3~5',
+//         },
+//         {
+//             id: 2,
+//             d_date: '2021-05-20',
+//             d_content: '졸작회의',
+//             d_check: false,
+//             d_tag: '',
+//         },
+//     ]
+// };
 
 function reducer(state, action) {
     switch (action.type) {
         case 'GET_TODO':
-            return action.d_todo_list.map((d, i) => ({
+            return action.dtodos.map((d, i) => ({
                 id: d.id,
                 d_date: d.d_date,
                 d_tag: d.d_tag,
@@ -104,15 +104,24 @@ const PrintToday = () => {
 
 const DateFormat = () => {
     const today = new Date();
+    var todayMonth = '';
+    if ((today.getMonth()+1).toString().length == 1) {
+        todayMonth = '0' + (today.getMonth()+1).toString();
+    } else {
+        todayMonth = today.getMonth()+1;
+    }
+    
+
     const result = "".concat(
         today.getFullYear(), '-', 
-        today.getMonth() + 1, '-', 
+        todayMonth, '-', 
         today.getDate());
+        console.log(result);
     return result;
 };
 
 const DtodosInput = () => {
-    // const nextId = useRef(3);
+    const nextId = useRef(3);
     const dailyContext = useContext(DailyContext);
     const authContext = useContext(AuthContext);
     
@@ -122,26 +131,26 @@ const DtodosInput = () => {
     });
 
     const addBtnHandler = async () => {
-        const { status, data } = await postApi(
-            {
-                uid: authContext.state.uid,
-                d_date: DateFormat(),
-                d_content: inputs.content,
-                d_tag: inputs.tag,
-                d_check: 'F',
-            },
-            "/tdl/weekly/"
-        );
+        // const { status, data } = await postApi(
+        //     {
+        //         uid: authContext.state.uid,
+        //         d_date: DateFormat(),
+        //         d_content: inputs.content,
+        //         d_tag: inputs.tag,
+        //         d_check: 'F',
+        //     },
+        //     "/tdl/daily/"
+        // );
         // dummy data
-        // const { status, data } = {
-        //     status: 200,
-        //     data: { d_todo_id: "1" },
-        // };
+        const { status, data } = {
+            status: 200,
+        };
         if (status === 200) {
             dailyContext.dispatch({
                 type: "CREATE_TODO",
                 dtodo: {
-                    id: data.d_todo_id,
+                    // id: data.d_todo_id,
+                    id: nextId.current,
                     d_date: DateFormat(),
                     d_content: inputs.content,
                     d_tag: inputs.tag,
@@ -156,8 +165,7 @@ const DtodosInput = () => {
             tag: '',
             content: '',
         });
-
-        // nextId.current += 1;
+        nextId.current += 1;
     };
 
     return (
@@ -191,17 +199,20 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
     const authContext = useContext(AuthContext);
     
     const clickCheck = async () => {
-        const { status, data } = await putApi(
-            {
-                uid: authContext.state.uid,
-                d_todo_id: id,
-                d_content: d_content,
-                d_tag: d_tag,
-                d_check: !d_check === false ? "F" : "T",
-                d_date: d_date,
-            },
-            "/tdl/daily/"
-        );
+        // const { status, data } = await putApi(
+        //     {
+        //         uid: authContext.state.uid,
+        //         d_todo_id: id,
+        //         d_content: d_content,
+        //         d_tag: d_tag,
+        //         d_check: !d_check === false ? "F" : "T",
+        //         d_date: d_date,
+        //     },
+        //     "/tdl/daily/"
+        // );
+        const { status, data } = {
+            status: 200,
+        };
         if (status === 200) {
             await dailyContext.dispatch({
                 type: 'CHECK_TODO',
@@ -214,14 +225,16 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
 
 
     const clickDelete = async () => {
-        const { status, data } = await deleteApi(
-            { 
-                uid: authContext.state.uid, 
-                d_todo_id: id 
-            },
-            "/tdl/daily/"
-        );
-
+        // const { status, data } = await deleteApi(
+        //     { 
+        //         uid: authContext.state.uid, 
+        //         d_todo_id: id 
+        //     },
+        //     "/tdl/daily/"
+        // );
+        const { status, data } = {
+            status: 200,
+        };
         if (status === 200) {
             await dailyContext.dispatch({
                 type: 'DELETE_TODO',
@@ -277,10 +290,7 @@ const DTodosList = ({ id, d_date, d_content, d_tag, d_check }) => {
 
 
 const DailyComp = () => {
-    const [state, dispatch] = useReducer(reducer, initialData);
-    // const nextId = useRef(3);
-    const { dtodos } = state;
-
+    const [dtodos, dispatch] = useReducer(reducer, initialData);
     const authContext = useContext(AuthContext);
 
     useEffect(() => {
@@ -288,7 +298,7 @@ const DailyComp = () => {
             const { status, data } = await getApi(
                 {
                     uid: authContext.state.uid,
-                    dates: DateFormat(),
+                    d_date: DateFormat(),
                 },
                 "/tdl/daily/"
             );
@@ -296,14 +306,14 @@ const DailyComp = () => {
             if (status === 200) {
                 await dispatch({
                     type: "GET_TODO",
-                    d_todo_list: data.d_todo_list,
+                    dtodos: data.d_todo_list,
                 });
             } else {
                 await console.log(status, data);
                 alert("인터넷 연결이 불안정합니다.");
             }
         };
-        getDailyData();
+        // getDailyData();
     }, []);
 
     return (
@@ -321,7 +331,7 @@ const DailyComp = () => {
                     </div>
                     <DailyContext.Provider value={{ dtodos, dispatch }}>
                         <div>
-                            {dtodos.map( d => (
+                            {dtodos.dtodos.map( d => (
                                 <DTodosList
                                     key={d.id}
                                     id={d.id}
