@@ -13,7 +13,6 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import moment from "moment";
-import { ContinuousColorLegend } from "react-vis";
 
 const MonthlyComp = () => {
     const authContext = useContext(AuthContext);
@@ -84,27 +83,27 @@ const MonthlyComp = () => {
                 alert("인터넷 연결이 불안정합니다.");
             }
         };
-        getMtodos();
+        // getMtodos();
     }, []);
 
     const onCreate = async (e) => {
         // 일정 추가 함수
         e.preventDefault();
         // POST
-        const { status, data } = await postApi(
-            {
-                uid: authContext.state.uid,
-                stt_date: start,
-                end_date: end,
-                m_content: title,
-            },
-            "/tdl/monthly/"
-        );
+        // const { status, data } = await postApi(
+        //     {
+        //         uid: authContext.state.uid,
+        //         stt_date: start,
+        //         end_date: end,
+        //         m_content: title,
+        //     },
+        //     "/tdl/monthly/"
+        // );
         // * dummy code
-        // const { status, data } = {
-        //     status: 200,
-        //     data: { m_todo_id: "1" },
-        // };
+        const { status, data } = {
+            status: 200,
+            data: { m_todo_id: "1" },
+        };
         // const { status, data } = {
         //     status: 400,
         //     data: { message: "mtdl post fail" },
@@ -202,21 +201,21 @@ const MonthlyComp = () => {
         );
 
         //UPDATE
-        const { status, data } = await putApi(
-            {
-                uid: authContext.state.uid,
-                m_todo_id: eventId,
-                stt_date: newStart,
-                end_date: newEnd,
-                m_content: eventInfo.oldEvent.title,
-            },
-            "/tdl/monthly/"
-        );
+        // const { status, data } = await putApi(
+        //     {
+        //         uid: authContext.state.uid,
+        //         m_todo_id: eventId,
+        //         stt_date: newStart,
+        //         end_date: newEnd,
+        //         m_content: eventInfo.oldEvent.title,
+        //     },
+        //     "/tdl/monthly/"
+        // );
         // * dummy date
-        // const { status, data } = {
-        //     status: 200,
-        //     data: { m_todo_id: "1" },
-        // };
+        const { status, data } = {
+            status: 200,
+            data: { m_todo_id: "1" },
+        };
         // const { status, data } = {
         //     status: 400,
         //     data: { message: "mtdl update fail" },
@@ -260,21 +259,21 @@ const MonthlyComp = () => {
             )
         );
         //UPDATE
-        const { status, data } = await putApi(
-            {
-                uid: authContext.state.uid,
-                m_todo_id: eventId,
-                stt_date: eventInfo.oldEvent.startStr,
-                end_date: newEnd,
-                m_content: eventInfo.oldEvent.title,
-            },
-            "/tdl/monthly/"
-        );
+        // const { status, data } = await putApi(
+        //     {
+        //         uid: authContext.state.uid,
+        //         m_todo_id: eventId,
+        //         stt_date: eventInfo.oldEvent.startStr,
+        //         end_date: newEnd,
+        //         m_content: eventInfo.oldEvent.title,
+        //     },
+        //     "/tdl/monthly/"
+        // );
         // * dummy date
-        // const { status, data } = {
-        //     status: 200,
-        //     data: { m_todo_id: "1" },
-        // };
+        const { status, data } = {
+            status: 200,
+            data: { m_todo_id: "1" },
+        };
         // const { status, data } = {
         //     status: 400,
         //     data: { message: "mtdl update fail" },
@@ -304,21 +303,21 @@ const MonthlyComp = () => {
         );
 
         //UPDATE
-        const { status, data } = await putApi(
-            {
-                uid: authContext.state.uid,
-                m_todo_id: state.eventId,
-                stt_date: inputs.start,
-                end_date: inputs.end,
-                m_content: inputs.title,
-            },
-            "/tdl/monthly/"
-        );
+        // const { status, data } = await putApi(
+        //     {
+        //         uid: authContext.state.uid,
+        //         m_todo_id: state.eventId,
+        //         stt_date: inputs.start,
+        //         end_date: inputs.end,
+        //         m_content: inputs.title,
+        //     },
+        //     "/tdl/monthly/"
+        // );
         // * dummy data
-        // const { status, data } = {
-        //     status: 200,
-        //     data: { m_todo_id: "1" },
-        // };
+        const { status, data } = {
+            status: 200,
+            data: { m_todo_id: "1" },
+        };
         // const { status, data } = {
         //     status: 400,
         //     data: { message: "mtdl update fail" },
@@ -339,18 +338,18 @@ const MonthlyComp = () => {
         e.preventDefault();
         setMtodos(mtodos.filter((mtodos) => mtodos.id != state.eventId)); // mtodos 배열에 해당 event 삭제
         // DELETE
-        const { status, data } = await deleteApi(
-            {
-                uid: authContext.state.uid,
-                m_todo_id: state.eventId,
-            },
-            "/tdl/monthly/"
-        );
+        // const { status, data } = await deleteApi(
+        //     {
+        //         uid: authContext.state.uid,
+        //         m_todo_id: state.eventId,
+        //     },
+        //     "/tdl/monthly/"
+        // );
         // * dummy date
-        // const { status, data } = {
-        //     status: 200,
-        //     data: { m_todo_id: "2" }
-        // };
+        const { status, data } = {
+            status: 200,
+            data: { m_todo_id: "2" }
+        };
         // const { status, data } = {
         //     status: 400,
         //     data: { message: "mtdl delete fail" },
@@ -397,7 +396,7 @@ const MonthlyComp = () => {
                             value={inputs.title}
                         />
                     </div>
-                    <div>
+                    <div style={{display:"none"}}>
                         <label>시작날짜</label>
                         <input
                             type="date"
@@ -408,7 +407,7 @@ const MonthlyComp = () => {
                             name="start"
                         />
                     </div>
-                    <div>
+                    <div style={{display:"none"}}>
                         <label>끝날짜</label>
                         <input
                             type="date"
@@ -447,6 +446,7 @@ const MonthlyComp = () => {
                 </div>
             </div>
         </div>
+        
     );
 };
 

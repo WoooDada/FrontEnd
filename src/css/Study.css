@@ -6,9 +6,15 @@
 
 .StudyPage .LeftComp {
     flex: 1;
+    
     border-right: 1px solid black;
 }
 
 .StudyPage .RightComp {
     flex: 1;
+}
+
+.StudyPage .LeftComp-router {
+    display: flex;
+    flex-direction: row-reverse;
 }
