@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { FaMedal } from "react-icons/fa";
-import axios from "axios";
 
 import "../css/Main.css";
 import { AuthContext } from "../App";
@@ -35,11 +34,6 @@ const BadgeComp = () => {
                 },
                 "/home/badge_profile"
             );
-            // const { status, data } = {
-            //     status: 200,
-            //     data: { nickname: "우정", badge: "B" },
-            // };
-
             if (status === 200) {
                 console.log(data);
                 await setUserData({
