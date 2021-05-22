@@ -63,8 +63,8 @@
 /********** MonthlyComp **********/
 .Main-MonthlyComp {
     flex: 2;
-    width: 40%;
-    height: 90%;
+    /* width: 40%; */
+    /* height: 90%; */
     padding: 2vmin;
     margin: 2vmin 0 0 0;
     border: 2px solid rgba(0, 0, 0, 0.178);
@@ -103,8 +103,8 @@
 .Main-WeeklyComp {
     flex: 3;
     margin: 2vmin 0 0 2vmin;
-    width: 60%;
-    height: 90%;
+    /* width: 60%; */
+    /* height: 90%; */
     border: 2px solid rgba(0, 0, 0, 0.178);
     padding: 2vmin 3vmin;
     /* overflow: hidden; */

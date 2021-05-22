@@ -19,34 +19,35 @@ const TenMinPlanner = () => {
 
 const DailyContext = createContext(null);
 
-const initialData = {
-    dtodos: [],
-}
-// dummy data
 // const initialData = {
-//     dtodos: [
-//         {
-//             id: 1,
-//             d_date: '2021-05-20',
-//             d_content: '졸작회의',
-//             d_check: true,
-//             d_tag: '3~5',
-//         },
-//         {
-//             id: 2,
-//             d_date: '2021-05-20',
-//             d_content: '졸작회의',
-//             d_check: false,
-//             d_tag: '',
-//         },
-//     ]
+//     dtodos: []
 // };
+// dummy data
+const initialData = {
+    dtodos: [
+        {
+            id: 1,
+            d_date: '2021-05-20',
+            d_content: '졸작회의',
+            d_check: true,
+            d_tag: '3~5',
+        },
+        {
+            id: 2,
+            d_date: '2021-05-20',
+            d_content: '졸작회의',
+            d_check: false,
+            d_tag: '',
+        },
+    ]
+};
 
 function reducer(state, action) {
     switch (action.type) {
         case 'GET_TODO':
             return action.dtodos.map((d, i) => ({
                 id: d.id,
+                // id: d.d_todo_id,
                 d_date: d.d_date,
                 d_tag: d.d_tag,
                 d_content: d.d_content,
@@ -111,12 +112,10 @@ const DateFormat = () => {
         todayMonth = today.getMonth()+1;
     }
     
-
     const result = "".concat(
         today.getFullYear(), '-', 
         todayMonth, '-', 
         today.getDate());
-        console.log(result);
     return result;
 };
 
@@ -145,6 +144,7 @@ const DtodosInput = () => {
         const { status, data } = {
             status: 200,
         };
+        console.log('CREATE_TODO = POST입니다');
         if (status === 200) {
             dailyContext.dispatch({
                 type: "CREATE_TODO",
@@ -213,6 +213,7 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
         const { status, data } = {
             status: 200,
         };
+        console.log('이거슨 CHECK');
         if (status === 200) {
             await dailyContext.dispatch({
                 type: 'CHECK_TODO',
@@ -222,7 +223,6 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
             alert("인터넷 연결 불안정");
         }
     };
-
 
     const clickDelete = async () => {
         // const { status, data } = await deleteApi(
@@ -235,6 +235,7 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
         const { status, data } = {
             status: 200,
         };
+        console.log("DELETE입니다우우우");
         if (status === 200) {
             await dailyContext.dispatch({
                 type: 'DELETE_TODO',
@@ -247,7 +248,7 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
 
     return (
         <div key={id} className='daily-todo-item'>
-            <span style={{width: '30%'}}>
+            <span style={{width: '30%'}} className='daily-todo-item-tag'>
                 {d_tag}
             </span>
             <span style={{width: '50%'}}>
@@ -256,10 +257,13 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
             {d_check ? (
                 <GrCheckboxSelected
                     onClick={clickCheck}
-                    className="daily-checkbox"
+                    className="daily-checkbox-true"
                 />
             ) : (
-                <GrCheckbox onClick={clickCheck} className="daily-checkbox" />
+                <GrCheckbox 
+                    onClick={clickCheck} 
+                    className="daily-checkbox-false" 
+                />
             )}
             <span 
                 style={{width: '5%'}, {paddingLeft:'1vmin'}, {cursor: 'pointer'}}
@@ -302,7 +306,7 @@ const DailyComp = () => {
                 },
                 "/tdl/daily/"
             );
-            // await console.log("아아아");
+            await console.log("GET아아아");
             if (status === 200) {
                 await dispatch({
                     type: "GET_TODO",
@@ -329,6 +333,7 @@ const DailyComp = () => {
                             할 일
                         </span>
                     </div>
+                    <div className='daily-todo-wrapper'>
                     <DailyContext.Provider value={{ dtodos, dispatch }}>
                         <div>
                             {dtodos.dtodos.map( d => (
@@ -344,6 +349,7 @@ const DailyComp = () => {
                             <DtodosInput />
                         </div>
                     </DailyContext.Provider>
+                    </div>
                 </div>
                 <TenMinPlanner />
             </div>
