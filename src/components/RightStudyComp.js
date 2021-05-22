@@ -62,57 +62,50 @@ const RightStudyComp = () => {
         // * 60초마다 저장된 결과값 중 최대 클래스(집중 or 딴짓)를 서버에 포스트. 이후 저장된 결과값 클리어
         if (classifier && start) {
             // 주석 처리해주기
-            // console.log(resultlistRef.current);
-            // console.log({
-            //     // uid: authContext.state.uid,
-            //     type:
-            //         resultlistRef.current["C"] >= resultlistRef.current["P"]
-            //             ? "C"
-            //             : "P",
-            //     time: new Date().toString().split(" ")[4].substr(0, 5),
-            // });
-            // resultlistRef.current["C"] = 0;
-            // resultlistRef.current["P"] = 0;
 
             const postModelResult = async () => {
-                const { status, data } = await postApi({
-                    uid: authContext.state.uid,
-                    type:
-                        resultlistRef.current["C"] > resultlistRef.current["P"]
-                            ? "C"
-                            : "P",
-                    time: new Date().toString().split(" ")[4].substr(0, 5),
-                });
+                const { status, data } = await postApi(
+                    {
+                        uid: authContext.state.uid,
+                        type:
+                            resultlistRef.current["C"] >
+                            resultlistRef.current["P"]
+                                ? "C"
+                                : "P",
+                        time: new Date().toString().split(" ")[4].substr(0, 5),
+                    },
+                    "/study/study_data/"
+                );
                 if (status === 200) {
                     await setStudy_time(data);
+                    console.log(resultlistRef.current);
                     resultlistRef.current["C"] = 0;
                     resultlistRef.current["P"] = 0;
-                    console.log(resultlistRef.current);
                 } else {
                     await alert("네트워크 오류");
                 }
             };
             // TODO post 시 이거 주석 처리 취소하기
-            // postModelResult();
+            postModelResult();
         }
     }, POST_RESULT_TIME * 1000);
 
     const toggle = async () => {
         // * start stop POST
         // TODO TEST할 때 꼭 주석 처리 없애기
-        // const { status, data } = await postApi(
-        //     {
-        //         uid: authContext.state.uid,
-        //         type: !start ? "start" : "stop",
-        //     },
-        //     "/study/studybutton/"
-        // );
-        // if (status === 200) {
-        await setStart(!start);
-        await setResult([]);
-        // } else {
-        // await alert("네트워크 에러!");
-        // }
+        const { status } = await postApi(
+            {
+                uid: authContext.state.uid,
+                type: !start ? "start" : "stop",
+            },
+            "/study/studybutton/"
+        );
+        if (status === 200) {
+            await setStart(!start);
+            await setResult([]);
+        } else {
+            await alert("네트워크 에러!");
+        }
     };
     const getClassRate = (ch) => {
         const concents = result.filter((c) => c.label[0] === ch);
