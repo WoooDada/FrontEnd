@@ -82,6 +82,8 @@ const reducer = (state, action) => {
                 }
                 return s;
             });
+        default:
+            return state;
     }
 };
 
@@ -162,7 +164,7 @@ const TaskItem = ({ dow, id, date, checked, content }) => {
     const [todo, setTodo] = useState(content);
     const handleCheck = async () => {
         // * 실제 api
-        const { status, data } = await putApi(
+        const { status } = await putApi(
             {
                 uid: authContext.state.uid,
                 w_todo_id: id,
@@ -182,7 +184,7 @@ const TaskItem = ({ dow, id, date, checked, content }) => {
     };
     const handleUpdateButton = async () => {
         // * 실제 api
-        const { status, data } = await putApi(
+        const { status } = await putApi(
             {
                 uid: authContext.state.uid,
                 w_todo_id: id,
@@ -211,14 +213,7 @@ const TaskItem = ({ dow, id, date, checked, content }) => {
         // });
     };
     const handleDeleteButton = async () => {
-        console.log("미쳐버리겠다");
-        console.log(
-            "auth uid, id, content",
-            authContext.state.uid,
-            id,
-            content
-        );
-        const { status, data } = await deleteApi(
+        const { status } = await deleteApi(
             { uid: authContext.state.uid, w_todo_id: id },
             "/tdl/weekly/"
         );

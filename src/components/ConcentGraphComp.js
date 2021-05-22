@@ -4,13 +4,11 @@ import {
     VerticalGridLines,
     HorizontalGridLines,
     VerticalBarSeries,
-    LineSeries,
     XAxis,
     YAxis,
 } from "react-vis";
 import "../css/MainGraph.css";
 import "../css/Main.css";
-import axios from "axios";
 import getApi from "../api/getApi";
 import { AuthContext } from "../App";
 

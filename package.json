@@ -10,6 +10,7 @@
     "@testing-library/react": "11.2.6",
     "@testing-library/user-event": "12.8.3",
     "@toast-ui/react-calendar": "^1.0.5",
+    "@use-it/interval": "1.0.0",
     "axios": "0.21.1",
     "ml5": "0.6.1",
     "moment": "^2.29.1",

@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../App";
-import axios from "axios";
 
 const MyProfile = (props) => {
     function LogoutBtn({ history }) {
