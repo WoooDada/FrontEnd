@@ -7,26 +7,25 @@
     display: flex;
     flex-direction: row;
 }
+
 .daily-planner { 
     display: flex;
     flex-direction: column;
     flex: 1;
-    margin-top: 1vmin;
-    border: 1px solid rgba(0, 0, 0, 0.377);
-    background-color: cornsilk;
-    
+    margin-top: 2vmin;
+    /* border: 1px solid rgba(0, 0, 0, 0.377); */
+    /* background-color: rgba(44, 44, 44, 0.116); */
 }
 
 .daily-tenmin {
     flex: 1;
     margin: 3vmin 1vmin;
     border: 1px solid rgba(0, 0, 0, 0.377);
+    min-height: 70vmin;
 }
+
 .daily-lower-input {
     display: flex;
-    position: fixed;
-    bottom: 10%;
-    width: 25%;
 }
 
 .daily-todo-upper {
@@ -35,9 +34,20 @@
     flex-direction: row;
 }
 
+.daily-todo-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 70vmin;
+}
+
 .daily-todo-item {
     flex: 1;
     display: flex;
     flex-direction: row;
     border: 1px solid rgba(0, 0, 0, 0.377);
+}
+
+.daily-todo-item-tag {
+    border-right: 1px solid rgba(0, 0, 0, 0.377);
 }
