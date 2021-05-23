@@ -10,17 +10,11 @@ import { AuthContext } from "../App";
 import "../css/LeftStudy.css";
 import { getApi, postApi, putApi, deleteApi } from "../api";
 import { GrCheckbox, GrCheckboxSelected } from "react-icons/gr";
+import TenMinPlanner from './TenMinPlanner';
 
-const TenMinPlanner = () => {
-    return <div className="daily-tenmin">this is ten</div>;
-};
 
 const DailyContext = createContext(null);
 
-// const initialData = {
-//     dtodos: []
-// };
-// dummy data
 const initialData = [
     {
         id: 1,
@@ -64,7 +58,7 @@ function reducer(state, action) {
             );
 
         case "DELETE_TODO":
-            return state.dtodos.filter((dtodo) => dtodo.id !== action.id);
+            return state.filter((dtodo) => dtodo.id !== action.id);
 
         default:
             return state;
@@ -132,20 +126,20 @@ const DtodosInput = () => {
     });
 
     const addBtnHandler = async () => {
-        const { status, data } = await postApi(
-            {
-                uid: authContext.state.uid,
-                d_date: DateFormat(),
-                d_content: inputs.content,
-                d_tag: inputs.tag,
-                d_check: "F",
-            },
-            "/tdl/daily/"
-        );
+        // const { status, data } = await postApi(
+        //     {
+        //         uid: authContext.state.uid,
+        //         d_date: DateFormat(),
+        //         d_content: inputs.content,
+        //         d_tag: inputs.tag,
+        //         d_check: "F",
+        //     },
+        //     "/tdl/daily/"
+        // );
         // dummy data
-        // const { status, data } = {
-        //     status: 200,
-        // };
+        const { status, data } = {
+            status: 200,
+        };
         console.log("CREATE_TODO = POST입니다");
         if (status === 200) {
             dailyContext.dispatch({
@@ -198,20 +192,20 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
     const authContext = useContext(AuthContext);
 
     const clickCheck = async () => {
-        const { status, data } = await putApi(
-            {
-                uid: authContext.state.uid,
-                d_todo_id: id,
-                d_content: d_content,
-                d_tag: d_tag,
-                d_check: !d_check === false ? "F" : "T",
-                d_date: d_date,
-            },
-            "/tdl/daily/"
-        );
-        // const { status, data } = {
-        //     status: 200,
-        // };
+        // const { status, data } = await putApi(
+        //     {
+        //         uid: authContext.state.uid,
+        //         d_todo_id: id,
+        //         d_content: d_content,
+        //         d_tag: d_tag,
+        //         d_check: !d_check === false ? "F" : "T",
+        //         d_date: d_date,
+        //     },
+        //     "/tdl/daily/"
+        // );
+        const { status, data } = {
+            status: 200,
+        };
         console.log("이거슨 CHECK");
         if (status === 200) {
             await dailyContext.dispatch({
@@ -224,16 +218,16 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
     };
 
     const clickDelete = async () => {
-        const { status, data } = await deleteApi(
-            {
-                uid: authContext.state.uid,
-                d_todo_id: id,
-            },
-            "/tdl/daily/"
-        );
-        // const { status, data } = {
-        //     status: 200,
-        // };
+        // const { status, data } = await deleteApi(
+        //     {
+        //         uid: authContext.state.uid,
+        //         d_todo_id: id,
+        //     },
+        //     "/tdl/daily/"
+        // );
+        const { status, data } = {
+            status: 200,
+        };
         console.log("DELETE입니다우우우");
         if (status === 200) {
             await dailyContext.dispatch({
@@ -318,7 +312,7 @@ const DailyComp = () => {
                 alert("인터넷 연결이 불안정합니다.");
             }
         };
-        getDailyData();
+        // getDailyData();
     }, []);
 
     return (
