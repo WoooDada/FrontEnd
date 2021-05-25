@@ -42,8 +42,8 @@ function reducer(state, action) {
     switch (action.type) {
         case "GET_TODO":
             return action.dtodos.map((d, i) => ({
-                id: d.id,
-                // id: d.d_todo_id,
+                // id: d.id,
+                id: d.d_todo_id,
                 d_date: d.d_date,
                 d_tag: d.d_tag,
                 d_content: d.d_content,
@@ -64,7 +64,7 @@ function reducer(state, action) {
             );
 
         case "DELETE_TODO":
-            return state.dtodos.filter((dtodo) => dtodo.id !== action.id);
+            return state.filter((dtodo) => dtodo.id !== action.id);
 
         default:
             return state;
@@ -151,8 +151,8 @@ const DtodosInput = () => {
             dailyContext.dispatch({
                 type: "CREATE_TODO",
                 dtodo: {
-                    // id: data.d_todo_id,
-                    id: nextId.current,
+                    id: data.d_todo_id,
+                    // id: nextId.current,
                     d_date: DateFormat(),
                     d_content: inputs.content,
                     d_tag: inputs.tag,
@@ -198,6 +198,14 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
     const authContext = useContext(AuthContext);
 
     const clickCheck = async () => {
+        console.log({
+            uid: authContext.state.uid,
+            d_todo_id: id,
+            d_content: d_content,
+            d_tag: d_tag,
+            d_check: !d_check === false ? "F" : "T",
+            d_date: d_date,
+        });
         const { status, data } = await putApi(
             {
                 uid: authContext.state.uid,
@@ -224,6 +232,10 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
     };
 
     const clickDelete = async () => {
+        console.log({
+            uid: authContext.state.uid,
+            d_todo_id: id,
+        });
         const { status, data } = await deleteApi(
             {
                 uid: authContext.state.uid,
