@@ -46,6 +46,7 @@ const TenMinPlanner = () => {
     ]);
 
     useInterval(() => {
+        console.log('useinterval');
         const getTenmin = async () => {
             console.log(update);
             const { status, data } = await getApi(
@@ -84,7 +85,7 @@ const TenMinPlanner = () => {
         getTenmin();
     }, GET_RESULT_TIME * 1000);
     
-
+    
     const DrawGrid = () => {
         const xLabels = [0,10,20,30,40,50];
         const yLabels = [5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
