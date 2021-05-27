@@ -1,11 +1,12 @@
 //////////////////////////////////////////////////////////////////////////////
-import React from "react";
+import React, { Component } from "react";
 import ml5 from "ml5";
 import "../css/Study.css";
 import { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import useInterval from "@use-it/interval";
+import { BtnContext } from "../pages/Study"
 
 import { postApi } from "../api";
 import { AuthContext } from "../App";
@@ -21,6 +22,7 @@ const POST_RESULT_TIME = 60;
 
 const RightStudyComp = () => {
     const authContext = useContext(AuthContext);
+    const btnContext = useContext(BtnContext); 
     const videoRef = useRef();
 
     const [start, setStart] = useState(false);
@@ -62,7 +64,6 @@ const RightStudyComp = () => {
         // * 60초마다 저장된 결과값 중 최대 클래스(집중 or 딴짓)를 서버에 포스트. 이후 저장된 결과값 클리어
         if (classifier && start) {
             // 주석 처리해주기
-
             const postModelResult = async () => {
                 const { status, data } = await postApi(
                     {
@@ -100,8 +101,13 @@ const RightStudyComp = () => {
             },
             "/study/studybutton/"
         );
+        // const { status, data } = { // Dummy Dummy
+        //     status: 200,
+        // };
         if (status === 200) {
-            await setStart(!start);
+            await console.log('바뀌기전 버튼값:', start);
+            await btnContext.dispatch({ type: "btnClick", payload: !start });
+            await setStart(!start); // start값 true <-> false 변경
             await setResult([]);
         } else {
             await alert("네트워크 에러!");
@@ -121,23 +127,26 @@ const RightStudyComp = () => {
 
     return (
         <div className="RightComp">
-            <h4>
+            {/* <h4>
                 고난에 지는 것은 수치가 아니다.
                 <br /> 쾌락에 지는 것이야말로 수치다.
-            </h4>
+            </h4> */}
             <div>
-                <p>집중: {getClassRate("C")}%</p>
                 <p>현재: {isConcentrate()}</p>
-                <video
+                <video className='Rstudy-video'
                     ref={videoRef}
                     style={{ transform: "scale(-1,1)" }}
                     width="200"
                     height="150"
                 ></video>
-                <p>
-                    공부시간: {study_time.tot_concent_time}
-                    <br />
-                    휴식시간: {study_time.tot_play_time}
+                <p className='Rstudy-undervideo'>
+                    <span>집중: {getClassRate("C")}%</span>
+                    <span>
+                        공부시간: {study_time.tot_concent_time}
+                    </span>
+                    <span>
+                        휴식시간: {study_time.tot_play_time}
+                    </span>
                 </p>
                 {loaded && (
                     <button onClick={() => toggle()}>

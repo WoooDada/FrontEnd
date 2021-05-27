@@ -1,21 +1,47 @@
-.StudyPage {
+.StudyComps {
     display: flex;
     flex-direction: row;
     min-height: 100%;
 }
 
-.StudyPage .LeftComp {
+.StudyComps .LeftComp {
     flex: 1;
     min-height: 80vmin;
     border-right: 1px solid black;
     padding-right: 3vmin;
 }
 
-.StudyPage .RightComp {
+.StudyComps .RightComp {
     flex: 1;
 }
 
-.StudyPage .LeftComp-router {
+.StudyComps .LeftComp-router {
     display: flex;
     flex-direction: row-reverse;
+}
+
+.Study-lowbanner {
+    background-color: #E1E5EA;
+    margin: 0;
+    padding: 0;
+}
+
+.Study-route {
+    margin-left: 10px;
+    width: 30vmin;
+    background-color: #E9B2BC;
+    border-width: 0;
+    margin: 0 auto 0 10vmin;
+    padding: 2vmin 3vmin;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 3vmin;
+    color: #2c2c2c;
+    font-size: 3vmin;
+    font-weight: 700;
+    transition: background-color 0.5s;
+}
+
+.Study-route:hover {
+    background-color: #e78b9c;
 }
