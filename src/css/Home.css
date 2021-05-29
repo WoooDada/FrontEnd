@@ -2,24 +2,34 @@
     justify-content: space-between;
     align-items: center;
     display: flex;
+    flex-direction: column;
+}
+
+.Home-banner {
+    display: flex;
+    flex-direction: column;
+}
+
+.Home-banner-only {
+    
 }
 
 .Home-route {
     margin-left: 10px;
     width: 30vmin;
-    background-color: grey;
+    background-color: #E9B2BC;
     border-width: 0;
     margin: 0 auto 0 10vmin;
     padding: 2vmin 3vmin;
     text-decoration: none;
     text-align: center;
-
-    color: white;
+    border-radius: 3vmin;
+    color: #2c2c2c;
     font-size: 3vmin;
     font-weight: 700;
-    transition: background-color 1s;
+    transition: background-color 0.5s;
 }
 
 .Home-route:hover {
-    background-color: rgb(128, 128, 128, 0.5);
+    background-color: #e78b9c;
 }
