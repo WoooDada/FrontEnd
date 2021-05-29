@@ -4,6 +4,7 @@ import {
     ConcentGraphComp,
     MonthlyComp,
     WeeklyComp,
+    TodayComp,
 } from "../components";
 
 import "../css/Main.css";
@@ -13,6 +14,7 @@ const Main = () => {
         <div className="Main">
             <div className="Main-UpperComp">
                 <BadgeComp></BadgeComp>
+                <TodayComp></TodayComp>
                 <ConcentGraphComp></ConcentGraphComp>
             </div>
             <div className="Main-LowerComp">
