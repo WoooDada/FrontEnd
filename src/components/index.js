@@ -5,3 +5,4 @@ export { default as WeeklyComp } from "./WeeklyComp";
 export { default as DailyComp } from "./DailyComp";
 export { default as LeftStudyComp } from "./LeftStudyComp";
 export { default as RightStudyComp } from "./RightStudyComp";
+export { default as TodayComp } from "./TodayComp";

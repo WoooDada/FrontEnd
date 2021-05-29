@@ -45,18 +45,19 @@ const ConcentGraphComp = () => {
                 "/home/concent_graph"
             );
             if (status === 200) {
-                setGraphData({
-                    concent: data.map((v, i) => ({
+                await console.log(data.graph);
+                await setGraphData({
+                    concent: data.graph.map((v, i) => ({
                         x: v.date,
                         y: parseInt(v.concent_time),
                     })),
-                    play: data.map((v, i) => ({
+                    play: data.graph.map((v, i) => ({
                         x: v.date,
                         y: parseInt(v.play_time),
                     })),
                 });
             } else {
-                alert("인터넷 연결이 불안정합니다.");
+                await alert("인터넷 연결이 불안정합니다.");
             }
         };
         getGraphData();

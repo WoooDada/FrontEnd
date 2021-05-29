@@ -10,8 +10,7 @@ import { AuthContext } from "../App";
 import "../css/LeftStudy.css";
 import { getApi, postApi, putApi, deleteApi } from "../api";
 import { GrCheckbox, GrCheckboxSelected } from "react-icons/gr";
-import TenMinPlanner from './TenMinPlanner';
-
+import TenMinPlanner from "./TenMinPlanner";
 
 const DailyContext = createContext(null);
 
@@ -36,8 +35,8 @@ function reducer(state, action) {
     switch (action.type) {
         case "GET_TODO":
             return action.dtodos.map((d, i) => ({
-                id: d.id,
-                // id: d.d_todo_id,
+                // id: d.id,
+                id: d.d_todo_id,
                 d_date: d.d_date,
                 d_tag: d.d_tag,
                 d_content: d.d_content,
@@ -145,8 +144,8 @@ const DtodosInput = () => {
             dailyContext.dispatch({
                 type: "CREATE_TODO",
                 dtodo: {
-                    // id: data.d_todo_id,
-                    id: nextId.current,
+                    id: data.d_todo_id,
+                    // id: nextId.current,
                     d_date: DateFormat(),
                     d_content: inputs.content,
                     d_tag: inputs.tag,
