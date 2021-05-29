@@ -11,32 +11,35 @@ import { useReducer, createContext, useContext } from "react";
 const Header = () => {
     const authContext = useContext(AuthContext);
     return (
-        <div className="App-header">
-            <h1 className="App-header-title">공다다</h1>
-            <div className="App-header-router-wrapper">
-                <Link to="/" className="App-header-route">
-                    홈
-                </Link>
-                {/* 로그인 여부에 따라 header에 login or myprofile 출력 */}
-                {authContext.state.uid ? (
-                    <></>
-                ) : (
-                    <Link to="/login" className="App-header-route">
-                        로그인
+        <>
+            <div className="App-header-belt"></div>
+            <div className="App-header">
+                <h1 className="App-header-title">공다다</h1>
+                <div className="App-header-router-wrapper">
+                    <Link to="/" className="App-header-route">
+                        홈
                     </Link>
-                )}
-                <Link to="/myprofile" className="App-header-route">
-                    마이프로필
-                </Link>
-                <Link to="/main" className="App-header-route">
-                    메인
-                </Link>
-                {/* 스터디는 임시임다 */}
-                <Link to="/study" className="App-header-route">
-                    스터디
-                </Link>
+                    {/* 로그인 여부에 따라 header에 login or myprofile 출력 */}
+                    {authContext.state.uid ? (
+                        <></>
+                    ) : (
+                        <Link to="/login" className="App-header-route">
+                            로그인
+                        </Link>
+                    )}
+                    <Link to="/myprofile" className="App-header-route">
+                        마이프로필
+                    </Link>
+                    <Link to="/main" className="App-header-route">
+                        메인
+                    </Link>
+                    {/* 스터디는 임시임다 */}
+                    <Link to="/study" className="App-header-route">
+                        스터디
+                    </Link>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
@@ -44,7 +47,15 @@ const Footer = () => {
     const authContext = useContext(AuthContext);
     return (
         <div className="App-footer">
-            <p>개발자들: 이진 전우정 김다현</p>
+            <div className="App-footer-title">
+                <p>GongDaDa</p>
+                <p>공부만을 위해; 공다다</p>
+            </div>
+            <div>
+                Copyright@2021 We are smwu students and team WOODADA by Jin Lee,
+                Dahyun Kim, Woojung Jun
+                <br /> Design comfirmed by Areum Song
+            </div>
             <p>
                 {authContext.state.uid
                     ? authContext.state.uid

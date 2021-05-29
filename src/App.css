@@ -6,20 +6,28 @@
     overflow: hidden;
 }
 
+.App-header-belt {
+    background-color: #a7bbc7;
+    min-height: 2vh;
+}
+
 .App-header {
-    background-color: #282c34;
+    background-color: #fff;
     min-height: 5vh;
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-size: calc(10px + 2vmin);
-    color: white;
     flex: 0.5;
 }
 
 .App-header-title {
-    font-size: calc(3vmin);
+    font-size: 3vmin;
     margin-left: 2vmin;
+    color: black;
+    font-family: "NanumGothic-Bold";
+    align-self: center;
+    justify-content: center;
 }
 .App-header-router-wrapper {
     margin-right: 1.5vmin;
@@ -27,7 +35,7 @@
 
 .App-header-route {
     font-size: 2vmin;
-    color: white;
+    color: black;
     margin-left: 1.5vmin;
     margin-right: 1.5vmin;
 }
@@ -37,13 +45,50 @@
     padding: 3vmin;
     overflow: hidden;
     min-height: 80vh; /* 최소높이 지정 -> footer 하단에 고정 */
+    background-color: pink;
 }
 
 .App-footer {
     flex: 0.5;
-    background-color: #282c34;
-    color: white;
+    display: flex;
+    flex-direction: column;
+    background-color: #e1e5ea;
+    color: #727272;
     font-size: 1.2vmin;
+    font-family: "NanumGothic-Regular";
     padding: 1vmin;
-    text-align: end;
+    text-align: center;
+    align-items: center;
+    justify-items: center;
+}
+
+.App-footer-title {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-items: center;
+}
+
+.App-footer-title p {
+    margin: 2vmin 1vmin;
+    font-size: 1.5vmin;
+}
+
+.App-footer-title :first-child {
+    font-size: 2.5vmin;
+}
+
+@font-face {
+    font-family: "NanumGothic-Regular";
+    src: url("./constants/fonts/NanumGothic-Regular.ttf");
+}
+
+@font-face {
+    font-family: "NanumGothic-Bold";
+    src: url("./constants/fonts/NanumGothic-Bold.ttf");
+}
+
+@font-face {
+    font-family: "NanumGothic-ExtraBold";
+    src: url("./constants/fonts/NanumGothic-ExtraBold.ttf");
 }
