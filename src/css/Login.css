@@ -49,6 +49,7 @@
     font-size: 2vh;
     border-radius: 1.5vh;
     font-family: "NanumGothic-Regular";
+    padding: 3vmin;
 }
 
 .Login-outer-form,
