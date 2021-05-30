@@ -59,13 +59,15 @@ function SignupForm({ history }) {
 
     return (
         <form className="Signup-outer-form" onSubmit={submitHandler}>
-            <img src={Logo} width="100" alt="logo" />
-            <h1>Study With Us!!!</h1>
+            <div className="Login-form-header">
+                <h3>공다다</h3>
+                <span>지금 바로 공부하러 가요!</span>
+            </div>
             <div className="form-group">
                 <h5>ID</h5>
                 <input
                     name="email"
-                    placeholder="Input your e-mail"
+                    placeholder="이메일을 입력해주세요."
                     onChange={(e) =>
                         setDetails({ ...details, uid: e.target.value })
                     }
@@ -73,11 +75,11 @@ function SignupForm({ history }) {
                 />
             </div>
             <div className="form-group">
-                <h5>Password</h5>
+                <h5>PASSWORD</h5>
                 <input
                     type="password"
                     name="password"
-                    placeholder="Input your password"
+                    placeholder="비밀번호를 설정해주세요."
                     onChange={(e) =>
                         setDetails({ ...details, password: e.target.value })
                     }
@@ -85,10 +87,10 @@ function SignupForm({ history }) {
                 />
             </div>
             <div className="form-group">
-                <h5>Nickname</h5>
+                <h5>NICKNAME</h5>
                 <input
                     name="nickname"
-                    placeholder="Input your nickname"
+                    placeholder="닉네임을 입력해주세요."
                     onChange={(e) =>
                         setDetails({ ...details, nickname: e.target.value })
                     }
