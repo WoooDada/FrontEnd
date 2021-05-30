@@ -51,13 +51,15 @@ function LoginForm({ history }) {
 
     return (
         <form className="Login-outer-form" onSubmit={submitHandler}>
-            <img src={Logo} width="100" alt="logo" />
-            <h1>Study With Us!!!</h1>
+            <div className="Login-form-header">
+                <h3>공다다</h3>
+                <span>지금 바로 공부하러 가요!</span>
+            </div>
             <div className="form-group">
-                <h5>ID</h5>
+                <h5>EMAIL</h5>
                 <input
                     name="uid"
-                    placeholder="Input your uid"
+                    placeholder="이메일을 적어주세요."
                     onChange={
                         (e) => setDetails({ ...details, uid: e.target.value }) ///useState의 setDetails
                     }
@@ -65,11 +67,11 @@ function LoginForm({ history }) {
                 />
             </div>
             <div className="form-group">
-                <h5>Password</h5>
+                <h5>PASSWORD</h5>
                 <input
                     type="password"
                     name="password"
-                    placeholder="Input your password"
+                    placeholder="비밀번호를 적어주세요."
                     onChange={(e) =>
                         setDetails({ ...details, password: e.target.value })
                     }
@@ -78,7 +80,7 @@ function LoginForm({ history }) {
             </div>
             <p>{loginErrorMsg}</p>
             <br></br>
-            <button type="submit">Login</button>
+            <button type="submit">LOG IN</button>
             <br />
         </form>
     );

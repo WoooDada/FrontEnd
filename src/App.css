@@ -4,11 +4,12 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    font-family: "NanumGothic-Regular";
 }
 
 .App-header-belt {
     background-color: #a7bbc7;
-    min-height: 2vh;
+    min-height: 3vh;
 }
 
 .App-header {
@@ -42,10 +43,9 @@
 
 .App-body {
     flex: 8;
-    padding: 3vmin;
     overflow: hidden;
     min-height: 80vh; /* 최소높이 지정 -> footer 하단에 고정 */
-    background-color: pink;
+    /* background-color: pink; */
 }
 
 .App-footer {

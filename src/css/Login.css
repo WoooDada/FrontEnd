@@ -1,20 +1,121 @@
-.Login-signupBtn {
+.LoginPage {
     display: flex;
-    flex-direction: column;
+
+    /* align-items: stretch; */
+    background-color: #f4f7ee;
+    min-height: 80vh;
     align-items: center;
     justify-content: center;
+    /* align-content: center; */
+    padding: 0 20vh 0 20vh;
+}
+
+.LoginPage-BookImg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+.Login-wrapper {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+.Login-LoginBox {
+    width: 50%;
+    /* min-width: 40vh; */
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    padding: 5vh;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.Login-LoginBox .Login-signupbtn {
+    display: flex;
+    background-color: #cad6dd;
+    text-decoration: none;
+    border: 0;
+    padding: 1vh;
+    font-weight: 200;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 2vh;
+    border-radius: 1.5vh;
+    font-family: "NanumGothic-Regular";
 }
 
 .Login-outer-form,
 .Signup-outer-form {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+
+    /* width: 100%; */
+    /* background-color: pink; */
+}
+
+.Login-form-header {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
+.Login-form-header h3 {
+    font-size: 3vh;
+    padding: 1vh 0 0;
+    font-weight: 200;
+}
+
+.Login-form-header span {
+    font-size: 1.5vh;
+    padding: 0 0 2vh;
+    color: #727272;
+}
+
+.Login-outer-form .form-group,
+.Signup-outer-form .form-group {
+    margin-bottom: 1vh;
+}
+
+.Login-outer-form .form-group h5,
+.Signup-outer-form .form-group h5 {
+    font-size: 1.5vh;
+    font-weight: 100;
+}
+
+.Login-outer-form .form-group input,
+.Signup-outer-form .form-group input {
+    font-size: 1.5vh;
+    font-weight: 100;
+    width: 95%;
+    border: 0;
+    border-bottom: 1px solid gray;
+    padding: 1vh;
+}
+
+.Login-outer-form button,
+.Signup-outer-form button {
+    background-color: #e9b2bc;
+    border: 0;
+    padding: 1vh;
+    font-weight: 200;
+    font-family: "NanumGothic-Regular";
+    font-size: 2vh;
+    border-radius: 1.5vh;
+}
+
 .Login-outer-form p,
 .Signup-outer-form p {
-    font-size: small;
+    font-size: 1.5vh;
     color: red;
+    font-family: "NanumGothic-Regular";
 }
