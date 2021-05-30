@@ -6,6 +6,7 @@ import { Main, MyProfile, NotFound, Home, Signup, Study } from "./pages";
 import "./App.css";
 import Login from "./pages/Login";
 import { useReducer, createContext, useContext } from "react";
+// import Logo from "./constants/imgs/oldLogo.jpg";
 
 //////////////////////////////////////////////////////////////////////////////////
 const Header = () => {

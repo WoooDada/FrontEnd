@@ -65,18 +65,21 @@ const RightStudyComp = () => {
         if (classifier && start) {
             // 주석 처리해주기
             const postModelResult = async () => {
-                const { status, data } = await postApi(
-                    {
-                        uid: authContext.state.uid,
-                        type:
-                            resultlistRef.current["C"] >
-                            resultlistRef.current["P"]
-                                ? "C"
-                                : "P",
-                        time: new Date().toString().split(" ")[4].substr(0, 5),
-                    },
-                    "/study/study_data/"
-                );
+                // const { status, data } = await postApi(
+                //     {
+                //         uid: authContext.state.uid,
+                //         type:
+                //             resultlistRef.current["C"] >
+                //             resultlistRef.current["P"]
+                //                 ? "C"
+                //                 : "P",
+                //         time: new Date().toString().split(" ")[4].substr(0, 5),
+                //     },
+                //     "/study/study_data/"
+                // );
+                const { status, data } = { // Dummy Dummy
+                    status: 200,
+                };
                 if (status === 200) {
                     await setStudy_time(data);
                     console.log(resultlistRef.current);
@@ -94,16 +97,16 @@ const RightStudyComp = () => {
     const toggle = async () => {
         // * start stop POST
         // TODO TEST할 때 꼭 주석 처리 없애기
-        const { status } = await postApi(
-            {
-                uid: authContext.state.uid,
-                type: !start ? "start" : "stop",
-            },
-            "/study/studybutton/"
-        );
-        // const { status, data } = { // Dummy Dummy
-        //     status: 200,
-        // };
+        // const { status } = await postApi(
+        //     {
+        //         uid: authContext.state.uid,
+        //         type: !start ? "start" : "stop",
+        //     },
+        //     "/study/studybutton/"
+        // );
+        const { status, data } = { // Dummy Dummy
+            status: 200,
+        };
         if (status === 200) {
             await console.log('바뀌기전 버튼값:', start);
             await btnContext.dispatch({ type: "btnClick", payload: !start });

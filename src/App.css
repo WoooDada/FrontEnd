@@ -42,10 +42,11 @@
 
 .App-body {
     flex: 8;
-    padding: 3vmin;
+    padding: 0; 
     overflow: hidden;
     min-height: 80vh; /* 최소높이 지정 -> footer 하단에 고정 */
-    background-color: pink;
+    background-color: white;
+    
 }
 
 .App-footer {

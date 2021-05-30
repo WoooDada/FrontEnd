@@ -13,12 +13,16 @@
     flex-direction: column;
     flex: 1;
     margin-top: 2vmin;
+    background-color: white;
+    border-radius: 5px;
 }
 
 .daily-tenmin {
     flex: 1;
     margin: 3vmin 1vmin;
     border: 1px solid rgba(0, 0, 0, 0.377);
+    background-color: white;
+    border-radius: 5px;
 }
 
 .daily-lower-input {
@@ -29,8 +33,8 @@
     flex: 1;
     display: flex;
     flex-direction: row;
-    background-color: rgba(250, 247, 99, 0.767);
     max-height: 3vmin;
+    
 }
 
 .daily-todo-wrapper {
