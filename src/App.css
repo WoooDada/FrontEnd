@@ -15,23 +15,31 @@
 .App-header {
     background-color: #fff;
     min-height: 5vh;
-    display: flex;
+    /* display: flex; 
     align-items: center;
-    justify-content: space-between;
+    justify-content: center; */
     font-size: calc(10px + 2vmin);
     flex: 0.5;
 }
 
 .App-header-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1vmin 0;
+}
+
+.App-header-title h1 {
     font-size: 3vmin;
     margin-left: 2vmin;
     color: black;
     font-family: "NanumGothic-Bold";
-    align-self: center;
-    justify-content: center;
 }
+
 .App-header-router-wrapper {
-    margin-right: 1.5vmin;
+    display: flex;
+    flex-direction: row-reverse;
+    margin-left: auto;
 }
 
 .App-header-route {

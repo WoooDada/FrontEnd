@@ -69,19 +69,19 @@ const PrintToday = () => {
     var strDay = "";
     switch (today.getDay()) {
         case 0:
-            strDay = "(일)";
+            strDay = "(일)"; break;
         case 1:
-            strDay = "(월)";
+            strDay = "(월)"; break;
         case 2:
-            strDay = "(화)";
+            strDay = "(화)"; break;
         case 3:
-            strDay = "(수)";
+            strDay = "(수)"; break;
         case 4:
-            strDay = "(목)";
+            strDay = "(목)"; break;
         case 5:
-            strDay = "(금)";
+            strDay = "(금)"; break;
         case 6:
-            strDay = "(토)";
+            strDay = "(토)"; break;
     }
     const result = "".concat(
         today.getFullYear(),
