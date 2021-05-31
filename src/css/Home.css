@@ -3,7 +3,7 @@
     align-items: center;
     display: flex;
     flex-direction: column;
-    margin: 0 0 10vmin 0;
+    /* margin: 0 0 0 0; */
     padding: 0;
 }
 
@@ -13,13 +13,13 @@
     margin: 0;
     padding: 0;
     width: 100%;
-    min-height: 462px;
+    min-height: 300px;
     background-image: url("../constants/imgs/home.png");
     color: white;
 }
 
 /* 오른쪽정렬 */
-.Home-banner-only { 
+.Home-banner-only {
     padding: 5vmin;
     font-size: large;
     display: flex;
@@ -33,17 +33,17 @@
 }
 
 .Home-route {
-    width: 30vmin;
-    background-color: #E9B2BC;
+    /* width: 30vmin; */
+    background-color: #e9b2bc;
     border-width: 0;
     margin: 0 auto;
-    margin-top: 20vmin;
-    padding: 2vmin 3vmin;
+    margin-top: 5vmin;
+    padding: 2vmin 6vmin;
     text-decoration: none;
     text-align: center;
     border-radius: 3vmin;
     color: #2c2c2c;
-    font-size: 3vmin;
+    font-size: 2.5vmin;
     font-weight: 700;
     transition: background-color 0.5s;
 }
@@ -58,7 +58,7 @@
 
 .Home-middle hr {
     border-width: 0;
-    padding: 2px 0;
+    padding: 1px 0;
     margin-top: 20px;
     width: 100%;
     background: rgba(128, 128, 128, 0.466);
@@ -78,7 +78,8 @@
     padding: 3vmin;
 }
 
-.Home-lower-left, .Home-lower-right {
+.Home-lower-left,
+.Home-lower-right {
     display: flex;
     flex-direction: row;
     padding: 5vmin 0 5vmin 0;
@@ -88,7 +89,8 @@
     margin-left: auto;
 }
 
-.left-p, .right-p {
+.left-p,
+.right-p {
     display: flex;
     flex-direction: column;
 }
@@ -98,7 +100,7 @@
 }
 
 .p1 {
-    color: #DA7F8F;
+    color: #da7f8f;
     font-weight: bold;
 }
 

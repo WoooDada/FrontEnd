@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
+
 import { FaMedal } from "react-icons/fa";
 
 import "../css/Main.css";
@@ -25,7 +25,10 @@ const getBadgeColor = (badge) => {
 
 const BadgeComp = () => {
     const authContext = useContext(AuthContext);
-    const [userData, setUserData] = useState({ nickname: "", badge_color: "" });
+    const [userData, setUserData] = useState({
+        nickname: "우정짱",
+        badge_color: "#c0c0c0",
+    });
     useEffect(() => {
         const getNickName = async () => {
             const { status, data } = await getApi(
@@ -44,15 +47,22 @@ const BadgeComp = () => {
                 alert("네트워크 불안정");
             }
         };
-        getNickName();
+        // getNickName();
     }, []);
     return (
-        <div className="Main-BadgeComp">
-            <FaMedal color={userData.badge_color} size="4em" className="icon" />
-            <p>{userData.nickname}</p>
-            <Link to="/study" className="button">
-                바로 공부하러 가기
-            </Link>
+        <div>
+            <p className="small-title">뱃지</p>
+            <div className="Main-BadgeComp">
+                <FaMedal
+                    color={userData.badge_color}
+                    size="4em"
+                    className="icon"
+                />
+                <small>
+                    <br />
+                    {userData.nickname}
+                </small>
+            </div>
         </div>
     );
 };

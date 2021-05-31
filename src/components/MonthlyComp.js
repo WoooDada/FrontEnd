@@ -348,7 +348,7 @@ const MonthlyComp = () => {
         // * dummy date
         const { status, data } = {
             status: 200,
-            data: { m_todo_id: "2" }
+            data: { m_todo_id: "2" },
         };
         // const { status, data } = {
         //     status: 400,
@@ -366,27 +366,31 @@ const MonthlyComp = () => {
 
     return (
         <div className="Main-MonthlyComp">
-            <FullCalendar
-                plugins={[dayGridPlugin, interactionPlugin]}
-                initialView="dayGridMonth"
-                events={mtodos}
-                // editable='true' //eventStartEditable(dragging) & eventDurationEditable(기간 늘리기)
-                droppable="true"
-                eventStartEditable="true"
-                eventDurationEditable="true"
-                selectable="true"
-                select={isDateSelected}
-                dateClick={handleDateClick}
-                eventClick={handleEventClick}
-                eventDrop={handleEventDrop}
-                eventResize={handleEventResize}
-                eventBackgroundColor="#C4C4C4"
-                eventBorderColor="#C4C4C4"
-            />
+            <p className="small-title">월간 스케줄</p>
+            <div className="calendar-wrapper">
+                <br />
+                <FullCalendar
+                    plugins={[dayGridPlugin, interactionPlugin]}
+                    initialView="dayGridMonth"
+                    events={mtodos}
+                    // editable='true' //eventStartEditable(dragging) & eventDurationEditable(기간 늘리기)
+                    droppable="true"
+                    eventStartEditable="true"
+                    eventDurationEditable="true"
+                    selectable="true"
+                    select={isDateSelected}
+                    dateClick={handleDateClick}
+                    eventClick={handleEventClick}
+                    eventDrop={handleEventDrop}
+                    eventResize={handleEventResize}
+                    eventBackgroundColor="#C4C4C4"
+                    eventBorderColor="#C4C4C4"
+                />
+            </div>
             <div className="Main-Monthly-input">
                 <form className="Main-Monthly-inputform">
                     <div>
-                        <label>내용</label>
+                        {/* <label>내용</label> */}
                         <input
                             className="input-title"
                             name="title"
@@ -396,7 +400,7 @@ const MonthlyComp = () => {
                             value={inputs.title}
                         />
                     </div>
-                    <div style={{display:"none"}}>
+                    <div style={{ display: "none" }}>
                         <label>시작날짜</label>
                         <input
                             type="date"
@@ -407,7 +411,7 @@ const MonthlyComp = () => {
                             name="start"
                         />
                     </div>
-                    <div style={{display:"none"}}>
+                    <div style={{ display: "none" }}>
                         <label>끝날짜</label>
                         <input
                             type="date"
@@ -446,7 +450,6 @@ const MonthlyComp = () => {
                 </div>
             </div>
         </div>
-        
     );
 };
 
