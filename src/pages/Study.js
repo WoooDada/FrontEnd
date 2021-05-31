@@ -27,6 +27,7 @@ const Study = () => {
                 <RightStudyComp></RightStudyComp>
             </div>
             <div className="Study-lowbanner">
+                <small>가슴에 손을 얹고 생각해보세요. 오늘 공부를 마치셨나요?</small>
                 <Link to={'/main'} className="Study-route"> 공부방 퇴장하기</Link>
             </div>
         </div>

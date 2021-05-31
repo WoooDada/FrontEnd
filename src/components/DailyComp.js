@@ -316,7 +316,7 @@ const DailyComp = () => {
 
     return (
         <div className="daily-comp">
-            <PrintToday />
+            <h3><PrintToday /></h3>
             <div className="daily-study-comp">
                 <div className="daily-planner">
                     <div className="daily-todo-upper">

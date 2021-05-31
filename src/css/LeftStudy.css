@@ -11,22 +11,39 @@
 .daily-planner { 
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 3;
     margin-top: 2vmin;
     background-color: white;
     border-radius: 5px;
+    padding: 0.8vmin;
 }
 
 .daily-tenmin {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
+    flex: 2;
     margin: 3vmin 1vmin;
-    border: 1px solid rgba(0, 0, 0, 0.377);
+    /* border: 1px solid rgba(0, 0, 0, 0.377); */
     background-color: white;
     border-radius: 5px;
 }
 
 .daily-lower-input {
     display: flex;
+}
+
+.daily-lower-input input {
+    background-color:#ebebeb;
+    border-radius: 2vmin;
+    border: none;
+
+}
+
+.daily-lower-input .add-button {
+    background-color: #E9B2BC;
+    border-radius: 2vmin;
+    border: none;
+    
 }
 
 .daily-todo-upper {
@@ -53,4 +70,8 @@
 
 .daily-todo-item-tag {
     border-right: 1px solid rgba(0, 0, 0, 0.377);
+}
+
+.daily-tenmin small {
+    margin: 1vmin auto;
 }

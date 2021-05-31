@@ -22,7 +22,7 @@ const POST_RESULT_TIME = 60;
 
 const RightStudyComp = () => {
     const authContext = useContext(AuthContext);
-    const btnContext = useContext(BtnContext); 
+    const btnContext = useContext(BtnContext);
     const videoRef = useRef();
 
     const [start, setStart] = useState(false);
@@ -70,7 +70,7 @@ const RightStudyComp = () => {
                         uid: authContext.state.uid,
                         type:
                             resultlistRef.current["C"] >
-                            resultlistRef.current["P"]
+                                resultlistRef.current["P"]
                                 ? "C"
                                 : "P",
                         time: new Date().toString().split(" ")[4].substr(0, 5),
@@ -130,12 +130,8 @@ const RightStudyComp = () => {
 
     return (
         <div className="RightComp">
-            {/* <h4>
-                고난에 지는 것은 수치가 아니다.
-                <br /> 쾌락에 지는 것이야말로 수치다.
-            </h4> */}
-            <div>
-                <p>현재: {isConcentrate()}</p>
+            <div className="RightComp-inner">
+                {/* <p>현재: {isConcentrate()}</p> */}
                 <video className='Rstudy-video'
                     ref={videoRef}
                     style={{ transform: "scale(-1,1)" }}
@@ -143,17 +139,17 @@ const RightStudyComp = () => {
                     height="150"
                 ></video>
                 <p className='Rstudy-undervideo'>
-                    <span>집중: {getClassRate("C")}%</span>
-                    <span>
+                    <span className="undervideo-span1">집중: {getClassRate("C")}%</span>
+                    <span className="undervideo-span2">
                         공부시간: {study_time.tot_concent_time}
                     </span>
-                    <span>
+                    <span className="undervideo-span3">
                         휴식시간: {study_time.tot_play_time}
                     </span>
                 </p>
                 {loaded && (
                     <button onClick={() => toggle()}>
-                        {start ? "Stop" : "Start"}
+                        {start ? "STOP" : "START"}
                     </button>
                 )}
             </div>

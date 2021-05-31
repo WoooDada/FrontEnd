@@ -280,11 +280,9 @@ const TenMinPlanner = () => {
         
         return (
             <HeatMapGrid
-                xLabels={xLabels}
+                
                 yLabels={yLabels}
-                xLabelsStyle={() => ({
-                    fontSize: ".65rem"
-                })}
+                
                 yLabelsStyle={() => ({
                     fontSize: ".65rem"
                 })}
@@ -307,6 +305,7 @@ const TenMinPlanner = () => {
 
     return (
         <div className="daily-tenmin">
+            <small>10 minute planner</small>
             <DrawGrid />
         </div>
     );

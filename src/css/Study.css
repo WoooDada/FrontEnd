@@ -3,6 +3,7 @@
     flex-direction: row;
     min-height: 100%;
     padding: 3vmin;
+    background: #FFFCF9;
 }
 
 .StudyComps .LeftComp {
@@ -23,20 +24,24 @@
 
 .Study-lowbanner {
     background-color: #E1E5EA;
-    margin: 0;
+    display: flex;
+    flex-direction: column;
     padding: 0;
 }
 
+.Study-lowbanner small {
+    margin: 10vmin auto 3vmin auto;
+}
+
 .Study-route {
-    margin-left: 10px;
-    width: 30vmin;
-    background-color: #E9B2BC;
+    margin: 3vmin auto;
+    width: 40vmin;
+    background-color: rgba(255, 255, 255, 0.623);
     border-width: 0;
-    margin: 0 auto 0 10vmin;
-    padding: 2vmin 3vmin;
+    padding: 1vh 15vh;
     text-decoration: none;
     text-align: center;
-    border-radius: 3vmin;
+    border-radius: 2vmin;
     color: #2c2c2c;
     font-size: 3vmin;
     font-weight: 700;
@@ -44,5 +49,61 @@
 }
 
 .Study-route:hover {
-    background-color: #e78b9c;
+    background-color: white;
+}
+
+.LeftComp {
+    margin-left: auto;
+}
+
+.LeftComp-button {
+    background-color: #e2aeb8;
+    color:white;
+    border: none;
+    border-radius: 2vmin;
+    margin: 1vmin;
+    width: 6vmin;
+}
+
+.RightComp-inner {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    width: 60%;
+    margin: 20vmin auto;
+    padding: 3vmin;
+}
+
+.RightComp-inner .Rstudy-video {
+    margin: auto;
+}
+
+.Rstudy-undervideo {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Rstudy-undervideo span {
+    font-size: small;
+}
+.undervideo-span1 {
+    color: #C4C4C4;
+    font-weight: bold;
+}
+.undervideo-span2 {
+    color: #BCD6A7;
+    font-weight: bold;
+}
+.undervideo-span3 {
+    color: #E9B2BC;
+    font-weight: bold;
+}
+
+.RightComp-inner button {
+    background-color: #DB7A77;
+    padding: 1vmin 0;
+    border: none;
+    border-radius: 1.5vmin;
+    color: white;
+    font-weight: bold;
 }

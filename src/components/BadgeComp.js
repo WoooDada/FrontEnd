@@ -44,7 +44,7 @@ const BadgeComp = () => {
 
     function afterOpenModal() {
         // references are now sync'd and can be accessed.
-        subtitle.style.color = '#f00';
+        subtitle.style.color = '#E9B2BC';
     }
 
     function closeModal() {
@@ -80,6 +80,7 @@ const BadgeComp = () => {
             <p className="small-title">뱃지</p>
             <div className="Main-BadgeComp">
                 <FaMedal
+                    style={{ cursor: "pointer" }}
                     onClick={openModal}
                     color={userData.badge_color}
                     size="4em"
@@ -100,9 +101,10 @@ const BadgeComp = () => {
                         실버(30시간 이상) <br></br>
                         골드(100시간 이상) <br></br>
                         플래티넘(200시간 이상) <br></br>
-                        다이아(1000시간 이상)<br></br>
+                        다이아(1000시간 이상) wow~<br></br><br></br>
+                        다이아까지 열공!열공!열공!!!
                     </div>
-                    <button onClick={closeModal}>close</button>
+                    
 
                 </Modal>
                 <small>

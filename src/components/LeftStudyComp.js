@@ -10,26 +10,26 @@ const LeftStudyComp = () => {
 
     return (
         <div className="LeftComp">
-            <button
+            <button className="LeftComp-button"
                 onClick={() => {
                     setWhichSchedule("daily");
                 }}
             >
-                daily
+                일
             </button>
-            <button
+            <button className="LeftComp-button"
                 onClick={() => {
                     setWhichSchedule("weekly");
                 }}
             >
-                weekly
+                주
             </button>
-            <button
+            <button className="LeftComp-button"
                 onClick={() => {
                     setWhichSchedule("monthly");
                 }}
             >
-                monthly
+                월
             </button>
             {whichSchedule === "daily" ? (
                 <DailyComp></DailyComp>
