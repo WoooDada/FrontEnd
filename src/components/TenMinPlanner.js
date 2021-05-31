@@ -177,10 +177,8 @@ const TenMinPlanner = () => {
 
     const timeToIndex = (stt_time, end_time) => { // return 값: stt_time의 인덱스 x,y, 칸수 len
         var r1 = 0; var r2 = 0; var len = 0;
-        var stt_moment = moment(stt_time).format('HH:mm');
-        var end_moment = moment(end_time).format('HH:mm');
-        console.log(stt_moment, end_moment);
-        var diff = moment.utc(moment(end_time,'HH:mm').diff(moment(stt_time,'HH:mm'))).format('HH:mm') // 00:00 형식의 차이
+        var diff = moment.utc(moment(end_time,'HH:mm').diff(moment(stt_time,'HH:mm')))
+            .format('HH:mm') // 00:00 형식의 차이
         var diff_split = diff.split(':');
         var time_diff = (diff_split[0]*1)*60 + diff_split[1]*1 + 1; // 분 차이: (hour*60 + min+1)/10
         var stt_split = stt_time.split(':'); //stsplit[0]=시간, stsplit[1]=분
@@ -262,22 +260,25 @@ const TenMinPlanner = () => {
             returns = timeToIndex(t.stt_time, t.end_time),  // 시간 매개변수. 들어갈 칸 인덱스 배열로 반환
             console.log(returns.x, returns.y, returns.len),
             DrawCell(returns.x, returns.y, returns.len, value)
-            // data[returns.x][returns.y] = returns.len
         ));
 
-        // const cellColor = (ratio) => {
-        //     if (ratio === 100){
-        //         return `rgb(120, 160, 44)`;
-        //     } else if (ratio === -100){
-        //         return 'rgb(233, 178, 188)';
-        //     } else {
-        //         return `rgb(0,0,0)`;
-        //     }
-        // };
+        const cellColor = (ratio) => {
+            if (ratio === 1){
+                return '#BCD6A7';
+            } else if (ratio === 0){
+                return '#E9B2BC';
+            } else { // ratio = 0.5
+                return '#F5F5F5';
+            }
+        };
+        
         return (
             <HeatMapGrid
                 xLabels={xLabels}
                 yLabels={yLabels}
+                xLabelsStyle={() => ({
+                    fontSize: ".65rem"
+                })}
                 yLabelsStyle={() => ({
                     fontSize: ".65rem"
                 })}
@@ -285,16 +286,15 @@ const TenMinPlanner = () => {
                 yLabelTextAlign='center'
                 data={data}
                 cellStyle={(_x, _y, ratio) => ({
-                    background: `rgb(120, 160, 44, ${ratio})`,
-                    // backgroud: `cellColor(ratio)`,
-                    fontSize: "1px",
-                    color: FaBlackberry,
+                    background: cellColor(ratio),
+                    // fontSize: "1px",
+                    // color: FaBlackberry,
                 })}
-                cellRender={(x, y, value) => (
-                    <div>{value}</div>
-                )}
+                // cellRender={(x, y, value) => (
+                //     <div>{value}</div>
+                // )}
                 cellHeight="1.2rem"
-                onClick={(x, y) => alert(`Clicked (${x}, ${y})=${data[x][y]}`)}
+                // onClick={(x, y) => alert(`Clicked (${x}, ${y})=${data[x][y]}`)}
             />
         );
     };
