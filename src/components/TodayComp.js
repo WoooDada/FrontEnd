@@ -10,12 +10,12 @@ const TodayComp = () => {
     const authContext = useContext(AuthContext);
     const [todayStudy, setTodayStudy] = useState({
         tot_concent_rate: 30,
-        tot_concent_time: "5h30m",
-        tot_time: "6h06m",
+        tot_concent_time: "5h 30m",
+        tot_time: "6h 06m",
     });
     const make2hmForm = (data) => {
         const l = data.split(":");
-        return l[0] + "h" + l[1] + "m";
+        return l[0] + "h " + l[1] + "m";
     };
     useEffect(() => {
         const getTodayInfo = async () => {
@@ -40,9 +40,21 @@ const TodayComp = () => {
     }, []);
     return (
         <div>
-            <p>집중도: {todayStudy.tot_concent_rate}</p>
-            <p>집중 시간: {todayStudy.tot_concent_time}</p>
-            <p>총 공부시간: {todayStudy.tot_time}</p>
+            <p className="small-title">오늘</p>
+            <div className="Main-TodayComp">
+                <div className="Main-TodayComp-status">
+                    <span className="stitle">집중도</span>
+                    <p>{todayStudy.tot_concent_rate}%</p>
+                </div>
+                <div className="Main-TodayComp-status">
+                    <span className="stitle">집중 시간</span>
+                    <p>{todayStudy.tot_concent_time}</p>
+                </div>
+                <div className="Main-TodayComp-status">
+                    <span className="stitle">총 공부시간</span>
+                    <p>{todayStudy.tot_time}</p>
+                </div>
+            </div>
         </div>
     );
 };

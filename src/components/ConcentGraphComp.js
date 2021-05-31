@@ -60,34 +60,36 @@ const ConcentGraphComp = () => {
                 await alert("인터넷 연결이 불안정합니다.");
             }
         };
-        getGraphData();
+        // getGraphData();
     }, []);
     return (
-        <div className="Main-ContentGraphComp">
-            <h4>집중 그래프</h4>
-            <XYPlot
-                height={150}
-                width={500}
-                stackBy="y"
-                xType="ordinal"
-                className="graph"
-            >
-                <VerticalGridLines />
-                <HorizontalGridLines />
-                <XAxis />
-                <YAxis />
-                <VerticalBarSeries
-                    color="#C4C4C4"
-                    barWidth={0.3}
-                    data={graphData.concent}
-                />
-                <VerticalBarSeries
-                    color="#ffc9c9"
-                    opacity={50}
-                    barWidth={0.3}
-                    data={graphData.play}
-                />
-            </XYPlot>
+        <div>
+            <p className="small-title">집중 그래프</p>
+            <div className="Main-ContentGraphComp">
+                <XYPlot
+                    height={150}
+                    width={500}
+                    stackBy="y"
+                    xType="ordinal"
+                    className="graph"
+                >
+                    <VerticalGridLines />
+                    <HorizontalGridLines />
+                    <XAxis />
+                    <YAxis />
+                    <VerticalBarSeries
+                        color="#C4C4C4"
+                        barWidth={0.3}
+                        data={graphData.concent}
+                    />
+                    <VerticalBarSeries
+                        color="#ffc9c9"
+                        opacity={50}
+                        barWidth={0.3}
+                        data={graphData.play}
+                    />
+                </XYPlot>
+            </div>
         </div>
     );
 };
