@@ -65,21 +65,21 @@ const RightStudyComp = () => {
         if (classifier && start) {
             // 주석 처리해주기
             const postModelResult = async () => {
-                // const { status, data } = await postApi(
-                //     {
-                //         uid: authContext.state.uid,
-                //         type:
-                //             resultlistRef.current["C"] >
-                //             resultlistRef.current["P"]
-                //                 ? "C"
-                //                 : "P",
-                //         time: new Date().toString().split(" ")[4].substr(0, 5),
-                //     },
-                //     "/study/study_data/"
-                // );
-                const { status, data } = { // Dummy Dummy
-                    status: 200,
-                };
+                const { status, data } = await postApi(
+                    {
+                        uid: authContext.state.uid,
+                        type:
+                            resultlistRef.current["C"] >
+                            resultlistRef.current["P"]
+                                ? "C"
+                                : "P",
+                        time: new Date().toString().split(" ")[4].substr(0, 5),
+                    },
+                    "/study/study_data/"
+                );
+                // const { status, data } = { // Dummy Dummy
+                //     status: 200,
+                // };
                 if (status === 200) {
                     await setStudy_time(data);
                     console.log(resultlistRef.current);

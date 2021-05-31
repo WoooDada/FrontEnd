@@ -44,56 +44,60 @@ const TenMinPlanner = () => {
     const authContext = useContext(AuthContext);
     const btnContext = useContext(BtnContext);
     const concentTypeRef = useRef({ C: 0, P: 0 });
-    // const [tenMinData, setTenMinData] = useState([]);
-    const [tenMinData, setTenMinData] = useState([
-        {
-            stt_time: "07:40",
-            end_time: "11:29",
-            concent_type: "C", // c: concentrate & p: play
-        },
-        {
-            stt_time: "14:00",
-            end_time: "14:29",
-            concent_type: "P",
-        },
-    ]);
-
+    const [tenMinData, setTenMinData] = useState([]);
+    const [flag, setFlag] = useState(false);
+    // const [tenMinData, setTenMinData] = useState([
+    //     {
+    //         stt_time: "07:40",
+    //         end_time: "11:29",
+    //         concent_type: "C", // c: concentrate & p: play
+    //     },
+    //     {
+    //         stt_time: "14:00",
+    //         end_time: "14:29",
+    //         concent_type: "P",
+    //     },
+    // ]);
 
     useEffect(() => { // 첨에 접속했을때 update=F로, 한꺼번에 받아옴
+        console.log('flag:', flag);
         if (btnContext.state.btnValue === false) { // if RightStudyComp 버튼이 stop일 경우
-            console.log('btnvalue:', btnContext.state.btnValue);
+            if (flag === false){
+                setFlag(true);
+                console.log('btnvalue:', btnContext.state.btnValue);
 
-            const getTenmin = async () => {
-                // const { status, data } = await getApi(
-                //     {
-                //         uid: authContext.state.uid,
-                //         update: btnContext.state.btnValue ? 'T' : 'F', 
-                //         date: DateFormat(),
-                //     },
-                //     "/study/ten_min_data/"
-                // );
-                const { status, data } = { // Dummy Dummy
-                    status: 200,
-                };
-                await console.log("useeffect");
-                if (status === 200) {
-                    // await console.log(data.ten_min_list);
-                    // await setTenMinData(
-                    //     data.ten_min_list.map(t => ({
-                    //         stt_time: t.stt_time,
-                    //         end_time: t.end_time,
-                    //         concent_type: t.concent_type,
-                    //     }))
-                    // );
-                    // await console.log("tenMinData:", tenMinData);
-                } else {
-                    alert("인터넷 연결이 불안정합니다.");
+                const getTenmin = async () => {
+                    const { status, data } = await getApi(
+                        {
+                            uid: authContext.state.uid,
+                            update: btnContext.state.btnValue ? 'T' : 'F', 
+                            date: DateFormat(),
+                        },
+                        "/study/ten_min_data/"
+                    );
+                    // const { status, data } = { // Dummy Dummy
+                    //     status: 200,
+                    // };
+                    await console.log("useeffect");
+                    if (status === 200) {
+                        // await console.log(data.ten_min_list);
+                        await setTenMinData(
+                            data.ten_min_list.map(t => ({
+                                stt_time: t.stt_time,
+                                end_time: t.end_time,
+                                concent_type: t.concent_type,
+                            }))
+                        );
+                        // await console.log("tenMinData:", tenMinData);
+                    } else {
+                        alert("인터넷 연결이 불안정합니다.");
+                    }
                 }
+                getTenmin();
+                // plususeRefWhenStop();
+                DrawGrid();
+                
             }
-            getTenmin();
-            // plususeRefWhenStop();
-            DrawGrid();
-
         }
     });
 
@@ -101,24 +105,24 @@ const TenMinPlanner = () => {
         // if RightStudyComp의 버튼 start되면,
         if (btnContext.state.btnValue === true) {
             const getTenmin = async () => {
-                // const { status, data } = await getApi(
-                //     {
-                //         uid: authContext.state.uid,
-                //         update: btnContext.state.btnValue ? 'T' : 'F', 
-                //         date: DateFormat(),
-                //     },
-                //     "/study/ten_min_data/"
-                // );
-                const { status, data } = { // Dummy Dummy
-                    status: 200,
-                };
+                const { status, data } = await getApi(
+                    {
+                        uid: authContext.state.uid,
+                        update: btnContext.state.btnValue ? 'T' : 'F', 
+                        date: DateFormat(),
+                    },
+                    "/study/ten_min_data/"
+                );
+                // const { status, data } = { // Dummy Dummy
+                //     status: 200,
+                // };
                 await console.log("useinterval!!!!!");
                 if (status === 200) {
                     // await console.log(data.ten_min_list);
-                    // await setTenMinData(tenMinData.concat(data.ten_min_list));
-                    await console.log("tenMinData:", tenMinData);
-                    // await plususeRef(data.ten_min_list.concent_type); // useRef에 반영
-                    await plususeRef('C');
+                    await setTenMinData(tenMinData.concat(data.ten_min_list));
+                    // await console.log("tenMinData:", tenMinData);
+                    await plususeRef(data.ten_min_list.concent_type); // useRef에 반영
+                    // await plususeRef('C');
                 } else {
                     alert("인터넷 연결이 불안정합니다.");
                 }
@@ -148,6 +152,8 @@ const TenMinPlanner = () => {
                 }
                 setTenMinData(tenMinData.concat(tendata));
                 // useRef 비워주기
+                concentTypeRef.current["C"] = 0;
+                concentTypeRef.current["P"] = 0;
             } else {
                 // useRef에 쌓인 데이터가 4개 이하면 처리X
             }
@@ -258,7 +264,7 @@ const TenMinPlanner = () => {
         tenMinData.map((t, i) => (
             value = typetoInt(t.concent_type),
             returns = timeToIndex(t.stt_time, t.end_time),  // 시간 매개변수. 들어갈 칸 인덱스 배열로 반환
-            console.log(returns.x, returns.y, returns.len),
+            // console.log(returns.x, returns.y, returns.len),
             DrawCell(returns.x, returns.y, returns.len, value)
         ));
 
