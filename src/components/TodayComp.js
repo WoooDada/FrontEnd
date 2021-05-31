@@ -42,16 +42,16 @@ const TodayComp = () => {
         <div>
             <p className="small-title">오늘</p>
             <div className="Main-TodayComp">
-                <div>
-                    <small>집중도</small>
+                <div className="Main-TodayComp-status">
+                    <span className="stitle">집중도</span>
                     <p>{todayStudy.tot_concent_rate}%</p>
                 </div>
-                <div>
-                    <small>집중 시간</small>
+                <div className="Main-TodayComp-status">
+                    <span className="stitle">집중 시간</span>
                     <p>{todayStudy.tot_concent_time}</p>
                 </div>
-                <div>
-                    <small>총 공부시간</small>
+                <div className="Main-TodayComp-status">
+                    <span className="stitle">총 공부시간</span>
                     <p>{todayStudy.tot_time}</p>
                 </div>
             </div>

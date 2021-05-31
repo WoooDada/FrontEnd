@@ -51,6 +51,7 @@
     font-size: 2vh;
     border-radius: 1.5vh;
     font-family: "NanumGothic-Regular";
+    cursor: pointer;
 }
 
 .Login-outer-form,
@@ -113,6 +114,7 @@
     font-family: "NanumGothic-Regular";
     font-size: 2vh;
     border-radius: 1.5vh;
+    cursor: pointer;
 }
 
 .Login-outer-form p,

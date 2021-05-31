@@ -6,7 +6,7 @@ import { Main, MyProfile, NotFound, Home, Study } from "./pages";
 import "./App.css";
 import Login from "./pages/Login";
 import { useReducer, createContext, useContext } from "react";
-// import Logo from "./constants/imgs/oldLogo.jpg";
+import Logo from "./constants/imgs/newlogo.png";
 
 //////////////////////////////////////////////////////////////////////////////////
 const Header = () => {
@@ -15,7 +15,10 @@ const Header = () => {
         <>
             <div className="App-header-belt"></div>
             <div className="App-header">
-                <h1 className="App-header-title">공다다</h1>
+                <div className="App-header-title">
+                    <img width='3%' src={Logo}></img>
+                    <h1>공다다</h1>
+                </div>
                 <div className="App-header-router-wrapper">
                     <Link to="/" className="App-header-route">
                         홈

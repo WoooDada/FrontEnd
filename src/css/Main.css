@@ -79,7 +79,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 4.9vh 4vh;
+    padding: 5vh 4vh;
     /* border: 1px solid rgba(0, 0, 0, 0.178); */
     border-radius: 2vh;
     margin: 0 2vmin 0 0;
@@ -94,20 +94,27 @@
 /********** Today Comp **********/
 .Main-TodayComp {
     flex: 2;
-    padding: 7.5vh 4vh 5.5vh;
+    padding: 8vh 4vh 6vh;
+    /* border: 1px solid rgba(0, 0, 0, 0.178); */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.Main-TodayComp :nth-child(n) {
+.Main-TodayComp-status {
     margin-right: 1.5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .Main-TodayComp :last-child {
     margin-right: 0;
 }
-
+.Main-TodayComp .stitle {
+    font-size: 1.5vh;
+}
 .Main-TodayComp p {
     font-size: 2.5vh;
     font-family: "NanumGothic-Bold";
@@ -250,7 +257,7 @@
     align-self: center;
     justify-content: center;
     background-color: #e9b2bc;
-    padding: 2vh 1.5vh;
+    padding: 2.5vh 1.5vh;
     font-size: 2vh;
     margin-right: 1vh;
 }
