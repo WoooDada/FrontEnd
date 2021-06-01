@@ -21,7 +21,7 @@
 /* 오른쪽정렬 */
 .Home-banner-only {
     padding: 5vmin;
-    font-size: large;
+    font-size: 2vmin;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -38,7 +38,7 @@
     border-width: 0;
     margin: 0 auto;
     margin-top: 5vmin;
-    padding: 2vmin 6vmin;
+    padding: 1.5vmin 8vmin;
     text-decoration: none;
     text-align: center;
     border-radius: 3vmin;
@@ -53,7 +53,8 @@
 }
 
 .Home-middle {
-    width: 80%;
+    width: 55%;
+    padding: 0 10vh;
 }
 
 .Home-middle hr {
@@ -68,10 +69,16 @@
     display: block;
     margin: 0 auto;
 }
+.Home-middle p {
+    margin: 5vh;
+    text-align: center;
+    font-size: 2vh;
+}
 
 .Home-lower {
     display: flex;
     flex-direction: column;
+    font-size: 2vh;
 }
 
 .Home-lower img {
@@ -82,7 +89,8 @@
 .Home-lower-right {
     display: flex;
     flex-direction: row;
-    padding: 5vmin 0 5vmin 0;
+    padding: 5vmin 0;
+    align-items: center;
 }
 
 .Home-lower-right {
@@ -93,6 +101,8 @@
 .right-p {
     display: flex;
     flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: center; */
 }
 
 .right-p p {

@@ -5,7 +5,7 @@ import { FaMedal } from "react-icons/fa";
 import "../css/Main.css";
 import { AuthContext } from "../App";
 import { getApi } from "../api";
-import Modal from 'react-modal';
+import Modal from "react-modal";
 
 const getBadgeColor = (badge) => {
     switch (badge) {
@@ -26,17 +26,17 @@ const getBadgeColor = (badge) => {
 
 const customStyles = {
     content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)'
-    }
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-50%, -50%)",
+    },
 };
 
 const BadgeComp = () => {
-    var subtitle = '';
+    var subtitle = "";
     const [modalIsOpen, setIsOpen] = React.useState(false);
     function openModal() {
         setIsOpen(true);
@@ -44,7 +44,7 @@ const BadgeComp = () => {
 
     function afterOpenModal() {
         // references are now sync'd and can be accessed.
-        subtitle.style.color = '#E9B2BC';
+        subtitle.style.color = "#E9B2BC";
     }
 
     function closeModal() {
@@ -94,18 +94,22 @@ const BadgeComp = () => {
                     ariaHideApp={false}
                     contentLabel="Example Modal"
                 >
-                    <h2 ref={_subtitle => (subtitle = _subtitle)}>뱃지 부여 기준</h2>
-                    <div>뱃지는 누적 총 공부시간으로 계산됩니다. <br></br>
-                        블랙(0시간 이상) <br></br>
-                        브론즈(5시간 이상) <br></br>
-                        실버(30시간 이상) <br></br>
-                        골드(100시간 이상) <br></br>
-                        플래티넘(200시간 이상) <br></br>
-                        다이아(1000시간 이상) wow~<br></br><br></br>
-                        다이아까지 열공!열공!열공!!!
+                    <h2 ref={(_subtitle) => (subtitle = _subtitle)}>
+                        뱃지 부여 기준
+                    </h2>
+                    <div>
+                        뱃지는 누적 총 공부시간으로 계산됩니다. <br></br>
+                        <p>
+                            블랙: 0시간 이상 <br></br>
+                            브론즈: 5시간 이상 <br></br>
+                            실버: 30시간 이상 <br></br>
+                            골드: 100시간 이상 <br></br>
+                            플래티넘: 200시간 이상 <br></br>
+                            다이아: 1000시간 이상<br></br>
+                            <br></br>
+                            다이아까지 열공!!!
+                        </p>
                     </div>
-                    
-
                 </Modal>
                 <small>
                     <br />
