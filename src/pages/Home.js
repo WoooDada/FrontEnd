@@ -25,7 +25,12 @@ const Home = () => {
             </div>
             <div className="Home-middle">
                 <hr></hr>
-                <img width="90%" src={HomeLower} />
+                {/* <img width="90%" src={HomeLower} /> */}
+                <p>
+                    공다(多)다(多)는 지금 당장 공부가 필요한, 당신을 위한
+                    플랫폼입니다. <br />
+                    지금 당신의 의지와 열정을 보여주세요.
+                </p>
                 <hr></hr>
             </div>
             <div className="Home-lower">

@@ -16,8 +16,10 @@ const Header = () => {
             <div className="App-header-belt"></div>
             <div className="App-header">
                 <div className="App-header-title">
-                    <img width='3%' src={Logo}></img>
-                    <h1>공다다</h1>
+                    <img width="3%" src={Logo}></img>
+                    <Link to="/" className="logo-title">
+                        공다다
+                    </Link>
                 </div>
                 <div className="App-header-router-wrapper">
                     <Link to="/" className="App-header-route">
