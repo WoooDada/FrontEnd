@@ -64,36 +64,7 @@ function reducer(state, action) {
     }
 }
 
-const PrintToday = () => {
-    const today = new Date();
-    var strDay = "";
-    switch (today.getDay()) {
-        case 0:
-            strDay = "(일)"; break;
-        case 1:
-            strDay = "(월)"; break;
-        case 2:
-            strDay = "(화)"; break;
-        case 3:
-            strDay = "(수)"; break;
-        case 4:
-            strDay = "(목)"; break;
-        case 5:
-            strDay = "(금)"; break;
-        case 6:
-            strDay = "(토)"; break;
-    }
-    const result = "".concat(
-        today.getFullYear(),
-        "년 ",
-        today.getMonth() + 1,
-        "월 ",
-        today.getDate(),
-        "일 ",
-        strDay
-    );
-    return <div>{result}</div>;
-};
+
 
 const DateFormat = () => {
     const today = new Date();
@@ -243,7 +214,7 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
             <span style={{ width: "30%" }} className="daily-todo-item-tag">
                 {d_tag}
             </span>
-            <span style={{ width: "50%" }}>{d_content}</span>
+            <span style={{ width: "60%" }}>{d_content}</span>
             {d_check ? (
                 <GrCheckboxSelected
                     onClick={clickCheck}
@@ -256,14 +227,10 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
                 />
             )}
             <span
-                style={
-                    ({ width: "5%" },
-                    { paddingLeft: "1vmin" },
-                    { cursor: "pointer" })
-                }
+                className="daily-todo-item-x"
                 onClick={clickDelete}
             >
-                ❌
+                X
             </span>
         </div>
     );
@@ -316,12 +283,19 @@ const DailyComp = () => {
 
     return (
         <div className="daily-comp">
-            <h3><PrintToday /></h3>
             <div className="daily-study-comp">
                 <div className="daily-planner">
                     <div className="daily-todo-upper">
-                        <span style={{ width: "30%" }}>시간대</span>
-                        <span style={{ width: "70%" }}>할 일</span>
+                        <div className="daily-todo-upper-tag">
+                            <span>
+                                시간대
+                            </span>
+                        </div>
+                        <div className="daily-todo-upper-content">
+                            <span>
+                                할 일
+                            </span>
+                        </div>
                     </div>
                     <div className="daily-todo-wrapper">
                         <DailyContext.Provider value={{ dtodos, dispatch }}>

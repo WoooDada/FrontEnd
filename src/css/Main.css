@@ -2,16 +2,22 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    background-color: #fffcf9;
+    background-color: #FAF3F3;
     padding-bottom: 1vh;
 }
 
 .Main .small-title {
     font-family: "NanumGothic-Bold";
+    font-weight: bold;
+}
+
+.small-title {
+    font-family: "NanumGothic-Bold";
+    font-weight: bold;
 }
 
 .Main-Banner {
-    background-color: #bcd6a7;
+    background-color: #E9B2BC;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -139,6 +145,7 @@
     /* padding: 0 4vh; */
     /* margin: 2vmin 0 0 0; */
     /* border: 2px solid rgba(0, 0, 0, 0.178); */
+    margin: 0 1vh;
     overflow: auto;
 }
 .Main-MonthlyComp::-webkit-scrollbar {
@@ -208,7 +215,7 @@
 /********** WeeklyComp **********/
 .Main-WeeklyComp {
     flex: 2;
-    margin: 0 2vh;
+    margin: 0 1vh;
     /* border: 2px solid rgba(0, 0, 0, 0.178); */
     /* padding: 2vmin 3vmin; */
 }
@@ -218,7 +225,7 @@
     flex: 1;
 }
 .Main-WeeklyComp .Weekly-container {
-    height: 63vh; /* or position:absolute; height:100%; */
+    /* height: 63vh; or position:absolute; height:100%; */
     display: flex;
     flex-direction: column;
     padding: 1vh 2vh;

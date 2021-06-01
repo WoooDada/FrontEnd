@@ -4,7 +4,7 @@ import { BtnContext } from "../pages/Study"
 import "../css/LeftStudy.css";
 import { getApi } from "../api";
 import { HeatMapGrid } from 'react-grid-heatmap';
-import { FaBlackberry } from "react-icons/fa";
+import { FaBlackberry, FaRegBell } from "react-icons/fa";
 import useInterval from "@use-it/interval";
 import { isCompositeComponentWithType } from "react-dom/test-utils";
 import { ContinuousSizeLegend } from "react-vis";
@@ -274,7 +274,7 @@ const TenMinPlanner = () => {
             } else if (ratio === 0){
                 return '#E9B2BC';
             } else { // ratio = 0.5
-                return '#F5F5F5';
+                return 'rgb(225,229,234,0.5)';
             }
         };
         

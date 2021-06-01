@@ -3,15 +3,22 @@
     flex-direction: row;
     min-height: 100%;
     padding: 3vmin;
-    background: #FFFCF9;
+    background: #FAF3F3;
 }
 
 .StudyComps .LeftComp {
     flex: 1;
     min-height: 80vmin;
-    border-right: 1px solid black;
-    padding-right: 3vmin;
+    /* border-right: 1px solid #E9B2BC; */
+    padding: 0 3vmin 1vmin 0;
 }
+
+.StudyComps .LeftComp-upper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 
 .StudyComps .RightComp {
     flex: 1;
@@ -63,6 +70,7 @@
     border-radius: 2vmin;
     margin: 1vmin;
     width: 6vmin;
+    padding: 1vmin 0;
 }
 
 .RightComp-inner {
