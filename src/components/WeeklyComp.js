@@ -164,76 +164,76 @@ const TaskItem = ({ dow, id, date, checked, content }) => {
     const [todo, setTodo] = useState(content);
     const handleCheck = async () => {
         // * 실제 api
-        // const { status } = await putApi(
-        //     {
-        //         uid: authContext.state.uid,
-        //         w_todo_id: id,
-        //         w_content: content,
-        //         w_check: !checked === false ? "F" : "T",
-        //         w_date: date,
-        //     },
-        //     "/tdl/weekly/"
-        // );
-        // if (status === 200) {
-        //     await weeklyContext.dispatch({ type: "UPDATE_CHECK", id, dow });
-        // } else {
-        //     alert("인터넷 연결 불안정");
-        // }
+        const { status } = await putApi(
+            {
+                uid: authContext.state.uid,
+                w_todo_id: id,
+                w_content: content,
+                w_check: !checked === false ? "F" : "T",
+                w_date: date,
+            },
+            "/tdl/weekly/"
+        );
+        if (status === 200) {
+            await weeklyContext.dispatch({ type: "UPDATE_CHECK", id, dow });
+        } else {
+            alert("인터넷 연결 불안정");
+        }
         // * dummy
-        weeklyContext.dispatch({ type: "UPDATE_CHECK", id, dow });
+        // weeklyContext.dispatch({ type: "UPDATE_CHECK", id, dow });
     };
     const handleUpdateButton = async () => {
         // * 실제 api
-        // const { status } = await putApi(
-        //     {
-        //         uid: authContext.state.uid,
-        //         w_todo_id: id,
-        //         w_content: todo,
-        //         w_check: checked,
-        //         w_date: date,
-        //     },
-        //     "/tdl/weekly/"
-        // );
-        // if (status === 200) {
-        //     await weeklyContext.dispatch({
-        //         type: "UPDATE_CONTENT",
-        //         id,
-        //         dow,
-        //         content: todo,
-        //     });
-        // } else {
-        //     await alert("인터넷 연결 불안정");
-        // }
+        const { status } = await putApi(
+            {
+                uid: authContext.state.uid,
+                w_todo_id: id,
+                w_content: todo,
+                w_check: checked,
+                w_date: date,
+            },
+            "/tdl/weekly/"
+        );
+        if (status === 200) {
+            await weeklyContext.dispatch({
+                type: "UPDATE_CONTENT",
+                id,
+                dow,
+                content: todo,
+            });
+        } else {
+            await alert("인터넷 연결 불안정");
+        }
         // * dummy data
-        weeklyContext.dispatch({
-            type: "UPDATE_CONTENT",
-            id,
-            dow,
-            content: todo,
-        });
+        // weeklyContext.dispatch({
+        //     type: "UPDATE_CONTENT",
+        //     id,
+        //     dow,
+        //     content: todo,
+        // });
     };
     const handleDeleteButton = async () => {
-        // const { status } = await deleteApi(
-        //     { uid: authContext.state.uid, w_todo_id: id },
-        //     "/tdl/weekly/"
-        // );
+        const { status } = await deleteApi(
+            { uid: authContext.state.uid, w_todo_id: id },
+            "/tdl/weekly/"
+        );
 
-        // if (status === 200) {
-        //     await weeklyContext.dispatch({
-        //         type: "DELETE",
-        //         id,
-        //         dow,
-        //     });
-        // } else {
-        //     // console.log(data.message);
-        //     await alert("네트워크 불안정");
-        // }
+        if (status === 200) {
+            await weeklyContext.dispatch({
+                type: "DELETE",
+                id,
+                dow,
+            });
+        } else {
+            // console.log(data.message);
+            await alert("네트워크 불안정");
+        }
         // 더미
-        weeklyContext.dispatch({
-            type: "DELETE",
-            id,
-            dow,
-        });
+        // weeklyContext.dispatch({
+        //     type: "DELETE",
+        //     id,
+        //     dow,
+        // });
     };
     const handleChange = (e) => {
         setTodo(e.target.value);
@@ -263,32 +263,32 @@ const DayOfWeekComp = ({ dow, date, tasks }) => {
 
     const handleAddButtonClick = async () => {
         // * 실제 쓰이는 코드
-        // const { status, data } = await postApi(
-        //     {
-        //         uid: authContext.state.uid,
-        //         w_date: date,
-        //         w_content: newTodo,
-        //         w_check: "F",
-        //     },
-        //     "/tdl/weekly/"
-        // );
-        // if (status === 200) {
-        //     weeklyContext.dispatch({
-        //         type: "ADD_NEW",
-        //         dow,
-        //         newTodo,
-        //         id: data.w_todo_id,
-        //     });
-        // } else {
-        //     alert("인터넷 연결이 불안정합니다.");
-        // }
+        const { status, data } = await postApi(
+            {
+                uid: authContext.state.uid,
+                w_date: date,
+                w_content: newTodo,
+                w_check: "F",
+            },
+            "/tdl/weekly/"
+        );
+        if (status === 200) {
+            weeklyContext.dispatch({
+                type: "ADD_NEW",
+                dow,
+                newTodo,
+                id: data.w_todo_id,
+            });
+        } else {
+            alert("인터넷 연결이 불안정합니다.");
+        }
         // dummy code
-        weeklyContext.dispatch({
-            type: "ADD_NEW",
-            dow,
-            newTodo,
-            id: 4,
-        });
+        // weeklyContext.dispatch({
+        //     type: "ADD_NEW",
+        //     dow,
+        //     newTodo,
+        //     id: 4,
+        // });
         setNewTodo("");
     };
     const handleNewChange = (e) => {
@@ -352,7 +352,7 @@ const WeeklyComp = () => {
                 alert("인터넷 연결이 불안정합니다.");
             }
         };
-        // getWeeklyData();
+        getWeeklyData();
     }, []);
     return (
         <div className="Main-WeeklyComp">

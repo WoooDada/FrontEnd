@@ -26,14 +26,23 @@
     align-items: center;
     /* background-color: pink; */
 }
-.App-header-title .logo-title {
+.App-header-title .logo-title-login {
     flex: 15;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 2vmin 0;
-    margin-left: 5vh;
+    margin-left: 10vh;
 }
+
+.App-header-title .logo-title-nologin {
+    flex: 15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2vmin 0;
+}
+
 .App-header-title .logo-title-txt {
     font-style: normal;
     text-decoration: none;

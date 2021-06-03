@@ -78,7 +78,7 @@
 
 .Main-BadgeComp,
 .Main-TodayComp,
-.Main-ContentGraphComp {
+.Main-ConcentGraphComp {
     /* background-color: antiquewhite; */
     /* height: 60%; */
     flex: 1;
@@ -126,15 +126,21 @@
     font-family: "NanumGothic-Bold";
 }
 
-/********** ContentGraphComp **********/
-.Main-ContentGraphComp {
+/********** ConcentGraphComp **********/
+.Main-ConcentGraphComp {
     flex: 3;
     /* border: 2px solid rgba(0, 0, 0, 0.178); */
     padding: 3vh 2vh 1vh;
+    cursor: pointer;
 }
 
-.Main-ContentGraphComp .graph {
+.Main-ConcentGraphComp .graph {
     align-self: center;
+}
+
+.Main-ConcentGraph-Wrapper .Modal-Style {
+    list-style-type: square;
+    font-size: 40vmin;
 }
 
 /********** MonthlyComp **********/
