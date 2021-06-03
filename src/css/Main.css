@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    background-color: #FAF3F3;
+    background-color: #faf3f3;
     padding-bottom: 1vh;
 }
 
@@ -17,7 +17,7 @@
 }
 
 .Main-Banner {
-    background-color: #E9B2BC;
+    background-color: #e9b2bc;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -78,7 +78,7 @@
 
 .Main-BadgeComp,
 .Main-TodayComp,
-.Main-ContentGraphComp {
+.Main-ConcentGraphComp {
     /* background-color: antiquewhite; */
     /* height: 60%; */
     flex: 1;
@@ -126,15 +126,21 @@
     font-family: "NanumGothic-Bold";
 }
 
-/********** ContentGraphComp **********/
-.Main-ContentGraphComp {
+/********** ConcentGraphComp **********/
+.Main-ConcentGraphComp {
     flex: 3;
     /* border: 2px solid rgba(0, 0, 0, 0.178); */
     padding: 3vh 2vh 1vh;
+    cursor: pointer;
 }
 
-.Main-ContentGraphComp .graph {
+.Main-ConcentGraphComp .graph {
     align-self: center;
+}
+
+.Main-ConcentGraph-Wrapper .Modal-Style {
+    list-style-type: square;
+    font-size: 40vmin;
 }
 
 /********** MonthlyComp **********/
@@ -225,7 +231,7 @@
     flex: 1;
 }
 .Main-WeeklyComp .Weekly-container {
-    /* height: 63vh; or position:absolute; height:100%; */
+    height: 63vh; /*or position:absolute; height:100%; */
     display: flex;
     flex-direction: column;
     padding: 1vh 2vh;

@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import LoginForm from "../components/LoginForm";
 import "../css/Login.css";
 import booksImg from "../constants/imgs/books2.svg";
 import { useState } from "react";
 import SignupForm from "../components/SignupForm";
+import { AuthContext } from "../App";
+import { useEffect } from "react";
 
 const Login = (props) => {
     const [isSignUp, setIsSignUp] = useState(false);
+    const authContext = useContext(AuthContext);
+
+    useEffect(() => {
+        authContext.dispatch({ type: "onLoginPage" });
+        return () => {
+            authContext.dispatch({ type: "notOnLoginPage" });
+        };
+    }, []);
     return (
         <div className="LoginPage">
             <div className="LoginPage-BookImg">

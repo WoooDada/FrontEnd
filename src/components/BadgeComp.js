@@ -52,8 +52,8 @@ const BadgeComp = () => {
     }
     const authContext = useContext(AuthContext);
     const [userData, setUserData] = useState({
-        nickname: "우정짱",
-        badge_color: "#c0c0c0",
+        nickname: "",
+        badge_color: "#000000",
     });
     useEffect(() => {
         const getNickName = async () => {
@@ -73,7 +73,7 @@ const BadgeComp = () => {
                 alert("네트워크 불안정");
             }
         };
-        // getNickName();
+        getNickName();
     }, []);
     return (
         <div>

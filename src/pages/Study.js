@@ -3,6 +3,7 @@ import { useReducer, createContext, useContext } from "react";
 import { Link } from "react-router-dom";
 import { LeftStudyComp, RightStudyComp } from "../components";
 import { AuthContext } from "../App";
+import { postApi } from "../api";
 
 import "../css/Study.css";
 export const BtnContext = createContext();
@@ -22,20 +23,19 @@ const Study = () => {
         btnValue: false,
     });
     const postOut = async () => {
-        // const { status } = await postApi(
-        //     {
-        //         uid: authContext.state.uid,
-        //         type: "stop",
-        //     },
-        //     "/study/studybutton/"
-        // );
-        const { status, data } = {
-            // Dummy Dummy
-            status: 200,
-        };
+        const { status } = await postApi(
+            {
+                uid: authContext.state.uid,
+                type: "stop",
+            },
+            "/study/studybutton/"
+        );
+        // const { status, data } = {
+        //     // Dummy Dummy
+        //     status: 200,
+        // };
         if (status === 200) {
-            // await console.log("바뀌기전 버튼값:", start);
-            // await btnContext.dispatch({ type: "btnClick", payload: !start });
+            console.log("잘됨");
         } else {
             alert("네트워크 에러!");
         }

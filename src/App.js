@@ -11,38 +11,34 @@ import Logo from "./constants/imgs/newlogo.png";
 //////////////////////////////////////////////////////////////////////////////////
 const Header = () => {
     const authContext = useContext(AuthContext);
+
     return (
         <>
             <div className="App-header-belt"></div>
             <div className="App-header">
                 <div className="App-header-title">
-                    <img width="3%" src={Logo}></img>
-                    <Link to="/" className="logo-title">
-                        공다다
-                    </Link>
-                </div>
-                <div className="App-header-router-wrapper">
-                    <Link to="/" className="App-header-route">
-                        홈
-                    </Link>
-                    {/* 로그인 여부에 따라 header에 login or myprofile 출력 */}
-                    {authContext.state.uid ? (
-                        <></>
-                    ) : (
-                        <Link to="/login" className="App-header-route">
-                            로그인
+                    <div
+                        className={
+                            !authContext.state.onLogin
+                                ? "logo-title-login"
+                                : "logo-title-nologin"
+                        }
+                    >
+                        <img width="3%" src={Logo}></img>
+                        <Link to="/" className="logo-title-txt">
+                            공다다
                         </Link>
-                    )}
-                    <Link to="/myprofile" className="App-header-route">
-                        마이프로필
-                    </Link>
-                    <Link to="/main" className="App-header-route">
-                        메인
-                    </Link>
-                    {/* 스터디는 임시임다 */}
-                    <Link to="/study" className="App-header-route">
-                        스터디
-                    </Link>
+                    </div>
+                    {!authContext.state.onLogin &&
+                        (authContext.state.uid ? (
+                            <Link to="/myprofile" className="App-header-route">
+                                로그아웃
+                            </Link>
+                        ) : (
+                            <Link to="/login" className="App-header-route">
+                                로그인
+                            </Link>
+                        ))}
                 </div>
             </div>
         </>
@@ -76,9 +72,13 @@ export const AuthContext = createContext();
 const reducer = (state, action) => {
     switch (action.type) {
         case "login":
-            return { uid: action.payload };
+            return { uid: action.payload, onLogin: true };
         case "logout":
-            return { uid: null };
+            return { uid: null, onLogin: true };
+        case "onLoginPage":
+            return { uid: null, onLogin: true };
+        case "notOnLoginPage":
+            return { uid: state.uid, onLogin: false };
         default:
             return state;
     }
@@ -88,6 +88,7 @@ const reducer = (state, action) => {
 function App() {
     const [state, dispatch] = useReducer(reducer, {
         uid: null,
+        onLogin: false,
     });
     return (
         <div className="App">

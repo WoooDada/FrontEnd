@@ -64,8 +64,6 @@ function reducer(state, action) {
     }
 }
 
-
-
 const DateFormat = () => {
     const today = new Date();
     var todayMonth = "";
@@ -162,20 +160,20 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
     const authContext = useContext(AuthContext);
 
     const clickCheck = async () => {
-        // const { status, data } = await putApi(
-        //     {
-        //         uid: authContext.state.uid,
-        //         d_todo_id: id,
-        //         d_content: d_content,
-        //         d_tag: d_tag,
-        //         d_check: !d_check === false ? "F" : "T",
-        //         d_date: d_date,
-        //     },
-        //     "/tdl/daily/"
-        // );
-        const { status, data } = {
-            status: 200,
-        };
+        const { status, data } = await putApi(
+            {
+                uid: authContext.state.uid,
+                d_todo_id: id,
+                d_content: d_content,
+                d_tag: d_tag,
+                d_check: !d_check === false ? "F" : "T",
+                d_date: d_date,
+            },
+            "/tdl/daily/"
+        );
+        // const { status, data } = {
+        //     status: 200,
+        // };
         console.log("이거슨 CHECK");
         if (status === 200) {
             await dailyContext.dispatch({
@@ -188,16 +186,16 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
     };
 
     const clickDelete = async () => {
-        // const { status, data } = await deleteApi(
-        //     {
-        //         uid: authContext.state.uid,
-        //         d_todo_id: id,
-        //     },
-        //     "/tdl/daily/"
-        // );
-        const { status, data } = {
-            status: 200,
-        };
+        const { status, data } = await deleteApi(
+            {
+                uid: authContext.state.uid,
+                d_todo_id: id,
+            },
+            "/tdl/daily/"
+        );
+        // const { status, data } = {
+        //     status: 200,
+        // };
         console.log("DELETE입니다우우우");
         if (status === 200) {
             await dailyContext.dispatch({
@@ -226,10 +224,7 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
                     className="daily-checkbox-false"
                 />
             )}
-            <span
-                className="daily-todo-item-x"
-                onClick={clickDelete}
-            >
+            <span className="daily-todo-item-x" onClick={clickDelete}>
                 X
             </span>
         </div>
@@ -278,7 +273,7 @@ const DailyComp = () => {
                 alert("인터넷 연결이 불안정합니다.");
             }
         };
-        // getDailyData();
+        getDailyData();
     }, []);
 
     return (
@@ -287,14 +282,10 @@ const DailyComp = () => {
                 <div className="daily-planner">
                     <div className="daily-todo-upper">
                         <div className="daily-todo-upper-tag">
-                            <span>
-                                시간대
-                            </span>
+                            <span>시간대</span>
                         </div>
                         <div className="daily-todo-upper-content">
-                            <span>
-                                할 일
-                            </span>
+                            <span>할 일</span>
                         </div>
                     </div>
                     <div className="daily-todo-wrapper">
