@@ -6,7 +6,7 @@ import { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import useInterval from "@use-it/interval";
-import { BtnContext } from "../pages/Study"
+import { BtnContext } from "../pages/Study";
 
 import { postApi } from "../api";
 import { AuthContext } from "../App";
@@ -70,7 +70,7 @@ const RightStudyComp = () => {
                         uid: authContext.state.uid,
                         type:
                             resultlistRef.current["C"] >
-                                resultlistRef.current["P"]
+                            resultlistRef.current["P"]
                                 ? "C"
                                 : "P",
                         time: new Date().toString().split(" ")[4].substr(0, 5),
@@ -104,11 +104,12 @@ const RightStudyComp = () => {
         //     },
         //     "/study/studybutton/"
         // );
-        const { status, data } = { // Dummy Dummy
+        const { status, data } = {
+            // Dummy Dummy
             status: 200,
         };
         if (status === 200) {
-            await console.log('바뀌기전 버튼값:', start);
+            await console.log("바뀌기전 버튼값:", start);
             await btnContext.dispatch({ type: "btnClick", payload: !start });
             await setStart(!start); // start값 true <-> false 변경
             await setResult([]);
@@ -132,14 +133,17 @@ const RightStudyComp = () => {
         <div className="RightComp">
             <div className="RightComp-inner">
                 {/* <p>현재: {isConcentrate()}</p> */}
-                <video className='Rstudy-video'
+                <video
+                    className="Rstudy-video"
                     ref={videoRef}
                     style={{ transform: "scale(-1,1)" }}
-                    width="200"
-                    height="150"
+                    width="300"
+                    height="200"
                 ></video>
-                <p className='Rstudy-undervideo'>
-                    <span className="undervideo-span1">집중: {getClassRate("C")}%</span>
+                <p className="Rstudy-undervideo">
+                    <span className="undervideo-span1">
+                        집중: {getClassRate("C")}%
+                    </span>
                     <span className="undervideo-span2">
                         공부시간: {study_time.tot_concent_time}
                     </span>
