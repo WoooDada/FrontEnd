@@ -17,23 +17,52 @@ import { AuthContext } from "../App";
 
 const initialData = {
     concent: [
-        { x: "Mon", y: 0 },
-        { x: "Tue", y: 0 },
-        { x: "Wed", y: 0 },
-        { x: "Thu", y: 0 },
-        { x: "Fri", y: 0 },
-        { x: "Sat", y: 0 },
-        { x: "Sun", y: 0 },
+        { x: "월", y: 0 },
+        { x: "화", y: 0 },
+        { x: "수", y: 0 },
+        { x: "목", y: 0 },
+        { x: "금", y: 0 },
+        { x: "토", y: 0 },
+        { x: "일", y: 0 },
     ],
     play: [
-        { x: "Mon", y: 0 },
-        { x: "Tue", y: 0 },
-        { x: "Wed", y: 0 },
-        { x: "Thu", y: 0 },
-        { x: "Fri", y: 0 },
-        { x: "Sat", y: 0 },
-        { x: "Sun", y: 0 },
+        { x: "월", y: 0 },
+        { x: "화", y: 0 },
+        { x: "수", y: 0 },
+        { x: "목", y: 0 },
+        { x: "금", y: 0 },
+        { x: "토", y: 0 },
+        { x: "일", y: 0 },
     ],
+};
+const dowEn2Kr = () => {
+    const dow_seq_list = ["월", "화", "수", "목", "금", "토", "일"];
+    const right_ans = [];
+    let i;
+    const left_ans = [];
+    const enDow_list = {
+        Fri: "금",
+        Sun: "일",
+        Sat: "토",
+        Mon: "월",
+        Tue: "화",
+        Wed: "수",
+        Thu: "목",
+    };
+    const enDow = new Date().toDateString().split(" ")[0];
+    const today = enDow_list[enDow];
+    for (i = 0; i < dow_seq_list.length; i++) {
+        right_ans.push(dow_seq_list[i]);
+        if (dow_seq_list[i] === today) {
+            break;
+        }
+    }
+    i++;
+    while (i < dow_seq_list.length) {
+        left_ans.push(dow_seq_list[i]);
+        i++;
+    }
+    return left_ans.concat(right_ans);
 };
 
 const customStyles = {
@@ -77,6 +106,7 @@ const ConcentGraphComp = () => {
     const authContext = useContext(AuthContext);
     useEffect(() => {
         const getGraphData = async () => {
+            const weekxs = dowEn2Kr();
             const { status, data } = await getApi(
                 {
                     uid: authContext.state.uid,
@@ -85,14 +115,21 @@ const ConcentGraphComp = () => {
             );
             if (status === 200) {
                 await console.log(data.graph);
+                // 무작위 월~일 데이터: 그 날 기준 6일 전까지로 정렬.
                 await setGraphData({
-                    concent: data.graph.map((v, i) => ({
-                        x: v.date,
-                        y: parseInt(v.concent_time),
+                    concent: weekxs.map((x, i) => ({
+                        x: x,
+                        y: parseInt(
+                            data.graph.filter((v, _) => x === v.date)[0]
+                                .concent_time
+                        ),
                     })),
-                    play: data.graph.map((v, i) => ({
-                        x: v.date,
-                        y: parseInt(v.play_time),
+                    play: weekxs.map((x, i) => ({
+                        x: x,
+                        y: parseInt(
+                            data.graph.filter((v, _) => x === v.date)[0]
+                                .play_time
+                        ),
                     })),
                 });
             } else {

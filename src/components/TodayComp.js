@@ -9,9 +9,9 @@ import { AuthContext } from "../App";
 const TodayComp = () => {
     const authContext = useContext(AuthContext);
     const [todayStudy, setTodayStudy] = useState({
-        tot_concent_rate: 30,
-        tot_concent_time: "5h 30m",
-        tot_time: "6h 06m",
+        tot_concent_rate: 0,
+        tot_concent_time: "0h 00m",
+        tot_time: "0h 00m",
     });
     const make2hmForm = (data) => {
         const l = data.split(":");

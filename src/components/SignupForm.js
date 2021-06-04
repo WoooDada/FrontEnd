@@ -3,7 +3,7 @@ import "../css/Login.css";
 import Logo from "../constants/imgs/Logo.jpg";
 import axios from "axios";
 
-function SignupForm({ history }) {
+function SignupForm({ setIsSignUp }) {
     const [details, setDetails] = useState({
         uid: "",
         nickname: "",
@@ -40,13 +40,16 @@ function SignupForm({ history }) {
 
         if (status === 200) {
             // signup 성공 시
-            await history.push("/login"); // 성공 시 login으로 이동
+            // await history.push("/login"); // 성공 시 login으로 이동
+            await setIsSignUp(false);
             alert("회원가입 성공!");
         } else {
             // 실패 시
             // 에러 메시지 송출
+            await console.log(data);
             if (data.message === "duplicate uid") {
                 // uid 중복
+
                 await setSignupErrorMsg("이미 가입된 회원입니다.");
             } else if (data.message === "duplicate nickname") {
                 // nickname 중복

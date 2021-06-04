@@ -73,8 +73,8 @@ const DateFormat = () => {
         todayMonth = today.getMonth() + 1;
     }
     var todayDate = "";
-    if ((today.getDate()).toString().length == 1) {
-        todayDate = "0" + (today.getDate()).toString();
+    if (today.getDate().toString().length == 1) {
+        todayDate = "0" + today.getDate().toString();
     } else {
         todayDate = today.getDate();
     }
@@ -84,7 +84,7 @@ const DateFormat = () => {
         "-",
         todayMonth,
         "-",
-        todayDate,
+        todayDate
     );
     return result;
 };
@@ -102,12 +102,12 @@ const DtodosInput = () => {
     var newtag = null;
     var newcontent = null;
     const addBtnHandler = async () => {
-        if (inputs.tag === ''){
+        if (inputs.tag === "") {
             newtag = null;
         } else {
             newtag = inputs.tag;
         }
-        if (inputs.content === ''){
+        if (inputs.content === "") {
             newcontent = null;
         } else {
             newcontent = inputs.content;
@@ -128,7 +128,6 @@ const DtodosInput = () => {
         // };
         console.log("CREATE_TODO = POST입니다");
         if (status === 200) {
-            
             dailyContext.dispatch({
                 type: "CREATE_TODO",
                 dtodo: {
