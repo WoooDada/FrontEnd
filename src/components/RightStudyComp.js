@@ -148,7 +148,7 @@ const RightStudyComp = () => {
                         공부시간: {study_time.tot_concent_time}
                     </span>
                     <span className="undervideo-span3">
-                        휴식시간: {study_time.tot_play_time}
+                        딴짓시간: {study_time.tot_play_time}
                     </span>
                 </p>
                 {loaded && (

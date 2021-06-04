@@ -430,7 +430,7 @@ const MonthlyComp = () => {
                                 className="Main-Monthly-changeBtn"
                                 onClick={handleClickUpdateBtn}
                             >
-                                일정변경
+                                내용변경
                             </button>
                             <button
                                 className="Main-Monthly-deleteBtn"

@@ -82,7 +82,7 @@ const TenMinPlanner = () => {
                     // };
                     await console.log("useeffect");
                     if (status === 200) {
-                        await console.log(data.ten_min_list);
+                        await console.log("data.tenminlist", data.ten_min_list);
                         await setTenMinData(
                             data.ten_min_list.map((t) => ({
                                 stt_time: t.stt_time,
@@ -156,7 +156,7 @@ const TenMinPlanner = () => {
                     // C > P
                     tendata.concent_type = "C";
                 } else {
-                    // C < Ps
+                    // C < P
                     tendata.concent_type = "P";
                 }
                 setTenMinData(tenMinData.concat(tendata));
@@ -314,7 +314,7 @@ const TenMinPlanner = () => {
     const typetoInt = (type) => {
         if (type === "C") {
             return 100;
-        } else {
+        } else if (type === "P") {
             return -100;
         }
     };

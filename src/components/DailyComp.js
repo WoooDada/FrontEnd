@@ -94,20 +94,20 @@ const DtodosInput = () => {
     });
 
     const addBtnHandler = async () => {
-        // const { status, data } = await postApi(
-        //     {
-        //         uid: authContext.state.uid,
-        //         d_date: DateFormat(),
-        //         d_content: inputs.content,
-        //         d_tag: inputs.tag,
-        //         d_check: "F",
-        //     },
-        //     "/tdl/daily/"
-        // );
+        const { status, data } = await postApi(
+            {
+                uid: authContext.state.uid,
+                d_date: DateFormat(),
+                d_content: inputs.content,
+                d_tag: inputs.tag,
+                d_check: "F",
+            },
+            "/tdl/daily/"
+        );
         // dummy data
-        const { status, data } = {
-            status: 200,
-        };
+        // const { status, data } = {
+        //     status: 200,
+        // };
         console.log("CREATE_TODO = POST입니다");
         if (status === 200) {
             dailyContext.dispatch({

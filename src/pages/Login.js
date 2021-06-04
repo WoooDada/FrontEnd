@@ -29,7 +29,7 @@ const Login = (props) => {
             <div className="Login-wrapper">
                 <div className="Login-LoginBox">
                     {isSignUp ? (
-                        <SignupForm></SignupForm>
+                        <SignupForm setIsSignUp={setIsSignUp}></SignupForm>
                     ) : (
                         <>
                             <LoginForm history={props.history} />
