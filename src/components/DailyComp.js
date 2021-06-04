@@ -15,20 +15,20 @@ import TenMinPlanner from "./TenMinPlanner";
 const DailyContext = createContext(null);
 
 const initialData = [
-    {
-        id: 1,
-        d_date: "2021-05-20",
-        d_content: "졸작회의",
-        d_check: true,
-        d_tag: "3~5",
-    },
-    {
-        id: 2,
-        d_date: "2021-05-20",
-        d_content: "졸작회의",
-        d_check: false,
-        d_tag: "",
-    },
+    // {
+    //     id: 1,
+    //     d_date: "2021-05-20",
+    //     d_content: "졸작회의",
+    //     d_check: true,
+    //     d_tag: "3~5",
+    // },
+    // {
+    //     id: 2,
+    //     d_date: "2021-05-20",
+    //     d_content: "졸작회의",
+    //     d_check: false,
+    //     d_tag: "",
+    // },
 ];
 
 function reducer(state, action) {
@@ -72,13 +72,19 @@ const DateFormat = () => {
     } else {
         todayMonth = today.getMonth() + 1;
     }
-
+    var todayDate = "";
+    if (today.getDate().toString().length == 1) {
+        todayDate = "0" + today.getDate().toString();
+    } else {
+        todayDate = today.getDate();
+    }
+    console.log(todayDate);
     const result = "".concat(
         today.getFullYear(),
         "-",
         todayMonth,
         "-",
-        today.getDate()
+        todayDate
     );
     return result;
 };
@@ -93,13 +99,25 @@ const DtodosInput = () => {
         content: "",
     });
 
+    var newtag = null;
+    var newcontent = null;
     const addBtnHandler = async () => {
+        if (inputs.tag === "") {
+            newtag = null;
+        } else {
+            newtag = inputs.tag;
+        }
+        if (inputs.content === "") {
+            newcontent = null;
+        } else {
+            newcontent = inputs.content;
+        }
         const { status, data } = await postApi(
             {
                 uid: authContext.state.uid,
                 d_date: DateFormat(),
-                d_content: inputs.content,
-                d_tag: inputs.tag,
+                d_content: newcontent,
+                d_tag: newtag,
                 d_check: "F",
             },
             "/tdl/daily/"
