@@ -1,0 +1,63 @@
+.what-box {
+    display: flex;
+    margin-right: auto;
+}
+.what-box-btn {
+    background-color: white;
+    border: none;
+    padding: 1vmin;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.studybox-upper-btns {
+    display: flex;
+    margin-bottom: 2vmin;
+}
+
+.more-btn {
+    background-color: white;
+    color: rgb(124, 124, 124);
+    border: none;
+    padding: 1vmin;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.box-list {
+    max-width: 70vmin;
+}
+
+.studybox-newsquare {
+    width: 12vmin;
+    height: 12vmin;
+    background-color: #FFCF23;
+    border: none;
+    border-radius: 2vmin;
+    margin: 1vmin;
+}
+
+.studybox-newsquare p {
+    font-size: x-small;
+    font-weight: bold;
+}
+
+.studybox-square { /* 사각형 한칸 */
+    width: 12vmin;
+    height: 12vmin;
+    background-color: #E1E5EA;
+    border: none;
+    border-radius: 2vmin;
+    margin: 1vmin;
+}
+
+.studybox-squares {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.studybox-squres-row {
+    display: flex;
+    flex-direction: row;
+}

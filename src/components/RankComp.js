@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
-import "../css/MainGraph.css";
 import "../css/Main.css";
 import getApi from "../api/getApi";
 import { AuthContext } from "../App";

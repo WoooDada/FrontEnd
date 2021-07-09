@@ -7,8 +7,8 @@
     border: none;
     padding: 1vmin;
     font-weight: bold;
+    cursor: pointer;
 }
-
 
 .Rank-study,
 .Rank-play {
