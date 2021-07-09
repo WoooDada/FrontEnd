@@ -5,6 +5,8 @@ import {
     MonthlyComp,
     WeeklyComp,
     TodayComp,
+    RankComp,
+    StudyBoxComp,
 } from "../components";
 import { Link } from "react-router-dom";
 import "../css/Main.css";
@@ -44,6 +46,14 @@ const Main = () => {
                         <ConcentGraphComp></ConcentGraphComp>
                     </div>
                 </div>
+                <div className="Main-big-wrapper">
+                    <h3>스터디</h3>
+                    <div className="Main-Study">
+                        <RankComp></RankComp>
+                        <StudyBoxComp></StudyBoxComp>
+                    </div>
+                </div>
+
                 <div className="Main-big-wrapper">
                     <h3>스케줄</h3>
                     <div className="Main-Schedule">

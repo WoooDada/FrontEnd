@@ -65,7 +65,8 @@
 }
 
 .Main-Body .Main-Status,
-.Main-Body .Main-Schedule {
+.Main-Body .Main-Schedule,
+.Main-Body .Main-Study {
     display: flex;
     flex-direction: row;
     overflow: hidden;
@@ -78,7 +79,9 @@
 
 .Main-BadgeComp,
 .Main-TodayComp,
-.Main-ConcentGraphComp {
+.Main-ConcentGraphComp,
+.Main-RankComp,
+.Main-StudyBoxComp {
     /* background-color: antiquewhite; */
     /* height: 60%; */
     flex: 1;
@@ -325,3 +328,6 @@
     height: 20%;
     border-bottom: 1px solid gray;
 }
+
+
+/* ---------------------Study--------------------- */

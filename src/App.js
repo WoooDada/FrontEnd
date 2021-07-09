@@ -29,6 +29,12 @@ const Header = () => {
                             공다다
                         </Link>
                     </div>
+                    {/* ------------ 테스트용 임시 코드 ------------- */}
+                    <div>
+                        <Link to="/main">
+                        메인
+                        </Link>
+                    </div>
                     {!authContext.state.onLogin &&
                         (authContext.state.uid ? (
                             <Link to="/myprofile" className="App-header-route">
