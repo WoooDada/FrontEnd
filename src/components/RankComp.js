@@ -46,7 +46,7 @@ const RankItem = ({rank, nickname, tot}) => {
 const StudyRank = (srank) => {
     const rendering = () => {
         const result = [];
-        for (let i=1; i < 11; i++) {
+        for (let i=1; i < Object.keys(srank).length; i++) {
             result.push(
                 <RankItem 
                     key={i}
@@ -76,7 +76,7 @@ const StudyRank = (srank) => {
 const PlayRank = (prank) => {
     const rendering = () => {
         const result = [];
-        for (let i = 1; i < 11; i++) {
+        for (let i = 1; i < Object.keys(prank).length; i++) {
             result.push(
                 <RankItem
                     key={i}
