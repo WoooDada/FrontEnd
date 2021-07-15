@@ -7,7 +7,7 @@ import "../css/StudyBox.css";
 
 const initialAllRoomData = [
     { room_id: 1, room_name: "성공하자", inppl: 6, maxppl: 10, room_color: "#E8BBBB" },
-    { room_id: 2, room_name: "송이들 드루와아아아아", inppl: 3, maxppl: 10, room_color: "#B0DFFB" },
+    { room_id: 2, room_name: "송이들 드루와아아아아아아아아아아아아", inppl: 3, maxppl: 10, room_color: "#B0DFFB" },
     { room_id: 3, room_name: "방방방", inppl: 6, maxppl: 10, room_color: "#E8BBBB" },
     { room_id: 4, room_name: "ㅎㅇㅎㅇ", inppl: 3, maxppl: 10, room_color: "#B0DFFB" },
     { room_id: 5, room_name: "공부합시다 여러분!!!!", inppl: 6, maxppl: 10, room_color: "#E8BBBB" },
@@ -21,17 +21,6 @@ const initialMyRoomData = [
     { room_id: 1, room_name: "성공하자", inppl: 6, maxppl: 10, room_color: "#E8BBBB" },
     { room_id: 2, room_name: "송이들 드루와아아", inppl: 3, maxppl: 10, room_color: "#B0DFFB" },
 ];
-
-function getByte(str) {
-    return str
-      .split('') 
-      .map(s => s.charCodeAt(0))
-      .reduce((prev, c) => (prev + ((c === 10) ? 2 : ((c >> 7) ? 2 : 1))), 0); // 계산식에 관한 설명은 위 블로그에 있습니다.
-}
-
-function cutByte(str) {
-    
-}
 
 const MySquare = ({ room_name, inppl, maxppl, room_color }) => { 
     const style = {
@@ -122,6 +111,59 @@ const StudyBoxComp = () => {
     const [allRoomData, setAllRoomData] = useState(initialAllRoomData);
     const [myRoomData, setMyRoomData] = useState(initialMyRoomData);
     const authContext = useContext(AuthContext);
+
+    useEffect(() => {
+        const getAllRoomData = async () => {
+            const { status, data } = await getApi(
+                {
+                    uid: authContext.state.uid,
+                },
+                "/main/random_rooms/"
+            );
+            if (status === 200) {
+                await console.log('Get Study Rank :', data.all_room_list);
+                await setAllRoomData(
+                    data.all_room_list.map(s => ({
+                        room_id: s.room_id,
+                        room_name: s.room_name,
+                        room_color: s.room_color,
+                        inppl: s.inppl,
+                        maxppl: s.maxppl,
+                    }))
+                );
+                await console.log("Get complete: ", allRoomData);
+            } else {
+                await alert("인터넷 연결이 불안정합니다.");
+            }
+        };
+        getAllRoomData();
+    }, []);
+
+    useEffect(() => {
+        const getMyRoomData = async () => {
+            const { status, data } = await getApi(
+                {
+                    uid: authContext.state.uid,
+                },
+                "/main/my_rooms/"
+            );
+            if (status === 200) {
+                await setMyRoomData(
+                    data.my_room_list.map(s => ({
+                        room_id: s.room_id,
+                        room_name: s.room_name,
+                        room_color: s.room_color,
+                        inppl: s.inppl,
+                        maxppl: s.maxppl,
+                    }))
+                );
+                await console.log("Get complete: ", myRoomData);
+            } else {
+                await alert("인터넷 연결이 불안정합니다.");
+            }
+        };
+        getMyRoomData();
+    }, []);
 
     return (
         <div>

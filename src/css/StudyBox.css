@@ -59,11 +59,11 @@
 .square-roomname {
     font-weight: bold;
     font-size: x-small;
-    padding: 2vmin 0.5vmin 1vmin 0.5vmin;
+    padding: 2vmin 0.5vmin 0vmin 0.5vmin;
     
-    text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
