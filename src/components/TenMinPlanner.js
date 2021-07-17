@@ -83,7 +83,8 @@ const TenMinPlanner = () => {
                             update: btnContext.state.btnValue ? 'T' : 'F', 
                             date: DateFormat(),
                         },
-                        "/study/ten_min_data/"
+                        "/study/ten_min_data/",
+                        authContext.state.token
                     );
                     // const { status, data } = { // Dummy Dummy
                     //     status: 200,
@@ -123,7 +124,8 @@ const TenMinPlanner = () => {
                         update: btnContext.state.btnValue ? 'T' : 'F', 
                         date: DateFormat(),
                     },
-                    "/study/ten_min_data/"
+                    "/study/ten_min_data/",
+                    authContext.state.token
                 );
                 // const { status, data } = { // Dummy Dummy
                 //     status: 200,

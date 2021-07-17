@@ -28,7 +28,8 @@ const Study = () => {
                 uid: authContext.state.uid,
                 type: "stop",
             },
-            "/study/studybutton/"
+            "/study/studybutton/",
+            authContext.state.token
         );
         // const { status, data } = {
         //     // Dummy Dummy

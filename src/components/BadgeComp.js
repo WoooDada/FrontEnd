@@ -61,7 +61,8 @@ const BadgeComp = () => {
                 {
                     uid: authContext.state.uid,
                 },
-                "/home/badge_profile"
+                "/home/badge_profile",
+                authContext.state.token
             );
             if (status === 200) {
                 console.log(data);

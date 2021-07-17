@@ -111,7 +111,8 @@ const ConcentGraphComp = () => {
                 {
                     uid: authContext.state.uid,
                 },
-                "/home/concent_graph"
+                "/home/concent_graph",
+                authContext.state.token
             );
             if (status === 200) {
                 await console.log(data.graph);

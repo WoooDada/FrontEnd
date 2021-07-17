@@ -6,23 +6,89 @@ import { AuthContext } from "../App";
 import "../css/StudyBox.css";
 
 const initialAllRoomData = [
-    { room_id: 1, room_name: "성공하자", inppl: 6, maxppl: 10, room_color: "#E8BBBB" },
-    { room_id: 2, room_name: "송이들 드루와아아아아아아아아아아아아", inppl: 3, maxppl: 10, room_color: "#B0DFFB" },
-    { room_id: 3, room_name: "방방방", inppl: 6, maxppl: 10, room_color: "#E8BBBB" },
-    { room_id: 4, room_name: "ㅎㅇㅎㅇ", inppl: 3, maxppl: 10, room_color: "#B0DFFB" },
-    { room_id: 5, room_name: "공부합시다 여러분!!!!", inppl: 6, maxppl: 10, room_color: "#E8BBBB" },
-    { room_id: 6, room_name: "공부공부", inppl: 3, maxppl: 10, room_color: "#B0DFFB" },
-    { room_id: 7, room_name: "ㅎㅇㅎㅇ", inppl: 3, maxppl: 10, room_color: "#B0DFFB" },
-    { room_id: 8, room_name: "아무나 들어오세유 웰컴", inppl: 6, maxppl: 10, room_color: "#E8BBBB" },
-    { room_id: 9, room_name: "hello hi", inppl: 3, maxppl: 10, room_color: "#B0DFFB" },
+    {
+        room_id: 1,
+        room_name: "성공하자",
+        inppl: 6,
+        maxppl: 10,
+        room_color: "#E8BBBB",
+    },
+    {
+        room_id: 2,
+        room_name: "송이들 드루와아아아아아아아아아아아아",
+        inppl: 3,
+        maxppl: 10,
+        room_color: "#B0DFFB",
+    },
+    {
+        room_id: 3,
+        room_name: "방방방",
+        inppl: 6,
+        maxppl: 10,
+        room_color: "#E8BBBB",
+    },
+    {
+        room_id: 4,
+        room_name: "ㅎㅇㅎㅇ",
+        inppl: 3,
+        maxppl: 10,
+        room_color: "#B0DFFB",
+    },
+    {
+        room_id: 5,
+        room_name: "공부합시다 여러분!!!!",
+        inppl: 6,
+        maxppl: 10,
+        room_color: "#E8BBBB",
+    },
+    {
+        room_id: 6,
+        room_name: "공부공부",
+        inppl: 3,
+        maxppl: 10,
+        room_color: "#B0DFFB",
+    },
+    {
+        room_id: 7,
+        room_name: "ㅎㅇㅎㅇ",
+        inppl: 3,
+        maxppl: 10,
+        room_color: "#B0DFFB",
+    },
+    {
+        room_id: 8,
+        room_name: "아무나 들어오세유 웰컴",
+        inppl: 6,
+        maxppl: 10,
+        room_color: "#E8BBBB",
+    },
+    {
+        room_id: 9,
+        room_name: "hello hi",
+        inppl: 3,
+        maxppl: 10,
+        room_color: "#B0DFFB",
+    },
 ];
 
 const initialMyRoomData = [
-    { room_id: 1, room_name: "성공하자", inppl: 6, maxppl: 10, room_color: "#E8BBBB" },
-    { room_id: 2, room_name: "송이들 드루와아아", inppl: 3, maxppl: 10, room_color: "#B0DFFB" },
+    {
+        room_id: 1,
+        room_name: "성공하자",
+        inppl: 6,
+        maxppl: 10,
+        room_color: "#E8BBBB",
+    },
+    {
+        room_id: 2,
+        room_name: "송이들 드루와아아",
+        inppl: 3,
+        maxppl: 10,
+        room_color: "#B0DFFB",
+    },
 ];
 
-const MySquare = ({ room_name, inppl, maxppl, room_color }) => { 
+const MySquare = ({ room_name, inppl, maxppl, room_color }) => {
     const style = {
         backgroundColor: room_color,
     };
@@ -30,81 +96,83 @@ const MySquare = ({ room_name, inppl, maxppl, room_color }) => {
     return (
         <div style={style} className="studybox-square">
             <div className="square-roomname">{room_name}</div>
-            <div className="square-ppl">{inppl}/{maxppl}</div>
-            
+            <div className="square-ppl">
+                {inppl}/{maxppl}
+            </div>
         </div>
     );
-}
+};
 
 const EmptySquare = () => {
-    return (
-        <div className="studybox-square"></div>
-    );
-}
+    return <div className="studybox-square"></div>;
+};
 
 const NewSquare = () => {
     return (
         <div className="studybox-newsquare">
-            <p><br/>공부방<br/>만들기</p>
+            <p>
+                <br />
+                공부방
+                <br />
+                만들기
+            </p>
         </div>
     );
-}
+};
 
-const StudyBox = ( allRooms ) => {
+const StudyBox = (allRooms) => {
     console.log(allRooms);
     console.log(Object.keys(allRooms).length);
-    console.log(allRooms.whatBox)
+    console.log(allRooms.whatBox);
     const row1 = () => {
         const result1 = [];
         for (let i = 0; i < 5; i++) {
-            if (allRooms[i] !== undefined){
+            if (allRooms[i] !== undefined) {
                 result1.push(
                     <MySquare
                         key={i}
                         room_name={allRooms[i].room_name}
                         inppl={allRooms[i].inppl}
                         maxppl={allRooms[i].maxppl}
-                        room_color={allRooms[i].room_color} />
-                )
+                        room_color={allRooms[i].room_color}
+                    />
+                );
             } else {
-                result1.push(
-                    <EmptySquare />
-                )
+                result1.push(<EmptySquare />);
             }
         }
         return result1;
-    }
+    };
     const row2 = () => {
         const result2 = [];
         for (let i = 5; i < 9; i++) {
-            if (allRooms[i] !== undefined){
+            if (allRooms[i] !== undefined) {
                 result2.push(
                     <MySquare
                         key={i}
                         room_name={allRooms[i].room_name}
                         inppl={allRooms[i].inppl}
                         maxppl={allRooms[i].maxppl}
-                        room_color={allRooms[i].room_color} />
-                )
+                        room_color={allRooms[i].room_color}
+                    />
+                );
             } else {
-                result2.push(
-                    <EmptySquare />
-                )
+                result2.push(<EmptySquare />);
             }
         }
         return result2;
-    }
-    
+    };
+
     return (
         <div className="studybox-squares">
             <div className="studybox-squres-row">{row1()}</div>
             <div className="studybox-squres-row">
-                {row2()}<NewSquare />
+                {row2()}
+                <NewSquare />
             </div>
         </div>
     );
-}
-
+};
 
 const StudyBoxComp = () => {
     const [whatBox, setWhatBox] = useState("all"); // all vs my
@@ -118,12 +186,13 @@ const StudyBoxComp = () => {
                 {
                     uid: authContext.state.uid,
                 },
-                "/main/random_rooms/"
+                "/main/random_rooms/",
+                authContext.state.token
             );
             if (status === 200) {
-                await console.log('Get Study Rank :', data.all_room_list);
+                await console.log("Get Study Rank :", data.all_room_list);
                 await setAllRoomData(
-                    data.all_room_list.map(s => ({
+                    data.all_room_list.map((s) => ({
                         room_id: s.room_id,
                         room_name: s.room_name,
                         room_color: s.room_color,
@@ -145,11 +214,12 @@ const StudyBoxComp = () => {
                 {
                     uid: authContext.state.uid,
                 },
-                "/main/my_rooms/"
+                "/main/my_rooms/",
+                authContext.state.token
             );
             if (status === 200) {
                 await setMyRoomData(
-                    data.my_room_list.map(s => ({
+                    data.my_room_list.map((s) => ({
                         room_id: s.room_id,
                         room_name: s.room_name,
                         room_color: s.room_color,
@@ -171,16 +241,18 @@ const StudyBoxComp = () => {
             <div className="Main-StudyBoxComp">
                 <div className="studybox-upper-btns">
                     <div className="what-box">
-                        <button className="what-box-btn"
+                        <button
+                            className="what-box-btn"
                             onClick={() => {
-                                setWhatBox("all")
+                                setWhatBox("all");
                             }}
                         >
                             모든 공부방
                         </button>
-                        <button className="what-box-btn"
+                        <button
+                            className="what-box-btn"
                             onClick={() => {
-                                setWhatBox("my")
+                                setWhatBox("my");
                             }}
                         >
                             참여한 공부방
@@ -188,9 +260,7 @@ const StudyBoxComp = () => {
                     </div>
 
                     <div>
-                        <button className="more-btn">
-                            + 더보기
-                        </button>
+                        <button className="more-btn">+ 더보기</button>
                     </div>
                 </div>
                 <div className="box-list">
