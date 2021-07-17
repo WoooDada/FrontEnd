@@ -37,7 +37,11 @@ function LoginForm({ history }) {
 
         if (status === 200) {
             // 성공 시 useReducer에 넣어두기.
-            authContext.dispatch({ type: "login", payload: details.uid }); // useContext 처리
+            authContext.dispatch({
+                type: "login",
+                token: data.token,
+                uid: details.uid,
+            }); // useContext 처리
             history.push("/main"); // 성공 시 main으로 이동
         } else {
             // 실패 시

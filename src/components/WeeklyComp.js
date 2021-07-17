@@ -172,7 +172,8 @@ const TaskItem = ({ dow, id, date, checked, content }) => {
                 w_check: !checked === false ? "F" : "T",
                 w_date: date,
             },
-            "/tdl/weekly/"
+            "/tdl/weekly/",
+            authContext.state.token
         );
         if (status === 200) {
             await weeklyContext.dispatch({ type: "UPDATE_CHECK", id, dow });
@@ -192,7 +193,8 @@ const TaskItem = ({ dow, id, date, checked, content }) => {
                 w_check: checked,
                 w_date: date,
             },
-            "/tdl/weekly/"
+            "/tdl/weekly/",
+            authContext.state.token
         );
         if (status === 200) {
             await weeklyContext.dispatch({
@@ -215,7 +217,8 @@ const TaskItem = ({ dow, id, date, checked, content }) => {
     const handleDeleteButton = async () => {
         const { status } = await deleteApi(
             { uid: authContext.state.uid, w_todo_id: id },
-            "/tdl/weekly/"
+            "/tdl/weekly/",
+            authContext.state.token
         );
 
         if (status === 200) {
@@ -270,7 +273,8 @@ const DayOfWeekComp = ({ dow, date, tasks }) => {
                 w_content: newTodo,
                 w_check: "F",
             },
-            "/tdl/weekly/"
+            "/tdl/weekly/",
+            authContext.state.token
         );
         if (status === 200) {
             weeklyContext.dispatch({
@@ -339,7 +343,8 @@ const WeeklyComp = () => {
                     uid: authContext.state.uid,
                     dates: calTheDates(),
                 },
-                "/tdl/weekly"
+                "/tdl/weekly",
+                authContext.state.token
             );
             // await console.log("실패했나 안했나");
             if (status === 200) {

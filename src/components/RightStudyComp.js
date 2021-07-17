@@ -75,7 +75,8 @@ const RightStudyComp = () => {
                                 : "P",
                         time: new Date().toString().split(" ")[4].substr(0, 5),
                     },
-                    "/study/study_data/"
+                    "/study/study_data/",
+                    authContext.state.token
                 );
                 // const { status, data } = { // Dummy Dummy
                 //     status: 200,
@@ -102,7 +103,8 @@ const RightStudyComp = () => {
                 uid: authContext.state.uid,
                 type: !start ? "start" : "stop",
             },
-            "/study/studybutton/"
+            "/study/studybutton/",
+            authContext.state.token
         );
         // const { status, data } = {
         //     // Dummy Dummy

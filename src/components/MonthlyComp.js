@@ -63,7 +63,8 @@ const MonthlyComp = () => {
                 {
                     uid: authContext.state.uid,
                 },
-                "/tdl/monthly/"
+                "/tdl/monthly/",
+                authContext.state.token
             );
             await console.log("아아아아아ㅏ");
             if (status === 200) {
@@ -97,7 +98,8 @@ const MonthlyComp = () => {
                 end_date: end,
                 m_content: title,
             },
-            "/tdl/monthly/"
+            "/tdl/monthly/",
+            authContext.state.token
         );
         // * dummy code
         // const { status, data } = {
@@ -209,7 +211,8 @@ const MonthlyComp = () => {
                 end_date: newEnd,
                 m_content: eventInfo.oldEvent.title,
             },
-            "/tdl/monthly/"
+            "/tdl/monthly/",
+            authContext.state.token
         );
         // * dummy date
         // const { status, data } = {
@@ -267,7 +270,8 @@ const MonthlyComp = () => {
                 end_date: newEnd,
                 m_content: eventInfo.oldEvent.title,
             },
-            "/tdl/monthly/"
+            "/tdl/monthly/",
+            authContext.state.token
         );
         // * dummy date
         // const { status, data } = {
@@ -311,7 +315,8 @@ const MonthlyComp = () => {
                 end_date: inputs.end,
                 m_content: inputs.title,
             },
-            "/tdl/monthly/"
+            "/tdl/monthly/",
+            authContext.state.token
         );
         // * dummy data
         // const { status, data } = {
@@ -343,7 +348,8 @@ const MonthlyComp = () => {
                 uid: authContext.state.uid,
                 m_todo_id: state.eventId,
             },
-            "/tdl/monthly/"
+            "/tdl/monthly/",
+            authContext.state.token
         );
         // * dummy date
         // const { status, data } = {

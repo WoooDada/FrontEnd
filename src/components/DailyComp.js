@@ -120,7 +120,8 @@ const DtodosInput = () => {
                 d_tag: newtag,
                 d_check: "F",
             },
-            "/tdl/daily/"
+            "/tdl/daily/",
+            authContext.state.token
         );
         // dummy data
         // const { status, data } = {
@@ -187,7 +188,8 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
                 d_check: !d_check === false ? "F" : "T",
                 d_date: d_date,
             },
-            "/tdl/daily/"
+            "/tdl/daily/",
+            authContext.state.token
         );
         // const { status, data } = {
         //     status: 200,
@@ -209,7 +211,8 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
                 uid: authContext.state.uid,
                 d_todo_id: id,
             },
-            "/tdl/daily/"
+            "/tdl/daily/",
+            authContext.state.token
         );
         // const { status, data } = {
         //     status: 200,
@@ -277,7 +280,8 @@ const DailyComp = () => {
                     uid: authContext.state.uid,
                     d_date: DateFormat(),
                 },
-                "/tdl/daily/"
+                "/tdl/daily/",
+                authContext.state.token
             );
             await console.log("GET아아아");
             if (status === 200) {

@@ -24,7 +24,8 @@ const TodayComp = () => {
                 {
                     uid: authContext.state.uid,
                 },
-                "/home/today_concent/"
+                "/home/today_concent/",
+                authContext.state.token
             );
             if (status === 200) {
                 await setTodayStudy({

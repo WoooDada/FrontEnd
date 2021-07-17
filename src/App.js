@@ -31,12 +31,10 @@ const Header = () => {
                     </div>
                     {/* ------------ 테스트용 임시 코드 ------------- */}
                     <div>
-                        <Link to="/main">
-                        메인
-                        </Link>
+                        <Link to="/main">메인</Link>
                     </div>
                     {!authContext.state.onLogin &&
-                        (authContext.state.uid ? (
+                        (authContext.state.token ? (
                             <Link to="/myprofile" className="App-header-route">
                                 로그아웃
                             </Link>
@@ -65,8 +63,8 @@ const Footer = () => {
                 <br /> Design comfirmed by Areum Song
             </div>
             <p>
-                {authContext.state.uid
-                    ? authContext.state.uid
+                {authContext.state.token
+                    ? authContext.state.token
                     : "로그인해주세요"}
             </p>
         </div>
@@ -78,13 +76,13 @@ export const AuthContext = createContext();
 const reducer = (state, action) => {
     switch (action.type) {
         case "login":
-            return { uid: action.payload, onLogin: true };
+            return { token: action.token, onLogin: true, uid: action.uid };
         case "logout":
-            return { uid: null, onLogin: true };
+            return { token: null, onLogin: true, uid: null };
         case "onLoginPage":
-            return { uid: null, onLogin: true };
+            return { token: null, onLogin: true, uid: null };
         case "notOnLoginPage":
-            return { uid: state.uid, onLogin: false };
+            return { token: state.token, onLogin: false, uid: state.uid };
         default:
             return state;
     }
@@ -93,6 +91,7 @@ const reducer = (state, action) => {
 //////////////////////////////////////////////////////////////////////////////////
 function App() {
     const [state, dispatch] = useReducer(reducer, {
+        token: null,
         uid: null,
         onLogin: false,
     });
