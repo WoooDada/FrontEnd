@@ -1,0 +1,94 @@
+.StudyRoom {
+    /* height: 100%; */
+    background-color: #faf3f3;
+}
+
+.StudyRoom .Contents-Wrapper {
+    /* background-color: #faf3f3; */
+    padding: 2vmin 30vmin;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+}
+
+.StudyRoom .Search-Bar {
+    margin: auto;
+    width: 45%;
+    /* font-size: large; */
+}
+
+.Search-Bar input {
+    margin: 1vmin 0.5vmin;
+    padding: 0.5vmin;
+    font-size: 1.8vmin;
+    width: 85%;
+    /* width: 100%; */
+}
+.Search-Bar button {
+    border: 0.5px solid grey;
+    margin: 1vmin 0.5vmin;
+    padding: 0.5vmin;
+    background-color: white;
+    font-size: 1.8vmin;
+    /* width: 100%; */
+}
+
+.StudyRoom .Tag-List {
+    margin: auto;
+    display: flex;
+    background-color: "pink";
+}
+
+.StudyRoom .Tag-Item-Unselected {
+    padding: 0.5vmin;
+    border: solid 1px #c4c4c4;
+    margin: 1vmin;
+    border-radius: 1vh;
+    font-size: 1.8vmin;
+    background-color: white;
+}
+
+.StudyRoom .Tag-Item-Selected {
+    padding: 0.5vmin;
+    border: solid 1px #e1e5ea;
+    margin: 1vmin;
+    border-radius: 1vh;
+    font-size: 1.8vmin;
+    background-color: #e1e5ea;
+}
+
+.StudyRoom .Room-List {
+    padding: 5vmin;
+    background-color: white;
+    border-radius: 3vmin;
+    overflow-y: scroll;
+}
+
+.Room-List .Room-Item {
+    margin: 1vmin 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    /* -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2; */
+    /* -webkit-column-width: 50%;
+    -moz-column-width: 50%;
+    column-width: 50%; */
+}
+
+.Room-List span {
+    margin: auto;
+}
+
+.Room-Item .Box {
+    background-color: #c4c4c4;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 1vmin 0;
+}
+
+.Room-Item b {
+    margin: 1vmin 0;
+}
