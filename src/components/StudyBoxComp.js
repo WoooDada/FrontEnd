@@ -4,6 +4,7 @@ import "../css/Main.css";
 import getApi from "../api/getApi";
 import { AuthContext } from "../App";
 import "../css/StudyBox.css";
+import { Link } from "react-router-dom";
 
 const initialAllRoomData = [
     {
@@ -109,14 +110,18 @@ const EmptySquare = () => {
 
 const NewSquare = () => {
     return (
+        
         <div className="studybox-newsquare">
-            <p>
-                <br />
-                공부방
-                <br />
-                만들기
-            </p>
+            <Link to={"/CreateRoom"}>
+                <p>
+                    <br />
+                    공부방
+                    <br />
+                    만들기
+                </p>
+            </Link>
         </div>
+        
     );
 };
 
