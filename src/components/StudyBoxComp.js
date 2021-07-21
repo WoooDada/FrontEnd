@@ -1,5 +1,7 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
+
 import "../css/Main.css";
 import getApi from "../api/getApi";
 import { AuthContext } from "../App";
@@ -260,7 +262,7 @@ const StudyBoxComp = () => {
                     </div>
 
                     <div>
-                        <button className="more-btn">+ 더보기</button>
+                        <Link to={"/studyroom"}>+ 더보기</Link>
                     </div>
                 </div>
                 <div className="box-list">
