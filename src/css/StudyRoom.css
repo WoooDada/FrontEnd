@@ -7,7 +7,6 @@
 .StudyRoom .Contents-Wrapper {
     /* background-color: #faf3f3; */
     padding: 2vmin 30vmin;
-    overflow: scroll;
     display: flex;
     flex-direction: column;
 }
@@ -18,7 +17,7 @@
     /* font-size: large; */
 
     /* background 뭐가 더 나은 지확인 */
-    /* background-color: #e1e5ea; */
+    background-color: #e1e5ea;
 
     border-radius: 1vmin;
     padding: 0 1vmin;
@@ -30,8 +29,7 @@
     font-size: 1.8vmin;
     width: 85%;
     border: none;
-    /* border 없애 말아 */
-    border: solid 0.5px #c4c4c4;
+
     border-radius: 0.5vmin;
     /* width: 100%; */
 }
@@ -70,6 +68,7 @@
 }
 
 .StudyRoom .Room-List {
+    margin: 0.5vh 0;
     padding: 5vmin;
     background-color: white;
     border-radius: 3vmin;
@@ -77,7 +76,6 @@
     align-self: center;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-
     width: 100%;
 }
 
@@ -119,6 +117,36 @@
     overflow-wrap: break-word;
 }
 
+.Room-Item .Explanation b {
+    font-size: 1.6vmin;
+}
+
 .Room-Item .Explanation small {
     margin-top: 0.5vmin;
+}
+
+.StudyRoom .Modal {
+    position: absolute;
+    border: 1px solid #ccc;
+    background: #fff;
+    overflow: auto;
+    border-radius: 4px;
+    outline: "none";
+    padding: "20px";
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    margin-right: "-50%";
+    transform: translate(-50%, -50%);
+    width: 5%;
+    height: 5%;
+}
+
+.Modal-Password-Wrapper input {
+    border: none;
+    background-color: #c4c4c4;
+}
+
+.Modal-Password-Wrapper button {
 }

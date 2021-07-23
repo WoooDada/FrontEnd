@@ -1,8 +1,12 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { getApi } from "../api";
+import Modal from "react-modal";
+
+import { getApi, postApi } from "../api";
 import { AuthContext } from "../App";
 import "../css/StudyRoom.css";
+
+// TODO: 비밀방인 경우 표시해주고, 비밀방의 경우에만 모달 떠서 비밀번호 입력하도록 하기. 즉, 비밀방이 아닌 경우는 바로 study 페이지로 옮겨주고 동시에 서버에 입장했다고 알리기.
 
 const initTags = [
     { id: 0, krname: "대학생", enname: "college", clicked: false },
@@ -197,6 +201,43 @@ const roomsTemp = [
     },
 ];
 
+const customStyles = {
+    content: {
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-50%, -50%)",
+    },
+};
+
+const modalStyles = {
+    wrapper: {
+        margin: "2vh 0 1vh 0",
+        display: "flex",
+        border: "none",
+    },
+    input: {
+        flex: 10,
+        margin: "0 1vh 0 0",
+        fontSize: "2vmin",
+        border: "none",
+        borderBottom: "1px solid #ccc",
+    },
+    button: {
+        flex: 1,
+        fontSize: "1.6vmin",
+        padding: "1vh 0 1vh 1vh",
+        border: "none",
+        cursor: "pointer",
+        border: "1px solid #ccc",
+        backgroundColor: "#e1e5ea",
+        textDecoration: "none",
+        color: "black",
+    },
+};
+
 const TagItem = ({ id, krname, clicked, handleClicked }) => {
     return (
         <div
@@ -208,9 +249,9 @@ const TagItem = ({ id, krname, clicked, handleClicked }) => {
     );
 };
 
-const RoomItem = ({ room_data }) => {
+const RoomItem = ({ room_data, onClick }) => {
     return (
-        <li className="Room-Item">
+        <li className="Room-Item" onClick={() => onClick(room_data.room_id)}>
             <div
                 className="Box"
                 style={{ backgroundColor: room_data.room_color }}
@@ -232,7 +273,46 @@ const StudyRoom = () => {
     const [keyword, setKeyword] = useState("");
     const [tags, setTags] = useState(initTags);
     const [rooms, setRooms] = useState(roomsTemp);
+    const [clickedRoomId, setClickedRoomId] = useState(-1);
+    const [password, setPassword] = useState("");
     const authContext = useContext(AuthContext);
+    const [modalIsOpen, setIsOpen] = useState(false);
+
+    /* modal 관련 함수들 */
+    var subtitle = "";
+
+    function openModal(room_id) {
+        setClickedRoomId(room_id);
+        setIsOpen(true);
+    }
+
+    function afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        subtitle.style.color = "#E9B2BC";
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+
+    /* modal에서 pwd 입력 후 화면 변환과 동시에 비번 맞는 지 요청 */
+
+    const getisCorrectPwd = async () => {
+        await closeModal();
+        // const { status, data } = await postApi(
+        //     { room_id: clickedRoomId, password },
+        //     "/studyroom/password",
+        //     authContext.state.token
+        // );
+        // if (status === 200) {
+        //     console.log(data.correct);
+        // } else {
+        //     alert("네트워크 오류");
+        // }
+        console.log({ room_id: clickedRoomId, password });
+    };
+
+    /* 검색 관련 함수들 */
 
     const handleClicked = (id) => {
         const newTags = tags.map((t, i) => {
@@ -269,6 +349,7 @@ const StudyRoom = () => {
         //     alert("네트워크 오류");
         // }
     };
+
     return (
         <div className="StudyRoom">
             <div className="Main-Banner">
@@ -302,13 +383,50 @@ const StudyRoom = () => {
                 <ul className="Room-List">
                     {rooms.length ? (
                         rooms.map((r, i) => (
-                            <RoomItem key={i} room_data={r}></RoomItem>
+                            <RoomItem
+                                key={i}
+                                room_data={r}
+                                onClick={openModal}
+                            ></RoomItem>
                         ))
                     ) : (
                         <span>방이 아직 없어요. 만들어주세요:)</span>
                     )}
                 </ul>
             </div>
+            <Modal
+                isOpen={modalIsOpen}
+                onAfterOpen={afterOpenModal}
+                onRequestClose={closeModal}
+                style={customStyles}
+                ariaHideApp={false}
+                contentLabel="Example Modal"
+            >
+                <h3 ref={(_subtitle) => (subtitle = _subtitle)}>
+                    {clickedRoomId}번방에 들어가려면, 비밀번호를 입력해주세요!
+                </h3>
+                <div
+                    className="Modal-PassWord-Wrapper"
+                    style={modalStyles.wrapper}
+                >
+                    <input
+                        placeholder="비밀번호를 입력해주세요."
+                        onChange={(e) => {
+                            setPassword(e.target.value);
+                        }}
+                        value={password}
+                        style={modalStyles.input}
+                        type="password"
+                    ></input>
+                    <Link
+                        style={modalStyles.button}
+                        onClick={getisCorrectPwd}
+                        to={"/study"}
+                    >
+                        입장
+                    </Link>
+                </div>
+            </Modal>
         </div>
     );
 };
