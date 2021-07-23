@@ -35,6 +35,166 @@ const roomsTemp = [
         is_secret: "T",
         room_color: "#F8D57E",
     },
+    {
+        room_id: "3",
+        room_name: "공부하자2",
+        inppl: "0",
+        maxppl: "5",
+        room_tag: "sat",
+        room_comment: "수능 공부할 사람만 들어와",
+        is_secret: "F",
+        room_color: "#E9B2BC",
+    },
+    {
+        room_id: "4",
+        room_name: "공부하자비밀방2",
+        inppl: "0",
+        maxppl: "5",
+        room_tag: "college",
+        room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
+        is_secret: "T",
+        room_color: "#F8D57E",
+    },
+    {
+        room_id: "5",
+        room_name: "공부하자3",
+        inppl: "0",
+        maxppl: "5",
+        room_tag: "sat",
+        room_comment: "수능 공부할 사람만 들어와",
+        is_secret: "F",
+        room_color: "#E9B2BC",
+    },
+    {
+        room_id: "6",
+        room_name: "공부하자비밀방3",
+        inppl: "0",
+        maxppl: "5",
+        room_tag: "college",
+        room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
+        is_secret: "T",
+        room_color: "#F8D57E",
+    },
+    {
+        room_id: "7",
+        room_name: "공부하자4",
+        inppl: "0",
+        maxppl: "5",
+        room_tag: "sat",
+        room_comment: "수능 공부할 사람만 들어와",
+        is_secret: "F",
+        room_color: "#E9B2BC",
+    },
+    {
+        room_id: "8",
+        room_name: "공부하자비밀방4",
+        inppl: "0",
+        maxppl: "5",
+        room_tag: "college",
+        room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
+        is_secret: "T",
+        room_color: "#F8D57E",
+    },
+    {
+        room_id: "9",
+        room_name: "공부하자5",
+        inppl: "0",
+        maxppl: "5",
+        room_tag: "sat",
+        room_comment: "수능 공부할 사람만 들어와",
+        is_secret: "F",
+        room_color: "#E9B2BC",
+    },
+    {
+        room_id: "10",
+        room_name: "공부하자비밀방5",
+        inppl: "0",
+        maxppl: "5",
+        room_tag: "college",
+        room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
+        is_secret: "T",
+        room_color: "#F8D57E",
+    },
+    {
+        room_id: "11",
+        room_name: "공부하자5",
+        inppl: "0",
+        maxppl: "5",
+        room_tag: "sat",
+        room_comment: "수능 공부할 사람만 들어와",
+        is_secret: "F",
+        room_color: "#E9B2BC",
+    },
+    {
+        room_id: "12",
+        room_name: "공부하자비밀방5",
+        inppl: "0",
+        maxppl: "5",
+        room_tag: "college",
+        room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
+        is_secret: "T",
+        room_color: "#F8D57E",
+    },
+    {
+        room_id: "13",
+        room_name: "공부하자5",
+        inppl: "0",
+        maxppl: "5",
+        room_tag: "sat",
+        room_comment: "수능 공부할 사람만 들어와",
+        is_secret: "F",
+        room_color: "#E9B2BC",
+    },
+    {
+        room_id: "14",
+        room_name: "공부하자비밀방5",
+        inppl: "0",
+        maxppl: "5",
+        room_tag: "college",
+        room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
+        is_secret: "T",
+        room_color: "#F8D57E",
+    },
+    {
+        room_id: "15",
+        room_name: "공부하자5",
+        inppl: "0",
+        maxppl: "5",
+        room_tag: "sat",
+        room_comment: "수능 공부할 사람만 들어와",
+        is_secret: "F",
+        room_color: "#E9B2BC",
+    },
+    {
+        room_id: "16",
+        room_name: "공부하자비밀방5",
+        inppl: "0",
+        maxppl: "5",
+        room_tag: "college",
+        room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
+        is_secret: "T",
+        room_color: "#F8D57E",
+    },
+    {
+        room_id: "17",
+        room_name: "공부하자5",
+        inppl: "0",
+        maxppl: "5",
+        room_tag: "sat",
+        room_comment: "수능 공부할 사람만 들어와",
+        is_secret: "F",
+        room_color: "#E9B2BC",
+    },
+    {
+        room_id: "18",
+        room_name: "공부하자비밀방5",
+        inppl: "0",
+        maxppl: "5",
+        room_tag: "college",
+        room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
+        is_secret: "T",
+        room_color: "#F8D57E",
+    },
 ];
 
 const TagItem = ({ id, krname, clicked, handleClicked }) => {
@@ -51,14 +211,19 @@ const TagItem = ({ id, krname, clicked, handleClicked }) => {
 const RoomItem = ({ room_data }) => {
     return (
         <li className="Room-Item">
-            <div className="Box">
+            <div
+                className="Box"
+                style={{ backgroundColor: room_data.room_color }}
+            >
                 <b>{room_data.room_name}</b>
                 <small>
                     {room_data.inppl}/{room_data.maxppl}
                 </small>
             </div>
-            <b>#{room_data.room_tag}</b>
-            <small>{room_data.room_comment}</small>
+            <div className="Explanation">
+                <b>#{room_data.room_tag}</b>
+                <small>{room_data.room_comment}</small>
+            </div>
         </li>
     );
 };
@@ -66,7 +231,7 @@ const RoomItem = ({ room_data }) => {
 const StudyRoom = () => {
     const [keyword, setKeyword] = useState("");
     const [tags, setTags] = useState(initTags);
-    const [rooms, setRooms] = useState([]);
+    const [rooms, setRooms] = useState(roomsTemp);
     const authContext = useContext(AuthContext);
 
     const handleClicked = (id) => {
@@ -91,18 +256,18 @@ const StudyRoom = () => {
         });
         console.log(params);
         // REAL
-        /*
-        const { status, data } = await getApi(
-            params,
-            "/main/random_rooms/",
-            authContext.state.token
-        );
-        if (status === 200) {
-            setRooms(data);
-        } else {
-            alert("네트워크 오류");
-        }
-        */
+
+        // const { status, data } = await getApi(
+        //     params,
+        //     "/studyroom",
+        //     authContext.state.token
+        // );
+        // if (status === 200) {
+        //     console.log(data.data);
+        //     await setRooms(data.data);
+        // } else {
+        //     alert("네트워크 오류");
+        // }
     };
     return (
         <div className="StudyRoom">

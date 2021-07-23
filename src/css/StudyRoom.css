@@ -1,6 +1,7 @@
 .StudyRoom {
-    /* height: 100%; */
+    height: 100%;
     background-color: #faf3f3;
+    min-height: 80vh;
 }
 
 .StudyRoom .Contents-Wrapper {
@@ -25,11 +26,13 @@
     /* width: 100%; */
 }
 .Search-Bar button {
-    border: 0.5px solid grey;
+    border: 0.5px solid #e1e5ea;
     margin: 1vmin 0.5vmin;
     padding: 0.5vmin;
-    background-color: white;
+    background-color: #e1e5ea;
     font-size: 1.8vmin;
+    border-radius: 0.5vh;
+    font-family: "NanumGothic-Bold";
     /* width: 100%; */
 }
 
@@ -61,20 +64,18 @@
     padding: 5vmin;
     background-color: white;
     border-radius: 3vmin;
-    overflow-y: scroll;
+    min-height: 60vh;
+    align-self: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+
+    width: 100%;
 }
 
 .Room-List .Room-Item {
-    margin: 1vmin 0;
+    margin: 1vh auto;
     list-style: none;
-    display: flex;
-    flex-direction: column;
-    /* -webkit-column-count: 2;
-    -moz-column-count: 2;
-    column-count: 2; */
-    /* -webkit-column-width: 50%;
-    -moz-column-width: 50%;
-    column-width: 50%; */
+    width: 200px;
 }
 
 .Room-List span {
@@ -87,8 +88,27 @@
     flex-direction: column;
     text-align: center;
     padding: 1vmin 0;
+    height: 100px;
+    justify-content: center;
+}
+
+.Room-Item .Explanation {
+    min-height: 80px;
+    /* background-color: pink; */
+    margin-top: 0.5vh;
+    padding: 0.5vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .Room-Item b {
-    margin: 1vmin 0;
+    margin: 0.5vmin 0;
+}
+
+.Room-Item small {
+    overflow-wrap: break-word;
+}
+
+.Room-Item .Explanation small {
+    margin-top: 0.5vmin;
 }
