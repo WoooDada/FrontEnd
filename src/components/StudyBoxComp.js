@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
 
 import "../css/Main.css";
 import getApi from "../api/getApi";
@@ -112,7 +111,6 @@ const EmptySquare = () => {
 
 const NewSquare = () => {
     return (
-        
         <div className="studybox-newsquare">
             <Link to={"/CreateRoom"}>
                 <p>
@@ -123,7 +121,6 @@ const NewSquare = () => {
                 </p>
             </Link>
         </div>
-        
     );
 };
 
