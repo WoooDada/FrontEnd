@@ -7,8 +7,6 @@ import { getApi, postApi } from "../api";
 import { AuthContext } from "../App";
 import "../css/StudyRoom.css";
 
-// TODO: 비밀번호 잘못 입력했을 때 alert 띄우기
-
 const initTags = [
     { id: 0, krname: "대학생", enname: "college", clicked: false },
     { id: 1, krname: "수능", enname: "sat", clicked: false },
@@ -226,16 +224,33 @@ const modalStyles = {
         border: "none",
         borderBottom: "1px solid #ccc",
     },
-    button: {
+    link: {
         flex: 1,
         fontSize: "1.6vmin",
-        padding: "1vh 0 1vh 1vh",
-        border: "none",
+        padding: "1vh",
+        // border: "none",
         cursor: "pointer",
-        border: "1px solid #ccc",
+        border: "1px solid #e1e5ea",
         backgroundColor: "#e1e5ea",
         textDecoration: "none",
         color: "black",
+        textAlign: "center",
+        alignContent: "center",
+        justifyContent: "center",
+    },
+    button: {
+        flex: 1,
+        fontSize: "1.6vmin",
+        padding: "1vh",
+        border: "none",
+        cursor: "pointer",
+        border: "1px solid #e1e5ea",
+        backgroundColor: "#e1e5ea",
+        textDecoration: "none",
+        color: "black",
+        textAlign: "center",
+        alignContent: "center",
+        justifyContent: "center",
     },
 };
 
@@ -323,6 +338,7 @@ const StudyRoom = () => {
     const [password, setPassword] = useState("");
     const authContext = useContext(AuthContext);
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [isPwdCorrect, setIsPwdCorrect] = useState(false);
 
     /* modal 관련 함수들 */
     var subtitle = "";
@@ -347,18 +363,31 @@ const StudyRoom = () => {
     }
 
     const getisCorrectPwd = async () => {
-        await closeModal();
-
         // const { status, data } = await postApi(
         //     { room_id: clickedRoomId, password },
         //     "/studyroom/password",
         //     authContext.state.token
         // );
-        // if (status === 200) {
-        //     console.log(data.correct);
-        // } else {
-        //     alert("네트워크 오류");
-        // }
+
+        // dummy: 비번 틀린 경우
+        const { status, data } = {
+            status: 200,
+            data: {
+                correct: "T",
+            },
+        };
+        if (status === 200) {
+            console.log(data.correct);
+            if (data.correct === "F") {
+                // 비밀번호가 틀림: Link로 바로 /study 페이지로 넘어가면 안됨.
+                await alert("비밀번호가 틀렸어요!");
+                await setIsPwdCorrect(false);
+            } else {
+                await setIsPwdCorrect(true);
+            }
+        } else {
+            alert("네트워크 오류");
+        }
 
         // dummy
         // console.log({ room_id: clickedRoomId, password });
@@ -471,13 +500,26 @@ const StudyRoom = () => {
                         style={modalStyles.input}
                         type="password"
                     ></input>
-                    <Link
-                        style={modalStyles.button}
+                    <button
                         onClick={getisCorrectPwd}
-                        to={"/study"}
+                        style={modalStyles.button}
                     >
-                        입장
-                    </Link>
+                        확인
+                    </button>
+                    {isPwdCorrect ? (
+                        <Link to={"/study"} onClick={() => closeModal()}>
+                            <button style={modalStyles.link}>입장</button>
+                        </Link>
+                    ) : (
+                        <button
+                            style={modalStyles.button}
+                            onClick={() => {
+                                alert("비밀번호를 확인해주세요.");
+                            }}
+                        >
+                            입장
+                        </button>
+                    )}
                 </div>
             </Modal>
         </div>
