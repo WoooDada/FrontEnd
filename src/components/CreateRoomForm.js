@@ -250,7 +250,7 @@ const CreateRoomForm = () => {
 
             <br></br>
             <button className="create-room-btn" type="submit" onClick={onCreate}>방만들고 공부하러 가기</button>
-            <p>{message}</p>
+            <p className="bottom-msg">{message}</p>
         </form>
     );
 }

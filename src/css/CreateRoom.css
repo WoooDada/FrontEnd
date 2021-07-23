@@ -129,3 +129,7 @@
 .room-color {
     cursor: pointer;
 }
+
+.bottom-msg {
+    font-size: small;
+}
