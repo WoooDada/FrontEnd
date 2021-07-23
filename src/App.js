@@ -1,7 +1,15 @@
 import { Switch, Route, Link } from "react-router-dom";
 
 // Page 로딩
-import { Main, MyProfile, NotFound, Home, Study, CreateRoom } from "./pages";
+import {
+    Main,
+    MyProfile,
+    NotFound,
+    Home,
+    Study,
+    StudyRoom,
+    CreateRoom,
+} from "./pages";
 // import Header from "./components/Header";
 import "./App.css";
 import Login from "./pages/Login";
@@ -106,6 +114,7 @@ function App() {
                         <Route path="/myprofile" component={MyProfile} />
                         <Route path="/main" component={Main} />
                         <Route path="/study" component={Study} />
+                        <Route path="/studyroom" component={StudyRoom} />
                         <Route path="/createroom" component={CreateRoom} />
                         <Route component={NotFound} />
                     </Switch>
