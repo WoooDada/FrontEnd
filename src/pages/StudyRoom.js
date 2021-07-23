@@ -7,6 +7,8 @@ import { getApi, postApi } from "../api";
 import { AuthContext } from "../App";
 import "../css/StudyRoom.css";
 
+// TODO: 모달의 확인 버튼, 입장 버튼 규격 같게 해 주기
+
 const initTags = [
     { id: 0, krname: "대학생", enname: "college", clicked: false },
     { id: 1, krname: "수능", enname: "sat", clicked: false },
@@ -363,19 +365,23 @@ const StudyRoom = () => {
     }
 
     const getisCorrectPwd = async () => {
+        // REAL
+
         // const { status, data } = await postApi(
         //     { room_id: clickedRoomId, password },
         //     "/studyroom/password",
         //     authContext.state.token
         // );
 
-        // dummy: 비번 틀린 경우
+        // dummy
+
         const { status, data } = {
             status: 200,
             data: {
                 correct: "T",
             },
         };
+
         if (status === 200) {
             console.log(data.correct);
             if (data.correct === "F") {

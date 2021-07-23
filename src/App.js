@@ -1,7 +1,15 @@
 import { Switch, Route, Link } from "react-router-dom";
 
 // Page 로딩
-import { Main, MyProfile, NotFound, Home, Study, StudyRoom, CreateRoom } from "./pages";
+import {
+    Main,
+    MyProfile,
+    NotFound,
+    Home,
+    Study,
+    StudyRoom,
+    CreateRoom,
+} from "./pages";
 // import Header from "./components/Header";
 import "./App.css";
 import Login from "./pages/Login";
