@@ -1,12 +1,13 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
+import { BsLockFill } from "react-icons/bs";
 
 import { getApi, postApi } from "../api";
 import { AuthContext } from "../App";
 import "../css/StudyRoom.css";
 
-// TODO: 비밀방인 경우 표시해주고, 비밀방의 경우에만 모달 떠서 비밀번호 입력하도록 하기. 즉, 비밀방이 아닌 경우는 바로 study 페이지로 옮겨주고 동시에 서버에 입장했다고 알리기.
+// TODO: 비밀번호 잘못 입력했을 때 alert 띄우기
 
 const initTags = [
     { id: 0, krname: "대학생", enname: "college", clicked: false },
@@ -22,7 +23,7 @@ const roomsTemp = [
     {
         room_id: "1",
         room_name: "공부하자",
-        inppl: "0",
+        inppl: "5",
         maxppl: "5",
         room_tag: "sat",
         room_comment: "수능 공부할 사람만 들어와",
@@ -249,13 +250,18 @@ const TagItem = ({ id, krname, clicked, handleClicked }) => {
     );
 };
 
-const RoomItem = ({ room_data, onClick }) => {
+const RoomItemChild = ({ room_data, onClick }) => {
     return (
-        <li className="Room-Item" onClick={() => onClick(room_data.room_id)}>
+        <div onClick={() => onClick(room_data.room_id)}>
             <div
                 className="Box"
                 style={{ backgroundColor: room_data.room_color }}
             >
+                {room_data.is_secret === "F" ? (
+                    <></>
+                ) : (
+                    <BsLockFill></BsLockFill>
+                )}
                 <b>{room_data.room_name}</b>
                 <small>
                     {room_data.inppl}/{room_data.maxppl}
@@ -265,6 +271,46 @@ const RoomItem = ({ room_data, onClick }) => {
                 <b>#{room_data.room_tag}</b>
                 <small>{room_data.room_comment}</small>
             </div>
+        </div>
+    );
+};
+
+const RoomItem = ({ room_data, openModal, alertOverflow }) => {
+    /* 방 접속 관련 함수들 */
+    function isRoomOverflow(room_data) {
+        return parseInt(room_data.inppl) === parseInt(room_data.maxppl);
+    }
+
+    function isSecretRoom(room_data) {
+        return room_data.is_secret === "T";
+    }
+    return (
+        <li className="Room-Item">
+            {isRoomOverflow(room_data) ? (
+                // 방 인원이 가득 찬 경우 못 들어감.
+                <RoomItemChild
+                    room_data={room_data}
+                    onClick={alertOverflow}
+                ></RoomItemChild>
+            ) : isSecretRoom(room_data) ? (
+                // 비밀방이면 모달로 비밀번호 입력하고 들어감
+                <RoomItemChild
+                    room_data={room_data}
+                    onClick={openModal}
+                ></RoomItemChild>
+            ) : (
+                // 비밀방이 아니면 모달 없이 들어갈 수 있음.
+                <Link
+                    style={{ textDecoration: "none", color: "black" }}
+                    to="/study"
+                    // onClick={() => onClick(room_data.room_id)}
+                >
+                    <RoomItemChild
+                        room_data={room_data}
+                        onClick={(i) => {}}
+                    ></RoomItemChild>
+                </Link>
+            )}
         </li>
     );
 };
@@ -281,24 +327,28 @@ const StudyRoom = () => {
     /* modal 관련 함수들 */
     var subtitle = "";
 
-    function openModal(room_id) {
-        setClickedRoomId(room_id);
-        setIsOpen(true);
-    }
-
     function afterOpenModal() {
         // references are now sync'd and can be accessed.
-        subtitle.style.color = "#E9B2BC";
+        subtitle.style.color = "#000";
     }
 
     function closeModal() {
         setIsOpen(false);
     }
 
-    /* modal에서 pwd 입력 후 화면 변환과 동시에 비번 맞는 지 요청 */
+    /* 스터디페이지 입장 관련 함수들 */
+    function openModal(room_id) {
+        setClickedRoomId(room_id);
+        setIsOpen(true);
+    }
+
+    function alertOverflow(room_id) {
+        alert("입장인원이 다 찼습니다. 다른 방에 접속해주세요!");
+    }
 
     const getisCorrectPwd = async () => {
         await closeModal();
+
         // const { status, data } = await postApi(
         //     { room_id: clickedRoomId, password },
         //     "/studyroom/password",
@@ -309,7 +359,9 @@ const StudyRoom = () => {
         // } else {
         //     alert("네트워크 오류");
         // }
-        console.log({ room_id: clickedRoomId, password });
+
+        // dummy
+        // console.log({ room_id: clickedRoomId, password });
     };
 
     /* 검색 관련 함수들 */
@@ -386,11 +438,12 @@ const StudyRoom = () => {
                             <RoomItem
                                 key={i}
                                 room_data={r}
-                                onClick={openModal}
+                                openModal={openModal}
+                                alertOverflow={alertOverflow}
                             ></RoomItem>
                         ))
                     ) : (
-                        <span>방이 아직 없어요. 만들어주세요:)</span>
+                        <span>방이 아직 없어요! 만들어주세요:)</span>
                     )}
                 </ul>
             </div>
