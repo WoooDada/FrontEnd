@@ -96,46 +96,48 @@ const CreateRoomForm = () => {
     // POST
     const onCreate = async (e) => {
         e.preventDefault();
-        
-
-        // 공개방일 경우 비밀번호 "" 처리
-        if (secret === "not-secret") { pwd = "" }
-        const { status, data } = await postApi(
-            {
-                uid: authContext.state.uid,
-                room_name: roomName,
-                maxppl: textNum,
-                is_secret: secret === "secret" ? "T" : "F",
-                room_pwd: pwd,
-                room_tag: category,
-                room_comment: manner,
-                room_color: color,
-            },
-            "/studyroom/",
-            authContext.state.token
-        );
-        // const { status, data } = {
-        //     status: 200,
-        //     data: { uid: "EXAMPLE" },
-        // };
-
-        if (status === 200) {
-            await console.log("room create success");
-            await console.log(data.room_id);
-            if (data.room_id == -1) {
-                await console.log("방명 중복");
-                setMessage("방명이 중복되었습니다. 다른 이름을 입력해주세요.");
-            } else if (data.room_id == -2) {
-                await console.log("비밀방인데 비밀번호 안씀");
-                setMessage("비밀방을 선택하셨습니다. 비밀번호를 입력해주세요.");
-            } else {
-                // 스터디룸으로 이동
-                // <Link to={"./StudyRoom"}></Link>
-            }
-        } else {
-            await console.log("room create fail");
+        if (roomName === "" || secret === "" || category === "" || color === ""){
+            setMessage("필수 입력 항목을 모두 입력해주세요.")
         }
+        else {
+            // 공개방일 경우 비밀번호 "" 처리
+            if (secret === "not-secret") { pwd = "" }
+            const { status, data } = await postApi(
+                {
+                    uid: authContext.state.uid,
+                    room_name: roomName,
+                    maxppl: textNum,
+                    is_secret: secret === "secret" ? "T" : "F",
+                    room_pwd: pwd,
+                    room_tag: category,
+                    room_comment: manner,
+                    room_color: color,
+                },
+                "/studyroom/",
+                authContext.state.token
+            );
+            // const { status, data } = {
+            //     status: 200,
+            //     data: { uid: "EXAMPLE" },
+            // };
 
+            if (status === 200) {
+                await console.log("room create success");
+                await console.log(data.room_id);
+                if (data.room_id == -1) {
+                    await console.log("방명 중복");
+                    setMessage("방명이 중복되었습니다. 다른 이름을 입력해주세요.");
+                } else if (data.room_id == -2) {
+                    await console.log("비밀방인데 비밀번호 안씀");
+                    setMessage("비밀방을 선택하셨습니다. 비밀번호를 입력해주세요.");
+                } else {
+                    // 스터디룸으로 이동
+                    // <Link to={"./StudyRoom"}></Link>
+                }
+            } else {
+                await console.log("room create fail");
+            }
+        }
     };
 
 
@@ -178,7 +180,7 @@ const CreateRoomForm = () => {
                 />
             </div>
             <div className="form-group2">
-                <h5>카테고리</h5>
+                <h5>카테고리*</h5>
                 <div className="categories">
                     <label>
                         <input type="radio" name="category" id="cate1"
