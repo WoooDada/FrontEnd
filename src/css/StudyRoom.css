@@ -16,6 +16,12 @@
     margin: auto;
     width: 45%;
     /* font-size: large; */
+
+    /* background 뭐가 더 나은 지확인 */
+    /* background-color: #e1e5ea; */
+
+    border-radius: 1vmin;
+    padding: 0 1vmin;
 }
 
 .Search-Bar input {
@@ -23,16 +29,21 @@
     padding: 0.5vmin;
     font-size: 1.8vmin;
     width: 85%;
+    border: none;
+    /* border 없애 말아 */
+    border: solid 0.5px #c4c4c4;
+    border-radius: 0.5vmin;
     /* width: 100%; */
 }
 .Search-Bar button {
     border: 0.5px solid #e1e5ea;
-    margin: 1vmin 0.5vmin;
+    margin: 1vmin;
     padding: 0.5vmin;
     background-color: #e1e5ea;
     font-size: 1.8vmin;
     border-radius: 0.5vh;
     font-family: "NanumGothic-Bold";
+    cursor: pointer;
     /* width: 100%; */
 }
 
@@ -42,21 +53,19 @@
     background-color: "pink";
 }
 
-.StudyRoom .Tag-Item-Unselected {
+.StudyRoom .Tag-Item-Unselected,
+.StudyRoom .Tag-Item-Selected {
     padding: 0.5vmin;
     border: solid 1px #c4c4c4;
     margin: 1vmin;
     border-radius: 1vh;
     font-size: 1.8vmin;
     background-color: white;
+    cursor: pointer;
 }
 
 .StudyRoom .Tag-Item-Selected {
-    padding: 0.5vmin;
     border: solid 1px #e1e5ea;
-    margin: 1vmin;
-    border-radius: 1vh;
-    font-size: 1.8vmin;
     background-color: #e1e5ea;
 }
 
@@ -76,6 +85,7 @@
     margin: 1vh auto;
     list-style: none;
     width: 200px;
+    cursor: pointer;
 }
 
 .Room-List span {
