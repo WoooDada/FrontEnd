@@ -5,10 +5,10 @@ import CreateRoomForm from "../components/CreateRoomForm";
 import "../css/Home.css";
 import "../css/CreateRoom.css";
 
-const CreateRoom = () => {
+const CreateRoom = (props) => {
     return (
         <div className="CreateRoom-page">
-            <CreateRoomForm></CreateRoomForm>
+            <CreateRoomForm history={props.history}></CreateRoomForm>
 
         </div>
     );

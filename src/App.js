@@ -3,6 +3,7 @@ import { Switch, Route, Link } from "react-router-dom";
 // Page 로딩
 import {
     Main,
+    Logout,
     MyProfile,
     NotFound,
     Home,
@@ -41,16 +42,21 @@ const Header = () => {
                     <div>
                         <Link to="/main">메인</Link>
                     </div>
-                    {!authContext.state.onLogin &&
-                        (authContext.state.token ? (
-                            <Link to="/myprofile" className="App-header-route">
-                                로그아웃
-                            </Link>
-                        ) : (
+                    {/* {!authContext.state.onLogin &&
+                        (authContext.state.token ? ( */}
+                            <div>
+                                <Link to="/myprofile" className="App-header-route">
+                                    내 프로필
+                                </Link>
+                                <Link to="/logout" className="App-header-route">
+                                    로그아웃
+                                </Link>
+                            </div>
+                        {/* ) : (
                             <Link to="/login" className="App-header-route">
                                 로그인
                             </Link>
-                        ))}
+                        ))} */}
                 </div>
             </div>
         </>
@@ -111,11 +117,12 @@ function App() {
                     <Switch>
                         <Route path="/" component={Home} exact />
                         <Route path="/login" component={Login} />
-                        <Route path="/myprofile" component={MyProfile} />
+                        <Route path="/logout" component={Logout} />
                         <Route path="/main" component={Main} />
                         <Route path="/study" component={Study} />
                         <Route path="/studyroom" component={StudyRoom} />
                         <Route path="/createroom" component={CreateRoom} />
+                        <Route path="/myprofile" component={MyProfile} />
                         <Route component={NotFound} />
                     </Switch>
                 </div>

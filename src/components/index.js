@@ -9,3 +9,4 @@ export { default as TodayComp } from "./TodayComp";
 export { default as RankComp } from "./RankComp";
 export { default as StudyBoxComp } from "./StudyBoxComp";
 export { default as CreateRoomForm } from "./CreateRoomForm";
+export { default as MyProfileForm } from "./MyProfileForm";
