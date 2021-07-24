@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import "../css/Login.css";
-import Logo from "../constants/imgs/Logo.jpg";
 import axios from "axios";
 
 function SignupForm({ setIsSignUp }) {

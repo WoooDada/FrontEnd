@@ -4,10 +4,7 @@ import { BtnContext } from "../pages/Study"
 import "../css/LeftStudy.css";
 import { getApi } from "../api";
 import { HeatMapGrid } from 'react-grid-heatmap';
-import { FaBlackberry, FaRegBell } from "react-icons/fa";
 import useInterval from "@use-it/interval";
-import { isCompositeComponentWithType } from "react-dom/test-utils";
-import { ContinuousSizeLegend } from "react-vis";
 import moment from 'moment';
 
 const GET_RESULT_TIME = 60; // 1분=60초마다

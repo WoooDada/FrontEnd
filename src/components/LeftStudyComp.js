@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { MonthlyComp, WeeklyComp, DailyComp } from "../components";
 
 import "../css/Study.css";

@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import Logo from "../constants/imgs/Logo.jpg";
 import "../css/Login.css";
 import { AuthContext } from "../App";
 import axios from "axios";
