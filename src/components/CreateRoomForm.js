@@ -1,9 +1,7 @@
 import React, { useContext, useState } from "react";
 import "../css/CreateRoom.css";
 import { AuthContext } from "../App";
-import axios from "axios";
 import { postApi } from "../api";
-import { Link } from "react-router-dom";
 
 const CreateRoomForm = ({ history }) => {
     const authContext = useContext(AuthContext);
@@ -102,24 +100,24 @@ const CreateRoomForm = ({ history }) => {
         else {
             // 공개방일 경우 비밀번호 "" 처리
             if (secret === "not-secret") { setPwd("") }
-            // const { status, data } = await postApi(
-            //     {
-            //         uid: authContext.state.uid,
-            //         room_name: roomName,
-            //         maxppl: textNum,
-            //         is_secret: secret === "secret" ? "T" : "F",
-            //         room_pwd: pwd,
-            //         room_tag: category,
-            //         room_comment: manner,
-            //         room_color: color,
-            //     },
-            //     "/studyroom/",
-            //     authContext.state.token
-            // );
-            const { status, data } = {
-                status: 200,
-                data: { uid: "EXAMPLE", room_id: 3 },
-            };
+            const { status, data } = await postApi(
+                {
+                    uid: authContext.state.uid,
+                    room_name: roomName,
+                    maxppl: textNum,
+                    is_secret: secret === "secret" ? "T" : "F",
+                    room_pwd: pwd,
+                    room_tag: category,
+                    room_comment: manner,
+                    room_color: color,
+                },
+                "/studyroom/",
+                authContext.state.token
+            );
+            // const { status, data } = {
+            //     status: 200,
+            //     data: { uid: "EXAMPLE", room_id: 3 },
+            // };
 
             if (status === 200) {
                 await console.log("room create success");

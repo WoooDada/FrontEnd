@@ -1,14 +1,12 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../App";
+import React from "react";
 import { MyProfileForm } from "../components";
 
 import "../css/MyProfile.css";
 
 const MyProfile = () => {
-    
 
     return (
-        <div>
+        <div className="MyProfilePage">
             <MyProfileForm></MyProfileForm>
         </div>
     )

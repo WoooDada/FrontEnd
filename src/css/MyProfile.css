@@ -1,0 +1,100 @@
+.MyProfilePage {
+    display: flex;
+    background-color: #FAF3F3;
+    min-height: 110vh;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20vh 0 20vh;
+    flex-direction: column;
+}
+
+.MyProfile-outer-form {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    text-align: center;
+    padding: 5vh 12vh;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.MyProfile-formgroup1 {
+    display: flex;
+    flex-direction: row;
+    width: 40vh;
+}
+.MyProfile-formgroup2 {
+    display: flex;
+    flex-direction: column;
+    width: 40vh;
+}
+
+.MyProfile-formgroup1 h5,
+.MyProfile-formgroup2 h5 {
+    margin-right: auto;
+}
+
+.MyProfile-formgroup1 input {
+    margin: auto 1vmin;
+    border: 0;
+    border-bottom: 1px solid gray;
+    text-align: right;
+}
+
+.MyProfile-formgroup1 label,
+.MyProfile-formgroup2 label {
+    margin: auto 0;
+}
+
+.MyProfile-formgroup1 p {
+    font-size: small;
+    margin: auto 0;
+}
+
+.MyProfile-formgroup2 p {
+    font-size: xx-small;
+    color:rgb(131, 131, 131);
+}
+
+.MyProfile-outer-form button {
+    padding: 1vh 10vh;
+    border: 0;
+    border-radius: 2vh;
+    cursor: pointer;
+
+}
+
+.MyProfile-button {
+    margin-top: 5vh;
+    background-color: #CAD6DD;
+}
+
+.MyProfile-backtoMain-button {
+    margin-top: 2.5vh;
+    background-color: #E9B2BC;
+}
+
+.MyProfile-formgroup2 h5 {
+    margin-bottom: 1vh;
+}
+
+.MyProfile-formgroup2 .likes {
+    display: flex;
+    flex-direction: row;
+    padding: 0 2vh;
+    font-size: small;
+}
+
+.MyProfile-formgroup2 .likes-group1 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 8vh;
+}
+
+.MyProfile-formgroup2 .likes-group2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}

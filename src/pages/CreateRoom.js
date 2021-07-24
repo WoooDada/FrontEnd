@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../App";
+import React from "react";
 import CreateRoomForm from "../components/CreateRoomForm";
 
 import "../css/Home.css";
