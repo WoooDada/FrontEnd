@@ -42,8 +42,8 @@ const Header = () => {
                     <div>
                         <Link to="/main">메인</Link>
                     </div>
-                    {/* {!authContext.state.onLogin &&
-                        (authContext.state.token ? ( */}
+                    {!authContext.state.onLogin &&
+                        (authContext.state.token ? (
                             <div>
                                 <Link to="/myprofile" className="App-header-route">
                                     내 프로필
@@ -52,11 +52,11 @@ const Header = () => {
                                     로그아웃
                                 </Link>
                             </div>
-                        {/* ) : (
+                        ) : (
                             <Link to="/login" className="App-header-route">
                                 로그인
                             </Link>
-                        ))} */}
+                        ))}
                 </div>
             </div>
         </>
