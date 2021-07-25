@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import { BsLockFill } from "react-icons/bs";
@@ -274,7 +274,7 @@ const RoomItemChild = ({ room_data, onClick }) => {
                 className="Box"
                 style={{ backgroundColor: room_data.room_color }}
             >
-                {room_data.is_secret === "F" ? (
+                {room_data.is_secret === false ? (
                     <></>
                 ) : (
                     <BsLockFill></BsLockFill>
@@ -299,7 +299,7 @@ const RoomItem = ({ room_data, openModal, alertOverflow }) => {
     }
 
     function isSecretRoom(room_data) {
-        return room_data.is_secret === "T";
+        return room_data.is_secret === true;
     }
     return (
         <li className="Room-Item">
@@ -335,12 +335,31 @@ const RoomItem = ({ room_data, openModal, alertOverflow }) => {
 const StudyRoom = () => {
     const [keyword, setKeyword] = useState("");
     const [tags, setTags] = useState(initTags);
-    const [rooms, setRooms] = useState(roomsTemp);
+    const [rooms, setRooms] = useState([]);
     const [clickedRoomId, setClickedRoomId] = useState(-1);
     const [password, setPassword] = useState("");
     const authContext = useContext(AuthContext);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [isPwdCorrect, setIsPwdCorrect] = useState(false);
+
+    /* useEffect */
+    useEffect(() => {
+        const getAllRooms = async () => {
+            const params = { all: "T", keyword: keyword };
+            const { status, data } = await getApi(
+                params,
+                "/studyroom/",
+                authContext.state.token
+            );
+            if (status === 200) {
+                console.log(data.data);
+                await setRooms(data.data);
+            } else {
+                alert("네트워크 오류");
+            }
+        };
+        getAllRooms();
+    }, []);
 
     /* modal 관련 함수들 */
     var subtitle = "";
@@ -367,21 +386,21 @@ const StudyRoom = () => {
     const getisCorrectPwd = async () => {
         // REAL
 
-        // const { status, data } = await postApi(
-        //     { room_id: clickedRoomId, password },
-        //     "/studyroom/password",
-        //     authContext.state.token
-        // );
+        const { status, data } = await postApi(
+            { room_id: clickedRoomId, password },
+            "/studyroom/password/",
+            authContext.state.token
+        );
 
         // dummy
 
-        const { status, data } = {
-            status: 200,
-            data: {
-                correct: "T",
-            },
-        };
-
+        // const { status, data } = {
+        //     status: 200,
+        //     data: {
+        //         correct: "T",
+        //     },
+        // };
+        await console.log(status);
         if (status === 200) {
             console.log(data.correct);
             if (data.correct === "F") {
@@ -424,17 +443,17 @@ const StudyRoom = () => {
         console.log(params);
         // REAL
 
-        // const { status, data } = await getApi(
-        //     params,
-        //     "/studyroom",
-        //     authContext.state.token
-        // );
-        // if (status === 200) {
-        //     console.log(data.data);
-        //     await setRooms(data.data);
-        // } else {
-        //     alert("네트워크 오류");
-        // }
+        const { status, data } = await getApi(
+            params,
+            "/studyroom/",
+            authContext.state.token
+        );
+        if (status === 200) {
+            console.log(data.data);
+            await setRooms(data.data);
+        } else {
+            alert("네트워크 오류");
+        }
     };
 
     return (
