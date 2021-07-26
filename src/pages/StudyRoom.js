@@ -7,7 +7,8 @@ import { getApi, postApi } from "../api";
 import { AuthContext } from "../App";
 import "../css/StudyRoom.css";
 
-// TODO: 모달의 확인 버튼, 입장 버튼 규격 같게 해 주기
+// TODO: issue #40
+// TODO:
 
 const initTags = [
     { id: 0, krname: "대학생", enname: "college", clicked: false },
