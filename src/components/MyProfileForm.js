@@ -20,9 +20,9 @@ const MyProfileForm = () => {
 
     const authContext = useContext(AuthContext);
 
-    const settingProfile = () => {
-        // sex & like_category
-        switch (sex) {
+    const settingProfile = (set_sex, set_likecategory) => {
+        // sex & like_category Setting
+        switch (set_sex) {
             case "U":
                 document.getElementById("unknown").checked = true; break;
             case "W":
@@ -31,13 +31,13 @@ const MyProfileForm = () => {
                 document.getElementById("man").checked = true; break;
         };
 
-        document.getElementById('college').checked = likeCategory.college === 'T' ? true : false;
-        document.getElementById('sat').checked = likeCategory.sat === 'T' ? true : false;
-        document.getElementById('gongmuwon').checked = likeCategory.gongmuwon === 'T' ? true : false;
-        document.getElementById('employment').checked = likeCategory.employment === 'T' ? true : false;
-        document.getElementById('certificate').checked = likeCategory.certificate === 'T' ? true : false;
-        document.getElementById('language').checked = likeCategory.language === 'T' ? true : false;
-        document.getElementById('etc').checked = likeCategory.etc === 'T' ? true : false;
+        document.getElementById('college').checked = set_likecategory.college === 'T' ? true : false;
+        document.getElementById('sat').checked = set_likecategory.sat === 'T' ? true : false;
+        document.getElementById('gongmuwon').checked = set_likecategory.gongmuwon === 'T' ? true : false;
+        document.getElementById('employment').checked = set_likecategory.employment === 'T' ? true : false;
+        document.getElementById('certificate').checked = set_likecategory.certificate === 'T' ? true : false;
+        document.getElementById('language').checked = set_likecategory.language === 'T' ? true : false;
+        document.getElementById('etc').checked = set_likecategory.etc === 'T' ? true : false;
     }
 
     useEffect(() => {
@@ -50,19 +50,20 @@ const MyProfileForm = () => {
                 authContext.state.token
             );
             if (status === 200) {
-                console.log(data);
-                await setNickname(data.nickname);
-                await setSex(data.sex);
-                await setBirth(data.birth);
-                await setLikeCategory(data.like_category);
-
+                await console.log(data);
+                await console.log(data.send_data.like_category);
+                await setNickname(data.send_data.nickname);
+                await setSex(data.send_data.sex);
+                await setBirth(data.send_data.birth);
+                await setLikeCategory(data.send_data.like_category);
+                await settingProfile(data.send_data.sex, data.send_data.like_category);
             } else {
                 alert("네트워크 불안정");
             }
         };
         getProfile();
         // GET한 정보들로 세팅
-        settingProfile();
+        
     }, []);
 
 
@@ -84,7 +85,8 @@ const MyProfileForm = () => {
         setBirth(e.target.value);
     }
 
-    const likeCategoryFormat = (checklist) => {
+    const likeCategoryFormat = (checklist) => { 
+        // checklist -> 서버에 넘겨줄 likeCategory 포맷으로 변경
         setLikeCategory({
             ...likeCategory,
             college: checklist[0].checked === true ? 'T' : 'F',
@@ -128,9 +130,9 @@ const MyProfileForm = () => {
             authContext.state.token
         );
         if (status === 200) {
-            console.log("profile update success");
+            await console.log("profile update success");
         } else {
-            console.log("profile update fail");
+            await console.log("profile update fail");
         }
     }
 
