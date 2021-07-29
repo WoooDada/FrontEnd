@@ -2,13 +2,16 @@
 import React, { Component } from "react";
 import ml5 from "ml5";
 import "../css/Study.css";
+import "../css/RightStudy.css";
 import { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import useInterval from "@use-it/interval";
 import { BtnContext } from "../pages/Study";
+import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
+import { FaMedal } from "react-icons/fa";
 
-import { postApi } from "../api";
+import { postApi, getApi } from "../api";
 import { AuthContext } from "../App";
 import { useContext } from "react";
 //////////////////////////////////////////////////////////////////////////////
@@ -17,6 +20,7 @@ let classifier;
 // 초 단위
 const MODEL_APPLY_TIME = 0.5;
 const POST_RESULT_TIME = 60;
+const GET_STUDYMATES = 60;
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -34,6 +38,46 @@ const RightStudyComp = () => {
         tot_play_time: "0:00",
     });
 
+    const [roomName, setRoomName] = useState("");
+    const [roomTag, setRoomTag] = useState("");
+    const [roomManner, setRoomManner] = useState("홀로로로로로롤 들어오세요 안녕안녕 다들 안녕 공부하자구요 규칙: 3번 어쩌구 지키기 ");
+    const [inppl, setInppl] = useState(0);
+    const [maxppl, setMaxppl] = useState(0);
+
+    const studymates = [
+        {
+            nickname: '1인',
+            concent_rate: '45%',
+            concent_time: '1시간 32분',
+            play_time: '1시간 47분',
+        },
+        {
+            nickname: '2인',
+            concent_rate: '90%',
+            concent_time: '2시간 42분',
+            play_time: '13분',
+        },
+        {
+            nickname: '3인',
+            concent_rate: '45%',
+            concent_time: '1시간 32분',
+            play_time: '1시간 47분',
+        },
+        {
+            nickname: '4인',
+            concent_rate: '90%',
+            concent_time: '2시간 42분',
+            play_time: '13분',
+        },
+        {
+            nickname: '5인',
+            concent_rate: '90%',
+            concent_time: '2시간 42분',
+            play_time: '13분',
+        },
+    ]
+
+
     useEffect(() => {
         // * 모델 불러오기 및 카메라 연결
         classifier = ml5.imageClassifier("./model/model.json", () => {
@@ -46,6 +90,30 @@ const RightStudyComp = () => {
                 });
         });
     }, []);
+
+    useEffect(() => {
+        const getRoomInfo = async () => {
+            const { status, data } = await getApi(
+                {
+                    uid: authContext.state.uid,
+                },
+                "/study/room_info/",
+                authContext.state.token
+            );
+            if (status === 200) {
+                await console.log(data);
+                await setRoomName(data.room_name);
+                await setRoomTag(data.room_tag);
+                await setRoomManner(data.room_manner);
+                await setInppl(data.in_ppl);
+                await setMaxppl(data.max_ppl);
+            } else {
+                alert("네트워크 불안정");
+            }
+        };
+        getRoomInfo();
+    }, []);
+
     useInterval(() => {
         // * 0.5초마다 모델에 데이터 집어넣고 결과는 results에 저장
         if (classifier && start) {
@@ -70,7 +138,7 @@ const RightStudyComp = () => {
                         uid: authContext.state.uid,
                         type:
                             resultlistRef.current["C"] >
-                            resultlistRef.current["P"]
+                                resultlistRef.current["P"]
                                 ? "C"
                                 : "P",
                         time: new Date().toString().split(" ")[4].substr(0, 5),
@@ -131,8 +199,95 @@ const RightStudyComp = () => {
         return getClassRate("C") > getClassRate("P") ? "C" : "P";
     };
 
+    const [mannerMore, setMannerMore] = useState(false);
+    const clickManner = () => {
+        setMannerMore(!mannerMore);
+    }
+
+    const [matesIndex, setMatesIndex] = useState(0);
+
+    const StudyMatesBox = ({ data }) => {
+        return (
+            <div className="Studymates-box">
+                {data.nickname}
+                {data.concent_rate} <br />
+                공부시간: {data.concent_time}<br />
+                딴짓시간: {data.play_time}<br />
+            </div>
+        )
+    }
+
+    const StudyMatesBox3 = ({ datas }) => {
+        return (
+            <div className="Studymates-box3">
+                <StudyMatesBox data={datas[matesIndex]} />
+                <StudyMatesBox data={datas[matesIndex + 1]} />
+                <StudyMatesBox data={datas[matesIndex + 2]} />
+            </div>
+        )
+    }
+
+    const clickMatesLeftBtn = (e) => {
+        e.preventDefault();
+        var leftBtn = document.getElementById('Studymates-leftbtn');
+        var rightBtn = document.getElementById('Studymates-rightbtn');
+        // Studymates Index Change
+        if (matesIndex !== 0) {
+            setMatesIndex(matesIndex - 1);
+        }
+        // Button Color Change
+        if (matesIndex <= 1) {
+            leftBtn.style.color = '#E1E5EA';
+            rightBtn.style.color = '#030303';
+        } else {
+            leftBtn.style.color = '#030303';
+            rightBtn.style.color = '#030303';
+        }
+
+    }
+
+    const clickMatesRightBtn = (e) => {
+        e.preventDefault();
+        var leftBtn = document.getElementById('Studymates-leftbtn');
+        var rightBtn = document.getElementById('Studymates-rightbtn');
+        // Studymates Index Change
+        if (matesIndex !== studymates.length - 3) {
+            setMatesIndex(matesIndex + 1);
+        }
+        // Button Color Change
+        if (matesIndex >= studymates.length - 4) {
+            leftBtn.style.color = '#030303';
+            rightBtn.style.color = '#E1E5EA';
+        } else {
+            leftBtn.style.color = '#030303';
+            rightBtn.style.color = '#030303';
+        }
+    }
+
     return (
         <div className="RightComp">
+            <div className="RightComp-inner">
+                <div className="RightComp-roominfo-group1">
+                    <div className="RightComp-roominfo-group2">
+                        <div className="RightComp-roomname">방이름{roomName}</div>
+                        <div className="RightComp-ppl">{inppl}/{maxppl}</div>
+                    </div>
+                    <div className="RightComp-roomtag">#수능{roomTag}</div>
+                </div>
+
+                <p className="RightComp-manner" onClick={(e) => clickManner()}>
+                    {
+                        roomManner.length > 20 ?
+                            (
+                                mannerMore ?
+                                    roomManner :
+                                    roomManner.substr(0, 17) + '...'
+                            )
+                            :
+                            roomManner
+                    }
+                </p>
+            </div>
             <div className="RightComp-inner">
                 {/* <p>현재: {isConcentrate()}</p> */}
                 <video
@@ -158,6 +313,28 @@ const RightStudyComp = () => {
                         {start ? "STOP" : "START"}
                     </button>
                 )}
+            </div>
+
+            <div className="RightComp-inner">
+
+                <div>공친이들</div>
+                <div className="RightComp-studymates">
+                    <div>
+                        <RiArrowLeftSLine
+                            id='Studymates-leftbtn'
+                            size='2rem'
+                            onClick={(e) => clickMatesLeftBtn(e)}
+                            style={{ color: '#E1E5EA' }} />
+                    </div>
+                    <StudyMatesBox3 datas={studymates} />
+                    <div>
+                        <RiArrowRightSLine
+                            id='Studymates-rightbtn'
+                            size='2rem'
+                            onClick={(e) => clickMatesRightBtn(e)}
+                            style={{ color: '#030303' }} />
+                    </div>
+                </div>
             </div>
         </div>
     );

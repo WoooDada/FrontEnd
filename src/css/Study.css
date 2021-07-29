@@ -77,8 +77,9 @@
     flex-direction: column;
     background-color: white;
     width: 60%;
-    margin: 20vmin auto;
+    margin: 2vmin auto;
     padding: 3vmin;
+    border-radius: 4vmin;
 }
 
 .RightComp-inner .Rstudy-video {
