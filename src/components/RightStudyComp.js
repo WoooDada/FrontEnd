@@ -24,7 +24,9 @@ const GET_STUDYMATES = 60;
 
 //////////////////////////////////////////////////////////////////////////////
 
-const RightStudyComp = () => {
+const RightStudyComp = ({ match }) => {
+    console.log('rightcomp match!', match); // match: room_id
+
     const authContext = useContext(AuthContext);
     const btnContext = useContext(BtnContext);
     const videoRef = useRef();
@@ -44,7 +46,10 @@ const RightStudyComp = () => {
     const [inppl, setInppl] = useState(0);
     const [maxppl, setMaxppl] = useState(0);
 
-    const studymates = [
+    // const [studymates, setStudymates] = useState([]);
+    
+
+    const initialStudymates = [
         {
             nickname: '1인',
             concent_rate: '45%',
@@ -75,8 +80,8 @@ const RightStudyComp = () => {
             concent_time: '2시간 42분',
             play_time: '13분',
         },
-    ]
-
+    ];
+    const [studymates, setStudymates] = useState(initialStudymates);
 
     useEffect(() => {
         // * 모델 불러오기 및 카메라 연결
@@ -95,8 +100,7 @@ const RightStudyComp = () => {
         const getRoomInfo = async () => {
             const { status, data } = await getApi(
                 {
-                    // uid: authContext.state.uid,
-                    // room_id 어캐주지
+                    room_id: match,
                 },
                 "/study/room_info/",
                 authContext.state.token
@@ -206,12 +210,12 @@ const RightStudyComp = () => {
         setMannerMore(!mannerMore);
     }
 
-    useInterval(() => { // 1분마다 studymates들 정보 받아오기
-        
+    // 1분마다 studymates들 정보 받아오기
+    useInterval(() => { 
         const getStudymates = async () => {
             const { status, data } = await postApi(
                 {
-                    // room_id 
+                    room_id: match,
                 },
                 "/study/study_mates/",
                 authContext.state.token
@@ -220,7 +224,14 @@ const RightStudyComp = () => {
             //     status: 200,
             // };
             if (status === 200) {
-                // setStudymates(data.~~) map함수 이용
+                await setStudymates(
+                    data.studymates.map((sm, i)=> ({
+                        nickname: sm.nickname,
+                        concent_rate: sm.concent_rate,
+                        concent_time: sm.concent_time,
+                        play_time: sm.play_time,
+                    }))
+                );
             } else {
                 await alert("네트워크 오류");
             }

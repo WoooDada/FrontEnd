@@ -33,7 +33,7 @@ const Main = () => {
         <div className="Main">
             <div className="Main-Banner">
                 <small>"{randomItem()}"</small>
-                <Link to="/study" className="button">
+                <Link to="/studyroom" className="button">
                     공부방 입장하기
                 </Link>
             </div>
