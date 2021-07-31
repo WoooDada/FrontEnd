@@ -95,7 +95,8 @@ const RightStudyComp = () => {
         const getRoomInfo = async () => {
             const { status, data } = await getApi(
                 {
-                    uid: authContext.state.uid,
+                    // uid: authContext.state.uid,
+                    // room_id 어캐주지
                 },
                 "/study/room_info/",
                 authContext.state.token
@@ -199,13 +200,36 @@ const RightStudyComp = () => {
         return getClassRate("C") > getClassRate("P") ? "C" : "P";
     };
 
+    // 공부방 에티켓 더보기 버튼
     const [mannerMore, setMannerMore] = useState(false);
     const clickManner = () => {
         setMannerMore(!mannerMore);
     }
 
-    const [matesIndex, setMatesIndex] = useState(0);
+    useInterval(() => { // 1분마다 studymates들 정보 받아오기
+        
+        const getStudymates = async () => {
+            const { status, data } = await postApi(
+                {
+                    // room_id 
+                },
+                "/study/study_mates/",
+                authContext.state.token
+            );
+            // const { status, data } = { // Dummy 
+            //     status: 200,
+            // };
+            if (status === 200) {
+                // setStudymates(data.~~) map함수 이용
+            } else {
+                await alert("네트워크 오류");
+            }
+        };
+        getStudymates();
+        
+    }, GET_STUDYMATES * 1000);
 
+    const [matesIndex, setMatesIndex] = useState(0);
     const StudyMatesBox = ({ data }) => {
         return (
             <div className="Studymates-box">
