@@ -122,7 +122,8 @@ function App() {
                         <Route path="/login" component={Login} />
                         <Route path="/logout" component={Logout} />
                         <Route path="/main" component={Main} />
-                        <Route path="/study" component={Study} />
+                        {/* <Route path="/study" component={Study} /> */}
+                        <Route path="/study/:roomid" component={Study} />
                         <Route path="/studyroom" component={StudyRoom} />
                         <Route path="/createroom" component={CreateRoom} />
                         <Route path="/myprofile" component={MyProfile} />

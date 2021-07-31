@@ -13,7 +13,7 @@ const initialAllRoomData = [
         room_name: "성공하자",
         inppl: 6,
         maxppl: 10,
-        room_color: "#E8BBBB",
+        room_color: "#FFB6B6",
     },
     {
         room_id: 2,
@@ -27,7 +27,7 @@ const initialAllRoomData = [
         room_name: "방방방",
         inppl: 6,
         maxppl: 10,
-        room_color: "#E8BBBB",
+        room_color: "#FFB6B6",
     },
     {
         room_id: 4,
@@ -41,7 +41,7 @@ const initialAllRoomData = [
         room_name: "공부합시다 여러분!!!!",
         inppl: 6,
         maxppl: 10,
-        room_color: "#E8BBBB",
+        room_color: "#FFB6B6",
     },
     {
         room_id: 6,
@@ -62,7 +62,7 @@ const initialAllRoomData = [
         room_name: "아무나 들어오세유 웰컴",
         inppl: 6,
         maxppl: 10,
-        room_color: "#E8BBBB",
+        room_color: "#FFB6B6",
     },
     {
         room_id: 9,
@@ -79,7 +79,7 @@ const initialMyRoomData = [
         room_name: "성공하자",
         inppl: 6,
         maxppl: 10,
-        room_color: "#E8BBBB",
+        room_color: "#FFB6B6",
     },
     {
         room_id: 2,
@@ -90,18 +90,19 @@ const initialMyRoomData = [
     },
 ];
 
-const MySquare = ({ room_name, inppl, maxppl, room_color }) => {
+const MySquare = ({ room_id, room_name, inppl, maxppl, room_color }) => {
     const style = {
         backgroundColor: room_color,
     };
-    console.log(room_name.length);
     return (
-        <div style={style} className="studybox-square">
-            <div className="square-roomname">{room_name}</div>
-            <div className="square-ppl">
-                {inppl}/{maxppl}
+        <Link to={`/study/${room_id}`}>
+            <div style={style} className="studybox-square">
+                <div className="square-roomname">{room_name}</div>
+                <div className="square-ppl">
+                    {inppl}/{maxppl}
+                </div>
             </div>
-        </div>
+        </Link>
     );
 };
 
@@ -125,9 +126,6 @@ const NewSquare = () => {
 };
 
 const StudyBox = (allRooms) => {
-    console.log(allRooms);
-    console.log(Object.keys(allRooms).length);
-    console.log(allRooms.whatBox);
     const row1 = () => {
         const result1 = [];
         for (let i = 0; i < 5; i++) {
@@ -135,6 +133,7 @@ const StudyBox = (allRooms) => {
                 result1.push(
                     <MySquare
                         key={i}
+                        room_id={allRooms[i].room_id}
                         room_name={allRooms[i].room_name}
                         inppl={allRooms[i].inppl}
                         maxppl={allRooms[i].maxppl}
@@ -154,6 +153,7 @@ const StudyBox = (allRooms) => {
                 result2.push(
                     <MySquare
                         key={i}
+                        room_id={allRooms[i].room_id}
                         room_name={allRooms[i].room_name}
                         inppl={allRooms[i].inppl}
                         maxppl={allRooms[i].maxppl}
