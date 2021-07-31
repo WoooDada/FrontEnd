@@ -45,7 +45,10 @@ const Header = () => {
                     {!authContext.state.onLogin &&
                         (authContext.state.token ? (
                             <div>
-                                <Link to="/myprofile" className="App-header-route">
+                                <Link
+                                    to="/myprofile"
+                                    className="App-header-route"
+                                >
                                     내 프로필
                                 </Link>
                                 <Link to="/logout" className="App-header-route">
