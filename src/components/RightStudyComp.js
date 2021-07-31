@@ -42,12 +42,13 @@ const RightStudyComp = ({ match }) => {
 
     const [roomName, setRoomName] = useState("");
     const [roomTag, setRoomTag] = useState("");
-    const [roomManner, setRoomManner] = useState("홀로로로로로롤 들어오세요 안녕안녕 다들 안녕 공부하자구요 규칙: 3번 어쩌구 지키기 ");
+    const [roomManner, setRoomManner]
+        = useState("홀로로로로로롤 들어오세요 안녕안녕 다들 안녕 공부하자구요 규칙: 1. 아침 10시 기상 2.숙제해오기 3번 어쩌구 지키기 4. 이거 다 안지키면 삼진아웃입니다잉 아셨죠? 아웃이라고요 아웃!!! ");
     const [inppl, setInppl] = useState(0);
     const [maxppl, setMaxppl] = useState(0);
 
     // const [studymates, setStudymates] = useState([]);
-    
+
 
     const initialStudymates = [
         {
@@ -211,7 +212,7 @@ const RightStudyComp = ({ match }) => {
     }
 
     // 1분마다 studymates들 정보 받아오기
-    useInterval(() => { 
+    useInterval(() => {
         const getStudymates = async () => {
             const { status, data } = await postApi(
                 {
@@ -225,7 +226,7 @@ const RightStudyComp = ({ match }) => {
             // };
             if (status === 200) {
                 await setStudymates(
-                    data.studymates.map((sm, i)=> ({
+                    data.studymates.map((sm, i) => ({
                         nickname: sm.nickname,
                         concent_rate: sm.concent_rate,
                         concent_time: sm.concent_time,
@@ -237,17 +238,24 @@ const RightStudyComp = ({ match }) => {
             }
         };
         getStudymates();
-        
     }, GET_STUDYMATES * 1000);
 
     const [matesIndex, setMatesIndex] = useState(0);
     const StudyMatesBox = ({ data }) => {
+        var crNum = data.concent_rate.slice(0,2);
+        var borderStyle = ''
+        if (crNum >= 50) {
+            borderStyle = { borderColor: '#92B355'}
+        } else {
+            borderStyle = { borderColor: '#E9B2BC'}
+        }
+
         return (
-            <div className="Studymates-box">
-                {data.nickname}
-                {data.concent_rate} <br />
-                공부시간: {data.concent_time}<br />
-                딴짓시간: {data.play_time}<br />
+            <div className="Studymates-box" style={borderStyle}>
+                <div className="Studymates-box-name">{data.nickname}</div>
+                <div className="Studymates-box-cr">{data.concent_rate} </div>
+                <div className="Studymates-box-ct">공부시간: {data.concent_time} </div>
+                <div className="Studymates-box-pt">딴짓시간: {data.play_time}</div>
             </div>
         )
     }
@@ -312,11 +320,11 @@ const RightStudyComp = ({ match }) => {
 
                 <p className="RightComp-manner" onClick={(e) => clickManner()}>
                     {
-                        roomManner.length > 20 ?
+                        roomManner.length > 40 ?
                             (
                                 mannerMore ?
                                     roomManner :
-                                    roomManner.substr(0, 17) + '...'
+                                    roomManner.substr(0, 37) + '...'
                             )
                             :
                             roomManner
@@ -351,10 +359,9 @@ const RightStudyComp = ({ match }) => {
             </div>
 
             <div className="RightComp-inner">
-
-                <div>공친이들</div>
+                <div className="RightComp-studymates-title">공친이들</div>
                 <div className="RightComp-studymates">
-                    <div>
+                    <div className="RightComp-studymates-leftbtn">
                         <RiArrowLeftSLine
                             id='Studymates-leftbtn'
                             size='2rem'
@@ -362,7 +369,7 @@ const RightStudyComp = ({ match }) => {
                             style={{ color: '#E1E5EA' }} />
                     </div>
                     <StudyMatesBox3 datas={studymates} />
-                    <div>
+                    <div className="RightComp-studymates-rightbtn">
                         <RiArrowRightSLine
                             id='Studymates-rightbtn'
                             size='2rem'
