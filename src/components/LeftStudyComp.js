@@ -22,6 +22,8 @@ const PrintToday = () => {
             strDay = "(금)"; break;
         case 6:
             strDay = "(토)"; break;
+        default:
+            strDay = ""; break;
     }
     const result = "".concat(
         today.getFullYear(),

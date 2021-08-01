@@ -296,7 +296,7 @@ const RoomItemChild = ({ room_data, onClick }) => {
 const RoomItem = ({ room_data, openModal, alertOverflow }) => {
     /* 방 접속 관련 함수들 */
     function isRoomOverflow(room_data) {
-        return parseInt(room_data.inppl) === parseInt(room_data.maxppl);
+        return parseInt(room_data.inppl) >= parseInt(room_data.maxppl);
     }
 
     function isSecretRoom(room_data) {

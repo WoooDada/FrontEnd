@@ -29,6 +29,8 @@ const MyProfileForm = () => {
                 document.getElementById("woman").checked = true; break;
             case "M":
                 document.getElementById("man").checked = true; break;
+            default:
+                document.getElementById("unknown").checked = true; break;
         };
 
         document.getElementById('college').checked = set_likecategory.college === 'T' ? true : false;
@@ -50,8 +52,6 @@ const MyProfileForm = () => {
                 authContext.state.token
             );
             if (status === 200) {
-                await console.log(data);
-                await console.log(data.send_data.like_category);
                 await setNickname(data.send_data.nickname);
                 await setSex(data.send_data.sex);
                 await setBirth(data.send_data.birth);
@@ -63,7 +63,6 @@ const MyProfileForm = () => {
         };
         getProfile();
         // GET한 정보들로 세팅
-        
     }, []);
 
 
@@ -97,7 +96,6 @@ const MyProfileForm = () => {
             language: checklist[5].checked === true ? 'T' : 'F',
             etc: checklist[6].checked === true ? 'T' : 'F',
         })
-        console.log(likeCategory);
     }
 
     const checkHandler = (e) => {
@@ -106,7 +104,6 @@ const MyProfileForm = () => {
         for (var i = 0; i < 7; i++) {
             if (checklist[i].checked) {
                 cnt += 1;
-                console.log(cnt);
             }
         }
         if (cnt > 3) {

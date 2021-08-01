@@ -12,18 +12,17 @@ const GET_RESULT_TIME = 60; // 1분=60초마다
 const DateFormat = () => {
     const today = new Date();
     var todayMonth = "";
-    if ((today.getMonth() + 1).toString().length == 1) {
+    if ((today.getMonth() + 1).toString().length === 1) {
         todayMonth = "0" + (today.getMonth() + 1).toString();
     } else {
         todayMonth = today.getMonth() + 1;
     }
     var todayDate = "";
-    if ((today.getDate()).toString().length == 1) {
+    if ((today.getDate()).toString().length === 1) {
         todayDate = "0" + (today.getDate()).toString();
     } else {
         todayDate = today.getDate();
     }
-    console.log(todayDate);
     const result = "".concat(
         today.getFullYear(),
         "-",
@@ -37,7 +36,6 @@ const DateFormat = () => {
 const isTenth = () => {
     const now = new Date();
     const nowmin = now.getMinutes();
-    console.log('now=',nowmin);
     if (nowmin > 0){
         if (nowmin % 10 === 0) {
             return true;
@@ -69,7 +67,7 @@ const TenMinPlanner = () => {
     // ]);
 
     useEffect(() => { // 첨에 접속했을때 update=F로, 한꺼번에 받아옴
-        console.log('flag:', flag);
+        // console.log('flag:', flag);
         if (btnContext.state.btnValue === false) { // if RightStudyComp 버튼이 stop일 경우
             if (flag === false){
                 setFlag(true);
@@ -86,9 +84,8 @@ const TenMinPlanner = () => {
                     // const { status, data } = { // Dummy Dummy
                     //     status: 200,
                     // };
-                    await console.log("useeffect");
                     if (status === 200) {
-                        await console.log('data.tenminlist',data.ten_min_list);
+                        // await console.log('data.tenminlist',data.ten_min_list);
                         await setTenMinData(
                             data.ten_min_list.map(t => ({
                                 stt_time: t.stt_time,
@@ -96,7 +93,7 @@ const TenMinPlanner = () => {
                                 concent_type: t.concent_type,
                             }))
                         );
-                        await console.log("tenMinData:", tenMinData);
+                        // await console.log("tenMinData:", tenMinData);
                     } else {
                         alert("인터넷 연결이 불안정합니다.");
                     }
@@ -127,9 +124,8 @@ const TenMinPlanner = () => {
                 // const { status, data } = { // Dummy Dummy
                 //     status: 200,
                 // };
-                await console.log("useinterval!!!!!");
                 if (status === 200) {
-                    await console.log('type무엇인가', data.ten_min_list.concent_type);
+                    // await console.log('type무엇인가', data.ten_min_list.concent_type);
                     // await setTenMinData(tenMinData.concat(data.ten_min_list));
                     await plususeRef(data.ten_min_list.concent_type); // useRef에 반영
                 } else {
@@ -141,17 +137,15 @@ const TenMinPlanner = () => {
     }, GET_RESULT_TIME * 1000);
 
     const plususeRef = (type) => { // 1분단위로 GET받은 데이터 useRef에 C/P로 저장
-        console.log('plususeRef');
         const tendata = {
             stt_time: '',
             end_time: '',
             concent_type: '',
         }
-        console.log('type과연',type);
         concentTypeRef.current[type] += 1;
-        console.log('useRef:', concentTypeRef);
+        // console.log('useRef:', concentTypeRef);
         if (isTenth()) { // 현재 시각 10n분이면, 11n분이라고 해보자.
-            console.log('10분!');
+            // console.log('10분!');
             if (concentTypeRef.current['C'] + concentTypeRef.current['P'] > 4) { // 이거 개수 접근하는거 에러남
                 tendata.stt_time = moment().subtract(10, 'minutes').format('HH:mm');
                 tendata.end_time = moment().subtract(1, 'minutes').format('HH:mm');
@@ -162,8 +156,8 @@ const TenMinPlanner = () => {
                     tendata.concent_type = 'P';
                 }
                 setTenMinData(tenMinData.concat(tendata));
-                console.log('tendata:',tendata);
-                console.log(tenMinData);
+                // console.log('tendata:',tendata);
+                // console.log(tenMinData);
                 DrawGrid(); //10분 될때 그리기
                 // useRef clear 비워주기
                 concentTypeRef.current["C"] = 0;
@@ -208,6 +202,7 @@ const TenMinPlanner = () => {
             case '02': r1 = 21; break;
             case '03': r1 = 22; break;
             case '04': r1 = 23; break;
+            default: r1 = 0; break;
         }
         switch (stt_split[1]) {
             case '00': r2 = 0; break;
@@ -216,6 +211,7 @@ const TenMinPlanner = () => {
             case '30': r2 = 3; break;
             case '40': r2 = 4; break;
             case '50': r2 = 5; break;
+            default: r2 = 0; break;
         }
         if (time_diff === 10) { // 한칸짜리면,
             return { x: r1, y: r2, len: 1 };
@@ -256,20 +252,17 @@ const TenMinPlanner = () => {
 
         var value = 0;
         var returns;
-        console.log(tenMinData);
         tenMinData.map((t, i) => ( // tenMinData에 들어있는 데이터 Grid에 그리기 위한 작업
             value = typetoInt(t.concent_type),
             returns = timeToIndex(t.stt_time, t.end_time),  // 시간 매개변수. 들어갈 칸 인덱스 배열로 반환
             // console.log(returns.x, returns.y, returns.len),
             DrawCell(returns.x, returns.y, returns.len, value)
-        ));
+        ))
 
         const cellColor = (v) => {
             if (v === 1){
-                // console.log(v);
                 return '#BCD6A7';
             } else if (v === 0){
-                // console.log(v);
                 return '#E9B2BC';
             } else { // ratio = Nan
                 return 'rgb(225,229,234,0.5)';
@@ -290,9 +283,6 @@ const TenMinPlanner = () => {
                     // fontSize: "1px",
                     // color: FaBlackberry,
                 })}
-                // cellRender={(x, y, value) => (
-                //     <div>{value}</div>
-                // )}
                 cellHeight="1.2rem"
                 // onClick={(x, y) => alert(`Clicked (${x}, ${y})=${data[x][y]}`)}
             />
@@ -308,25 +298,3 @@ const TenMinPlanner = () => {
 };
 
 export default TenMinPlanner;
-
-
-// const plususeRefWhenStop = () => { // 아직 10n분 아닌데 stop 눌렀을 경우
-//     const howmany = concentTypeRef.current['C'] + concentTypeRef.current['P'];
-//     const tendata = {
-//         stt_time: '',
-//         end_time: '',
-//         concent_type: '',
-//     }
-//     if (howmany > 4) {
-//         tendata.stt_time = moment().subtract(howmany, 'minutes').format('HH:mm');
-//         tendata.end_time = moment().subtract(1, 'minutes').format('HH:mm');
-//         if (concentTypeRef.current['C'] > concentTypeRef.current['P']) { // C > P
-//             tendata.concent_type = 'C';
-//         } else { // C < P
-//             tendata.concent_type = 'P';
-//         }
-//         setTenMinData(tenMinData.concat(tendata));
-//     } else {
-//         // useRef에 쌓인 데이터가 4개 이하면 처리X
-//     }
-// };
