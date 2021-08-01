@@ -123,23 +123,18 @@ const CreateRoomForm = ({ history }) => {
                 await console.log("room create success");
                 await console.log(data.room_id);
                 if (data.room_id == -1) {
-                    await console.log("방명 중복");
                     setMessage("방명이 중복되었습니다. 다른 이름을 입력해주세요.");
                 } else if (data.room_id == -2) {
-                    await console.log("비밀방인데 비밀번호 안씀");
                     setMessage("비밀방을 선택하셨습니다. 비밀번호를 입력해주세요.");
                 } else {
                     // 스터디룸으로 이동
-                    history.push("/study");
+                    history.push(`/study/${data.room_id}`);
                 }
             } else {
                 await console.log("room create fail");
             }
         }
     };
-
-
-
 
     return (
         <form className="Createroom-outer-form">

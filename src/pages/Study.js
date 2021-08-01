@@ -17,7 +17,8 @@ const reducer = (state, action) => {
     }
 };
 
-const Study = () => {
+const Study = ({ match }) => {
+    console.log('roomid!', match.params.roomid);
     const authContext = useContext(AuthContext);
     const [state, dispatch] = useReducer(reducer, {
         btnValue: false,
@@ -46,7 +47,7 @@ const Study = () => {
             <div className="StudyPage">
                 <div className="StudyComps">
                     <LeftStudyComp></LeftStudyComp>
-                    <RightStudyComp></RightStudyComp>
+                    <RightStudyComp match={match.params.roomid}></RightStudyComp>
                 </div>
                 <div className="Study-lowbanner">
                     <small>

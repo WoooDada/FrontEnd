@@ -320,7 +320,7 @@ const RoomItem = ({ room_data, openModal, alertOverflow }) => {
                 // 비밀방이 아니면 모달 없이 들어갈 수 있음.
                 <Link
                     style={{ textDecoration: "none", color: "black" }}
-                    to="/study"
+                    to={`/study/${room_data.room_id}`}
                     // onClick={() => onClick(room_data.room_id)}
                 >
                     <RoomItemChild
@@ -336,7 +336,8 @@ const RoomItem = ({ room_data, openModal, alertOverflow }) => {
 const StudyRoom = () => {
     const [keyword, setKeyword] = useState("");
     const [tags, setTags] = useState(initTags);
-    const [rooms, setRooms] = useState([]);
+    // const [rooms, setRooms] = useState([]);
+    const [rooms, setRooms] = useState(roomsTemp);
     const [clickedRoomId, setClickedRoomId] = useState(-1);
     const [password, setPassword] = useState("");
     const authContext = useContext(AuthContext);
@@ -570,7 +571,10 @@ const StudyRoom = () => {
                         확인
                     </button>
                     {isPwdCorrect ? (
-                        <Link to={"/study"} onClick={() => closeModal()}>
+                        <Link 
+                            to={`/study/${clickedRoomId}`}
+                            // to={`/study/01`}
+                            onClick={() => closeModal()}>
                             <button style={modalStyles.link}>입장</button>
                         </Link>
                     ) : (
