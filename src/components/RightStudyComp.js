@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////
-import React, { Component } from "react";
+import React from "react";
 import ml5 from "ml5";
 import "../css/Study.css";
 import "../css/RightStudy.css";
@@ -9,7 +9,6 @@ import { useEffect } from "react";
 import useInterval from "@use-it/interval";
 import { BtnContext } from "../pages/Study";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
-import { FaMedal } from "react-icons/fa";
 
 import { postApi, getApi } from "../api";
 import { AuthContext } from "../App";

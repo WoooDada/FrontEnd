@@ -194,7 +194,7 @@ const StudyBoxComp = () => {
                 authContext.state.token
             );
             if (status === 200) {
-                await console.log("Get Study Rank :", data.all_room_list);
+                // await console.log("Get Study Rank :", data.all_room_list);
                 await setAllRoomData(
                     data.all_room_list.map((s) => ({
                         room_id: s.room_id,
@@ -204,7 +204,7 @@ const StudyBoxComp = () => {
                         maxppl: s.maxppl,
                     }))
                 );
-                await console.log("Get complete: ", allRoomData);
+                // await console.log("Get complete: ", allRoomData);
             } else {
                 await alert("인터넷 연결이 불안정합니다.");
             }
@@ -231,7 +231,7 @@ const StudyBoxComp = () => {
                         maxppl: s.maxppl,
                     }))
                 );
-                await console.log("Get complete: ", myRoomData);
+                // await console.log("Get complete: ", myRoomData);
             } else {
                 await alert("인터넷 연결이 불안정합니다.");
             }

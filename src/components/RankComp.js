@@ -122,7 +122,6 @@ const RankComp = () => {
                 authContext.state.token
             );
             if (status === 200) {
-                await console.log("Get Study Rank :", data.rank_study_list);
                 await setStudyRankData(
                     data.rank_study_list.map((s) => ({
                         rank: s.rank,
@@ -130,7 +129,6 @@ const RankComp = () => {
                         tot_concent_time: s.tot_concent_time,
                     }))
                 );
-                await console.log("Get complete: ", studyRankData);
             } else {
                 await alert("인터넷 연결이 불안정합니다.");
             }
@@ -148,7 +146,6 @@ const RankComp = () => {
                 authContext.state.token
             );
             if (status === 200) {
-                await console.log("Get Play Rank :", data.rank_play_list);
                 await setPlayRankData(
                     data.rank_play_list.map((p) => ({
                         rank: p.rank,
@@ -156,7 +153,6 @@ const RankComp = () => {
                         tot_concent_rate: p.tot_concent_rate,
                     }))
                 );
-                await console.log("Get complete: ", playRankData);
             } else {
                 await alert("인터넷 연결이 불안정합니다.");
             }
