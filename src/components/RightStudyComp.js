@@ -84,6 +84,19 @@ const RightStudyComp = ({ match }) => {
     ];
     const [studymates, setStudymates] = useState(initialStudymates);
 
+    // useEffect(() => {
+    //     // * 모델 불러오기 및 카메라 연결
+    //     classifier = ml5.imageClassifier("./model/model.json", () => {
+    //         navigator.mediaDevices
+    //             .getUserMedia({ video: true, audio: false })
+    //             .then((stream) => {
+    //                 videoRef.current.srcObject = stream;
+    //                 videoRef.current.play();
+    //                 setLoaded(true);
+    //             });
+    //     });
+    // }, []);
+
     useEffect(() => {
         // * 모델 불러오기 및 카메라 연결
         classifier = ml5.imageClassifier("./model/model.json", () => {
@@ -95,9 +108,6 @@ const RightStudyComp = ({ match }) => {
                     setLoaded(true);
                 });
         });
-    }, []);
-
-    useEffect(() => {
         const getRoomInfo = async () => {
             const { status, data } = await getApi(
                 {
@@ -107,7 +117,7 @@ const RightStudyComp = ({ match }) => {
                 authContext.state.token
             );
             if (status === 200) {
-                await console.log('room_info:', data);
+                await console.log("room_info:", data);
                 await setRoomName(data.room_name);
                 await setRoomTag(data.room_tag);
                 await setRoomManner(data.room_manner);
@@ -117,6 +127,34 @@ const RightStudyComp = ({ match }) => {
                 alert("네트워크 불안정");
             }
         };
+        const getStudymates = async () => {
+            const { status, data } = await getApi(
+                {
+                    room_id: match,
+                },
+                "/study/study_mate/",
+                authContext.state.token
+            );
+            // const { status, data } = { // Dummy
+            //     status: 200,
+            // };
+            console.log("status", status);
+            await console.log("get study mates");
+            await console.log(data);
+            if (status === 200) {
+                const new_studymates = data.studymates.map((sm, i) => ({
+                    nickname: sm.nickname,
+                    concent_rate: sm.concent_rate,
+                    concent_time: sm.concent_time,
+                    play_time: sm.play_time,
+                }));
+                console.log(new_studymates);
+                await setStudymates(new_studymates);
+            } else {
+                await alert("네트워크 오류");
+            }
+        };
+        getStudymates();
         getRoomInfo();
     }, []);
 
@@ -142,7 +180,7 @@ const RightStudyComp = ({ match }) => {
                     concent_time: sm.concent_time,
                     play_time: sm.play_time,
                 }));
-                await console.log('new_studymates:',new_studymates);
+                await console.log("new_studymates:", new_studymates);
                 await setStudymates(new_studymates);
             } else {
                 await alert("네트워크 오류");
@@ -176,7 +214,7 @@ const RightStudyComp = ({ match }) => {
                         uid: authContext.state.uid,
                         type:
                             resultlistRef.current["C"] >
-                                resultlistRef.current["P"]
+                            resultlistRef.current["P"]
                                 ? "C"
                                 : "P",
                         time: new Date().toString().split(" ")[4].substr(0, 5),
@@ -281,7 +319,7 @@ const RightStudyComp = ({ match }) => {
         } else {
             rightBtn.style.color = "#E1E5EA";
         }
-    }
+    };
 
     const [matesIndex, setMatesIndex] = useState(0); // 좌우 화살표 변환에 필요한 matesIndex
     const StudyMatesBox = ({ data }) => {
@@ -308,24 +346,23 @@ const RightStudyComp = ({ match }) => {
     };
 
     const StudyMatesBox3 = ({ datas }) => {
+        console.log("StudyMatesBox3", datas);
         return (
             <div className="Studymates-box3">
-                {(studymates.length === 1) ?
+                {studymates.length === 1 ? (
                     <StudyMatesBox data={datas[matesIndex]} />
-                    :
-                    (studymates.length === 2) ?
-                        <div className="Studymates-box3">
-                            <StudyMatesBox data={datas[matesIndex]} />
-                            <StudyMatesBox data={datas[matesIndex + 1]} />
-                        </div>
-                        :
-                        <div className="Studymates-box3">
-                            <StudyMatesBox data={datas[matesIndex]} />
-                            <StudyMatesBox data={datas[matesIndex + 1]} />
-                            <StudyMatesBox data={datas[matesIndex + 2]} />
-                        </div>
-
-                }
+                ) : studymates.length === 2 ? (
+                    <div className="Studymates-box3">
+                        <StudyMatesBox data={datas[matesIndex]} />
+                        <StudyMatesBox data={datas[matesIndex + 1]} />
+                    </div>
+                ) : (
+                    <div className="Studymates-box3">
+                        <StudyMatesBox data={datas[matesIndex]} />
+                        <StudyMatesBox data={datas[matesIndex + 1]} />
+                        <StudyMatesBox data={datas[matesIndex + 2]} />
+                    </div>
+                )}
             </div>
         );
     };
@@ -334,14 +371,13 @@ const RightStudyComp = ({ match }) => {
         e.preventDefault();
         var leftBtn = document.getElementById("Studymates-leftbtn");
         var rightBtn = document.getElementById("Studymates-rightbtn");
-
         // Studymates Index Change
         if (matesIndex !== 0) {
             setMatesIndex(matesIndex - 1);
         }
         // Button Color Change
-        if (studymates.length > 3){
-            if (matesIndex <= 1 ) {
+        if (studymates.length > 3) {
+            if (matesIndex <= 1) {
                 leftBtn.style.color = "#E1E5EA";
                 rightBtn.style.color = "#030303";
             } else {
@@ -379,9 +415,7 @@ const RightStudyComp = ({ match }) => {
             <div className="RightComp-inner">
                 <div className="RightComp-roominfo-group1">
                     <div className="RightComp-roominfo-group2">
-                        <div className="RightComp-roomname">
-                            {roomName}
-                        </div>
+                        <div className="RightComp-roomname">{roomName}</div>
                         <div className="RightComp-ppl">
                             {inppl}/{maxppl}
                         </div>
@@ -390,7 +424,7 @@ const RightStudyComp = ({ match }) => {
                 </div>
 
                 <p className="RightComp-manner" onClick={(e) => clickManner()}>
-                    {(roomManner !== null) && (roomManner.length > 40)
+                    {roomManner !== null && roomManner.length > 40
                         ? mannerMore
                             ? roomManner
                             : roomManner.substr(0, 37) + "..."
@@ -435,13 +469,16 @@ const RightStudyComp = ({ match }) => {
                             style={{ color: "#E1E5EA" }}
                         />
                     </div>
-                    {studymates? <StudyMatesBox3 datas={studymates} />:<div>친구가 없어요</div>}
+                    {studymates ? (
+                        <StudyMatesBox3 datas={studymates} />
+                    ) : (
+                        <div>친구가 없어요</div>
+                    )}
                     <div className="RightComp-studymates-rightbtn">
                         <RiArrowRightSLine
                             id="Studymates-rightbtn"
                             size="2rem"
                             onClick={(e) => clickMatesRightBtn(e)}
-                            
                             style={{ color: "#E1E5EA" }}
                         />
                     </div>
@@ -452,4 +489,3 @@ const RightStudyComp = ({ match }) => {
 };
 
 export default RightStudyComp;
-

@@ -7,8 +7,8 @@ import { getApi, postApi } from "../api";
 import { AuthContext } from "../App";
 import "../css/StudyRoom.css";
 
-// TODO: issue #40
-// TODO:
+// TODO: issue #40 눌렀을 때 한번 더 확인해줘야 함. -> get으로 작성해주기
+// TODO: issue #41 roomtag에서 initTags랑 맞는 한글 태그 찾아서 보여주기. 만약 맞는 게 없다면 기타로 들어가야 함.
 
 const initTags = [
     { id: 0, krname: "대학생", enname: "college", clicked: false },
@@ -353,9 +353,40 @@ const StudyRoom = () => {
                 "/studyroom/",
                 authContext.state.token
             );
+
             if (status === 200) {
                 console.log(data.data);
-                await setRooms(data.data);
+                const inp_rooms = data.data.map((d) => {
+                    var room_tag = "기타";
+                    switch (d.room_tag) {
+                        case "college":
+                            room_tag = "대학생";
+                            break;
+                        case "sat":
+                            room_tag = "수능";
+                            break;
+                        case "gongmuwon":
+                            room_tag = "공무원";
+                            break;
+                        case "employment":
+                            room_tag = "취업 및 이직";
+                            break;
+                        case "certificate":
+                            room_tag = "자격증";
+                            break;
+                        case "language":
+                            room_tag = "어학";
+                            break;
+                        default:
+                            room_tag = "기타";
+                            break;
+                    }
+                    return {
+                        ...d,
+                        room_tag: room_tag,
+                    };
+                });
+                await setRooms(inp_rooms);
             } else {
                 alert("네트워크 오류");
             }
@@ -373,6 +404,11 @@ const StudyRoom = () => {
 
     function closeModal() {
         setIsOpen(false);
+    }
+
+    function findRoomName(clickedRoomId) {
+        const { room_name } = rooms.filter((r) => r.room_id === clickedRoomId);
+        return room_name;
     }
 
     /* 스터디페이지 입장 관련 함수들 */
@@ -512,7 +548,8 @@ const StudyRoom = () => {
                 contentLabel="Example Modal"
             >
                 <h3 ref={(_subtitle) => (subtitle = _subtitle)}>
-                    {clickedRoomId}번방에 들어가려면, 비밀번호를 입력해주세요!
+                    {findRoomName(clickedRoomId)}번방에 들어가려면, 비밀번호를
+                    입력해주세요!
                 </h3>
                 <div
                     className="Modal-PassWord-Wrapper"
