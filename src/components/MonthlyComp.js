@@ -65,11 +65,9 @@ const MonthlyComp = () => {
                 "/tdl/monthly/",
                 authContext.state.token
             );
-            await console.log("아아아아아ㅏ");
             if (status === 200) {
                 // data : [m_todo_id, stt_date, end_date, m_content] 배열 여러개.
                 // map으로 각각 setMtodos로 id, start, end, title에 넣어주기
-                await console.log(data.m_todo_list);
                 await setMtodos(
                     data.m_todo_list.map((mdata, i) => ({
                         id: mdata.m_todo_id,
@@ -78,7 +76,6 @@ const MonthlyComp = () => {
                         title: mdata.m_content,
                     }))
                 );
-                await console.log("mtodos:", mtodos);
             } else {
                 alert("인터넷 연결이 불안정합니다.");
             }
@@ -190,7 +187,7 @@ const MonthlyComp = () => {
         setMtodos(
             // mtodos 배열에  반영
             mtodos.map((mtodo) =>
-                mtodo.id == eventId
+                mtodo.id === eventId
                     ? {
                           ...mtodo,
                           title: eventInfo.oldEvent.title,
@@ -250,7 +247,7 @@ const MonthlyComp = () => {
         setMtodos(
             // mtodos 배열에  반영
             mtodos.map((mtodo) =>
-                mtodo.id == eventId
+                mtodo.id === eventId
                     ? {
                           ...mtodo,
                           title: eventInfo.oldEvent.title,
@@ -294,7 +291,7 @@ const MonthlyComp = () => {
 
         setMtodos(
             mtodos.map((mtodo) =>
-                mtodo.id == state.eventId
+                mtodo.id === state.eventId
                     ? {
                           ...mtodo,
                           title: inputs.title,
@@ -340,7 +337,7 @@ const MonthlyComp = () => {
     // 일정삭제(DELETE) : mtodos배열에서 해당 id의 event 삭제
     const handleClickDeleteBtn = async (e) => {
         e.preventDefault();
-        setMtodos(mtodos.filter((mtodos) => mtodos.id != state.eventId)); // mtodos 배열에 해당 event 삭제
+        setMtodos(mtodos.filter((mtodos) => mtodos.id !== state.eventId)); // mtodos 배열에 해당 event 삭제
         // DELETE
         const { status, data } = await deleteApi(
             {

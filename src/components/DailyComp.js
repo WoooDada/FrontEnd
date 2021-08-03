@@ -67,18 +67,17 @@ function reducer(state, action) {
 const DateFormat = () => {
     const today = new Date();
     var todayMonth = "";
-    if ((today.getMonth() + 1).toString().length == 1) {
+    if ((today.getMonth() + 1).toString().length === 1) {
         todayMonth = "0" + (today.getMonth() + 1).toString();
     } else {
         todayMonth = today.getMonth() + 1;
     }
     var todayDate = "";
-    if (today.getDate().toString().length == 1) {
+    if (today.getDate().toString().length === 1) {
         todayDate = "0" + today.getDate().toString();
     } else {
         todayDate = today.getDate();
     }
-    console.log(todayDate);
     const result = "".concat(
         today.getFullYear(),
         "-",
@@ -127,7 +126,6 @@ const DtodosInput = () => {
         // const { status, data } = {
         //     status: 200,
         // };
-        console.log("CREATE_TODO = POST입니다");
         if (status === 200) {
             dailyContext.dispatch({
                 type: "CREATE_TODO",
@@ -194,7 +192,6 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
         // const { status, data } = {
         //     status: 200,
         // };
-        console.log("이거슨 CHECK");
         if (status === 200) {
             await dailyContext.dispatch({
                 type: "CHECK_TODO",
@@ -217,7 +214,6 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
         // const { status, data } = {
         //     status: 200,
         // };
-        console.log("DELETE입니다우우우");
         if (status === 200) {
             await dailyContext.dispatch({
                 type: "DELETE_TODO",
@@ -283,15 +279,13 @@ const DailyComp = () => {
                 "/tdl/daily/",
                 authContext.state.token
             );
-            await console.log("GET아아아");
             if (status === 200) {
                 await dispatch({
                     type: "GET_TODO",
                     dtodos: data.d_todo_list,
                 });
-                await console.log(data.d_todo_list);
             } else {
-                await console.log(status, data);
+                // await console.log(status, data);
                 alert("인터넷 연결이 불안정합니다.");
             }
         };

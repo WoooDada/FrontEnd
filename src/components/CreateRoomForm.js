@@ -48,7 +48,7 @@ const CreateRoomForm = ({ history }) => {
     // 카테고리
     const [category, setCategory] = useState("");
     const categoryChange = (e) => {
-        console.log(e.target.id)
+        // console.log(e.target.id)
         switch (e.target.id) {
             case "cate1": setCategory("college"); break;
             case "cate2": setCategory("sat"); break;
@@ -57,6 +57,7 @@ const CreateRoomForm = ({ history }) => {
             case "cate5": setCategory("certificate"); break;
             case "cate6": setCategory("language"); break;
             case "cate7": setCategory("etc"); break;
+            default: setCategory("etc"); break;
         }
     }
 
@@ -77,11 +78,12 @@ const CreateRoomForm = ({ history }) => {
             case "rc5": setColor("#B0DFFB"); break;
             case "rc6": setColor("#E1B0FF"); break;
             case "rc7": setColor("#B89779"); break;
+            default: setColor("#B89779"); break;
         }
         for (var i=1; i<=7; i++){
             var nowid = "rc" + i;
             var element = document.getElementById(nowid);
-            if (nowid == id){
+            if (nowid === id){
                 element.style.border = "solid 2px #727272";
                 element.style.width = "16px"; element.style.height = "16px";
             } else {
@@ -122,9 +124,9 @@ const CreateRoomForm = ({ history }) => {
             if (status === 200) {
                 await console.log("room create success");
                 await console.log(data.room_id);
-                if (data.room_id == -1) {
+                if (data.room_id === -1) {
                     setMessage("방명이 중복되었습니다. 다른 이름을 입력해주세요.");
-                } else if (data.room_id == -2) {
+                } else if (data.room_id === -2) {
                     setMessage("비밀방을 선택하셨습니다. 비밀번호를 입력해주세요.");
                 } else {
                     // 스터디룸으로 이동
@@ -168,7 +170,7 @@ const CreateRoomForm = ({ history }) => {
                 <input
                     name="room_pwd"
                     placeholder="~~으로 입력해주세요"
-                    disabled={secret == "secret" ? false : true}
+                    disabled={secret === "secret" ? false : true}
                     onChange={(e) => inputPwd(e)}
                 />
             </div>
