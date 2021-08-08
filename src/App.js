@@ -1,4 +1,4 @@
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, useHistory, useLocation } from "react-router-dom";
 
 // Page 로딩
 import {
@@ -14,7 +14,7 @@ import {
 // import Header from "./components/Header";
 import "./App.css";
 import Login from "./pages/Login";
-import { useReducer, createContext, useContext } from "react";
+import { useReducer, createContext, useContext, useEffect } from "react";
 import Logo from "./constants/imgs/newlogo.png";
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -107,11 +107,40 @@ const reducer = (state, action) => {
 
 //////////////////////////////////////////////////////////////////////////////////
 function App() {
+    const history = useHistory();
+    const location = useLocation();
     const [state, dispatch] = useReducer(reducer, {
         token: null,
         uid: null,
         onLogin: false,
     });
+
+    useEffect(() => {
+        const initUserInfo = async () => {
+            const { token, uid } = await JSON.parse(
+                localStorage.getItem("loggedInfo")
+            );
+
+            if (token) {
+                await dispatch({
+                    type: "login",
+                    token: token,
+                    uid: uid,
+                });
+                await dispatch({ type: "notOnLoginPage" });
+            } else {
+                await dispatch({
+                    type: "logout",
+                });
+                await dispatch({ type: "notOnLoginPage" });
+                if (location.pathname !== "/") {
+                    await history.push("/login");
+                }
+            }
+        };
+        initUserInfo();
+    }, [state.token]);
+
     return (
         <div className="App">
             <AuthContext.Provider value={{ state, dispatch }}>
