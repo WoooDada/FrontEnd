@@ -11,8 +11,11 @@ const Logout = (props) => {
             e.preventDefault();
             // logout 성공
             authContext.dispatch({ type: "logout" });
+            localStorage.setItem(
+                "loggedInfo",
+                JSON.stringify({ uid: null, token: null })
+            );
             history.push("/login"); // logout 성공 시 login창으로 이동
-            alert("로그아웃!");
         };
 
         return (
