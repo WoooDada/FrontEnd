@@ -10,6 +10,7 @@ import {
     Study,
     StudyRoom,
     CreateRoom,
+    Socket,
 } from "./pages";
 // import Header from "./components/Header";
 import "./App.css";
@@ -117,11 +118,12 @@ function App() {
 
     useEffect(() => {
         const initUserInfo = async () => {
-            const { token, uid } = await JSON.parse(
+            const loggedInfo = await JSON.parse(
                 localStorage.getItem("loggedInfo")
             );
 
-            if (token) {
+            if (loggedInfo) {
+                const { token, uid } = loggedInfo;
                 await dispatch({
                     type: "login",
                     token: token,
@@ -156,6 +158,7 @@ function App() {
                         <Route path="/studyroom" component={StudyRoom} />
                         <Route path="/createroom" component={CreateRoom} />
                         <Route path="/myprofile" component={MyProfile} />
+                        <Route path="/socket" component={Socket} />
                         <Route component={NotFound} />
                     </Switch>
                 </div>
