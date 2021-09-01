@@ -29,6 +29,7 @@ const RightStudyComp = ({ match }) => {
     const authContext = useContext(AuthContext);
     const btnContext = useContext(BtnContext);
     const videoRef = useRef();
+    const ws = useRef(null);
 
     const [start, setStart] = useState(false);
     const [result, setResult] = useState([]);
@@ -84,18 +85,23 @@ const RightStudyComp = ({ match }) => {
     ];
     const [studymates, setStudymates] = useState(initialStudymates);
 
-    // useEffect(() => {
-    //     // * 모델 불러오기 및 카메라 연결
-    //     classifier = ml5.imageClassifier("./model/model.json", () => {
-    //         navigator.mediaDevices
-    //             .getUserMedia({ video: true, audio: false })
-    //             .then((stream) => {
-    //                 videoRef.current.srcObject = stream;
-    //                 videoRef.current.play();
-    //                 setLoaded(true);
-    //             });
-    //     });
-    // }, []);
+    useEffect(() => {
+        // * 웹 소켓 연결하기
+        const url = "ws://13.209.194.64:8080/yolo/getmessage/";
+        ws.current = new WebSocket(url);
+        ws.current.onopen = () => console.log("ws opened");
+        ws.current.onclose = () => console.log("ws closed");
+        ws.current.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            console.log("from server: ", message);
+        };
+
+        return () => {
+            if (ws.current) {
+                ws.current.closed();
+            }
+        };
+    }, []);
 
     useEffect(() => {
         // * 모델 불러오기 및 카메라 연결
@@ -410,6 +416,13 @@ const RightStudyComp = ({ match }) => {
         }
     };
 
+    function sendMessage() {
+        const msg = { txt: "hello from client" };
+        if (!ws.current) return;
+
+        ws.current.send(JSON.stringify(msg));
+    }
+
     return (
         <div className="RightComp">
             <div className="RightComp-inner">
@@ -456,6 +469,7 @@ const RightStudyComp = ({ match }) => {
                         {start ? "STOP" : "START"}
                     </button>
                 )}
+                <button onClick={sendMessage}>소켓 메시지 보내기</button>
             </div>
 
             <div className="RightComp-inner">
