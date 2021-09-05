@@ -11,6 +11,7 @@ import {
     StudyRoom,
     CreateRoom,
     Socket,
+    Graph,
 } from "./pages";
 // import Header from "./components/Header";
 import "./App.css";
@@ -159,6 +160,7 @@ function App() {
                         <Route path="/createroom" component={CreateRoom} />
                         <Route path="/myprofile" component={MyProfile} />
                         <Route path="/socket" component={Socket} />
+                        <Route path="/graph" component={Graph} />
                         <Route component={NotFound} />
                     </Switch>
                 </div>

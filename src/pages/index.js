@@ -8,3 +8,4 @@ export { default as CreateRoom } from "./CreateRoom";
 export { default as StudyRoom } from "./StudyRoom";
 export { default as MyProfile } from "./MyProfile";
 export { default as Socket } from "./Socket";
+export { default as Graph } from "./Graph";
