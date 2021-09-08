@@ -11,6 +11,7 @@ import {
     StudyRoom,
     CreateRoom,
     Socket,
+    Graph,
 } from "./pages";
 // import Header from "./components/Header";
 import "./App.css";
@@ -135,9 +136,9 @@ function App() {
                     type: "logout",
                 });
                 await dispatch({ type: "notOnLoginPage" });
-                if (location.pathname !== "/") {
-                    await history.push("/login");
-                }
+                // if (location.pathname !== "/") {
+                //     await history.push("/login");
+                // }
             }
         };
         initUserInfo();
@@ -159,6 +160,7 @@ function App() {
                         <Route path="/createroom" component={CreateRoom} />
                         <Route path="/myprofile" component={MyProfile} />
                         <Route path="/socket" component={Socket} />
+
                         <Route component={NotFound} />
                     </Switch>
                 </div>
