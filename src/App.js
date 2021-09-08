@@ -136,9 +136,9 @@ function App() {
                     type: "logout",
                 });
                 await dispatch({ type: "notOnLoginPage" });
-                if (location.pathname !== "/") {
-                    await history.push("/login");
-                }
+                // if (location.pathname !== "/") {
+                //     await history.push("/login");
+                // }
             }
         };
         initUserInfo();
@@ -160,7 +160,7 @@ function App() {
                         <Route path="/createroom" component={CreateRoom} />
                         <Route path="/myprofile" component={MyProfile} />
                         <Route path="/socket" component={Socket} />
-                        <Route path="/graph" component={Graph} />
+
                         <Route component={NotFound} />
                     </Switch>
                 </div>
