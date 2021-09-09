@@ -148,7 +148,7 @@ function App() {
     return (
         <div className="App">
             <AuthContext.Provider value={{ state, dispatch }}>
-                <Header></Header>
+                {/* <Header></Header> */}
                 <div className="App-body">
                     <Switch>
                         <Route path="/" component={Home} exact />
@@ -166,7 +166,7 @@ function App() {
                         <Route component={NotFound} />
                     </Switch>
                 </div>
-                <Footer></Footer>
+                {/* <Footer></Footer> */}
             </AuthContext.Provider>
         </div>
     );
