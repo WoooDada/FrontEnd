@@ -1,0 +1,127 @@
+.StudyRoom {
+    height: 100%;
+    background-color: #faf3f3;
+    min-height: 80vh;
+}
+
+.StudyRoom .Contents-Wrapper {
+    /* background-color: #faf3f3; */
+    padding: 2vmin 30vmin;
+    display: flex;
+    flex-direction: column;
+}
+
+.StudyRoom .Search-Bar {
+    margin: auto;
+    width: 45%;
+    /* font-size: large; */
+
+    /* background 뭐가 더 나은 지확인 */
+    background-color: #e1e5ea;
+
+    border-radius: 1vmin;
+    padding: 0 1vmin;
+}
+
+.Search-Bar input {
+    margin: 1vmin 0.5vmin;
+    padding: 0.5vmin;
+    font-size: 1.8vmin;
+    width: 85%;
+    border: none;
+
+    border-radius: 0.5vmin;
+    /* width: 100%; */
+}
+.Search-Bar button {
+    border: 0.5px solid #e1e5ea;
+    margin: 1vmin;
+    padding: 0.5vmin;
+    background-color: #e1e5ea;
+    font-size: 1.8vmin;
+    border-radius: 0.5vh;
+    font-family: "NanumGothic-Bold";
+    cursor: pointer;
+    /* width: 100%; */
+}
+
+.StudyRoom .Tag-List {
+    margin: auto;
+    display: flex;
+    background-color: "pink";
+}
+
+.StudyRoom .Tag-Item-Unselected,
+.StudyRoom .Tag-Item-Selected {
+    padding: 0.5vmin;
+    border: solid 1px #c4c4c4;
+    margin: 1vmin;
+    border-radius: 1vh;
+    font-size: 1.8vmin;
+    background-color: white;
+    cursor: pointer;
+}
+
+.StudyRoom .Tag-Item-Selected {
+    border: solid 1px #e1e5ea;
+    background-color: #e1e5ea;
+}
+
+.StudyRoom .Room-List {
+    margin: 0.5vh 0;
+    padding: 5vmin;
+    background-color: white;
+    border-radius: 3vmin;
+    min-height: 60vh;
+    align-self: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    width: 100%;
+}
+
+.Room-List .Room-Item {
+    margin: 1vh auto;
+    list-style: none;
+    width: 200px;
+    cursor: pointer;
+}
+
+.Room-List span {
+    margin: auto;
+}
+
+.Room-Item .Box {
+    background-color: #c4c4c4;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 1vmin 0;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+}
+
+.Room-Item .Explanation {
+    min-height: 80px;
+    /* background-color: pink; */
+    margin-top: 0.5vh;
+    padding: 0.5vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.Room-Item b {
+    margin: 0.5vmin 0;
+}
+
+.Room-Item small {
+    overflow-wrap: break-word;
+}
+
+.Room-Item .Explanation b {
+    font-size: 1.6vmin;
+}
+
+.Room-Item .Explanation small {
+    margin-top: 0.5vmin;
+}

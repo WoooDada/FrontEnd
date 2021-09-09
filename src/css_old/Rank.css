@@ -1,0 +1,37 @@
+.what-rank {
+    display: flex;
+    margin-right: auto;
+}
+.what-rank-btn {
+    background-color: white;
+    border: none;
+    padding: 1vmin;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.Rank-study,
+.Rank-play {
+    min-width: 15rem;
+}
+
+.rank-item {
+    display: flex;
+    font-size: small;
+    padding-bottom: 0.2em;
+}
+
+.rank-item .rank-item1 {
+    flex-basis: 10%;
+}
+.rank-item .rank-item2 {
+    flex-basis: 50%;
+}
+.rank-item .rank-item3 {
+    flex-basis: 40%;
+}
+
+.Rank-study p,
+.Rank-play p {
+    font-size: small;
+}

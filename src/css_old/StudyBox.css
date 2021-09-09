@@ -1,0 +1,88 @@
+.what-box {
+    display: flex;
+    margin-right: auto;
+}
+.what-box-btn {
+    background-color: white;
+    border: none;
+    padding: 1vmin;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.studybox-upper-btns {
+    display: flex;
+    margin-bottom: 2vmin;
+}
+
+.more-btn {
+    background-color: white;
+    color: rgb(124, 124, 124);
+    border: none;
+    padding: 1vmin;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.box-list {
+    max-width: 70vmin;
+}
+
+.studybox-newsquare {
+    width: 12vmin;
+    height: 12vmin;
+    background-color: #FFCF23;
+    border: none;
+    border-radius: 2vmin;
+    margin: 1vmin;
+    cursor: pointer;
+}
+
+.studybox-newsquare p {
+    font-size: x-small;
+    font-weight: bold;
+}
+
+/* 사각형 한칸 */
+.studybox-square { 
+    width: 12vmin;
+    height: 12vmin;
+    background-color: #E1E5EA;
+    border: none;
+    border-radius: 2vmin;
+    margin: 1vmin;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.square-roomname {
+    font-weight: bold;
+    font-size: x-small;
+    padding: 2vmin 0.5vmin 0vmin 0.5vmin;
+    
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.square-ppl {
+    font-weight: bold;
+    font-size: x-small;
+    padding: 1vmin 0;
+    
+}
+
+.studybox-squares {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.studybox-squres-row {
+    display: flex;
+    flex-direction: row;
+}
+

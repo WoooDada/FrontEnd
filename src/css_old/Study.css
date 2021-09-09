@@ -1,0 +1,119 @@
+.StudyComps {
+    display: flex;
+    flex-direction: row;
+    min-height: 100%;
+    padding: 3vmin;
+    background: #faf3f3;
+}
+
+.StudyComps .LeftComp {
+    flex: 1;
+    min-height: 80vmin;
+    /* border-right: 1px solid #E9B2BC; */
+    padding: 0 3vmin 1vmin 0;
+    margin-left: 5vh;
+}
+
+.StudyComps .LeftComp-upper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.StudyComps .RightComp {
+    flex: 1;
+}
+
+.StudyComps .LeftComp-router {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.Study-lowbanner {
+    background-color: #e1e5ea;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.Study-lowbanner small {
+    margin: 5vmin auto 1vmin auto;
+}
+
+.Study-route {
+    margin: 3vmin auto;
+    width: 40vmin;
+    background-color: rgba(255, 255, 255, 0.623);
+    border-width: 0;
+    padding: 1vh 15vh;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 2vmin;
+    color: #2c2c2c;
+    font-size: 3vmin;
+    font-weight: 700;
+    transition: background-color 0.5s;
+}
+
+.Study-route:hover {
+    background-color: white;
+}
+
+.LeftComp {
+    margin-left: auto;
+}
+
+.LeftComp-button {
+    background-color: #e2aeb8;
+    color: white;
+    border: none;
+    border-radius: 2vmin;
+    margin: 1vmin;
+    width: 6vmin;
+    padding: 1vmin 0;
+}
+
+.RightComp-inner {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    width: 70%;
+    margin: 2vmin auto;
+    padding: 3vmin;
+    border-radius: 4vmin;
+}
+
+.RightComp-inner .Rstudy-video {
+    margin: auto;
+}
+
+.Rstudy-undervideo {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 7vmin;
+}
+
+.Rstudy-undervideo span {
+    font-size: small;
+}
+.undervideo-span1 {
+    color: #c4c4c4;
+    font-weight: bold;
+}
+.undervideo-span2 {
+    color: #bcd6a7;
+    font-weight: bold;
+}
+.undervideo-span3 {
+    color: #e9b2bc;
+    font-weight: bold;
+}
+
+.RightComp-inner button {
+    background-color: #db7a77;
+    padding: 1vmin 0;
+    border: none;
+    border-radius: 1.5vmin;
+    color: white;
+    font-weight: bold;
+}

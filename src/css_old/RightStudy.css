@@ -1,0 +1,70 @@
+.RightComp-roominfo-group1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.RightComp-roominfo-group2 {
+    display: flex;
+    flex-direction: row;
+}
+
+.RightComp-roomname {
+    font-size: large;
+    font-weight: bold;
+}
+
+.RightComp-roomtag {
+    margin: auto 0;   
+}
+
+.RightComp-ppl {
+    padding-left: 2vmin;
+}
+
+.RightComp-manner {
+    cursor: pointer;
+}
+
+.RightComp-studymates-title {
+    font-weight: bold;
+    margin-bottom: 1vmin;
+}
+
+.RightComp-studymates {
+    display: flex;
+    flex-direction: row;
+}
+
+.Studymates-box3 {
+    display: flex;
+    flex-direction: row;
+}
+
+.Studymates-box {
+    background-color: #ffffff;
+    border: solid 3px;
+    width: 15vmin;
+    height: 10vmin;
+    padding: 1vmin;
+    margin: 1vmin;
+    font-size: xx-small;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.RightComp-studymates-leftbtn, 
+.RightComp-studymates-rightbtn {
+    margin: auto 0;
+}
+
+.Studymates-box-name {
+    font-weight: bold;
+}
+
+.Studymates-box-cr {
+    font-size: medium;
+    padding: 5px 0;
+}

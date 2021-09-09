@@ -12,6 +12,7 @@ import {
     CreateRoom,
     Socket,
     Graph,
+    NewMain,
 } from "./pages";
 // import Header from "./components/Header";
 import "./App.css";
@@ -154,6 +155,7 @@ function App() {
                         <Route path="/login" component={Login} />
                         <Route path="/logout" component={Logout} />
                         <Route path="/main" component={Main} />
+                        <Route path="/newmain" component={NewMain} />
                         {/* <Route path="/study" component={Study} /> */}
                         <Route path="/study/:roomid" component={Study} />
                         <Route path="/studyroom" component={StudyRoom} />
