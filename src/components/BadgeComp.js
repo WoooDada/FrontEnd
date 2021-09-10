@@ -24,6 +24,23 @@ const getBadgeColor = (badge) => {
     }
 };
 
+const getBadgeName = (badge) => {
+    switch (badge) {
+        case "B":
+            return "BRONZE";
+        case "S":
+            return "SILVER";
+        case "G":
+            return "GOLD";
+        case "P":
+            return "PLATINUM";
+        case "D":
+            return "DIA";
+        default:
+            return "IRON";
+    }
+}
+
 const customStyles = {
     content: {
         top: "50%",
@@ -54,21 +71,27 @@ const BadgeComp = () => {
     const [userData, setUserData] = useState({
         nickname: "",
         badge_color: "#000000",
+        badge_name: "",
     });
     useEffect(() => {
         const getNickName = async () => {
-            const { status, data } = await getApi(
-                {
-                    uid: authContext.state.uid,
-                },
-                "/home/badge_profile",
-                authContext.state.token
-            );
+            // const { status, data } = await getApi(
+            //     {
+            //         uid: authContext.state.uid,
+            //     },
+            //     "/home/badge_profile",
+            //     authContext.state.token
+            // );
+            const { status, data } = {
+                status: 200,
+                data: { nickname: "우정" },
+            };
             if (status === 200) {
                 console.log(data);
                 await setUserData({
                     nickname: data.nickname,
                     badge_color: getBadgeColor(data.badge),
+                    badge_name: getBadgeName(data.badge),
                 });
             } else {
                 alert("네트워크 불안정");
@@ -78,15 +101,17 @@ const BadgeComp = () => {
     }, []);
     return (
         <div>
-            <p className="small-title">뱃지</p>
             <div className="Main-BadgeComp">
+                <div className="badge-circle"></div>
+                <div className="badge-icon">
                 <FaMedal
                     style={{ cursor: "pointer" }}
                     onClick={openModal}
                     color={userData.badge_color}
-                    size="4em"
+                    size="45px"
                     className="icon"
                 />
+                </div>
                 <Modal
                     isOpen={modalIsOpen}
                     onAfterOpen={afterOpenModal}
@@ -112,10 +137,12 @@ const BadgeComp = () => {
                         </p>
                     </div>
                 </Modal>
-                <small>
-                    <br />
+                <div className='badge-nickname'>
                     {userData.nickname}
-                </small>
+                </div>
+                <div className='badge-name'>
+                    {userData.badge_name}
+                </div>
             </div>
         </div>
     );
