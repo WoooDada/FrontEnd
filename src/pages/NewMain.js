@@ -9,13 +9,14 @@ import {
     RankComp,
     StudyBoxComp,
 } from "../components";
+import { useState } from "react";
 
 const NewMain = () => {
+    const [whichSection, setWhichSection] = useState("gongdada");
     return (
         <div className='Main'>
             <aside>
                 <BadgeComp></BadgeComp>
-                
                 <div className='aside-menus'>
                     <p>Home</p>
                     <p>Main</p>
@@ -25,6 +26,10 @@ const NewMain = () => {
                 </div>
                 <div className='aside-bottom'>공다다</div>
             </aside>
+
+            <header>
+                <TodayComp></TodayComp>
+            </header>
         </div>
     )
 }

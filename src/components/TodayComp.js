@@ -2,7 +2,6 @@ import React from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
-
 import { getApi } from "../api";
 import { AuthContext } from "../App";
 
@@ -40,22 +39,14 @@ const TodayComp = () => {
         getTodayInfo();
     }, []);
     return (
-        <div>
-            <p className="small-title">오늘</p>
-            <div className="Main-TodayComp">
-                <div className="Main-TodayComp-status">
-                    <span className="stitle">집중도</span>
-                    <p>{todayStudy.tot_concent_rate}%</p>
-                </div>
-                <div className="Main-TodayComp-status">
-                    <span className="stitle">집중 시간</span>
-                    <p>{todayStudy.tot_concent_time}</p>
-                </div>
-                <div className="Main-TodayComp-status">
-                    <span className="stitle">총 공부시간</span>
-                    <p>{todayStudy.tot_time}</p>
-                </div>
-            </div>
+        <div className="TodayComp">
+            <p className="small-title">오늘 당신의 학습력은...</p>
+            <p className="stitle">집중도</p>
+            <p className="today-percent" style={{color: '#000000'}}>{todayStudy.tot_concent_rate}%</p>
+            <p className="stitle">집중 시간</p>
+            <p className="today-percent" style={{color: '#5F45FF'}}>{todayStudy.tot_concent_time}</p>
+            <p className="stitle">총 공부시간</p>
+            <p className="today-percent" style={{color: '#F68059'}}>{todayStudy.tot_time}</p>
         </div>
     );
 };
