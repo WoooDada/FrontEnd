@@ -11,6 +11,6 @@ export { default as StudyBoxComp } from "./StudyBoxComp";
 export { default as CreateRoomForm } from "./CreateRoomForm";
 export { default as MyProfileForm } from "./MyProfileForm";
 export { default as MainRight } from "./MainRight";
-export { default as Studyroom } from "./Studyroom";
+export { default as Studycard } from "./Studycard";
 export { default as Gongdada } from "./Gongdada";
 export { default as Schedule } from "./Schedule";

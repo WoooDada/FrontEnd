@@ -3,10 +3,9 @@ import "../css/Main.css";
 import { Link } from "react-router-dom";
 import {
     BadgeComp,
-    Studyroom,
     MainRight,
 } from "../components";
-import { Logout, MyProfile } from ".";
+import { Logout, MyProfile, StudyRoom } from ".";
 import { useState, useContext } from "react";
 import { AuthContext } from "../App";
 
@@ -41,7 +40,7 @@ const NewMain = () => {
             {whichSection === "main" ? (
                 <MainRight></MainRight>
             ) : whichSection === "studyroom" ? (
-                <Studyroom></Studyroom>
+                <StudyRoom></StudyRoom>
             ) : whichSection === "profile" ? (
                 <MyProfile></MyProfile>
             ) : (

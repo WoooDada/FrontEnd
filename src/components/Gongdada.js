@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {
     ConcentGraphComp,
     RankComp,
-
+    StudyBoxComp,
 } from "../components";
 import "../css/Main.css";
 
@@ -12,7 +12,7 @@ const Gongdada = () => {
         <div className="Main-Gongdada">
             <div className="Gongdada-left">
                 <ConcentGraphComp></ConcentGraphComp>
-                
+                <StudyBoxComp></StudyBoxComp>
             </div>
             <div className="Gongdada-right">
                 <RankComp></RankComp>

@@ -1,11 +1,12 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
-
 import "../css/Main.css";
 import getApi from "../api/getApi";
 import { AuthContext } from "../App";
 import "../css/StudyBox.css";
 import { Link } from "react-router-dom";
+import { Studycard } from ".";
+import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 
 const initialAllRoomData = [
     {
@@ -13,176 +14,165 @@ const initialAllRoomData = [
         room_name: "성공하자",
         inppl: 6,
         maxppl: 10,
-        room_color: "#FFB6B6",
+        room_color: "#9F8FFF",
+        is_scret: "F",
+        room_tag: "#대학생"
     },
     {
         room_id: 2,
         room_name: "송이들 드루와아아아아아아아아아아아아",
         inppl: 3,
         maxppl: 10,
-        room_color: "#B0DFFB",
+        room_color: "#FAB39B",
+        is_scret: "T",
+        room_tag: "#수능"
     },
     {
         room_id: 3,
         room_name: "방방방",
         inppl: 6,
         maxppl: 10,
-        room_color: "#FFB6B6",
+        room_color: "#9ADDE8",
+        is_scret: "F",
+        room_tag: "#공무원"
     },
     {
         room_id: 4,
         room_name: "ㅎㅇㅎㅇ",
         inppl: 3,
         maxppl: 10,
-        room_color: "#B0DFFB",
+        room_color: "#C0C0C0",
+        is_scret: "T",
+        room_tag: "#수능"
     },
     {
         room_id: 5,
         room_name: "공부합시다 여러분!!!!",
         inppl: 6,
         maxppl: 10,
-        room_color: "#FFB6B6",
+        room_color: "#C0C0C0",
+        is_scret: "T",
+        room_tag: "#수능"
     },
     {
         room_id: 6,
         room_name: "공부공부",
         inppl: 3,
         maxppl: 10,
-        room_color: "#B0DFFB",
+        room_color: "#9ADDE8",
+        is_scret: "T",
+        room_tag: "#수능"
     },
     {
         room_id: 7,
         room_name: "ㅎㅇㅎㅇ",
         inppl: 3,
         maxppl: 10,
-        room_color: "#B0DFFB",
+        room_color: "#FAB39B",
+        is_scret: "T",
+        room_tag: "#수능"
     },
     {
         room_id: 8,
         room_name: "아무나 들어오세유 웰컴",
         inppl: 6,
         maxppl: 10,
-        room_color: "#FFB6B6",
+        room_color: "#FAB39B",
+        is_scret: "T",
+        room_tag: "#수능"
     },
     {
         room_id: 9,
         room_name: "hello hi",
         inppl: 3,
         maxppl: 10,
-        room_color: "#B0DFFB",
+        room_color: "#FAB39B",
+        is_scret: "T",
+        room_tag: "#수능"
     },
 ];
 
 const initialMyRoomData = [
     {
         room_id: 1,
-        room_name: "성공하자",
+        room_name: "성공하자22",
         inppl: 6,
         maxppl: 10,
-        room_color: "#FFB6B6",
+        room_color: "#FAB39B",
+        is_scret: "T",
+        room_tag: "#수능"
     },
     {
         room_id: 2,
-        room_name: "송이들 드루와아아",
+        room_name: "송이들 드루와아아22",
         inppl: 3,
         maxppl: 10,
-        room_color: "#B0DFFB",
+        room_color: "#C0C0C0",
+        is_scret: "T",
+        room_tag: "#수능"
     },
 ];
 
-const MySquare = ({ room_id, room_name, inppl, maxppl, room_color }) => {
-    const style = {
-        backgroundColor: room_color,
-    };
-    return (
-        <Link to={`/study/${room_id}`}>
-            <div style={style} className="studybox-square">
-                <div className="square-roomname">{room_name}</div>
-                <div className="square-ppl">
-                    {inppl}/{maxppl}
-                </div>
-            </div>
-        </Link>
-    );
-};
-
-const EmptySquare = () => {
-    return <div className="studybox-square"></div>;
-};
-
-const NewSquare = () => {
-    return (
-        <div className="studybox-newsquare">
-            <Link to={"/CreateRoom"}>
-                <p>
-                    <br />
-                    공부방
-                    <br />
-                    만들기
-                </p>
-            </Link>
-        </div>
-    );
-};
-
-const StudyBox = (allRooms) => {
-    const row1 = () => {
-        const result1 = [];
-        for (let i = 0; i < 5; i++) {
-            if (allRooms[i] !== undefined) {
-                result1.push(
-                    <MySquare
-                        key={i}
-                        room_id={allRooms[i].room_id}
-                        room_name={allRooms[i].room_name}
-                        inppl={allRooms[i].inppl}
-                        maxppl={allRooms[i].maxppl}
-                        room_color={allRooms[i].room_color}
-                    />
-                );
-            } else {
-                result1.push(<EmptySquare />);
-            }
-        }
-        return result1;
-    };
-    const row2 = () => {
-        const result2 = [];
-        for (let i = 5; i < 9; i++) {
-            if (allRooms[i] !== undefined) {
-                result2.push(
-                    <MySquare
-                        key={i}
-                        room_id={allRooms[i].room_id}
-                        room_name={allRooms[i].room_name}
-                        inppl={allRooms[i].inppl}
-                        maxppl={allRooms[i].maxppl}
-                        room_color={allRooms[i].room_color}
-                    />
-                );
-            } else {
-                result2.push(<EmptySquare />);
-            }
-        }
-        return result2;
-    };
-
-    return (
-        <div className="studybox-squares">
-            <div className="studybox-squres-row">{row1()}</div>
-            <div className="studybox-squres-row">
-                {row2()}
-                <NewSquare />
-            </div>
-        </div>
-    );
-};
 
 const StudyBoxComp = () => {
     const [whatBox, setWhatBox] = useState("all"); // all vs my
     const [allRoomData, setAllRoomData] = useState(initialAllRoomData);
     const [myRoomData, setMyRoomData] = useState(initialMyRoomData);
     const authContext = useContext(AuthContext);
+    const [allIndex, setAllIndex] = useState(0);
+    const [myIndex, setMyIndex] = useState(0);
+
+    const StudyBox = (allRooms) => {
+        const row1 = () => {
+            const result1 = [];
+            for (let i = allIndex; i < allIndex + 4; i++) {
+                if (allRooms[i] !== undefined) {
+                    result1.push(
+                        <Studycard
+                            key={i}
+                            room_id={allRooms[i].room_id}
+                            room_name={allRooms[i].room_name}
+                            inppl={allRooms[i].inppl}
+                            maxppl={allRooms[i].maxppl}
+                            room_color={allRooms[i].room_color}
+                            is_scret={allRooms[i].is_scret}
+                            room_tag={allRooms[i].room_tag}
+                        />
+                    );
+                } else {
+                    result1.push();
+                }
+            }
+            return result1;
+        };
+    
+        return (
+            <div className="Studycard-list">
+                {row1()}
+            </div>
+        );
+    };
+
+    const clickLeftBtn = (whatBox) => {
+        console.log(allIndex, myIndex);
+        if (allIndex > 0) {
+            setAllIndex(allIndex - 1);
+        }
+        var leftBtn = document.getElementById("StudyBox-leftbtn");
+        var rightBtn = document.getElementById("StudyBox-rightbtn");
+        
+    };
+    
+    const clickRightBtn = (whatBox) => {
+        console.log(allIndex, myIndex);
+        if (allIndex < allRoomData.length-4){
+            setAllIndex(allIndex + 1);
+        }
+        var leftBtn = document.getElementById("Studybox-leftbtn");
+        var rightBtn = document.getElementById("Studybox-rightbtn");
+        
+    };
+
 
     useEffect(() => {
         const getAllRoomData = async () => {
@@ -202,6 +192,8 @@ const StudyBoxComp = () => {
                         room_color: s.room_color,
                         inppl: s.inppl,
                         maxppl: s.maxppl,
+                        is_scret: s.is_scret,
+                        room_tag: s.room_tag,
                     }))
                 );
                 // await console.log("Get complete: ", allRoomData);
@@ -229,6 +221,8 @@ const StudyBoxComp = () => {
                         room_color: s.room_color,
                         inppl: s.inppl,
                         maxppl: s.maxppl,
+                        room_tag: s.room_tag,
+                        is_scret: s.is_scret,
                     }))
                 );
                 // await console.log("Get complete: ", myRoomData);
@@ -240,41 +234,56 @@ const StudyBoxComp = () => {
     }, []);
 
     return (
-        <div>
+        <div className="Main-StudyBoxComp">
             <p className="small-title">공부방 들어가기</p>
-            <div className="Main-StudyBoxComp">
                 <div className="studybox-upper-btns">
                     <div className="what-box">
                         <button
                             className="what-box-btn"
                             onClick={() => {
                                 setWhatBox("all");
+                                setAllIndex(0);
+                                setMyIndex(0);
                             }}
                         >
-                            모든 공부방
+                            공부방 랜덤 추천
                         </button>
                         <button
                             className="what-box-btn"
                             onClick={() => {
                                 setWhatBox("my");
+                                setAllIndex(0);
+                                setMyIndex(0);
                             }}
                         >
                             참여한 공부방
                         </button>
                     </div>
 
-                    <div>
+                    <div className="StudyBox-more">
                         <Link to={"/studyroom"}>+ 더보기</Link>
                     </div>
                 </div>
-                <div className="box-list">
+                <div className="Studycard-wrapper">
+                    <RiArrowLeftSLine
+                        id="Studybox-leftbtn"
+                        size="40px"
+                        onClick={(e) => clickLeftBtn(whatBox)}
+                        style={{ color: "#9893B7" }}
+                    />
                     {whatBox === "all" ? (
                         <StudyBox {...allRoomData} whatBox={whatBox} />
                     ) : (
                         <StudyBox {...myRoomData} whatBox={whatBox} />
                     )}
+                    <RiArrowRightSLine
+                        id="Studybox-leftbtn"
+                        size="40px"
+                        onClick={(e) => clickRightBtn(whatBox)}
+                        style={{ color: "#9893B7", paddingLeft: "20px" }}
+                    />
                 </div>
-            </div>
+            
         </div>
     );
 };

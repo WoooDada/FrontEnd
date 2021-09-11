@@ -15,52 +15,61 @@
     margin-bottom: 2vmin;
 }
 
-.more-btn {
-    background-color: white;
-    color: rgb(124, 124, 124);
-    border: none;
-    padding: 1vmin;
-    font-weight: bold;
+.StudyBox-more {
+    font-family: roboto;
+    font-size: 0.8rem;
+    margin-right: 40px;
+}
+
+/* Studycard */
+.Main-StudyBoxComp {
+    background-color: #ffffff;
+    margin: 0 40px 40px 40px;
+    padding: 20px;
+    border-radius: 8px;
+    width: 700px;
+}
+
+.Studycard-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.Studycard-list {
+    display: flex;
+    flex-direction: row;
+}
+
+.Studycard {
+    display: flex;
+    flex-direction: column;
+    width: 120px;
+    height: 160px;
+    margin-left: 20px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
     cursor: pointer;
 }
 
-.box-list {
-    max-width: 70vmin;
-}
-
-.studybox-newsquare {
-    width: 12vmin;
-    height: 12vmin;
-    background-color: #FFCF23;
-    border: none;
-    border-radius: 2vmin;
-    margin: 1vmin;
-    cursor: pointer;
-}
-
-.studybox-newsquare p {
-    font-size: x-small;
-    font-weight: bold;
-}
-
-/* 사각형 한칸 */
-.studybox-square { 
-    width: 12vmin;
-    height: 12vmin;
-    background-color: #E1E5EA;
-    border: none;
-    border-radius: 2vmin;
-    margin: 1vmin;
-    cursor: pointer;
+.Studycard-upper {
+    height: 80px;
     display: flex;
     flex-direction: column;
 }
 
-.square-roomname {
-    font-weight: bold;
-    font-size: x-small;
-    padding: 2vmin 0.5vmin 0vmin 0.5vmin;
-    
+.Studycard-lower {
+    height: 80px;
+    border-radius: 8px;
+}
+
+.Studycard-roomname {
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: #ffffff;
+    padding: 10px 5px 0 8px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -68,21 +77,20 @@
     -webkit-box-orient: vertical;
 }
 
-.square-ppl {
-    font-weight: bold;
-    font-size: x-small;
-    padding: 1vmin 0;
+.Studycard-roomtag {
+    font-size: 0.4rem;
+    color: #ffffff;
+    padding: 10px 0 0 10px;
+}
+
+.Studycard-ppl {
+    font-size: 0.7rem;
+}
+
+.Studycard-secret {
     
 }
 
-.studybox-squares {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+.Studycard-image {
+    text-align: center;
 }
-
-.studybox-squres-row {
-    display: flex;
-    flex-direction: row;
-}
-
