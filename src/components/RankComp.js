@@ -127,6 +127,18 @@ const PlayRank = (prank) => {
     );
 };
 
+const setBtnColor = (btn) => {
+    var studyBtn = document.getElementById("study-rank-btn");
+    var playBtn = document.getElementById("play-rank-btn");
+    if (btn === "study") {
+        studyBtn.style.color = "#000000";
+        playBtn.style.color = "#9893B7";
+    } else {
+        studyBtn.style.color = "#9893B7";
+        playBtn.style.color = "#000000";
+    }
+}
+
 const RankComp = () => {
     const authContext = useContext(AuthContext);
     const [studyRankData, setStudyRankData] = useState(initialStudyData);
@@ -187,16 +199,22 @@ const RankComp = () => {
                 <div className="what-rank">
                     <button
                         className="what-rank-btn"
+                        id="study-rank-btn"
+                        style={{color: "#000"}}
                         onClick={() => {
                             setWhatRank("study");
+                            setBtnColor("study");
                         }}
                     >
                         공부왕 랭킹
                     </button>
                     <button
                         className="what-rank-btn"
+                        id="play-rank-btn"
+                        style={{color: "#9893B7"}}
                         onClick={() => {
                             setWhatRank("play");
+                            setBtnColor("play");
                         }}
                     >
                         딴짓왕 랭킹

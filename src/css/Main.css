@@ -16,6 +16,7 @@
 
 .Main aside p {
     font-size: 1rem;
+    font-weight: 600;
 }
 
 .Main .aside-menus p {
@@ -140,18 +141,18 @@
     height: 2rem;
     background-color: #ffffff;
     padding-left: 20px;
-    
 }
 
 .MainRight-menu div {
     background-color: #F5F7FD;
     border-radius: 8px 8px 0px 0px;
     padding: 10px 40px;
+    cursor: pointer;
 }
 
 .MainRight-menu span {
-    font-family: Darker Grotesque;
     font-size: 1rem;
+    font-weight: 600;
     line-height: 1rem;
     color: #9893B7;
 }

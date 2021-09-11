@@ -113,6 +113,18 @@ const initialMyRoomData = [
     },
 ];
 
+const setFontColor = (value) => {
+    var allBtn = document.getElementById("all-box-btn");
+    var myBtn = document.getElementById("my-box-btn");
+    if (value === "all") {
+        allBtn.style.color = "#000000";
+        myBtn.style.color = "#9893B7";
+    } else {
+        allBtn.style.color = "#9893B7";
+        myBtn.style.color = "#000000";
+    }
+}
+
 
 const StudyBoxComp = () => {
     const [whatBox, setWhatBox] = useState("all"); // all vs my
@@ -158,9 +170,6 @@ const StudyBoxComp = () => {
         if (allIndex > 0) {
             setAllIndex(allIndex - 1);
         }
-        var leftBtn = document.getElementById("StudyBox-leftbtn");
-        var rightBtn = document.getElementById("StudyBox-rightbtn");
-        
     };
     
     const clickRightBtn = (whatBox) => {
@@ -168,9 +177,6 @@ const StudyBoxComp = () => {
         if (allIndex < allRoomData.length-4){
             setAllIndex(allIndex + 1);
         }
-        var leftBtn = document.getElementById("Studybox-leftbtn");
-        var rightBtn = document.getElementById("Studybox-rightbtn");
-        
     };
 
 
@@ -240,20 +246,26 @@ const StudyBoxComp = () => {
                     <div className="what-box">
                         <button
                             className="what-box-btn"
+                            id="all-box-btn"
+                            style={{color: "#000000"}}
                             onClick={() => {
                                 setWhatBox("all");
                                 setAllIndex(0);
                                 setMyIndex(0);
+                                setFontColor("all");
                             }}
                         >
                             공부방 랜덤 추천
                         </button>
                         <button
                             className="what-box-btn"
+                            id="my-box-btn"
+                            style={{color: "#9893B7"}}
                             onClick={() => {
                                 setWhatBox("my");
                                 setAllIndex(0);
                                 setMyIndex(0);
+                                setFontColor("my");
                             }}
                         >
                             참여한 공부방
