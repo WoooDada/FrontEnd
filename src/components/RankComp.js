@@ -3,7 +3,6 @@ import { useState, useEffect, useContext } from "react";
 import "../css/Main.css";
 import getApi from "../api/getApi";
 import { AuthContext } from "../App";
-import "../css/Rank.css";
 
 const initialStudyData = [
     { rank: 54, nickname: "우정쨩", tot_concent_time: "1:53" }, // 내 순위
@@ -34,9 +33,20 @@ const initialPlayData = [
 ];
 
 const RankItem = ({ rank, nickname, tot }) => {
+    var rankcolor = '#727272';
+    switch (rank) {
+        case 1:
+            rankcolor = '#FFCF23'; break;
+        case 2:
+            rankcolor = '#D6D6D6'; break;
+        case 3:
+            rankcolor = '#CC9F5C'; break;
+        default:
+            rankcolor = '#727272'; break;
+    }
     return (
         <div className="rank-item">
-            <span className="rank-item1">{rank}</span>
+            <div className="rank-item1" style={{backgroundColor: rankcolor}}>{rank}</div>
             <span className="rank-item2">{nickname}</span>
             <span className="rank-item3">{tot}</span>
         </div>
@@ -60,7 +70,12 @@ const StudyRank = (srank) => {
     };
     return (
         <div className="Rank-study">
-            <p>~누가누가 공부를 많이 했나~</p>
+            <div className="Rank-header">
+                <p>순위</p>
+                <p>닉네임</p>
+                <p>집중시간</p>
+            </div>
+            <hr />
             {rendering()}
             <hr />
             <div>
@@ -92,7 +107,12 @@ const PlayRank = (prank) => {
     };
     return (
         <div className="Rank-play">
-            <p>~누가누가 딴짓을 많이 했나~</p>
+            <div className="Rank-header">
+                <p>순위</p>
+                <p>닉네임</p>
+                <p>집중도(%)</p>
+            </div>
+            <hr />
             {rendering()}
             <hr />
             <div>
@@ -162,9 +182,8 @@ const RankComp = () => {
 
     const [whatRank, setWhatRank] = useState("study");
     return (
-        <div>
-            <p className="small-title">랭킹</p>
-            <div className="Main-RankComp">
+        <div className="Main-RankComp">
+            <div className="Rank-wrapper">
                 <div className="what-rank">
                     <button
                         className="what-rank-btn"
@@ -172,7 +191,7 @@ const RankComp = () => {
                             setWhatRank("study");
                         }}
                     >
-                        공부왕
+                        공부왕 랭킹
                     </button>
                     <button
                         className="what-rank-btn"
@@ -180,7 +199,7 @@ const RankComp = () => {
                             setWhatRank("play");
                         }}
                     >
-                        딴짓왕
+                        딴짓왕 랭킹
                     </button>
                 </div>
                 <div className="rank-list">

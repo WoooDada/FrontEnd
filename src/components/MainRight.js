@@ -7,7 +7,7 @@ import {
 import "../css/Main.css";
 
 const MainRight = () => {
-    const [whichSection2, setWhichSection2] = useState("main");
+    const [whichSection2, setWhichSection2] = useState("gongdada");
 
     return (
         <div className="MainRight">

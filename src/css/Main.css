@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
 }
+
 .Main aside {
     position: absolute;
     background-color: #ffffff;
@@ -19,6 +20,11 @@
 
 .Main .aside-menus p {
     cursor: pointer;
+}
+
+.MainRight .small-title {
+    font-size: 0.8rem;
+    font-weight: 600;
 }
 
 /* Badge */
@@ -235,8 +241,6 @@
 }
 
 .Main-WeeklyComp .small-title {
-    font-size: 1rem;
-    font-weight: 600;
     margin: 28px 0 0 24px;
 }
 
@@ -328,5 +332,104 @@
     flex: 10.5;
     height: 20%;
     border-bottom: 1px solid gray;
+}
+
+/* Gongdada section */
+.Main-Gongdada {
+    display: flex;
+    flex-direction: row;
+}
+
+.Gongdada-left {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ConcentGraph */
+.Main-ConcentGraph-Wrapper {
+    background-color: #ffffff;
+    border-radius: 8px;
+    margin: 40px;
+    padding: 20px;
+    width: 40vw;
+}
+
+/* Rank */
+.Main-RankComp {
+    background-color: white;
+    border-radius: 8px;
+    margin: 40px 0;
+    padding: 20px;
+}
+
+.Rank-wrapper {
+    padding: 0 20px;
+}
+
+.what-rank {
+    display: flex;
+    margin-right: auto;
+}
+
+.what-rank-btn {
+    background-color: white;
+    border: none;
+    padding: 10px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.Rank-study,
+.Rank-play {
+    min-width: 15rem;
+}
+
+.Rank-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.Rank-header p {
+    margin: 0;
+}
+
+.rank-item {
+    display: flex;
+    flex-direction: row;
+    font-size: small;
+    padding-bottom: 5px;
+}
+
+.rank-item .rank-item1 {
+    flex-basis: 10%;
+    border-radius: 4px;
+    color: #ffffff;
+    width: 32px;
+    height: 32px;
+    font-family: Roboto;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 30px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.rank-item .rank-item2 {
+    flex-basis: 70%;
+    font-size: 0.8rem;
+    line-height: 35px;
+    text-align: center;
+}
+.rank-item .rank-item3 {
+    flex-basis: 10%;
+    font-size: 1rem;
+}
+
+.Rank-study p,
+.Rank-play p {
+    font-size: small;
 }
 
