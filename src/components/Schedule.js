@@ -8,8 +8,9 @@ import "../css/Main.css";
 const Schedule = () => {
 
     return (
-        <div>
-            
+        <div className="Main-Schedule">
+            <MonthlyComp></MonthlyComp>
+            <WeeklyComp></WeeklyComp>
         </div>
     );
 };

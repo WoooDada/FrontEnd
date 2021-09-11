@@ -9,7 +9,7 @@ import "../css/Main.css";
 const Gongdada = () => {
 
     return (
-        <div>
+        <div className="Main-Gongdada">
             
         </div>
     );

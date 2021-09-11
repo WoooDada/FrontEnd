@@ -368,7 +368,7 @@ const MonthlyComp = () => {
 
     return (
         <div className="Main-MonthlyComp">
-            <p className="small-title">월간 스케줄</p>
+            {/* <p className="small-title">월간 스케줄</p> */}
             <div className="calendar-wrapper">
                 <br />
                 <FullCalendar
@@ -385,45 +385,22 @@ const MonthlyComp = () => {
                     eventClick={handleEventClick}
                     eventDrop={handleEventDrop}
                     eventResize={handleEventResize}
-                    eventBackgroundColor="#C4C4C4"
-                    eventBorderColor="#C4C4C4"
+                    eventBackgroundColor="#5F45FF"
+                    eventBorderColor="#5F45FF"
                 />
             </div>
             <div className="Main-Monthly-input">
                 <form className="Main-Monthly-inputform">
-                    <div>
-                        {/* <label>내용</label> */}
-                        <input
-                            className="input-title"
-                            name="title"
-                            onChange={(e) =>
-                                setInputs({ ...inputs, title: e.target.value })
-                            }
-                            value={inputs.title}
-                        />
-                    </div>
-                    <div style={{ display: "none" }}>
-                        <label>시작날짜</label>
-                        <input
-                            type="date"
-                            onChange={(e) =>
-                                setInputs({ ...inputs, start: e.target.value })
-                            }
-                            value={inputs.start}
-                            name="start"
-                        />
-                    </div>
-                    <div style={{ display: "none" }}>
-                        <label>끝날짜</label>
-                        <input
-                            type="date"
-                            onChange={(e) =>
-                                setInputs({ ...inputs, end: e.target.value })
-                            }
-                            value={inputs.end}
-                            name="end"
-                        />
-                    </div>
+                    
+                    <input
+                        className="input-title"
+                        name="title"
+                        onChange={(e) =>
+                            setInputs({ ...inputs, title: e.target.value })
+                        }
+                        value={inputs.title}
+                    />
+                    
                 </form>
                 <div className="Main-Monthly-Btns">
                     {state.isClicked ? (
