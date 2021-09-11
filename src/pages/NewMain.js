@@ -1,35 +1,52 @@
 import React from "react";
 import "../css/Main.css";
+import { Link } from "react-router-dom";
 import {
     BadgeComp,
-    ConcentGraphComp,
-    MonthlyComp,
-    WeeklyComp,
-    TodayComp,
-    RankComp,
-    StudyBoxComp,
+    Studyroom,
+    MainRight,
 } from "../components";
-import { useState } from "react";
+import { Logout, MyProfile } from ".";
+import { useState, useContext } from "react";
+import { AuthContext } from "../App";
 
 const NewMain = () => {
-    const [whichSection, setWhichSection] = useState("gongdada");
+    const authContext = useContext(AuthContext);
+    const [whichSection, setWhichSection] = useState("main");
+    
     return (
         <div className='Main'>
             <aside>
                 <BadgeComp></BadgeComp>
                 <div className='aside-menus'>
-                    <p>Home</p>
-                    <p>Main</p>
-                    <p>Studyroom</p>
-                    <p>Profile</p>
-                    <p>Logout</p>
+                    <p><Link to={'/'}>Home</Link></p>
+                    <p onClick={() => {
+                        setWhichSection("main");
+                    }}>Main</p>
+
+                    <p onClick={() => {
+                        setWhichSection("studyroom");
+                    }}>Studyroom</p>
+
+                    <p onClick={() => {
+                        setWhichSection("profile");
+                    }}>Profile</p>
+
+                    <p onClick={() => {
+                        setWhichSection("logout");
+                    }}>Logout</p>
                 </div>
                 <div className='aside-bottom'>공다다</div>
             </aside>
-
-            <header>
-                <TodayComp></TodayComp>
-            </header>
+            {whichSection === "main" ? (
+                <MainRight></MainRight>
+            ) : whichSection === "studyroom" ? (
+                <Studyroom></Studyroom>
+            ) : whichSection === "profile" ? (
+                <MyProfile></MyProfile>
+            ) : (
+                <Logout></Logout>
+            )}
         </div>
     )
 }
