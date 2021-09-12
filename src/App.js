@@ -1,4 +1,4 @@
-import { Switch, Route, Link, useHistory, useLocation } from "react-router-dom";
+import { Switch, Route, Link, useHistory, useLocation, NavLink } from "react-router-dom";
 
 // Page 로딩
 import {
@@ -12,18 +12,17 @@ import {
     CreateRoom,
     Socket,
     Graph,
-    NewMain,
 } from "./pages";
 // import Header from "./components/Header";
 import "./App.css";
 import Login from "./pages/Login";
 import { useReducer, createContext, useContext, useEffect } from "react";
 import Logo from "./constants/imgs/newlogo.png";
+import { BadgeComp } from "../src/components";
 
 //////////////////////////////////////////////////////////////////////////////////
 const Header = () => {
     const authContext = useContext(AuthContext);
-
     return (
         <>
             <div className="App-header-belt"></div>
@@ -90,6 +89,42 @@ const Footer = () => {
         </div>
     );
 };
+
+const SideMenu = () => {
+    const activeStyle = {
+        color:'#5F45FF',
+    };
+    // Sidemenu 나타나지 않는 페이지
+    if (window.location.pathname === '/login'
+    || window.location.pathname === '/signup'
+    || window.location.pathname === '/'
+    || window.location.pathname.startsWith('/study/')) return null;
+
+    return (
+        <aside>
+            <BadgeComp></BadgeComp>
+                <div className='aside-menus'>
+                    <p><Link to={'/'}>Home</Link></p>
+                    <p id="Main-side-main">
+                        <NavLink to={'/main'} activeStyle={activeStyle}>Main</NavLink>
+                    </p>
+
+                    <p id="Main-side-studyroom">
+                        <NavLink to={'/studyroom'} activeStyle={activeStyle}>Studyroom</NavLink>
+                    </p>
+
+                    <p id="Main-side-profile">
+                    <NavLink to={'/myprofile'} activeStyle={activeStyle}>Profile</NavLink>
+                    </p>
+
+                    <p id="Main-side-log">
+                    <NavLink to={'/logout'} activeStyle={activeStyle}>Logout</NavLink>
+                    </p>
+                </div>
+                <div className='aside-bottom'>공다다</div>
+            </aside>
+    )
+}
 //////////////////////////////////////////////////////////////////////////////////
 export const AuthContext = createContext();
 
@@ -149,13 +184,13 @@ function App() {
         <div className="App">
             <AuthContext.Provider value={{ state, dispatch }}>
                 {/* <Header></Header> */}
+                <SideMenu></SideMenu>
                 <div className="App-body">
                     <Switch>
                         <Route path="/" component={Home} exact />
                         <Route path="/login" component={Login} />
                         <Route path="/logout" component={Logout} />
                         <Route path="/main" component={Main} />
-                        <Route path="/newmain" component={NewMain} />
                         {/* <Route path="/study" component={Study} /> */}
                         <Route path="/study/:roomid" component={Study} />
                         <Route path="/studyroom" component={StudyRoom} />

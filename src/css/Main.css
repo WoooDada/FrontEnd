@@ -3,26 +3,6 @@
     flex-direction: row;
 }
 
-.Main aside {
-    position: absolute;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    width: 260px;
-    height: 100vh;
-    position: fixed;
-    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.25);
-}
-
-.Main aside p {
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.Main .aside-menus p {
-    cursor: pointer;
-}
-
 .MainRight .small-title {
     font-size: 0.8rem;
     font-weight: 600;
@@ -92,8 +72,6 @@
 /* 오늘 */
 .MainRight {
     padding-left: 260px;
-    width:100%;
-    overflow-x:hidden;
 }
 
 .MainRight::-webkit-scrollbar {
@@ -103,7 +81,6 @@
 .MainRight header {
     background-color: #ffffff;
     height: 14vh;
-    width: 100vw;
 }
 
 .TodayComp {

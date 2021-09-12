@@ -272,9 +272,9 @@ const StudyBoxComp = () => {
                         </button>
                     </div>
 
-                    {/* <div className="StudyBox-more">
+                    <div className="StudyBox-more">
                         <Link to={"/studyroom"}>+ 더보기</Link>
-                    </div> */}
+                    </div>
                 </div>
                 <div className="Studycard-wrapper">
                     <RiArrowLeftSLine
