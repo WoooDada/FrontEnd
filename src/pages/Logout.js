@@ -33,17 +33,17 @@ const Logout = (props) => {
         <div className="LogoutPage">
             <div className="Logout-wrapper">
                 <h3>로그아웃</h3>
-                <span>정말.. 이대로 가시는 건가요..? </span>
+                <span>오늘 공부 마치신거죠?</span>
                 <div className="Logout-button-wrapper">
                     <LogoutBtn history={props.history}></LogoutBtn>
-                    <button
+                    {/* <button
                         onClick={() => {
                             props.history.push("/main");
                         }}
                         className="gobackbtn"
                     >
                         GO BACK TO MAIN
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </div>
