@@ -59,7 +59,7 @@ function LoginForm({ history }) {
     return (
         <form className="Login-outer-form" onSubmit={submitHandler}>
             <div className="Login-form-header">
-                <h3>공다다</h3>
+                <h3>로그인</h3>
                 <span>지금 바로 공부하러 가요!</span>
             </div>
             <div className="form-group">

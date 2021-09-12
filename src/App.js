@@ -96,7 +96,6 @@ const SideMenu = () => {
     };
     // Sidemenu 나타나지 않는 페이지
     if (window.location.pathname === '/login'
-    || window.location.pathname === '/signup'
     || window.location.pathname === '/'
     || window.location.pathname.startsWith('/study/')) return null;
 
