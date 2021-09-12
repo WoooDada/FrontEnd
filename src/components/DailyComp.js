@@ -10,7 +10,6 @@ import { AuthContext } from "../App";
 import "../css/LeftStudy.css";
 import { getApi, postApi, putApi, deleteApi } from "../api";
 import { GrCheckbox, GrCheckboxSelected } from "react-icons/gr";
-import TenMinPlanner from "./TenMinPlanner";
 
 const DailyContext = createContext(null);
 
@@ -322,7 +321,6 @@ const DailyComp = () => {
                         </DailyContext.Provider>
                     </div>
                 </div>
-                <TenMinPlanner />
             </div>
         </div>
     );

@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import useInterval from "@use-it/interval";
 import { BtnContext } from "../pages/Study";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
-
+import { Link } from "react-router-dom";
 import { postApi, getApi } from "../api";
 import { AuthContext } from "../App";
 import { useContext } from "react";
@@ -29,7 +29,6 @@ const RightStudyComp = ({ match }) => {
     const authContext = useContext(AuthContext);
     const btnContext = useContext(BtnContext);
     const videoRef = useRef();
-    const ws = useRef(null);
 
     const [start, setStart] = useState(false);
     const [result, setResult] = useState([]);
@@ -39,16 +38,6 @@ const RightStudyComp = ({ match }) => {
         tot_concent_time: "0:00",
         tot_play_time: "0:00",
     });
-
-    const [roomName, setRoomName] = useState("");
-    const [roomTag, setRoomTag] = useState("");
-    // const [roomManner, setRoomManner] = useState(
-    // "홀로로로로로롤 들어오세요 안녕안녕 다들 안녕 공부하자구요 규칙: 1. 아침 10시 기상 2.숙제해오기 3번 어쩌구 지키기 4. 이거 다 안지키면 삼진아웃입니다잉 아셨죠? 아웃이라고요 아웃!!! "
-    // );
-    const [roomManner, setRoomManner] = useState("");
-    const [inppl, setInppl] = useState(0);
-    const [maxppl, setMaxppl] = useState(0);
-
     // const [studymates, setStudymates] = useState([]);
 
     const initialStudymates = [
@@ -86,26 +75,8 @@ const RightStudyComp = ({ match }) => {
     const [studymates, setStudymates] = useState(initialStudymates);
 
     useEffect(() => {
-        // * 웹 소켓 연결하기
-        const url = "ws://13.209.194.64:8080/yolo/getmessage/";
-        ws.current = new WebSocket(url);
-        ws.current.onopen = () => console.log("ws opened");
-        ws.current.onclose = () => console.log("ws closed");
-        ws.current.onmessage = (event) => {
-            const message = JSON.parse(event.data);
-            console.log("from server: ", message);
-        };
-
-        return () => {
-            if (ws.current) {
-                ws.current.closed();
-            }
-        };
-    }, []);
-
-    useEffect(() => {
         // * 모델 불러오기 및 카메라 연결
-        classifier = ml5.imageClassifier("./model/model.json", () => {
+        classifier = ml5.imageClassifier("../public/model/model.json", () => {
             navigator.mediaDevices
                 .getUserMedia({ video: true, audio: false })
                 .then((stream) => {
@@ -114,25 +85,7 @@ const RightStudyComp = ({ match }) => {
                     setLoaded(true);
                 });
         });
-        const getRoomInfo = async () => {
-            const { status, data } = await getApi(
-                {
-                    room_id: match,
-                },
-                "/study/room_info/",
-                authContext.state.token
-            );
-            if (status === 200) {
-                await console.log("room_info:", data);
-                await setRoomName(data.room_name);
-                await setRoomTag(data.room_tag);
-                await setRoomManner(data.room_manner);
-                await setInppl(data.in_ppl);
-                await setMaxppl(data.max_ppl);
-            } else {
-                alert("네트워크 불안정");
-            }
-        };
+
         const getStudymates = async () => {
             const { status, data } = await getApi(
                 {
@@ -161,7 +114,6 @@ const RightStudyComp = ({ match }) => {
             }
         };
         getStudymates();
-        getRoomInfo();
     }, []);
 
     useEffect(() => {
@@ -279,12 +231,6 @@ const RightStudyComp = ({ match }) => {
     };
     const isConcentrate = () => {
         return getClassRate("C") > getClassRate("P") ? "C" : "P";
-    };
-
-    // 공부방 에티켓 더보기 버튼
-    const [mannerMore, setMannerMore] = useState(false);
-    const clickManner = () => {
-        setMannerMore(!mannerMore);
     };
 
     // 1분마다 studymates들 정보 받아오기
@@ -416,46 +362,41 @@ const RightStudyComp = ({ match }) => {
         }
     };
 
-    function sendMessage() {
-        const msg = { txt: "hello from client" };
-        if (!ws.current) return;
-
-        ws.current.send(JSON.stringify(msg));
-    }
+    const postOut = async () => {
+        const { status } = await postApi(
+            {
+                uid: authContext.state.uid,
+                type: "stop",
+            },
+            "/study/studybutton/",
+            authContext.state.token
+        );
+        // const { status, data } = {
+        //     // Dummy Dummy
+        //     status: 200,
+        // };
+        if (status === 200) {
+            console.log("잘됨");
+        } else {
+            alert("네트워크 에러!");
+        }
+    };
 
     return (
         <div className="RightComp">
-            <div className="RightComp-inner">
-                <div className="RightComp-roominfo-group1">
-                    <div className="RightComp-roominfo-group2">
-                        <div className="RightComp-roomname">{roomName}</div>
-                        <div className="RightComp-ppl">
-                            {inppl}/{maxppl}
-                        </div>
-                    </div>
-                    <div className="RightComp-roomtag">#{roomTag}</div>
-                </div>
-
-                <p className="RightComp-manner" onClick={(e) => clickManner()}>
-                    {roomManner !== null && roomManner.length > 40
-                        ? mannerMore
-                            ? roomManner
-                            : roomManner.substr(0, 37) + "..."
-                        : roomManner}
-                </p>
-            </div>
-            <div className="RightComp-inner">
+            <div className="VideoComp">
                 {/* <p>현재: {isConcentrate()}</p> */}
                 <video
-                    className="Rstudy-video"
+                    className="CameraComp"
                     ref={videoRef}
-                    style={{ transform: "scale(-1,1)" }}
-                    width="300"
-                    height="200"
+                    style={{
+                        transform: "scale(-1,1)",
+                        width: "100%",
+                    }}
                 ></video>
-                <p className="Rstudy-undervideo">
+                <p className="StudyStatus">
                     <span className="undervideo-span1">
-                        집중: {getClassRate("C")}%
+                        현 집중도: {getClassRate("C")}%
                     </span>
                     <span className="undervideo-span2">
                         공부시간: {study_time.tot_concent_time}
@@ -465,15 +406,17 @@ const RightStudyComp = ({ match }) => {
                     </span>
                 </p>
                 {loaded && (
-                    <button onClick={() => toggle()}>
-                        {start ? "STOP" : "START"}
+                    <button
+                        onClick={() => toggle()}
+                        className={start ? "StartButton" : "EndButton"}
+                    >
+                        {start ? "공부 시작하기" : "공부 끝내기"}
                     </button>
                 )}
-                <button onClick={sendMessage}>소켓 메시지 보내기</button>
             </div>
 
             <div className="RightComp-inner">
-                <div className="RightComp-studymates-title">공친이들</div>
+                <h3 className="RightComp-studymates-title">STUDY MATES</h3>
                 <div className="RightComp-studymates">
                     <div className="RightComp-studymates-leftbtn">
                         <RiArrowLeftSLine
@@ -498,6 +441,10 @@ const RightStudyComp = ({ match }) => {
                     </div>
                 </div>
             </div>
+            <Link to={"/main"} className="GoOutBtn" onClick={() => postOut()}>
+                {" "}
+                공부방 퇴장하기
+            </Link>
         </div>
     );
 };
