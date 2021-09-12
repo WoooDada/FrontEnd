@@ -9,6 +9,7 @@
     margin-left: 10px;
 }
 
+
 /* Badge */
 .aside-upper-badge {
     width: 80px;
@@ -23,7 +24,7 @@
     align-items: center;
 }
 
-.Main-BadgeComp {
+.badge-contents {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -144,6 +145,7 @@
     width: min-content;
 }
 
+
 /********** MonthlyComp **********/
 .Main-MonthlyComp {
     overflow: auto;
@@ -215,7 +217,7 @@
 .Main-WeeklyComp {
     width: 35vw;
     height: min-content;
-    margin: 40px 0 40px 0;
+    margin: 40px 0 ;
     padding: 20px;
     background-color: white;
     border-radius: 8px;
@@ -338,7 +340,7 @@
 .Main-RankComp {
     background-color: white;
     border-radius: 8px;
-    margin: 40px 0;
+    margin: 40px 40px 40px 0;
     padding: 20px;
 }
 
@@ -413,3 +415,88 @@
     font-size: small;
 }
 
+@media screen and (max-width: 840px) {
+    .Main {
+        padding-top: 7rem;
+        width: 100vw;
+    }
+
+    .badge-contents {
+        display: flex;
+        flex-direction: row;
+        margin-left: 15px;
+    }
+    .badge-circle {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        left: 20px;
+        top: 10px;
+        border-radius: 50px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+    .badge-icon {
+        margin-top: 30px;
+        margin-left: 22px;
+        padding-right: 25px;
+    }
+    .badge-nickname{
+        width: 200px;
+        height: 30px;
+        overflow: hidden;
+        text-overflow: hidden;
+    }
+    .badge-name {
+        position: absolute;
+        top: 25px;
+        left: 110px;
+    }
+
+    .MainRight {
+        margin-left: 0px;
+        /* width: ; */
+    }
+    
+    .MainRight header {
+        width: 100vw;
+        height: 20vh;
+    }
+
+    .TodayComp {
+        padding-top: 6vh;
+        width: 100vmax;
+    }
+
+    .Main-Gongdada {
+        display: flex;
+        flex-direction: column;
+        width: min-content;
+    }
+
+    .Main-RankComp {
+        width: min-content;
+        margin-left: 30vw;
+    }
+}
+@media screen and (max-width: 1200px) {
+    .Main-Schedule {
+        display: flex;
+        flex-direction: column;
+        width: min-content;
+    }
+    .Main-MonthlyComp {
+        width: min-content;
+    }
+    .Main-MonthlyComp .calendar-wrapper {
+        width: 500px;
+    }
+
+    .Main-WeeklyComp {
+        width: 540px;
+        height: min-content;
+        margin: 40px 0 40px 40px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+    }
+}

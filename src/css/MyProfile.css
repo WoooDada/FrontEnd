@@ -101,3 +101,9 @@
     flex-direction: column;
     align-items: flex-start;
 }
+
+@media screen and (max-width: 840px) {
+    .MyProfile-outer-form {
+        margin-top: 150px;
+    }
+}

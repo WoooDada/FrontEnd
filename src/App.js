@@ -183,6 +183,7 @@ function App() {
         <div className="App">
             <AuthContext.Provider value={{ state, dispatch }}>
                 {/* <Header></Header> */}
+                {/* <div className="SideMenu-back"></div> */}
                 <SideMenu></SideMenu>
                 <div className="App-body">
                     <Switch>

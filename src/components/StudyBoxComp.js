@@ -289,10 +289,10 @@ const StudyBoxComp = () => {
                         <StudyBox {...myRoomData} whatBox={whatBox} />
                     )}
                     <RiArrowRightSLine
-                        id="Studybox-leftbtn"
+                        id="Studybox-rightbtn"
                         size="40px"
                         onClick={(e) => clickRightBtn(whatBox)}
-                        style={{ color: "#9893B7", paddingLeft: "20px" }}
+                        style={{ color: "#9893B7" }}
                     />
                 </div>
             

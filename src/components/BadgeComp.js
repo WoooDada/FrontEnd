@@ -82,7 +82,7 @@ const BadgeComp = () => {
                 "/home/badge_profile",
                 authContext.state.token
             );
-            
+
             if (status === 200) {
                 console.log(data);
                 await setUserData({
@@ -100,45 +100,47 @@ const BadgeComp = () => {
         <div>
             <div className="Main-BadgeComp">
                 <div className="badge-circle"></div>
-                <div className="badge-icon">
-                <FaMedal
-                    style={{ cursor: "pointer" }}
-                    onClick={openModal}
-                    color={userData.badge_color}
-                    size="45px"
-                    className="icon"
-                />
-                </div>
-                <Modal
-                    isOpen={modalIsOpen}
-                    onAfterOpen={afterOpenModal}
-                    onRequestClose={closeModal}
-                    style={customStyles}
-                    ariaHideApp={false}
-                    contentLabel="Example Modal"
-                >
-                    <h2 ref={(_subtitle) => (subtitle = _subtitle)}>
-                        뱃지 부여 기준
-                    </h2>
-                    <div>
-                        뱃지는 누적 총 공부시간으로 계산됩니다. <br></br>
-                        <p>
-                            블랙: 0시간 이상 <br></br>
-                            브론즈: 5시간 이상 <br></br>
-                            실버: 30시간 이상 <br></br>
-                            골드: 100시간 이상 <br></br>
-                            플래티넘: 200시간 이상 <br></br>
-                            다이아: 1000시간 이상<br></br>
-                            <br></br>
-                            다이아까지 열공!!!
-                        </p>
+                <div className="badge-contents">
+                    <div className="badge-icon">
+                        <FaMedal
+                            style={{ cursor: "pointer" }}
+                            onClick={openModal}
+                            color={userData.badge_color}
+                            size="45px"
+                            className="icon"
+                        />
                     </div>
-                </Modal>
-                <div className='badge-nickname'>
-                    {userData.nickname}
-                </div>
-                <div className='badge-name'>
-                    {userData.badge_name}
+                    <Modal
+                        isOpen={modalIsOpen}
+                        onAfterOpen={afterOpenModal}
+                        onRequestClose={closeModal}
+                        style={customStyles}
+                        ariaHideApp={false}
+                        contentLabel="Example Modal"
+                    >
+                        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>
+                            뱃지 부여 기준
+                        </h2>
+                        <div>
+                            뱃지는 누적 총 공부시간으로 계산됩니다. <br></br>
+                            <p>
+                                블랙: 0시간 이상 <br></br>
+                                브론즈: 5시간 이상 <br></br>
+                                실버: 30시간 이상 <br></br>
+                                골드: 100시간 이상 <br></br>
+                                플래티넘: 200시간 이상 <br></br>
+                                다이아: 1000시간 이상<br></br>
+                                <br></br>
+                                다이아까지 열공!!!
+                            </p>
+                        </div>
+                    </Modal>
+                    <div className='badge-nickname'>
+                        {userData.nickname}
+                    </div>
+                    <div className='badge-name'>
+                        {userData.badge_name}
+                    </div>
                 </div>
             </div>
         </div>

@@ -5,6 +5,8 @@ import "../css/StudyBox.css";
 import ppl_icon from "../constants/imgs/ppl_icon.png";
 import secret_icon from "../constants/imgs/secret_icon.png";
 import logo from "../constants/imgs/newlogo.png"
+import { AiFillLock } from "react-icons/ai";
+import { BsFillPersonFill } from "react-icons/bs";
 
 const Studycard = ({ room_id, room_name, inppl, maxppl, room_color, is_scret, room_tag }) => {
     const style = {
@@ -16,16 +18,16 @@ const Studycard = ({ room_id, room_name, inppl, maxppl, room_color, is_scret, ro
                 <div className="Studycard-upper"> 
                     {is_scret === "T" ? (
                         <div className="Studycard-secret">
-                            <img src={secret_icon} style={{padding:"0 3px"}}/>
+                            <AiFillLock style={{color:"#030303", margin:"5px"}}/>
                         </div>
                     ) : (
                         <div style={{color:"#ffffff"}}>.</div>
                     )}
                     <div className="Studycard-image">
-                        <img src={logo} style={{ width: "20px" }} />
+                        <img src={logo} style={{ width: "24px" }} />
                     </div>
                     <div className="Studycard-ppl">
-                        <img src={ppl_icon} style={{padding:"0 3px"}}/>
+                        <BsFillPersonFill />
                         {inppl}/{maxppl}
                     </div>
                 </div>

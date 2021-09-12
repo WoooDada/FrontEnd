@@ -14,9 +14,9 @@
     display: flex;
     margin-bottom: 2vmin;
 }
-
+/* @import url('https://fonts.googleapis.com/css?family=Roboto'); */
 .StudyBox-more {
-    font-family: roboto;
+    /* font-family: 'Roboto'; */
     font-size: 0.6rem;
     margin-right: 60px;
 }
@@ -57,6 +57,7 @@
     height: 80px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 .Studycard-lower {
@@ -84,8 +85,28 @@
 
 .Studycard-ppl {
     font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
 }
 
 .Studycard-image {
     text-align: center;
+}
+
+#Studybox-rightbtn {
+    padding-left: 20px;
+}
+
+@media screen and (max-width: 840px) {
+    .Main-StudyBoxComp {
+        background-color: #ffffff;
+        margin: 0 20px 40px 40px;
+        padding: 10px;
+        border-radius: 8px;
+    }
+    #Studybox-rightbtn {
+        padding-left: 5px;
+    }
+    
 }
