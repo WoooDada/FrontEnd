@@ -71,14 +71,11 @@ const CreateRoomForm = ({ history }) => {
     const [color, setColor] = useState("");
     const selectColor = (id) => {
         switch (id) {
-            case "rc1": setColor("#FFB6B6"); break;
-            case "rc2": setColor("#F8D57E"); break;
-            case "rc3": setColor("#FDF76B"); break;
+            case "rc1": setColor("#9F8FFF"); break;
+            case "rc2": setColor("#FAB39B"); break;
+            case "rc3": setColor("#9ADDE8"); break;
             case "rc4": setColor("#CCF8A8"); break;
-            case "rc5": setColor("#B0DFFB"); break;
-            case "rc6": setColor("#E1B0FF"); break;
-            case "rc7": setColor("#B89779"); break;
-            default: setColor("#B89779"); break;
+            default: setColor("#9F8FFF"); break;
         }
         for (var i=1; i<=7; i++){
             var nowid = "rc" + i;
@@ -140,15 +137,14 @@ const CreateRoomForm = ({ history }) => {
 
     return (
         <form className="Createroom-outer-form">
-            <div className="Createroom-form-header">
-                <h3>방만들기</h3>
-            </div>
+            <h3>CREATE ROOM</h3>
             <div className="form-group">
                 <h5>방명*</h5>
                 <input
+                    className="form-input"
                     name="room_name"
                     onChange={(e) => inputRoomName(e)}
-                />
+                /> 
             </div>
             <div className="form-group">
                 <h5>최대인원*</h5>
@@ -168,8 +164,9 @@ const CreateRoomForm = ({ history }) => {
             <div className="form-group">
                 <h5>비밀번호</h5>
                 <input
+                    className="form-input"
                     name="room_pwd"
-                    placeholder="~~으로 입력해주세요"
+                    placeholder="(형식)으로 입력해주세요"
                     disabled={secret === "secret" ? false : true}
                     onChange={(e) => inputPwd(e)}
                 />
@@ -219,27 +216,18 @@ const CreateRoomForm = ({ history }) => {
                 <h5>공부방 에티켓</h5>
                 <textarea rows='5'
                     onChange={(e) => inputManner(e)}></textarea>
-
-
             </div>
-            <div className="form-group2">
+            <div className="form-group-color">
                 <h5>테마컬러*</h5>
                 <div className="room-colors">
                     <div className="room-color" id="rc1"
-                        onClick={() => selectColor("rc1")}
-                        ></div>
+                        onClick={() => selectColor("rc1")}></div>
                     <div className="room-color" id="rc2"
                         onClick={() => selectColor("rc2")}></div>
                     <div className="room-color" id="rc3"
                         onClick={() => selectColor("rc3")}></div>
                     <div className="room-color" id="rc4"
                         onClick={() => selectColor("rc4")}></div>
-                    <div className="room-color" id="rc5"
-                        onClick={() => selectColor("rc5")}></div>
-                    <div className="room-color" id="rc6"
-                        onClick={() => selectColor("rc6")}></div>
-                    <div className="room-color" id="rc7"
-                        onClick={() => selectColor("rc7")}></div>
                 </div>
             </div>
 
