@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 import {
     BadgeComp,
     MainRight,
+    MyProfileForm,
 } from "../components";
-import { Logout, MyProfile, StudyRoom } from ".";
+import { Logout, StudyRoom } from ".";
 import { useState, useContext } from "react";
 import { AuthContext } from "../App";
 
@@ -40,7 +41,6 @@ const setMenuColor = (value) => {
             logMenu.style.color='#5F45FF';
             break;
     }
-
 }
 
 const NewMain = () => {
@@ -89,7 +89,7 @@ const NewMain = () => {
             ) : whichSection === "studyroom" ? (
                 <StudyRoom></StudyRoom>
             ) : whichSection === "profile" ? (
-                <MyProfile></MyProfile>
+                <MyProfileForm></MyProfileForm>
             ) : (
                 <Logout></Logout>
             )}

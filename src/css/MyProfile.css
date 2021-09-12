@@ -1,22 +1,22 @@
 .MyProfilePage {
     display: flex;
-    background-color: #FAF3F3;
-    min-height: 110vh;
+    margin-top: 30px;
     align-items: center;
     justify-content: center;
-    padding: 0 20vh 0 20vh;
+    padding-left: 260px;
     flex-direction: column;
-}
+} 
 
 .MyProfile-outer-form {
-    background-color: white;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: center;
     text-align: center;
     padding: 5vh 12vh;
-    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+    margin-left: 300px;
 }
 
 .MyProfile-formgroup1 {
@@ -62,17 +62,21 @@
     border: 0;
     border-radius: 2vh;
     cursor: pointer;
-
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.7rem;
 }
 
 .MyProfile-button {
     margin-top: 5vh;
-    background-color: #CAD6DD;
+    background-color: #5F45FF;
+    
 }
 
 .MyProfile-backtoMain-button {
     margin-top: 2.5vh;
-    background-color: #E9B2BC;
+    background-color: #9893B7;
+    
 }
 
 .MyProfile-formgroup2 h5 {

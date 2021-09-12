@@ -134,11 +134,13 @@ const MyProfileForm = () => {
     }
 
     return (
+        <div className="MyProfilePage">
         <div className="MyProfile-outer-form">
             <h2>프로필 수정</h2>
             <div className="MyProfile-formgroup1">
                 <h5>닉네임</h5>
                 <input
+                    style={{width: '8rem'}}
                     name="nickname"
                     value={nickname}
                     onChange={(e) => inputNickname(e)}
@@ -160,7 +162,11 @@ const MyProfileForm = () => {
 
             <div className="MyProfile-formgroup1">
                 <h5>생년월일</h5>
-                <input type="date" name="birth" value={birth}
+                <input 
+                    style={{width: '8rem'}}
+                    type="date" 
+                    name="birth" 
+                    value={birth}
                     onChange={(e) => inputBirth(e)}></input>
             </div>
 
@@ -220,13 +226,7 @@ const MyProfileForm = () => {
                 onClick={clickProfileBtn}>수정하기
             </button>
 
-            <Link to={"/main"}>
-                <button
-                    className="MyProfile-backtoMain-button">
-                    메인화면으로 돌아가기
-                </button>
-            </Link>
-
+        </div>
         </div>
     );
 }
