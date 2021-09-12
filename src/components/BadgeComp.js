@@ -69,23 +69,20 @@ const BadgeComp = () => {
     }
     const authContext = useContext(AuthContext);
     const [userData, setUserData] = useState({
-        nickname: "",
+        nickname: "로그인해주세요",
         badge_color: "#000000",
-        badge_name: "",
+        badge_name: "IRON",
     });
     useEffect(() => {
         const getNickName = async () => {
-            // const { status, data } = await getApi(
-            //     {
-            //         uid: authContext.state.uid,
-            //     },
-            //     "/home/badge_profile",
-            //     authContext.state.token
-            // );
-            const { status, data } = {
-                status: 200,
-                data: { nickname: "우정" },
-            };
+            const { status, data } = await getApi(
+                {
+                    uid: authContext.state.uid,
+                },
+                "/home/badge_profile",
+                authContext.state.token
+            );
+            
             if (status === 200) {
                 console.log(data);
                 await setUserData({

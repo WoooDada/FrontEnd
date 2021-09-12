@@ -17,8 +17,8 @@
 
 .StudyBox-more {
     font-family: roboto;
-    font-size: 0.8rem;
-    margin-right: 40px;
+    font-size: 0.6rem;
+    margin-right: 60px;
 }
 
 /* Studycard */
@@ -27,7 +27,6 @@
     margin: 0 40px 40px 40px;
     padding: 20px;
     border-radius: 8px;
-    width: 700px;
 }
 
 .Studycard-wrapper {

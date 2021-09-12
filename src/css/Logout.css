@@ -3,6 +3,7 @@
     min-height: 80vh;
     align-items: center;
     justify-content: center;
+    padding: 5vh 0 0 18vh;
 }
 
 .Logout-wrapper {
@@ -14,7 +15,7 @@
     text-align: center;
     padding: 5vh;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    margin-left: 20vmax;
+    margin-top: 5vh;
     width: 400px;
 }
 
