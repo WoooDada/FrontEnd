@@ -1,8 +1,6 @@
-//////////////////////////////////////////////////////////////////////////////
 import React from "react";
 import ml5 from "ml5";
 import "../css/Study.css";
-import "../css/RightStudy.css";
 import { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -13,7 +11,8 @@ import { Link } from "react-router-dom";
 import { postApi, getApi } from "../api";
 import { AuthContext } from "../App";
 import { useContext } from "react";
-//////////////////////////////////////////////////////////////////////////////
+import logo from "../constants/imgs/newlogo.png"
+
 let classifier;
 
 // 초 단위
@@ -275,25 +274,26 @@ const RightStudyComp = ({ match }) => {
 
     const [matesIndex, setMatesIndex] = useState(0); // 좌우 화살표 변환에 필요한 matesIndex
     const StudyMatesBox = ({ data }) => {
-        var crNum = data.concent_rate.slice(0, -1);
-        crNum *= 1;
-        var borderStyle = "";
-        if (crNum >= 50) {
-            borderStyle = { borderColor: "#92B355" };
-        } else {
-            borderStyle = { borderColor: "#E9B2BC" };
-        }
+        var crNum = data.concent_rate.slice(0, -1); // 집중도 % 떼고 숫자만 가져옴 = crNum
+        crNum *= 1; 
         return (
-            <div className="Studymates-box" style={borderStyle}>
-                <div className="Studymates-box-name">{data.nickname}</div>
-                <div className="Studymates-box-cr">{data.concent_rate} </div>
-                <div className="Studymates-box-ct">
-                    공부시간: {data.concent_time}{" "}
+            <div className="Studymates-box">
+                <div className="SM-box-col1">
+                    <img className="SM-box-logo" src={logo} />
+                    <div className="SM-box-name">{data.nickname}</div>
                 </div>
-                <div className="Studymates-box-pt">
-                    딴짓시간: {data.play_time}
+                <div className="SM-box-col2">
+                    <div className={crNum > 50 ? "SM-box-cr-C" : "SM-box-cr-P"}>
+                        {data.concent_rate} </div>
+                    <div className="SM-box-ct">
+                        공부시간: {data.concent_time}{" "}
+                    </div>
+                    <div className="SM-box-pt">
+                        딴짓시간: {data.play_time}
+                    </div>
                 </div>
             </div>
+            
         );
     };
 
@@ -408,9 +408,9 @@ const RightStudyComp = ({ match }) => {
                 {loaded && (
                     <button
                         onClick={() => toggle()}
-                        className={start ? "StartButton" : "EndButton"}
+                        className={start ? "EndButton" : "StartButton"}
                     >
-                        {start ? "공부 시작하기" : "공부 끝내기"}
+                        {start ? "공부 끝내기" : "공부 시작하기"}
                     </button>
                 )}
             </div>

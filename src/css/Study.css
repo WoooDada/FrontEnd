@@ -97,6 +97,7 @@
     border-radius: 2vmin;
     background-color: white;
     font-family: "DarkerGrotesque-Bold";
+    font-weight: 600;
 }
 
 .StudyPage .LeftComp .Planner .Schedule .Header .NotSelectedBtn:hover,
@@ -148,26 +149,35 @@
 .StudyPage .RightComp .VideoComp .StartButton,
 .StudyPage .RightComp .VideoComp .EndButton {
     padding: 1.5vh 0;
-    border: none;
+    /* border: none; */
     border-radius: 8px;
     font-family: "DarkerGrotesque-SemiBold";
     font-size: large;
-}
-
-.StudyPage .RightComp .VideoComp .StartButton:hover,
-.StudyPage .RightComp .VideoComp .EndButton:hover {
+    font-weight: 600;
+    transition: background-color 0.5s;
     cursor: pointer;
 }
 
 .StudyPage .RightComp .VideoComp .StartButton {
     background-color: #f68059;
-    color: white;
+    color: #ffffff;
+    border: 2px solid #f68059;
+}
+.StudyPage .RightComp .VideoComp .StartButton:hover {
+    background-color: #ffffff;
+    color: #f68059;
+    border: 2px solid #f68059;
 }
 
 .StudyPage .RightComp .VideoComp .EndButton {
-    border: 2px solid #fabfac;
+    border: 2px solid #f68059;
     background-color: white;
     color: #f68059;
+}
+.StudyPage .RightComp .VideoComp .EndButton:hover {
+    border: 2px solid #f68059;
+    background-color: #f68059;
+    color: #ffffff;
 }
 
 .StudyPage .RightComp .RightComp-inner {
@@ -179,18 +189,122 @@
 .StudyPage .RightComp .RightComp-studymates-title {
     margin: 0 auto;
     font-family: "DarkerGrotesque-ExtraBold";
-    /* background-color: #5f45ff; */
+}
+
+
+.RightComp-roominfo-group1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.RightComp-roominfo-group2 {
+    display: flex;
+    flex-direction: row;
+}
+
+.RightComp-roomname {
+    font-size: large;
+    font-weight: bold;
+}
+
+.RightComp-roomtag {
+    margin: auto 0;   
+}
+
+.RightComp-ppl {
+    padding-left: 2vmin;
+}
+
+.RightComp-manner {
+    cursor: pointer;
+}
+
+.RightComp-studymates-title {
+    font-weight: bold;
+    margin-bottom: 1vmin;
+}
+
+.RightComp-studymates {
+    display: flex;
+    flex-direction: row;
+}
+
+.Studymates-box3 {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.Studymates-box {
+    background-color: #ffffff;
+    border: none;
+    width: 100%;
+    height: min-content;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.SM-box-col1, .SM-box-col2 {
+    display: flex;
+    flex-direction: column;
+}
+
+.SM-box-col1 {
+    margin: 2vh 2vw;
+}
+
+.SM-box-col2 {
+    
+}
+
+.SM-box-logo {
+    width: 3vw;
+}
+
+.SM-box-name {
+    font-weight: 600;
+    width: 50px;
+    font-size: 0.7rem;
+}
+
+.SM-box-cr-C {
+    color: #5F45FF;
+    font-family: "DarkerGrotesque-Bold";
+    font-size: 1.5rem;
+}
+.SM-box-cr-P {
+    color: #f68059;
+    font-family: "DarkerGrotesque-Bold";
+    font-size: 1.5rem;
+}
+
+.SM-box-ct, .SM-box-pt {
+    width: 8vw;
+    font-size: 0.8rem;
+    white-space : nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.RightComp-studymates-leftbtn, 
+.RightComp-studymates-rightbtn {
+    margin: auto 0;
 }
 
 .GoOutBtn {
     display: flex;
-    background-color: white;
+    background-color: #ffffff;
     border: 2px solid #5f45ff;
     color: #5f45ff;
     border-radius: 8px;
 
     font-family: "DarkerGrotesque-SemiBold";
     font-size: large;
+    font-weight: 600;
     text-decoration: none;
     text-align: center;
     justify-content: center;
@@ -205,4 +319,5 @@
 .StudyPage .RightComp .GoOutBtn:hover {
     background-color: #5F45FF;
     color: #ffffff;
+    font-weight: 600;
 }

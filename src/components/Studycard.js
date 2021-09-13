@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../css/Main.css";
 import "../css/StudyBox.css";
-import ppl_icon from "../constants/imgs/ppl_icon.png";
-import secret_icon from "../constants/imgs/secret_icon.png";
 import logo from "../constants/imgs/newlogo.png"
 import { AiFillLock } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";

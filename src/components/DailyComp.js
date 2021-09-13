@@ -151,14 +151,14 @@ const DtodosInput = () => {
     return (
         <div className="daily-lower-input">
             <input
+                className="input-tag"
                 name="tag"
-                style={{ width: "30%" }}
                 onChange={(e) => setInputs({ ...inputs, tag: e.target.value })}
                 value={inputs.tag}
             />
             <input
+                className="input-content"
                 name="content"
-                style={{ width: "60%" }}
                 onChange={(e) =>
                     setInputs({ ...inputs, content: e.target.value })
                 }
@@ -225,22 +225,24 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
 
     return (
         <div key={id} className="daily-todo-item">
-            <span style={{ width: "30%" }} className="daily-todo-item-tag">
+            <span style={{ width: "30%", textAlign:'center' }} className="daily-todo-item-tag">
                 {d_tag}
             </span>
-            <span style={{ width: "60%" }}>{d_content}</span>
+            <span style={{ width: "60%", textAlign:'center' }}>{d_content}</span>
             {d_check ? (
                 <GrCheckboxSelected
                     onClick={clickCheck}
                     className="daily-checkbox-true"
+                    style={{marginTop: '2px'}}
                 />
             ) : (
                 <GrCheckbox
                     onClick={clickCheck}
                     className="daily-checkbox-false"
+                    style={{marginTop: '2px'}}
                 />
             )}
-            <span className="daily-todo-item-x" onClick={clickDelete}>
+            <span className="daily-todo-item-x" onClick={clickDelete} style={{color: '#F68059', fontWeight:'600'}}>
                 X
             </span>
         </div>
