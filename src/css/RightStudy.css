@@ -38,16 +38,18 @@
 
 .Studymates-box3 {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+
 }
 
 .Studymates-box {
     background-color: #ffffff;
-    border: solid 3px;
-    width: 15vmin;
-    height: 10vmin;
-    padding: 1vmin;
-    margin: 1vmin;
+    border: none;
+    width: 12vw;
+    height: 7vw;
+    /* margin-left: auto; */
+    /* padding: 1vmin;
+    margin: 1vmin; */
     font-size: xx-small;
     display: flex;
     flex-direction: column;

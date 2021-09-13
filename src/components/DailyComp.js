@@ -278,6 +278,7 @@ const DailyComp = () => {
                 "/tdl/daily/",
                 authContext.state.token
             );
+            
             if (status === 200) {
                 await dispatch({
                     type: "GET_TODO",

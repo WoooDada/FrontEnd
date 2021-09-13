@@ -46,6 +46,13 @@
     font-size: 16px;
 }
 
+
+.StudyPage .LeftComp .RoomPpl {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .StudyPage .LeftComp .Planner {
     display: flex;
     flex-direction: row;
@@ -196,5 +203,6 @@
 }
 
 .StudyPage .RightComp .GoOutBtn:hover {
-    background-color: white;
+    background-color: #5F45FF;
+    color: #ffffff;
 }
