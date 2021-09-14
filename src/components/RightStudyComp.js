@@ -41,35 +41,35 @@ const RightStudyComp = ({ match }) => {
 
     const initialStudymates = [
         {
-            nickname: "친구를 기다리는 중...",
+            nickname: "친구를 기다려요!",
             concent_rate: "0%",
-            concent_time: "0시간 00분",
-            play_time: "0시간 00분",
+            concent_time: "-시간 --분",
+            play_time: "-시간 --분",
         },
-        // {
-        //     nickname: "2인",
-        //     concent_rate: "90%",
-        //     concent_time: "2시간 42분",
-        //     play_time: "13분",
-        // },
-        // {
-        //     nickname: "3인",
-        //     concent_rate: "45%",
-        //     concent_time: "1시간 32분",
-        //     play_time: "1시간 47분",
-        // },
-        // {
-        //     nickname: "4인",
-        //     concent_rate: "90%",
-        //     concent_time: "2시간 42분",
-        //     play_time: "13분",
-        // },
-        // {
-        //     nickname: "5인",
-        //     concent_rate: "90%",
-        //     concent_time: "2시간 42분",
-        //     play_time: "13분",
-        // },
+        {
+            nickname: "2인",
+            concent_rate: "90%",
+            concent_time: "2시간 42분",
+            play_time: "13분",
+        },
+        {
+            nickname: "3인",
+            concent_rate: "45%",
+            concent_time: "1시간 32분",
+            play_time: "1시간 47분",
+        },
+        {
+            nickname: "4인",
+            concent_rate: "90%",
+            concent_time: "2시간 42분",
+            play_time: "13분",
+        },
+        {
+            nickname: "5인",
+            concent_rate: "90%",
+            concent_time: "2시간 42분",
+            play_time: "13분",
+        },
     ];
     const [studymates, setStudymates] = useState(initialStudymates);
 
@@ -293,26 +293,19 @@ const RightStudyComp = ({ match }) => {
                     </div>
                 </div>
             </div>
-            
         );
     };
 
     const StudyMatesBox3 = ({ datas }) => {
-        console.log("StudyMatesBox3", datas);
+        // console.log("StudyMatesBox3", datas);
         return (
             <div className="Studymates-box3">
                 {studymates.length === 1 ? (
                     <StudyMatesBox data={datas[matesIndex]} />
-                ) : studymates.length === 2 ? (
-                    <div className="Studymates-box3">
-                        <StudyMatesBox data={datas[matesIndex]} />
-                        <StudyMatesBox data={datas[matesIndex + 1]} />
-                    </div>
                 ) : (
                     <div className="Studymates-box3">
                         <StudyMatesBox data={datas[matesIndex]} />
                         <StudyMatesBox data={datas[matesIndex + 1]} />
-                        <StudyMatesBox data={datas[matesIndex + 2]} />
                     </div>
                 )}
             </div>
@@ -328,7 +321,7 @@ const RightStudyComp = ({ match }) => {
             setMatesIndex(matesIndex - 1);
         }
         // Button Color Change
-        if (studymates.length > 3) {
+        if (studymates.length > 2) {
             if (matesIndex <= 1) {
                 leftBtn.style.color = "#E1E5EA";
                 rightBtn.style.color = "#030303";
@@ -344,12 +337,12 @@ const RightStudyComp = ({ match }) => {
         var leftBtn = document.getElementById("Studymates-leftbtn");
         var rightBtn = document.getElementById("Studymates-rightbtn");
         // Studymates Index Change
-        if (studymates.length > 3) {
-            if (matesIndex !== studymates.length - 3) {
+        if (studymates.length > 2) {
+            if (matesIndex !== studymates.length - 2) {
                 setMatesIndex(matesIndex + 1);
             }
             // Button Color Change
-            if (matesIndex >= studymates.length - 4) {
+            if (matesIndex >= studymates.length - 3) {
                 leftBtn.style.color = "#030303";
                 rightBtn.style.color = "#E1E5EA";
             } else {

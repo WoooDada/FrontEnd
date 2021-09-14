@@ -119,7 +119,7 @@
     flex-direction: column;
     width: 80%;
     margin: 2vmin auto;
-    padding: 3vmin;
+    padding: 3vmin 0;
 }
 
 .StudyPage .RightComp .VideoComp .CameraComp {
@@ -228,12 +228,12 @@
 .RightComp-studymates {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 
 .Studymates-box3 {
     display: flex;
     flex-direction: column;
-    
 }
 
 .Studymates-box {
@@ -241,6 +241,8 @@
     border: none;
     width: 100%;
     height: min-content;
+    max-height: 13vh;
+    margin: 1vh 0;
     
     display: flex;
     flex-direction: row;
@@ -254,32 +256,40 @@
 }
 
 .SM-box-col1 {
-    margin: 2vh 2vw;
-}
-
-.SM-box-col2 {
-    
+    margin: 2vh 1vw;
+    align-items: center;
 }
 
 .SM-box-logo {
-    width: 3vw;
+    width: 2.6vw;
+    padding: 0.2vw 0;
 }
 
 .SM-box-name {
-    font-weight: 600;
-    width: 50px;
     font-size: 0.7rem;
+    font-weight: 600;
+    width: 4vw;
+
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    text-align: center;
+    display: -webkit-box; 
+    -webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical;
+}
+
+.SM-box-cr-C, .SM-box-cr-P {
+    font-family: "DarkerGrotesque-Bold";
+    font-size: 1.5rem;
+    padding-bottom: 1vh;
 }
 
 .SM-box-cr-C {
     color: #5F45FF;
-    font-family: "DarkerGrotesque-Bold";
-    font-size: 1.5rem;
 }
+
 .SM-box-cr-P {
     color: #f68059;
-    font-family: "DarkerGrotesque-Bold";
-    font-size: 1.5rem;
 }
 
 .SM-box-ct, .SM-box-pt {
