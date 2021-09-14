@@ -9,12 +9,11 @@
     margin-left: 10px;
 }
 
-
 /* Badge */
 .aside-upper-badge {
     width: 80px;
     height: 80px;
-    background: #FFFFFF;
+    background: #ffffff;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     margin-left: 90px;
     margin-top: 52px;
@@ -48,17 +47,17 @@
     font-size: 0.8rem;
     font-weight: 600;
     margin-top: 40px;
-} 
+}
 
 .badge-name {
     font-size: 0.7rem;
-    color: #9893B7;
-} 
+    color: #9893b7;
+}
 
 .aside-menus {
     margin-left: 62px;
     padding-top: 30px;
-    color: #9893B7;
+    color: #9893b7;
 }
 
 .aside-bottom {
@@ -70,7 +69,6 @@
     margin-left: 68px;
     margin-top: 100px;
 }
-
 
 .MainRight {
     margin-left: 260px;
@@ -97,14 +95,14 @@
 .TodayComp .small-title {
     font-weight: 600;
     font-size: 0.8rem;
-    color: #9893B7;
+    color: #9893b7;
     margin-left: 60px;
     padding-right: 1rem;
 }
 
 .TodayComp .stitle {
     font-size: 0.6rem;
-    color: #9893B7;
+    color: #9893b7;
     padding-right: 0.5rem;
     font-weight: bold;
 }
@@ -125,7 +123,7 @@
 }
 
 .MainRight-menu div {
-    background-color: #F5F7FD;
+    background-color: #f5f7fd;
     border-radius: 8px 8px 0px 0px;
     padding: 10px 40px;
     cursor: pointer;
@@ -135,7 +133,7 @@
     font-size: 1rem;
     font-weight: 600;
     line-height: 1rem;
-    color: #9893B7;
+    color: #9893b7;
 }
 
 /* Schedule section */
@@ -144,7 +142,6 @@
     flex-direction: row;
     width: min-content;
 }
-
 
 /********** MonthlyComp **********/
 .Main-MonthlyComp {
@@ -181,7 +178,7 @@
 
 .Main-Monthly-inputform {
     font-size: 1rem;
-    background: #F5F7FD;
+    background: #f5f7fd;
     border-radius: 8px;
     margin-right: 30px;
 }
@@ -202,9 +199,9 @@
     background: #ffffff;
     padding: 10px;
     border-radius: 8px;
-    border: #5F45FF 2px solid;
+    border: #5f45ff 2px solid;
     margin-right: 10px;
-    color: #5F45FF;
+    color: #5f45ff;
     font-weight: 600;
 }
 
@@ -217,7 +214,7 @@
 .Main-WeeklyComp {
     width: 35vw;
     height: min-content;
-    margin: 40px 0 ;
+    margin: 40px 0;
     padding: 20px;
     background-color: white;
     border-radius: 8px;
@@ -225,6 +222,8 @@
 
 .Main-WeeklyComp .small-title {
     margin: 28px 0 0 24px;
+    font-size: 0.8rem;
+    font-weight: 600;
 }
 
 .Main-WeeklyComp .DowComp {
@@ -235,7 +234,6 @@
     display: flex;
     flex-direction: column;
     padding: 1vh 2vh;
-
 }
 
 .Main-WeeklyComp .Weekly-wrapper {
@@ -248,31 +246,41 @@
     flex: 1;
     overflow: auto;
     padding: 2vh;
+    margin: 0 auto;
 }
 
 .Main-WeeklyComp .Dow-wrapper {
     display: flex;
     flex-direction: row;
-    padding: 1vh 0;
+    margin: 4px 0;
+    border-radius: 8px;
     width: 100%;
+    background-color: #f5f7fd;
 }
 
-.Main-WeeklyComp .Dow-wrapper span {
+.Main-WeeklyComp .Dow-wrapper .dot {
     flex: 1;
-    border-radius: 50%;
-    text-align: center;
-    align-self: center;
+    border-radius: 8px;
+    align-items: center;
     justify-content: center;
-    background-color: #e9b2bc;
+    justify-items: center;
+    background-color: #9f8fff;
     padding: 2.5vh 1.5vh;
-    font-size: 2vh;
     margin-right: 1vh;
+    color: white;
+    text-align: center;
 }
+
+.Main-WeeklyComp .Dow-wrapper .dot span {
+    font-size: 2vh;
+    color: white;
+    vertical-align: middle;
+    margin: auto;
+}
+
 .Main-WeeklyComp .Dow-todos {
     flex: 10;
-    padding: 1vh 2vh;
-    background-color: #e1e5ea;
-    border-radius: 5vh;
+    padding: 1vh;
 }
 
 .Main-WeeklyComp .Dow-todos-item {
@@ -293,10 +301,14 @@
     background: none;
     margin: 0.5vh 1vh;
 }
-.Main-WeeklyComp .Dow-todos-item button {
+.Main-WeeklyComp .Dow-todos-item button,
+.Main-WeeklyComp .New-input-wrapper .add-button {
     flex: 0.3;
     border: 0;
     background: none;
+    color: #9f8fff;
+    align-self: center;
+    justify-self: center;
 }
 
 .Main-WeeklyComp .New-input-wrapper {
@@ -306,10 +318,6 @@
     justify-items: center;
 }
 
-.Main-WeeklyComp .New-input-wrapper .add-button {
-    flex: 0.3;
-    border: 0;
-}
 .Main-WeeklyComp .New-input-wrapper .new-input {
     border: none;
     flex: 10.5;
@@ -440,7 +448,7 @@
         margin-left: 22px;
         padding-right: 25px;
     }
-    .badge-nickname{
+    .badge-nickname {
         width: 200px;
         height: 30px;
         overflow: hidden;
@@ -456,7 +464,7 @@
         margin-left: 0px;
         /* width: ; */
     }
-    
+
     .MainRight header {
         width: 100vw;
         height: 20vh;
