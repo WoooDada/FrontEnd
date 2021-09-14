@@ -1,4 +1,11 @@
-import { Switch, Route, Link, useHistory, useLocation, NavLink } from "react-router-dom";
+import {
+    Switch,
+    Route,
+    Link,
+    useHistory,
+    useLocation,
+    NavLink,
+} from "react-router-dom";
 
 // Page 로딩
 import {
@@ -92,38 +99,51 @@ const Footer = () => {
 
 const SideMenu = () => {
     const activeStyle = {
-        color:'#5F45FF',
+        color: "#5F45FF",
     };
     // Sidemenu 나타나지 않는 페이지
-    if (window.location.pathname === '/login'
-    || window.location.pathname === '/'
-    || window.location.pathname.startsWith('/study/')) return null;
+    if (
+        window.location.pathname === "/login" ||
+        window.location.pathname === "/" ||
+        window.location.pathname.startsWith("/study/")
+    )
+        return null;
 
     return (
         <aside>
             <BadgeComp></BadgeComp>
-                <div className='aside-menus'>
-                    <p><Link to={'/'}>Home</Link></p>
-                    <p id="Main-side-main">
-                        <NavLink to={'/main'} activeStyle={activeStyle}>Main</NavLink>
-                    </p>
+            <div className="aside-menus">
+                <p>
+                    <Link to={"/"}>Home</Link>
+                </p>
+                <p id="Main-side-main">
+                    <NavLink to={"/main"} activeStyle={activeStyle}>
+                        Main
+                    </NavLink>
+                </p>
 
-                    <p id="Main-side-studyroom">
-                        <NavLink to={'/studyroom'} activeStyle={activeStyle}>Studyroom</NavLink>
-                    </p>
+                <p id="Main-side-studyroom">
+                    <NavLink to={"/studyroom"} activeStyle={activeStyle}>
+                        Studyroom
+                    </NavLink>
+                </p>
 
-                    <p id="Main-side-profile">
-                    <NavLink to={'/myprofile'} activeStyle={activeStyle}>Profile</NavLink>
-                    </p>
+                <p id="Main-side-profile">
+                    <NavLink to={"/myprofile"} activeStyle={activeStyle}>
+                        Profile
+                    </NavLink>
+                </p>
 
-                    <p id="Main-side-log">
-                    <NavLink to={'/logout'} activeStyle={activeStyle}>Logout</NavLink>
-                    </p>
-                </div>
-                <div className='aside-bottom'>공다다</div>
-            </aside>
-    )
-}
+                <p id="Main-side-log">
+                    <NavLink to={"/logout"} activeStyle={activeStyle}>
+                        Logout
+                    </NavLink>
+                </p>
+            </div>
+            <div className="aside-bottom">공다다</div>
+        </aside>
+    );
+};
 //////////////////////////////////////////////////////////////////////////////////
 export const AuthContext = createContext();
 
@@ -197,7 +217,6 @@ function App() {
                         <Route path="/createroom" component={CreateRoom} />
                         <Route path="/myprofile" component={MyProfile} />
                         <Route path="/socket" component={Socket} />
-
                         <Route component={NotFound} />
                     </Switch>
                 </div>

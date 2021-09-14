@@ -14,3 +14,4 @@ export { default as MainRight } from "./MainRight";
 export { default as Studycard } from "./Studycard";
 export { default as Gongdada } from "./Gongdada";
 export { default as Schedule } from "./Schedule";
+export { default as NewGraphComp } from "./NewGraphComp";
