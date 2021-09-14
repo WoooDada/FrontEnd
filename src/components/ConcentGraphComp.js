@@ -17,21 +17,21 @@ import { AuthContext } from "../App";
 
 const initialData = {
     concent: [
-        { x: "월", y: 0 },
-        { x: "화", y: 0 },
-        { x: "수", y: 0 },
-        { x: "목", y: 0 },
-        { x: "금", y: 0 },
-        { x: "토", y: 0 },
+        { x: "월", y: 1 },
+        { x: "화", y: 2 },
+        { x: "수", y: 3 },
+        { x: "목", y: 1 },
+        { x: "금", y: 2 },
+        { x: "토", y: 3 },
         { x: "일", y: 0 },
     ],
     play: [
-        { x: "월", y: 0 },
-        { x: "화", y: 0 },
-        { x: "수", y: 0 },
-        { x: "목", y: 0 },
-        { x: "금", y: 0 },
-        { x: "토", y: 0 },
+        { x: "월", y: 0.5 },
+        { x: "화", y: 1 },
+        { x: "수", y: 0.5 },
+        { x: "목", y: 1 },
+        { x: "금", y: 0.5 },
+        { x: "토", y: 1 },
         { x: "일", y: 0 },
     ],
 };
@@ -137,7 +137,7 @@ const ConcentGraphComp = () => {
                 await alert("인터넷 연결이 불안정합니다.");
             }
         };
-        getGraphData();
+        // getGraphData();
     }, []);
     return (
         <div className="Main-ConcentGraph-Wrapper">

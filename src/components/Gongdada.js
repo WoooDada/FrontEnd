@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import {
-    ConcentGraphComp,
-    RankComp,
-    StudyBoxComp,
-} from "../components";
+import { NewGraphComp, RankComp, StudyBoxComp } from "../components";
 import "../css/Main.css";
+import ConcentGraphComp from "./ConcentGraphComp";
 
 const Gongdada = () => {
-
     return (
         <div className="Main-Gongdada">
             <div className="Gongdada-left">
-                <ConcentGraphComp></ConcentGraphComp>
+                {/* <ConcentGraphComp /> */}
+                <NewGraphComp />
                 <StudyBoxComp></StudyBoxComp>
             </div>
             <div className="Gongdada-right">
