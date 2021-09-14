@@ -6,6 +6,8 @@ import "../css/Main.css";
 import { GrCheckbox, GrCheckboxSelected } from "react-icons/gr";
 import { useReducer, createContext, useContext } from "react";
 import { useEffect } from "react";
+import { BsFillPlusSquareFill } from "react-icons/bs";
+
 import { getApi, postApi, putApi, deleteApi } from "../api";
 import { AuthContext } from "../App";
 
@@ -300,7 +302,9 @@ const DayOfWeekComp = ({ dow, date, tasks }) => {
     };
     return (
         <div className="Dow-wrapper">
-            <span class="dot">{dow}</span>
+            <div class="dot">
+                <span>{dow}</span>
+            </div>
             <div className="Dow-todos">
                 {tasks.map((t, i) => {
                     // console.log(t.id)
@@ -325,7 +329,7 @@ const DayOfWeekComp = ({ dow, date, tasks }) => {
                         onClick={handleAddButtonClick}
                         className="add-button"
                     >
-                        +
+                        <BsFillPlusSquareFill></BsFillPlusSquareFill>
                     </button>
                 </div>
             </div>
