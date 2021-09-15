@@ -23,8 +23,6 @@ const GET_STUDYMATES = 5;
 //////////////////////////////////////////////////////////////////////////////
 
 const RightStudyComp = ({ match }) => {
-    // console.log("rightcomp match!", match); // match: room_id
-
     const authContext = useContext(AuthContext);
     const btnContext = useContext(BtnContext);
     const videoRef = useRef();
@@ -46,30 +44,30 @@ const RightStudyComp = ({ match }) => {
             concent_time: "-시간 --분",
             play_time: "-시간 --분",
         },
-        {
-            nickname: "2인",
-            concent_rate: "90%",
-            concent_time: "2시간 42분",
-            play_time: "13분",
-        },
-        {
-            nickname: "3인",
-            concent_rate: "45%",
-            concent_time: "1시간 32분",
-            play_time: "1시간 47분",
-        },
-        {
-            nickname: "4인",
-            concent_rate: "90%",
-            concent_time: "2시간 42분",
-            play_time: "13분",
-        },
-        {
-            nickname: "5인",
-            concent_rate: "90%",
-            concent_time: "2시간 42분",
-            play_time: "13분",
-        },
+        // {
+        //     nickname: "2인",
+        //     concent_rate: "90%",
+        //     concent_time: "2시간 42분",
+        //     play_time: "13분",
+        // },
+        // {
+        //     nickname: "3인",
+        //     concent_rate: "45%",
+        //     concent_time: "1시간 32분",
+        //     play_time: "1시간 47분",
+        // },
+        // {
+        //     nickname: "4인",
+        //     concent_rate: "90%",
+        //     concent_time: "2시간 42분",
+        //     play_time: "13분",
+        // },
+        // {
+        //     nickname: "5인",
+        //     concent_rate: "90%",
+        //     concent_time: "2시간 42분",
+        //     play_time: "13분",
+        // },
     ];
     const [studymates, setStudymates] = useState(initialStudymates);
 
@@ -264,11 +262,13 @@ const RightStudyComp = ({ match }) => {
     }, GET_STUDYMATES * 1000);
 
     const setStudyMatesArrowColor = () => {
+        var leftBtn = document.getElementById("Studymates-leftbtn");
         var rightBtn = document.getElementById("Studymates-rightbtn");
-        if (studymates.length > 3) {
+        if ((studymates.length > 2) && (matesIndex === 0)) {
             rightBtn.style.color = "#030303";
-        } else {
-            rightBtn.style.color = "#E1E5EA";
+        }
+        if (matesIndex === 0){
+            leftBtn.style.color = "#E1E5EA";
         }
     };
 
@@ -300,7 +300,7 @@ const RightStudyComp = ({ match }) => {
         // console.log("StudyMatesBox3", datas);
         return (
             <div className="Studymates-box3">
-                {studymates.length === 1 ? (
+                {((studymates.length === 1)||(matesIndex === studymates.length-1)) ? (
                     <StudyMatesBox data={datas[matesIndex]} />
                 ) : (
                     <div className="Studymates-box3">
@@ -318,7 +318,7 @@ const RightStudyComp = ({ match }) => {
         var rightBtn = document.getElementById("Studymates-rightbtn");
         // Studymates Index Change
         if (matesIndex !== 0) {
-            setMatesIndex(matesIndex - 1);
+            setMatesIndex(matesIndex - 2);
         }
         // Button Color Change
         if (studymates.length > 2) {
@@ -339,7 +339,7 @@ const RightStudyComp = ({ match }) => {
         // Studymates Index Change
         if (studymates.length > 2) {
             if (matesIndex !== studymates.length - 2) {
-                setMatesIndex(matesIndex + 1);
+                setMatesIndex(matesIndex + 2);
             }
             // Button Color Change
             if (matesIndex >= studymates.length - 3) {
@@ -429,7 +429,7 @@ const RightStudyComp = ({ match }) => {
                             id="Studymates-rightbtn"
                             size="2rem"
                             onClick={(e) => clickMatesRightBtn(e)}
-                            style={{ color: "#E1E5EA" }}
+                            style={{ color: "#E1E5EA" }} 
                         />
                     </div>
                 </div>
