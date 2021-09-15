@@ -349,9 +349,9 @@ const TenMinPlanner = () => {
 
         const cellColor = (v) => {
             if (v === 1) {
-                return "#BCD6A7";
+                return "#9F8FFF";
             } else if (v === 0) {
-                return "#E9B2BC";
+                return "#FAB39B";
             } else {
                 // ratio = Nan
                 return "rgb(225,229,234,0.5)";

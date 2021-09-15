@@ -9,6 +9,7 @@ import "../css/Study.css";
 import TenMinPlanner from "./TenMinPlanner";
 
 import { AiFillLock } from "react-icons/ai";
+import { BsFillPersonFill } from "react-icons/bs";
 
 const PrintToday = () => {
     const today = new Date();
@@ -97,9 +98,13 @@ const LeftStudyComp = ({ match }) => {
                     <div className="RoomTitle">
                         <h3>{roomData.room_name}</h3>
                         <AiFillLock className="LockIcon" />
+                        <h5 style={{marginLeft:'10px'}}>#{roomData.room_tag}</h5>
                     </div>
                     <h5>
-                        {roomData.in_ppl}/{roomData.max_ppl}
+                        <span className="RoomPpl">
+                            <BsFillPersonFill />
+                            {roomData.in_ppl}/{roomData.max_ppl}
+                        </span>
                     </h5>
                 </div>
                 <p onClick={(e) => clickManner()}>

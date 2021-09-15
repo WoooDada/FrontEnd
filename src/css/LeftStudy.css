@@ -35,7 +35,7 @@
 }
 
 .daily-lower-input input {
-    background-color: #e1e5ea;
+    background-color: #F5F7FD;
     border-radius: 2vmin;
     border: none;
     padding: 0.5vmin 0;
@@ -45,29 +45,35 @@
 }
 
 .daily-lower-input .add-button {
-    background-color: #e9b2bc;
-    border-radius: 2vmin;
+    background-color: #ffffff;
+    color: #5F45FF;
+    /* border-radius: 2vmin; */
     border: none;
-    margin-top: 0.3vmin;
+    margin: 0px;
+    padding: 0px;
     font-weight: bold;
+    font-size: 1rem;
+    font-family: sans-serif;
 }
 
 .daily-todo-upper {
     /* flex: 1; */
     display: flex;
     flex-direction: row;
-    max-height: 3vmin;
+    max-height: 20px;
     padding: 1vmin 0;
 }
 
 .daily-todo-upper-tag {
-    flex: 3;
-    margin-left: 4vmin;
+    flex-basis: 30%;
+    text-align: center;
+    color: #9893B7;
 }
 
 .daily-todo-upper-content {
-    flex: 7;
-    margin-left: 11vmin;
+    flex-basis: 60%;
+    text-align: center;
+    color: #9893B7;
 }
 
 .daily-todo-upper span {
@@ -96,7 +102,9 @@
 }
 
 .daily-todo-item-x {
-    font-size: x-small;
+    color: #F68059;
+    font-size: 1rem;
+    font-family: sans-serif;
     align-self: center;
 }
 
@@ -107,3 +115,13 @@
     cursor: pointer;
     color: rgb(46, 46, 46);
 }
+
+.input-tag {
+    width: 30%;
+    text-align: center;
+}
+.input-content {
+    width: 60%;
+    text-align: center;
+}
+

@@ -1,8 +1,6 @@
-//////////////////////////////////////////////////////////////////////////////
 import React from "react";
 import ml5 from "ml5";
 import "../css/Study.css";
-import "../css/RightStudy.css";
 import { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -13,7 +11,8 @@ import { Link } from "react-router-dom";
 import { postApi, getApi } from "../api";
 import { AuthContext } from "../App";
 import { useContext } from "react";
-//////////////////////////////////////////////////////////////////////////////
+import logo from "../constants/imgs/newlogo.png"
+
 let classifier;
 
 // 초 단위
@@ -24,8 +23,6 @@ const GET_STUDYMATES = 5;
 //////////////////////////////////////////////////////////////////////////////
 
 const RightStudyComp = ({ match }) => {
-    // console.log("rightcomp match!", match); // match: room_id
-
     const authContext = useContext(AuthContext);
     const btnContext = useContext(BtnContext);
     const videoRef = useRef();
@@ -42,10 +39,10 @@ const RightStudyComp = ({ match }) => {
 
     const initialStudymates = [
         {
-            nickname: "친구를 기다리는 중...",
+            nickname: "친구를 기다려요!",
             concent_rate: "0%",
-            concent_time: "0시간 00분",
-            play_time: "0시간 00분",
+            concent_time: "-시간 --분",
+            play_time: "-시간 --분",
         },
         // {
         //     nickname: "2인",
@@ -265,54 +262,50 @@ const RightStudyComp = ({ match }) => {
     }, GET_STUDYMATES * 1000);
 
     const setStudyMatesArrowColor = () => {
+        var leftBtn = document.getElementById("Studymates-leftbtn");
         var rightBtn = document.getElementById("Studymates-rightbtn");
-        if (studymates.length > 3) {
+        if ((studymates.length > 2) && (matesIndex === 0)) {
             rightBtn.style.color = "#030303";
-        } else {
-            rightBtn.style.color = "#E1E5EA";
+        }
+        if (matesIndex === 0){
+            leftBtn.style.color = "#E1E5EA";
         }
     };
 
     const [matesIndex, setMatesIndex] = useState(0); // 좌우 화살표 변환에 필요한 matesIndex
     const StudyMatesBox = ({ data }) => {
-        var crNum = data.concent_rate.slice(0, -1);
-        crNum *= 1;
-        var borderStyle = "";
-        if (crNum >= 50) {
-            borderStyle = { borderColor: "#92B355" };
-        } else {
-            borderStyle = { borderColor: "#E9B2BC" };
-        }
+        var crNum = data.concent_rate.slice(0, -1); // 집중도 % 떼고 숫자만 가져옴 = crNum
+        crNum *= 1; 
         return (
-            <div className="Studymates-box" style={borderStyle}>
-                <div className="Studymates-box-name">{data.nickname}</div>
-                <div className="Studymates-box-cr">{data.concent_rate} </div>
-                <div className="Studymates-box-ct">
-                    공부시간: {data.concent_time}{" "}
+            <div className="Studymates-box">
+                <div className="SM-box-col1">
+                    <img className="SM-box-logo" src={logo} />
+                    <div className="SM-box-name">{data.nickname}</div>
                 </div>
-                <div className="Studymates-box-pt">
-                    딴짓시간: {data.play_time}
+                <div className="SM-box-col2">
+                    <div className={crNum > 50 ? "SM-box-cr-C" : "SM-box-cr-P"}>
+                        {data.concent_rate} </div>
+                    <div className="SM-box-ct">
+                        공부시간: {data.concent_time}{" "}
+                    </div>
+                    <div className="SM-box-pt">
+                        딴짓시간: {data.play_time}
+                    </div>
                 </div>
             </div>
         );
     };
 
     const StudyMatesBox3 = ({ datas }) => {
-        console.log("StudyMatesBox3", datas);
+        // console.log("StudyMatesBox3", datas);
         return (
             <div className="Studymates-box3">
-                {studymates.length === 1 ? (
+                {((studymates.length === 1)||(matesIndex === studymates.length-1)) ? (
                     <StudyMatesBox data={datas[matesIndex]} />
-                ) : studymates.length === 2 ? (
-                    <div className="Studymates-box3">
-                        <StudyMatesBox data={datas[matesIndex]} />
-                        <StudyMatesBox data={datas[matesIndex + 1]} />
-                    </div>
                 ) : (
                     <div className="Studymates-box3">
                         <StudyMatesBox data={datas[matesIndex]} />
                         <StudyMatesBox data={datas[matesIndex + 1]} />
-                        <StudyMatesBox data={datas[matesIndex + 2]} />
                     </div>
                 )}
             </div>
@@ -325,10 +318,10 @@ const RightStudyComp = ({ match }) => {
         var rightBtn = document.getElementById("Studymates-rightbtn");
         // Studymates Index Change
         if (matesIndex !== 0) {
-            setMatesIndex(matesIndex - 1);
+            setMatesIndex(matesIndex - 2);
         }
         // Button Color Change
-        if (studymates.length > 3) {
+        if (studymates.length > 2) {
             if (matesIndex <= 1) {
                 leftBtn.style.color = "#E1E5EA";
                 rightBtn.style.color = "#030303";
@@ -344,12 +337,12 @@ const RightStudyComp = ({ match }) => {
         var leftBtn = document.getElementById("Studymates-leftbtn");
         var rightBtn = document.getElementById("Studymates-rightbtn");
         // Studymates Index Change
-        if (studymates.length > 3) {
-            if (matesIndex !== studymates.length - 3) {
-                setMatesIndex(matesIndex + 1);
+        if (studymates.length > 2) {
+            if (matesIndex !== studymates.length - 2) {
+                setMatesIndex(matesIndex + 2);
             }
             // Button Color Change
-            if (matesIndex >= studymates.length - 4) {
+            if (matesIndex >= studymates.length - 3) {
                 leftBtn.style.color = "#030303";
                 rightBtn.style.color = "#E1E5EA";
             } else {
@@ -408,9 +401,9 @@ const RightStudyComp = ({ match }) => {
                 {loaded && (
                     <button
                         onClick={() => toggle()}
-                        className={start ? "StartButton" : "EndButton"}
+                        className={start ? "EndButton" : "StartButton"}
                     >
-                        {start ? "공부 시작하기" : "공부 끝내기"}
+                        {start ? "공부 끝내기" : "공부 시작하기"}
                     </button>
                 )}
             </div>
@@ -436,7 +429,7 @@ const RightStudyComp = ({ match }) => {
                             id="Studymates-rightbtn"
                             size="2rem"
                             onClick={(e) => clickMatesRightBtn(e)}
-                            style={{ color: "#E1E5EA" }}
+                            style={{ color: "#E1E5EA" }} 
                         />
                     </div>
                 </div>
