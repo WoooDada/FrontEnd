@@ -105,6 +105,7 @@ const SideMenu = () => {
     if (
         window.location.pathname === "/login" ||
         window.location.pathname === "/" ||
+        window.location.pathname === "/socket" ||
         window.location.pathname.startsWith("/study/")
     )
         return null;
