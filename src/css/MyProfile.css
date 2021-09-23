@@ -29,10 +29,15 @@
     width: 40vh;
 }
 
-.MyProfile-formgroup1 h5,
+.MyProfile-formgorup1-title {
+    margin-right: auto;
+    width: 60px;
+}
+
 .MyProfile-formgroup2 h5 {
     margin-right: auto;
 }
+
 
 .MyProfile-formgroup1 input {
     margin: auto 1vmin;
@@ -52,7 +57,8 @@
 }
 
 .MyProfile-formgroup2 p {
-    font-size: xx-small;
+    font-size: small;
+    width: max-content;
     color:rgb(131, 131, 131);
 }
 
@@ -75,7 +81,6 @@
 .MyProfile-backtoMain-button {
     margin-top: 2.5vh;
     background-color: #9893B7;
-    
 }
 
 .MyProfile-formgroup2 h5 {

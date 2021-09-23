@@ -138,9 +138,9 @@ const MyProfileForm = () => {
         <div className="MyProfile-outer-form">
             <h2>프로필 수정</h2>
             <div className="MyProfile-formgroup1">
-                <h5>닉네임</h5>
+                <div className="MyProfile-formgorup1-title"><h5>닉네임</h5></div>
                 <input
-                    style={{width: '8rem'}}
+                    style={{width: '10rem'}}
                     name="nickname"
                     value={nickname}
                     onChange={(e) => inputNickname(e)}
@@ -148,7 +148,7 @@ const MyProfileForm = () => {
             </div>
 
             <div className="MyProfile-formgroup1">
-                <h5>성별</h5>
+                <div className="MyProfile-formgorup1-title"><h5>성별</h5></div>
                 <input type="radio" name="sex" id="woman"
                     onChange={(e) => sexChange(e)}></input>
                 <label for="woman"><p>여자</p></label>
@@ -161,9 +161,9 @@ const MyProfileForm = () => {
             </div>
 
             <div className="MyProfile-formgroup1">
-                <h5>생년월일</h5>
+                <div className="MyProfile-formgorup1-title"><h5>생년월일</h5></div>
                 <input 
-                    style={{width: '8rem'}}
+                    style={{width: '10rem'}}
                     type="date" 
                     name="birth" 
                     value={birth}
