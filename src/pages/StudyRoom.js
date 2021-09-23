@@ -2,9 +2,11 @@ import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import { BsLockFill } from "react-icons/bs";
+import { BiSearch } from "react-icons/bi";
 
 import { getApi, postApi } from "../api";
 import { AuthContext } from "../App";
+import { Studycard } from "../components";
 import "../css/StudyRoom.css";
 
 // TODO: issue #40 눌렀을 때 한번 더 확인해줘야 함. -> get으로 작성해주기
@@ -29,17 +31,17 @@ const roomsTemp = [
         room_tag: "sat",
         room_comment: "수능 공부할 사람만 들어와",
         is_secret: "F",
-        room_color: "#E9B2BC",
+        room_color: "#9F8FFF",
     },
     {
         room_id: "2",
-        room_name: "공부하자비밀방",
+        room_name: "공부하자비밀방이건두줄이지롱",
         inppl: "0",
         maxppl: "5",
         room_tag: "college",
         room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
         is_secret: "T",
-        room_color: "#F8D57E",
+        room_color: "#FAB39B",
     },
     {
         room_id: "3",
@@ -49,7 +51,7 @@ const roomsTemp = [
         room_tag: "sat",
         room_comment: "수능 공부할 사람만 들어와",
         is_secret: "F",
-        room_color: "#E9B2BC",
+        room_color: "#9ADDE8",
     },
     {
         room_id: "4",
@@ -59,7 +61,7 @@ const roomsTemp = [
         room_tag: "college",
         room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
         is_secret: "T",
-        room_color: "#F8D57E",
+        room_color: "#C0C0C0",
     },
     {
         room_id: "5",
@@ -79,7 +81,7 @@ const roomsTemp = [
         room_tag: "college",
         room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
         is_secret: "T",
-        room_color: "#F8D57E",
+        room_color: "#9F8FFF",
     },
     {
         room_id: "7",
@@ -89,7 +91,7 @@ const roomsTemp = [
         room_tag: "sat",
         room_comment: "수능 공부할 사람만 들어와",
         is_secret: "F",
-        room_color: "#E9B2BC",
+        room_color: "#9F8FFF",
     },
     {
         room_id: "8",
@@ -99,7 +101,7 @@ const roomsTemp = [
         room_tag: "college",
         room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
         is_secret: "T",
-        room_color: "#F8D57E",
+        room_color: "#FAB39B",
     },
     {
         room_id: "9",
@@ -119,7 +121,7 @@ const roomsTemp = [
         room_tag: "college",
         room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
         is_secret: "T",
-        room_color: "#F8D57E",
+        room_color: "#FAB39B",
     },
     {
         room_id: "11",
@@ -139,7 +141,7 @@ const roomsTemp = [
         room_tag: "college",
         room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
         is_secret: "T",
-        room_color: "#F8D57E",
+        room_color: "#FAB39B",
     },
     {
         room_id: "13",
@@ -263,7 +265,7 @@ const TagItem = ({ id, krname, clicked, handleClicked }) => {
             className={clicked ? "Tag-Item-Selected" : "Tag-Item-Unselected"}
             onClick={() => handleClicked(id)}
         >
-            #{krname}
+            {krname}
         </div>
     );
 };
@@ -495,100 +497,123 @@ const StudyRoom = () => {
     };
 
     return (
-        <div className="StudyRoom">
-            <div className="Main-Banner">
-                <Link to="/createroom" className="button">
-                    공부방 만들기
-                </Link>
-            </div>
-            <div className="Contents-Wrapper">
-                <div className="Search-Bar">
-                    <input
-                        placeholder="검색어를 입력해주세요."
-                        name="keyword"
-                        onChange={(e) => {
-                            setKeyword(e.target.value);
-                        }}
-                        value={keyword}
-                    ></input>
-                    <button onClick={searchByKeyword}>검색</button>
-                </div>
-                <div className="Tag-List">
-                    {tags.map((t, i) => (
-                        <TagItem
-                            id={t.id}
-                            key={t.id}
-                            krname={t.krname}
-                            clicked={t.clicked}
-                            handleClicked={handleClicked}
-                        ></TagItem>
-                    ))}
+        <div className="StudyRoomWrapper">
+            <div className="StudyRoom">
+                <div className="HeaderWrapper">
+                    <header>
+                        <div className="HeaderTop">
+                            <div className="SearchBar">
+                                <input
+                                    placeholder="Search"
+                                    name="keyword"
+                                    onChange={(e) => {
+                                        setKeyword(e.target.value);
+                                    }}
+                                    value={keyword}
+                                ></input>
+                                <button onClick={searchByKeyword}>
+                                    <BiSearch color="white"></BiSearch>
+                                </button>
+                            </div>
+                            <Link to="/createroom" className="CreateRoomBtn">
+                                CREATE ROOM
+                            </Link>
+                        </div>
+                        <div className="TagList">
+                            {tags.map((t, i) => (
+                                <TagItem
+                                    id={t.id}
+                                    key={t.id}
+                                    krname={t.krname}
+                                    clicked={t.clicked}
+                                    handleClicked={handleClicked}
+                                ></TagItem>
+                            ))}
+                        </div>
+                    </header>
                 </div>
                 <ul className="Room-List">
                     {rooms.length ? (
+                        // rooms.map((r, i) => (
+                        //     <RoomItem
+                        //         key={i}
+                        //         room_data={r}
+                        //         openModal={openModal}
+                        //         alertOverflow={alertOverflow}
+                        //     ></RoomItem>
+                        // ))
                         rooms.map((r, i) => (
-                            <RoomItem
+                            <Studycard
                                 key={i}
-                                room_data={r}
+                                room_id={r.room_id}
+                                room_name={r.room_name}
+                                inppl={r.inppl}
+                                maxppl={r.maxppl}
+                                room_color={r.room_color}
+                                is_scret={r.is_secret}
+                                room_tag={r.room_tag}
+                                page={"studyroom"}
                                 openModal={openModal}
                                 alertOverflow={alertOverflow}
-                            ></RoomItem>
+                            ></Studycard>
                         ))
                     ) : (
                         <span>방이 아직 없어요! 만들어주세요:)</span>
                     )}
                 </ul>
-            </div>
-            <Modal
-                isOpen={modalIsOpen}
-                onAfterOpen={afterOpenModal}
-                onRequestClose={closeModal}
-                style={customStyles}
-                ariaHideApp={false}
-                contentLabel="Example Modal"
-            >
-                <h3 ref={(_subtitle) => (subtitle = _subtitle)}>
-                    {findRoomName(clickedRoomId)}번방에 들어가려면, 비밀번호를
-                    입력해주세요!
-                </h3>
-                <div
-                    className="Modal-PassWord-Wrapper"
-                    style={modalStyles.wrapper}
+
+                <Modal
+                    isOpen={modalIsOpen}
+                    onAfterOpen={afterOpenModal}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    ariaHideApp={false}
+                    contentLabel="Example Modal"
                 >
-                    <input
-                        placeholder="비밀번호를 입력해주세요."
-                        onChange={(e) => {
-                            setPassword(e.target.value);
-                        }}
-                        value={password}
-                        style={modalStyles.input}
-                        type="password"
-                    ></input>
-                    <button
-                        onClick={getisCorrectPwd}
-                        style={modalStyles.button}
+                    <h3 ref={(_subtitle) => (subtitle = _subtitle)}>
+                        {findRoomName(clickedRoomId)}번방에 들어가려면,
+                        비밀번호를 입력해주세요!
+                    </h3>
+                    <div
+                        className="Modal-PassWord-Wrapper"
+                        style={modalStyles.wrapper}
                     >
-                        확인
-                    </button>
-                    {isPwdCorrect ? (
-                        <Link 
-                            to={`/study/${clickedRoomId}`}
-                            // to={`/study/01`}
-                            onClick={() => closeModal()}>
-                            <button style={modalStyles.link}>입장</button>
-                        </Link>
-                    ) : (
-                        <button
-                            style={modalStyles.button}
-                            onClick={() => {
-                                alert("비밀번호를 확인해주세요.");
+                        <input
+                            placeholder="비밀번호를 입력해주세요."
+                            onChange={(e) => {
+                                setPassword(e.target.value);
                             }}
+                            value={password}
+                            style={modalStyles.input}
+                            type="password"
+                        ></input>
+                        <button
+                            onClick={getisCorrectPwd}
+                            style={modalStyles.button}
                         >
-                            입장
+                            확인
                         </button>
-                    )}
-                </div>
-            </Modal>
+                        {isPwdCorrect ? (
+                            <Link
+                                to={`/study/${clickedRoomId}`}
+                                // to={`/study/01`}
+                                onClick={() => closeModal()}
+                            >
+                                <button style={modalStyles.link}>입장</button>
+                            </Link>
+                        ) : (
+                            <button
+                                style={modalStyles.button}
+                                onClick={() => {
+                                    alert("비밀번호를 확인해주세요.");
+                                }}
+                            >
+                                입장
+                            </button>
+                        )}
+                    </div>
+                </Modal>
+            </div>
         </div>
     );
 };

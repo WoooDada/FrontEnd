@@ -1,82 +1,112 @@
-.StudyRoom {
-    height: 100%;
-    background-color: #faf3f3;
-    min-height: 80vh;
+.StudyRoomWrapper {
+    /* width: 100%; */
+    margin-left: 260px;
 }
 
-.StudyRoom .Contents-Wrapper {
-    /* background-color: #faf3f3; */
-    padding: 2vmin 30vmin;
+.StudyRoom {
+    width: 100%;
     display: flex;
     flex-direction: column;
+    background-color: #f5f7fd;
 }
 
-.StudyRoom .Search-Bar {
-    margin: auto;
-    width: 45%;
-    /* font-size: large; */
-
-    /* background 뭐가 더 나은 지확인 */
-    background-color: #e1e5ea;
-
-    border-radius: 1vmin;
-    padding: 0 1vmin;
+.StudyRoom header {
+    background-color: #ffffff;
+    height: 16vh;
+    width: 90%;
+    margin: 0 auto;
 }
 
-.Search-Bar input {
-    margin: 1vmin 0.5vmin;
-    padding: 0.5vmin;
-    font-size: 1.8vmin;
-    width: 85%;
-    border: none;
-
-    border-radius: 0.5vmin;
-    /* width: 100%; */
-}
-.Search-Bar button {
-    border: 0.5px solid #e1e5ea;
-    margin: 1vmin;
-    padding: 0.5vmin;
-    background-color: #e1e5ea;
-    font-size: 1.8vmin;
-    border-radius: 0.5vh;
-    font-family: "NanumGothic-Bold";
-    cursor: pointer;
-    /* width: 100%; */
+.StudyRoom .HeaderWrapper {
+    width: 100%;
+    background-color: white;
 }
 
-.StudyRoom .Tag-List {
-    margin: auto;
+.StudyRoom .HeaderTop {
     display: flex;
-    background-color: "pink";
+    flex-direction: row;
+    margin: 40px 0 12px;
+    align-items: center;
+    justify-content: space-around;
+    /* background-color: pink; */
+}
+
+.StudyRoom .HeaderTop .SearchBar {
+    display: flex;
+    border-radius: 8px;
+    width: 80%;
+}
+
+.StudyRoom .HeaderTop .SearchBar input {
+    flex: 30;
+    background-color: #f5f7fd;
+    font-size: 2.5vh;
+    font-family: "DarkerGrotesque-Bold";
+    border: none;
+    border-radius: 8px;
+    padding: 4px 4px 8px 8px;
+}
+
+.StudyRoom .HeaderTop .SearchBar button {
+    flex: 1;
+    border: none;
+    border-radius: 8px;
+    background-color: #5f45ff;
+    font-family: "DarkerGrotesque-Bold";
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.StudyRoom .HeaderTop .CreateRoomBtn {
+    color: #5f45ff;
+    background-color: white;
+    border: 3px solid #5f45ff;
+    font-family: "DarkerGrotesque-Bold";
+    font-size: 2.5vh;
+    padding: 0 4px 4px 4px;
+    margin-left: 32px;
+    border-radius: 8px;
+}
+
+.StudyRoom .TagList {
+    /* margin: auto; */
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    /* justify-content: center; */
 }
 
 .StudyRoom .Tag-Item-Unselected,
 .StudyRoom .Tag-Item-Selected {
-    padding: 0.5vmin;
+    padding: 4px 12px 4px 12px;
     border: solid 1px #c4c4c4;
-    margin: 1vmin;
-    border-radius: 1vh;
-    font-size: 1.8vmin;
+    margin: 12px;
+    border-radius: 8px;
+    font-size: 1.8vh;
+    border: 2px solid white;
     background-color: white;
     cursor: pointer;
+    color: #9893b7;
 }
 
 .StudyRoom .Tag-Item-Selected {
-    border: solid 1px #e1e5ea;
-    background-color: #e1e5ea;
+    border: 2px solid #5f45ff;
+    color: #5f45ff;
+    background-color: white;
 }
 
 .StudyRoom .Room-List {
-    margin: 0.5vh 0;
-    padding: 5vmin;
+    margin: 2vh auto;
+    /* padding: 5vmin; */
     background-color: white;
-    border-radius: 3vmin;
-    min-height: 60vh;
-    align-self: center;
+    min-height: 100vh;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    width: 100%;
+    width: 90%;
+    background-color: #f5f7fd;
 }
 
 .Room-List .Room-Item {

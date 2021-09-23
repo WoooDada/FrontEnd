@@ -16,7 +16,7 @@ const initialAllRoomData = [
         maxppl: 10,
         room_color: "#9F8FFF",
         is_scret: "F",
-        room_tag: "#대학생"
+        room_tag: "#대학생",
     },
     {
         room_id: 2,
@@ -25,7 +25,7 @@ const initialAllRoomData = [
         maxppl: 10,
         room_color: "#FAB39B",
         is_scret: "T",
-        room_tag: "#수능"
+        room_tag: "#수능",
     },
     {
         room_id: 3,
@@ -34,7 +34,7 @@ const initialAllRoomData = [
         maxppl: 10,
         room_color: "#9ADDE8",
         is_scret: "F",
-        room_tag: "#공무원"
+        room_tag: "#공무원",
     },
     {
         room_id: 4,
@@ -43,7 +43,7 @@ const initialAllRoomData = [
         maxppl: 10,
         room_color: "#C0C0C0",
         is_scret: "T",
-        room_tag: "#수능"
+        room_tag: "#수능",
     },
     {
         room_id: 5,
@@ -52,7 +52,7 @@ const initialAllRoomData = [
         maxppl: 10,
         room_color: "#C0C0C0",
         is_scret: "T",
-        room_tag: "#수능"
+        room_tag: "#수능",
     },
     {
         room_id: 6,
@@ -61,7 +61,7 @@ const initialAllRoomData = [
         maxppl: 10,
         room_color: "#9ADDE8",
         is_scret: "T",
-        room_tag: "#수능"
+        room_tag: "#수능",
     },
     {
         room_id: 7,
@@ -70,7 +70,7 @@ const initialAllRoomData = [
         maxppl: 10,
         room_color: "#FAB39B",
         is_scret: "T",
-        room_tag: "#수능"
+        room_tag: "#수능",
     },
     {
         room_id: 8,
@@ -79,7 +79,7 @@ const initialAllRoomData = [
         maxppl: 10,
         room_color: "#FAB39B",
         is_scret: "T",
-        room_tag: "#수능"
+        room_tag: "#수능",
     },
     {
         room_id: 9,
@@ -88,7 +88,7 @@ const initialAllRoomData = [
         maxppl: 10,
         room_color: "#FAB39B",
         is_scret: "T",
-        room_tag: "#수능"
+        room_tag: "#수능",
     },
 ];
 
@@ -100,7 +100,7 @@ const initialMyRoomData = [
         maxppl: 10,
         room_color: "#FAB39B",
         is_scret: "T",
-        room_tag: "#수능"
+        room_tag: "#수능",
     },
     {
         room_id: 2,
@@ -109,7 +109,7 @@ const initialMyRoomData = [
         maxppl: 10,
         room_color: "#C0C0C0",
         is_scret: "T",
-        room_tag: "#수능"
+        room_tag: "#수능",
     },
 ];
 
@@ -123,8 +123,7 @@ const setFontColor = (value) => {
         allBtn.style.color = "#9893B7";
         myBtn.style.color = "#000000";
     }
-}
-
+};
 
 const StudyBoxComp = () => {
     const [whatBox, setWhatBox] = useState("all"); // all vs my
@@ -149,6 +148,7 @@ const StudyBoxComp = () => {
                             room_color={allRooms[i].room_color}
                             is_scret={allRooms[i].is_scret}
                             room_tag={allRooms[i].room_tag}
+                            page={"main"}
                         />
                     );
                 } else {
@@ -157,12 +157,8 @@ const StudyBoxComp = () => {
             }
             return result1;
         };
-    
-        return (
-            <div className="Studycard-list">
-                {row1()}
-            </div>
-        );
+
+        return <div className="Studycard-list">{row1()}</div>;
     };
 
     const clickLeftBtn = (whatBox) => {
@@ -171,14 +167,13 @@ const StudyBoxComp = () => {
             setAllIndex(allIndex - 1);
         }
     };
-    
+
     const clickRightBtn = (whatBox) => {
         console.log(allIndex, myIndex);
-        if (allIndex < allRoomData.length-4){
+        if (allIndex < allRoomData.length - 4) {
             setAllIndex(allIndex + 1);
         }
     };
-
 
     useEffect(() => {
         const getAllRoomData = async () => {
@@ -242,60 +237,59 @@ const StudyBoxComp = () => {
     return (
         <div className="Main-StudyBoxComp">
             <p className="small-title">공부방 들어가기</p>
-                <div className="studybox-upper-btns">
-                    <div className="what-box">
-                        <button
-                            className="what-box-btn"
-                            id="all-box-btn"
-                            style={{color: "#000000"}}
-                            onClick={() => {
-                                setWhatBox("all");
-                                setAllIndex(0);
-                                setMyIndex(0);
-                                setFontColor("all");
-                            }}
-                        >
-                            공부방 랜덤 추천
-                        </button>
-                        <button
-                            className="what-box-btn"
-                            id="my-box-btn"
-                            style={{color: "#9893B7"}}
-                            onClick={() => {
-                                setWhatBox("my");
-                                setAllIndex(0);
-                                setMyIndex(0);
-                                setFontColor("my");
-                            }}
-                        >
-                            참여한 공부방
-                        </button>
-                    </div>
+            <div className="studybox-upper-btns">
+                <div className="what-box">
+                    <button
+                        className="what-box-btn"
+                        id="all-box-btn"
+                        style={{ color: "#000000" }}
+                        onClick={() => {
+                            setWhatBox("all");
+                            setAllIndex(0);
+                            setMyIndex(0);
+                            setFontColor("all");
+                        }}
+                    >
+                        공부방 랜덤 추천
+                    </button>
+                    <button
+                        className="what-box-btn"
+                        id="my-box-btn"
+                        style={{ color: "#9893B7" }}
+                        onClick={() => {
+                            setWhatBox("my");
+                            setAllIndex(0);
+                            setMyIndex(0);
+                            setFontColor("my");
+                        }}
+                    >
+                        참여한 공부방
+                    </button>
+                </div>
 
-                    <div className="StudyBox-more">
-                        <Link to={"/studyroom"}>+ 더보기</Link>
-                    </div>
+                <div className="StudyBox-more">
+                    <Link to={"/studyroom"}>+ 더보기</Link>
                 </div>
-                <div className="Studycard-wrapper">
-                    <RiArrowLeftSLine
-                        id="Studybox-leftbtn"
-                        size="40px"
-                        onClick={(e) => clickLeftBtn(whatBox)}
-                        style={{ color: "#9893B7" }}
-                    />
-                    {whatBox === "all" ? (
-                        <StudyBox {...allRoomData} whatBox={whatBox} />
-                    ) : (
-                        <StudyBox {...myRoomData} whatBox={whatBox} />
-                    )}
-                    <RiArrowRightSLine
-                        id="Studybox-rightbtn"
-                        size="40px"
-                        onClick={(e) => clickRightBtn(whatBox)}
-                        style={{ color: "#9893B7" }}
-                    />
-                </div>
-            
+            </div>
+            <div className="Studycard-wrapper">
+                <RiArrowLeftSLine
+                    id="Studybox-leftbtn"
+                    size="40px"
+                    onClick={(e) => clickLeftBtn(whatBox)}
+                    style={{ color: "#9893B7" }}
+                />
+                {whatBox === "all" ? (
+                    <StudyBox {...allRoomData} whatBox={whatBox} />
+                ) : (
+                    <StudyBox {...myRoomData} whatBox={whatBox} />
+                )}
+                <RiArrowRightSLine
+                    id="Studybox-rightbtn"
+                    size="40px"
+                    onClick={(e) => clickRightBtn(whatBox)}
+                    style={{ color: "#9893B7" }}
+                />
+            </div>
         </div>
     );
 };
