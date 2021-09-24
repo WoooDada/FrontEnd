@@ -212,10 +212,6 @@ const StudyRoom = () => {
 
     /* useEffect */
     useEffect(() => {
-        const getRandomEmoji = () => {
-            const emojis = ["👍", "✊", "👊", "🤘", "🙏", "✋", "💪"];
-            return emojis[Math.floor(Math.random() * 7)];
-        };
         const getAllRooms = async () => {
             // const params = { all: "T", keyword: keyword };
             // const { status, data } = await getApi(
@@ -260,7 +256,6 @@ const StudyRoom = () => {
                     return {
                         ...d,
                         room_tag: room_tag,
-                        emoji: getRandomEmoji(),
                     };
                 });
                 await setRooms(inp_rooms);
@@ -439,7 +434,6 @@ const StudyRoom = () => {
                                 room_color={r.room_color}
                                 is_scret={r.is_secret}
                                 room_tag={r.room_tag}
-                                emoji={r.emoji}
                                 page={"studyroom"}
                                 openModal={openModal}
                                 alertOverflow={alertOverflow}

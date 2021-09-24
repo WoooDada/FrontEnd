@@ -16,7 +16,6 @@ const Studycard = ({
     room_tag,
     page,
     openModal,
-    emoji,
     alertOverflow,
     setClickedRoomId,
 }) => {
@@ -24,6 +23,11 @@ const Studycard = ({
 
     const style = {
         backgroundColor: room_color,
+    };
+
+    const getRandomEmoji = () => {
+        const emojis = ["👍", "✊", "👊", "🤘", "🙏", "✋", "💪"];
+        return emojis[Math.floor(Math.random() * 7)];
     };
 
     return (
@@ -56,7 +60,7 @@ const Studycard = ({
                     </div>
                 </div>
 
-                <div className="Studycard-emoji">{emoji}</div>
+                <div className="Studycard-emoji">{getRandomEmoji()}</div>
             </div>
             <div style={style} className="Studycard-lower">
                 <div className="Studycard-roomname">{room_name}</div>
