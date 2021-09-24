@@ -30,7 +30,7 @@ aside p {
         height: 7rem;
     } */
     aside {
-        position: absolute;
+        position: fixed;
         background-color: #ffffff;
         display: flex;
         flex-direction: row;
