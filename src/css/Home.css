@@ -59,6 +59,7 @@
     display: flex;
     flex-direction: column;
     font-size: 2vh;
+    width: 100vw;
 }
 
 .Home-lower img {
@@ -91,13 +92,14 @@
 
 .p1 {
     color: #5F45FF;
-    font-weight: bold;
-    font-size: 1.5vw;
+    font-size: 1.7rem;
     margin-bottom: 8vh;
+    font-weight: bold;
 }
 
 .p2 {
-    font-size: 1vw;
+    font-size: 1rem;
+    font-weight: normal;
 }
 
 #p2-2 {

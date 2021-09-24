@@ -31,8 +31,8 @@ const Home = () => {
         <div className="Home">
             <div className="Home-banner">
                 <div className="Home-banner-only">
-                    <p>공다다</p>
-                    <p>공부만을 위해</p>
+                    <p><span style={{color:"#9F8FFF"}}>공</span>다다</p>
+                    <p><span style={{color:"#9F8FFF"}}>공</span>부만을 위해</p>
                 </div>
                 <div className="Home-middle">
                     <div className="Home-middle-leftbox"></div>
@@ -51,8 +51,8 @@ const Home = () => {
                         <br></br>
                         <p className="p1">이제 핸드폰은 그만!</p>
                         <p className="p2">
-                            핸드폰을 만지면 공다다가 귀신같이 캐치해요! 
-                            <br></br>경고를 받지 않으려면 손에는 펜만 들어야겠죠?
+                            핸드폰을 만지거나 딴 짓을 하면 공다다가 귀신같이 캐치해요! 
+                            <br></br>집중도를 높이려면 손에는 펜만 들어야겠죠?
                         </p>
                     </div>
                 </div>
@@ -60,7 +60,7 @@ const Home = () => {
                     <div className="right-p">
                         <p className="p1">집중그래프로 학습관리까지!</p>
                         <p className="p2" id="p2-2">
-                            일주일간 공부에 얼마나 집중했는지를 나타내는
+                            일주일 간 공부에 얼마나 집중했는지를 나타내는
                             그래프가 보여져요!
                             <br></br>얼마나 공부했는지 스스로 점검하고 성찰해서
                             보다 더 집중할 수 있어요!
@@ -75,7 +75,7 @@ const Home = () => {
                             <br></br>성취 돋는 하루!
                         </p>
                         <p className="p2">
-                            공다다와 함께 성취 돋는 하루를 시작해 보세요!
+                            와~ 오늘 이만큼이나 집중해서 공부했다니! 공다다와 함께 성취 돋는 하루를 시작해 보세요.
                             <br></br>공다다를 키면 무조건 공부 시작! 딴 짓은 엄금!
                         </p>
                     </div>
