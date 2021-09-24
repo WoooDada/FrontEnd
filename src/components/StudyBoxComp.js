@@ -113,6 +113,11 @@ const initialMyRoomData = [
     },
 ];
 
+const getRandomEmoji = () => {
+    const emojis = ["👍", "✊", "👊", "🤘", "🙏", "✋", "💪"];
+    return emojis[Math.floor(Math.random() * 7)];
+};
+
 const setFontColor = (value) => {
     var allBtn = document.getElementById("all-box-btn");
     var myBtn = document.getElementById("my-box-btn");
@@ -149,6 +154,7 @@ const StudyBoxComp = () => {
                             is_scret={allRooms[i].is_scret}
                             room_tag={allRooms[i].room_tag}
                             page={"main"}
+                            emoji={getRandomEmoji()}
                         />
                     );
                 } else {
