@@ -60,7 +60,7 @@
     border-radius: 8px;
     cursor: pointer;
     margin: 30px;
-    /* margin-top: 20px; */
+    width: 200px;
 }
 
 .Studycard-upper {
@@ -153,13 +153,13 @@
 
 .Studycard-emoji {
     text-align: center;
-    font-size: 5vh;
+    font-size: 1rem;
     vertical-align: center;
     margin-bottom: 8px;
 }
 
 .Studycard-studyroom .Studycard-emoji {
-    font-size: 7vh;
+    font-size: 3rem;
     margin: 12px 0;
 }
 

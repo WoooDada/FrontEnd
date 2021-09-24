@@ -28,7 +28,6 @@
     margin: 40px 0 12px;
     align-items: center;
     justify-content: space-around;
-    /* background-color: pink; */
 }
 
 .StudyRoom .HeaderTop .SearchBar {
@@ -69,6 +68,7 @@
     padding: 0 4px 4px 4px;
     margin-left: 32px;
     border-radius: 8px;
+    white-space: nowrap;
 }
 
 .StudyRoom .TagList {
@@ -90,6 +90,7 @@
     background-color: white;
     cursor: pointer;
     color: #9893b7;
+    white-space: nowrap;
 }
 
 .StudyRoom .Tag-Item-Selected {
@@ -112,7 +113,7 @@
 .Room-List .Room-Item {
     margin: 1vh auto;
     list-style: none;
-    width: 200px;
+    width: 200px; 
     cursor: pointer;
 }
 
@@ -133,7 +134,6 @@
 
 .Room-Item .Explanation {
     min-height: 80px;
-    /* background-color: pink; */
     margin-top: 0.5vh;
     padding: 0.5vh;
     display: flex;
@@ -154,4 +154,15 @@
 
 .Room-Item .Explanation small {
     margin-top: 0.5vmin;
+}
+
+@media screen and (max-width: 840px) {
+    .StudyRoomWrapper {
+        padding-top: 110px;
+        margin-left: 0;
+    }
+
+    .HeaderTop {
+        margin-left: 20px;
+    }
 }
