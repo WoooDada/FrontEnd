@@ -73,7 +73,9 @@
 }
 
 .Studycard-studyroom .Studycard-upper {
-    padding-bottom: 40px;
+    /* padding-bottom: 40px; */
+    flex: 1;
+    height: auto;
     /* background-color: antiquewhite; */
 }
 
@@ -90,7 +92,7 @@
 
 .Studycard-studyroom .Studycard-lower {
     /* height: 120px; */
-    height: 100px;
+    flex: 1;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -125,6 +127,7 @@
     font-size: 1rem;
     padding: 0;
     font-family: "DarkerGrotesque-SemiBold";
+    margin-top: 10px;
 }
 
 .Studycard-ppl {
@@ -137,6 +140,11 @@
 
 .Studycard-ppl div {
     margin-left: 4px;
+}
+
+.Studycard-studyroom .Studycard-ppl {
+    color: #1c1c21;
+    font-size: 1rem;
 }
 
 .Studycard-image {

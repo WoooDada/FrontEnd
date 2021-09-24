@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Modal from "react-modal";
 import { BsLockFill } from "react-icons/bs";
 import { BiSearch } from "react-icons/bi";
@@ -8,7 +8,6 @@ import { getApi, postApi } from "../api";
 import { AuthContext } from "../App";
 import { Studycard } from "../components";
 import "../css/StudyRoom.css";
-
 // TODO: issue #40 눌렀을 때 한번 더 확인해줘야 함. -> get으로 작성해주기
 // TODO: issue #41 roomtag에서 initTags랑 맞는 한글 태그 찾아서 보여주기. 만약 맞는 게 없다면 기타로 들어가야 함.
 
@@ -36,7 +35,7 @@ const roomsTemp = [
     {
         room_id: "2",
         room_name: "공부하자비밀방이건두줄이지롱",
-        inppl: "0",
+        inppl: "5",
         maxppl: "5",
         room_tag: "college",
         room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
@@ -75,7 +74,7 @@ const roomsTemp = [
     },
     {
         room_id: "6",
-        room_name: "공부하자비밀방3",
+        room_name: "공부하자비밀방3이것도두줄이지롱",
         inppl: "0",
         maxppl: "5",
         room_tag: "college",
@@ -105,7 +104,7 @@ const roomsTemp = [
     },
     {
         room_id: "9",
-        room_name: "공부하자5",
+        room_name: "공부하자3",
         inppl: "0",
         maxppl: "5",
         room_tag: "sat",
@@ -115,93 +114,33 @@ const roomsTemp = [
     },
     {
         room_id: "10",
-        room_name: "공부하자비밀방5",
+        room_name: "공부하자비밀방3이것도두줄이지롱",
         inppl: "0",
         maxppl: "5",
         room_tag: "college",
         room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
         is_secret: "T",
-        room_color: "#FAB39B",
+        room_color: "#9F8FFF",
     },
     {
         room_id: "11",
-        room_name: "공부하자5",
+        room_name: "공부하자4",
         inppl: "0",
         maxppl: "5",
         room_tag: "sat",
         room_comment: "수능 공부할 사람만 들어와",
         is_secret: "F",
-        room_color: "#E9B2BC",
+        room_color: "#9F8FFF",
     },
     {
         room_id: "12",
-        room_name: "공부하자비밀방5",
+        room_name: "공부하자비밀방4",
         inppl: "0",
         maxppl: "5",
         room_tag: "college",
         room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
         is_secret: "T",
         room_color: "#FAB39B",
-    },
-    {
-        room_id: "13",
-        room_name: "공부하자5",
-        inppl: "0",
-        maxppl: "5",
-        room_tag: "sat",
-        room_comment: "수능 공부할 사람만 들어와",
-        is_secret: "F",
-        room_color: "#E9B2BC",
-    },
-    {
-        room_id: "14",
-        room_name: "공부하자비밀방5",
-        inppl: "0",
-        maxppl: "5",
-        room_tag: "college",
-        room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
-        is_secret: "T",
-        room_color: "#F8D57E",
-    },
-    {
-        room_id: "15",
-        room_name: "공부하자5",
-        inppl: "0",
-        maxppl: "5",
-        room_tag: "sat",
-        room_comment: "수능 공부할 사람만 들어와",
-        is_secret: "F",
-        room_color: "#E9B2BC",
-    },
-    {
-        room_id: "16",
-        room_name: "공부하자비밀방5",
-        inppl: "0",
-        maxppl: "5",
-        room_tag: "college",
-        room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
-        is_secret: "T",
-        room_color: "#F8D57E",
-    },
-    {
-        room_id: "17",
-        room_name: "공부하자5",
-        inppl: "0",
-        maxppl: "5",
-        room_tag: "sat",
-        room_comment: "수능 공부할 사람만 들어와",
-        is_secret: "F",
-        room_color: "#E9B2BC",
-    },
-    {
-        room_id: "18",
-        room_name: "공부하자비밀방5",
-        inppl: "0",
-        maxppl: "5",
-        room_tag: "college",
-        room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
-        is_secret: "T",
-        room_color: "#F8D57E",
     },
 ];
 
@@ -229,20 +168,6 @@ const modalStyles = {
         border: "none",
         borderBottom: "1px solid #ccc",
     },
-    link: {
-        flex: 1,
-        fontSize: "1.6vmin",
-        padding: "1vh",
-        // border: "none",
-        cursor: "pointer",
-        border: "1px solid #e1e5ea",
-        backgroundColor: "#e1e5ea",
-        textDecoration: "none",
-        color: "black",
-        textAlign: "center",
-        alignContent: "center",
-        justifyContent: "center",
-    },
     button: {
         flex: 1,
         fontSize: "1.6vmin",
@@ -257,6 +182,9 @@ const modalStyles = {
         alignContent: "center",
         justifyContent: "center",
     },
+    message: {
+        color: "red",
+    },
 };
 
 const TagItem = ({ id, krname, clicked, handleClicked }) => {
@@ -270,94 +198,40 @@ const TagItem = ({ id, krname, clicked, handleClicked }) => {
     );
 };
 
-const RoomItemChild = ({ room_data, onClick }) => {
-    return (
-        <div onClick={() => onClick(room_data.room_id)}>
-            <div
-                className="Box"
-                style={{ backgroundColor: room_data.room_color }}
-            >
-                {room_data.is_secret === false ? (
-                    <></>
-                ) : (
-                    <BsLockFill></BsLockFill>
-                )}
-                <b>{room_data.room_name}</b>
-                <small>
-                    {room_data.inppl}/{room_data.maxppl}
-                </small>
-            </div>
-            <div className="Explanation">
-                <b>#{room_data.room_tag}</b>
-                <small>{room_data.room_comment}</small>
-            </div>
-        </div>
-    );
-};
-
-const RoomItem = ({ room_data, openModal, alertOverflow }) => {
-    /* 방 접속 관련 함수들 */
-    function isRoomOverflow(room_data) {
-        return parseInt(room_data.inppl) >= parseInt(room_data.maxppl);
-    }
-
-    function isSecretRoom(room_data) {
-        return room_data.is_secret === true;
-    }
-    return (
-        <li className="Room-Item">
-            {isRoomOverflow(room_data) ? (
-                // 방 인원이 가득 찬 경우 못 들어감.
-                <RoomItemChild
-                    room_data={room_data}
-                    onClick={alertOverflow}
-                ></RoomItemChild>
-            ) : isSecretRoom(room_data) ? (
-                // 비밀방이면 모달로 비밀번호 입력하고 들어감
-                <RoomItemChild
-                    room_data={room_data}
-                    onClick={openModal}
-                ></RoomItemChild>
-            ) : (
-                // 비밀방이 아니면 모달 없이 들어갈 수 있음.
-                <Link
-                    style={{ textDecoration: "none", color: "black" }}
-                    to={`/study/${room_data.room_id}`}
-                    // onClick={() => onClick(room_data.room_id)}
-                >
-                    <RoomItemChild
-                        room_data={room_data}
-                        onClick={(i) => {}}
-                    ></RoomItemChild>
-                </Link>
-            )}
-        </li>
-    );
-};
-
 const StudyRoom = () => {
     const [keyword, setKeyword] = useState("");
     const [tags, setTags] = useState(initTags);
     // const [rooms, setRooms] = useState([]);
-    const [rooms, setRooms] = useState(roomsTemp);
-    const [clickedRoomId, setClickedRoomId] = useState(-1);
+    const [rooms, setRooms] = useState([]);
+    const [clickedRoomId, setClickedRoomId] = useState(undefined);
     const [password, setPassword] = useState("");
     const authContext = useContext(AuthContext);
     const [modalIsOpen, setIsOpen] = useState(false);
-    const [isPwdCorrect, setIsPwdCorrect] = useState(false);
+    const [isPwdCorrect, setIsPwdCorrect] = useState(true);
+    const history = useHistory();
 
     /* useEffect */
     useEffect(() => {
+        const getRandomEmoji = () => {
+            const emojis = ["👍", "✊", "👊", "🤘", "🙏", "✋", "💪"];
+            return emojis[Math.floor(Math.random() * 7)];
+        };
         const getAllRooms = async () => {
-            const params = { all: "T", keyword: keyword };
-            const { status, data } = await getApi(
-                params,
-                "/studyroom/",
-                authContext.state.token
-            );
+            // const params = { all: "T", keyword: keyword };
+            // const { status, data } = await getApi(
+            //     params,
+            //     "/studyroom/",
+            //     authContext.state.token
+            // );
+            const { status, data } = {
+                status: 200,
+                data: {
+                    data: roomsTemp,
+                },
+            };
 
             if (status === 200) {
-                console.log(data.data);
+                // console.log(data.data);
                 const inp_rooms = data.data.map((d) => {
                     var room_tag = "기타";
                     switch (d.room_tag) {
@@ -386,6 +260,7 @@ const StudyRoom = () => {
                     return {
                         ...d,
                         room_tag: room_tag,
+                        emoji: getRandomEmoji(),
                     };
                 });
                 await setRooms(inp_rooms);
@@ -406,11 +281,17 @@ const StudyRoom = () => {
 
     function closeModal() {
         setIsOpen(false);
+        setIsPwdCorrect(false);
     }
 
     function findRoomName(clickedRoomId) {
-        const { room_name } = rooms.filter((r) => r.room_id === clickedRoomId);
-        return room_name;
+        if (clickedRoomId === undefined) {
+            return "";
+        }
+        const clickedRoomName = rooms.filter(
+            (r) => r.room_id === clickedRoomId
+        )[0].room_name;
+        return clickedRoomName;
     }
 
     /* 스터디페이지 입장 관련 함수들 */
@@ -423,39 +304,53 @@ const StudyRoom = () => {
         alert("입장인원이 다 찼습니다. 다른 방에 접속해주세요!");
     }
 
-    const getisCorrectPwd = async () => {
-        // REAL
+    function isOverflow(clicked_room_id) {
+        // TODO 여기서 다시 해당 in_ppl 구해와서 보기
+        if (clicked_room_id === undefined) {
+            return "";
+        }
+        const { inppl, maxppl } = rooms.filter(
+            (r) => r.room_id === clicked_room_id
+        )[0];
 
-        const { status, data } = await postApi(
-            { room_id: clickedRoomId, password },
-            "/studyroom/password/",
-            authContext.state.token
-        );
+        return parseInt(inppl) >= parseInt(maxppl);
+    }
 
-        // dummy
+    const getisCorrectPwd = async (clicked_room_id) => {
+        // * REAL
 
-        // const { status, data } = {
-        //     status: 200,
-        //     data: {
-        //         correct: "T",
-        //     },
-        // };
+        // const { status, data } = await postApi(
+        //     { room_id: clicked_room_id, password },
+        //     "/studyroom/password/",
+        //     authContext.state.token
+        // );
+
+        // * dummy
+
+        const { status, data } = {
+            status: 200,
+            data: {
+                correct: "T",
+            },
+        };
         await console.log(status);
         if (status === 200) {
             console.log(data.correct);
-            if (data.correct === "F") {
-                // 비밀번호가 틀림: Link로 바로 /study 페이지로 넘어가면 안됨.
-                await alert("비밀번호가 틀렸어요!");
-                await setIsPwdCorrect(false);
-            } else {
+            if (data.correct === "T") {
                 await setIsPwdCorrect(true);
+                return true;
+            } else {
+                // 비밀번호가 틀림: Link로 바로 /study 페이지로 넘어가면 안됨.
+                await setIsPwdCorrect(false);
+                return false;
             }
         } else {
             alert("네트워크 오류");
+            return false;
         }
 
         // dummy
-        // console.log({ room_id: clickedRoomId, password });
+        // console.log({ room_id: clicked_room_id, password });
     };
 
     /* 검색 관련 함수들 */
@@ -534,14 +429,6 @@ const StudyRoom = () => {
                 </div>
                 <ul className="Room-List">
                     {rooms.length ? (
-                        // rooms.map((r, i) => (
-                        //     <RoomItem
-                        //         key={i}
-                        //         room_data={r}
-                        //         openModal={openModal}
-                        //         alertOverflow={alertOverflow}
-                        //     ></RoomItem>
-                        // ))
                         rooms.map((r, i) => (
                             <Studycard
                                 key={i}
@@ -552,9 +439,11 @@ const StudyRoom = () => {
                                 room_color={r.room_color}
                                 is_scret={r.is_secret}
                                 room_tag={r.room_tag}
+                                emoji={r.emoji}
                                 page={"studyroom"}
                                 openModal={openModal}
                                 alertOverflow={alertOverflow}
+                                setClickedRoomId={setClickedRoomId}
                             ></Studycard>
                         ))
                     ) : (
@@ -571,8 +460,8 @@ const StudyRoom = () => {
                     contentLabel="Example Modal"
                 >
                     <h3 ref={(_subtitle) => (subtitle = _subtitle)}>
-                        {findRoomName(clickedRoomId)}번방에 들어가려면,
-                        비밀번호를 입력해주세요!
+                        "{findRoomName(clickedRoomId)}"에 들어가려면, 비밀번호를
+                        입력해주세요!
                     </h3>
                     <div
                         className="Modal-PassWord-Wrapper"
@@ -588,30 +477,25 @@ const StudyRoom = () => {
                             type="password"
                         ></input>
                         <button
-                            onClick={getisCorrectPwd}
+                            onClick={async () => {
+                                if (
+                                    (await getisCorrectPwd(clickedRoomId)) ===
+                                    true
+                                ) {
+                                    if (isOverflow(clickedRoomId) === false) {
+                                        history.push(`/study/${clickedRoomId}`);
+                                    }
+                                }
+                                setPassword("");
+                            }}
                             style={modalStyles.button}
                         >
-                            확인
+                            입장
                         </button>
-                        {isPwdCorrect ? (
-                            <Link
-                                to={`/study/${clickedRoomId}`}
-                                // to={`/study/01`}
-                                onClick={() => closeModal()}
-                            >
-                                <button style={modalStyles.link}>입장</button>
-                            </Link>
-                        ) : (
-                            <button
-                                style={modalStyles.button}
-                                onClick={() => {
-                                    alert("비밀번호를 확인해주세요.");
-                                }}
-                            >
-                                입장
-                            </button>
-                        )}
                     </div>
+                    <small style={modalStyles.message}>
+                        {isPwdCorrect ? "" : "비밀번호가 틀렸습니다."}
+                    </small>
                 </Modal>
             </div>
         </div>

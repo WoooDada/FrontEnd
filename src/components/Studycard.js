@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 import "../css/Main.css";
 import "../css/StudyBox.css";
 import logo from "../constants/imgs/newlogo.png";
@@ -15,22 +15,28 @@ const Studycard = ({
     is_scret,
     room_tag,
     page,
+    openModal,
+    emoji,
+    alertOverflow,
+    setClickedRoomId,
 }) => {
     const history = useHistory();
-    const location = useLocation();
+
     const style = {
         backgroundColor: room_color,
-    };
-    const getRandomEmoji = () => {
-        const emojis = ["👍", "✊", "👊", "🤘", "🙏", "✋", "💪"];
-        return emojis[Math.floor(Math.random() * 7)];
     };
 
     return (
         <div
             className={page === "main" ? "Studycard" : "Studycard-studyroom"}
             onClick={() => {
-                history.push(`/study/${room_id}`);
+                if (inppl >= maxppl) {
+                    alert("입장인원이 다 찼습니다. 다른 방에 접속해주세요!");
+                } else if (is_scret === "T") {
+                    openModal(room_id);
+                } else {
+                    history.push(`/study/${room_id}`);
+                }
             }}
         >
             <div className="Studycard-upper">
@@ -50,10 +56,7 @@ const Studycard = ({
                     </div>
                 </div>
 
-                <div className="Studycard-emoji">
-                    {getRandomEmoji()}
-                    {/* <img src={logo} style={{ width: "24px" }} /> */}
-                </div>
+                <div className="Studycard-emoji">{emoji}</div>
             </div>
             <div style={style} className="Studycard-lower">
                 <div className="Studycard-roomname">{room_name}</div>
