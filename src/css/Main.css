@@ -249,6 +249,10 @@
     font-weight: 600;
 }
 
+.Weekly-container::-webkit-scrollbar {
+    display: none;
+}
+
 .Main-WeeklyComp .DowComp {
     overflow: auto;
     flex: 1;
@@ -257,6 +261,7 @@
     display: flex;
     flex-direction: column;
     padding: 1vh 2vh;
+    max-height: 75vh;
 }
 
 .Main-WeeklyComp .Weekly-wrapper {
@@ -290,15 +295,16 @@
     background-color: #9f8fff;
     padding: 2.5vh 1.5vh;
     margin-right: 1vh;
-    color: white;
+    color: #ffffff;
     text-align: center;
 }
 
 .Main-WeeklyComp .Dow-wrapper .dot span {
-    font-size: 2vh;
-    color: white;
+    color: #ffffff;
     vertical-align: middle;
     margin: auto;
+    font-weight: 600;
+    font-size: 1rem;
 }
 
 .Main-WeeklyComp .Dow-todos {

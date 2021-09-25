@@ -3,6 +3,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    min-height: 90vh;
 } 
 
 .MyProfile-outer-form {
@@ -14,7 +15,7 @@
     justify-content: center;
     text-align: center;
     padding: 50px 80px;
-    margin: 5vh 0 0 200px;
+    margin: 5vh 0 5vh 200px;
 }
 
 .MyProfile-formgroup1 {
@@ -30,13 +31,17 @@
 
 .MyProfile-formgorup1-title {
     margin-right: auto;
-    width: 60px;
+    width: max-content;
 }
 
 .MyProfile-formgroup2 h5 {
     margin-right: auto;
 }
 
+.MyProfile-formgorup1-title h5 {
+    font-size: 1rem;
+    margin-right: auto;
+}
 
 .MyProfile-formgroup1 input {
     margin: auto 1vmin;
@@ -59,6 +64,8 @@
     font-size: small;
     width: max-content;
     color:rgb(131, 131, 131);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .MyProfile-outer-form button {
@@ -84,6 +91,7 @@
 
 .MyProfile-formgroup2 h5 {
     margin-bottom: 1vh;
+    font-size: 1rem;
 }
 
 .MyProfile-formgroup2 .likes {
@@ -91,6 +99,8 @@
     flex-direction: row;
     padding: 0 2vh;
     font-size: small;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .MyProfile-formgroup2 .likes-group1 {

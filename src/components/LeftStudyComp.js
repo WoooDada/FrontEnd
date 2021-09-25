@@ -136,6 +136,7 @@ const LeftStudyComp = ({ match }) => {
                                 { kr: "월", en: "monthly" },
                             ].map((btnType) => (
                                 <button
+                                    key={btnType.en}
                                     className={
                                         whichSchedule === btnType.en
                                             ? "SelectedBtn"
