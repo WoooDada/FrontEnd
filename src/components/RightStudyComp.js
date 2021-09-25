@@ -1,41 +1,38 @@
 import React from "react";
-import ml5 from "ml5";
 import "../css/Study.css";
-import { useRef } from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import useInterval from "@use-it/interval";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { BtnContext } from "../pages/Study";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
-import { Link } from "react-router-dom";
-import { postApi, getApi } from "../api";
+import { Link, useLocation, useHistory } from "react-router-dom";
+import { postApi, getApi, putApi } from "../api";
 import { AuthContext } from "../App";
 import { useContext } from "react";
-import logo from "../constants/imgs/newlogo.png"
-
-let classifier;
+import Webcam from "react-webcam";
+import logo from "../constants/imgs/newlogo.png";
+import useInterval from "@use-it/interval";
 
 // 초 단위
-const MODEL_APPLY_TIME = 0.5;
-const POST_RESULT_TIME = 60;
-const GET_STUDYMATES = 5;
-
+const MODEL_APPLY_TIME = 3;
 //////////////////////////////////////////////////////////////////////////////
 
 const RightStudyComp = ({ match }) => {
     const authContext = useContext(AuthContext);
     const btnContext = useContext(BtnContext);
-    const videoRef = useRef();
+    const history = useHistory();
+    const location = useLocation();
+    const webcamRef = useRef(null);
+    const yolo_ws = useRef(null);
+    const mate_ws = useRef(null);
 
     const [start, setStart] = useState(false);
-    const [result, setResult] = useState([]);
-    const resultlistRef = useRef({ C: 0, P: 0 });
-    const [loaded, setLoaded] = useState(false);
+    const [resultList, setResultList] = useState([]);
+    // TODO 이거 result -> resultList로 바꾸기
+    const resultDictRef = useRef({ C: 0, P: 0 });
     const [study_time, setStudy_time] = useState({
         tot_concent_time: "0:00",
         tot_play_time: "0:00",
     });
-    // const [studymates, setStudymates] = useState([]);
+    const [studymates, setStudymates] = useState([]);
 
     const initialStudymates = [
         {
@@ -44,12 +41,12 @@ const RightStudyComp = ({ match }) => {
             concent_time: "-시간 --분",
             play_time: "-시간 --분",
         },
-        // {
-        //     nickname: "2인",
-        //     concent_rate: "90%",
-        //     concent_time: "2시간 42분",
-        //     play_time: "13분",
-        // },
+        {
+            nickname: "2인",
+            concent_rate: "90%",
+            concent_time: "2시간 42분",
+            play_time: "13분",
+        },
         // {
         //     nickname: "3인",
         //     concent_rate: "45%",
@@ -69,205 +66,113 @@ const RightStudyComp = ({ match }) => {
         //     play_time: "13분",
         // },
     ];
-    const [studymates, setStudymates] = useState(initialStudymates);
 
+    const getStudyRate = (resultDict) => {
+        // TODO 로직 짜기
+        /*
+            --준비--
+            resultDictRef : 딕셔너리 형태
+            resultList : 리스트 형태 
+            --로직--
+            학습률: 3초마다 반영해줌
+            resultDictRef.length >= 40
+                : 누적된 근 40개의 C, P의 비율로 계산(즉, 최근 2분간의 데이터로 계산)
+            
+            resultDictRef.length < 40
+                : 누적된 근 resultDictRef.length개의 C, P의 비율로 계산
+
+            3초마다: 
+            resultDictRef.length > 40
+                : result에서 1개 shift, resultDictRef 해당 타입 -1
+        */
+        const studyRate = resultDict.C / (resultDict.P + resultDict.C);
+        return studyRate ? String(studyRate * 100).substring(0, 4) : "0.00";
+    };
+
+    /* 페이지 진입 시 */
     useEffect(() => {
-        // * 모델 불러오기 및 카메라 연결
-        classifier = ml5.imageClassifier("../public/model/model.json", () => {
-            navigator.mediaDevices
-                .getUserMedia({ video: true, audio: false })
-                .then((stream) => {
-                    videoRef.current.srcObject = stream;
-                    videoRef.current.play();
-                    setLoaded(true);
-                });
-        });
-
-        const getStudymates = async () => {
-            const { status, data } = await getApi(
-                {
-                    room_id: match,
-                },
-                "/study/study_mate/",
-                authContext.state.token
-            );
-            // const { status, data } = { // Dummy
-            //     status: 200,
-            // };
-            console.log("status", status);
-            await console.log("get study mates");
-            await console.log(data);
-            if (status === 200) {
-                const new_studymates = data.studymates.map((sm, i) => ({
-                    nickname: sm.nickname,
-                    concent_rate: sm.concent_rate,
-                    concent_time: sm.concent_time,
-                    play_time: sm.play_time,
-                }));
-                console.log(new_studymates);
-                await setStudymates(new_studymates);
-            } else {
-                await alert("네트워크 오류");
-            }
-        };
-        getStudymates();
-    }, []);
-
-    useEffect(() => {
-        const getStudymates = async () => {
-            const { status, data } = await getApi(
-                {
-                    room_id: match,
-                },
-                "/study/study_mate/",
-                authContext.state.token
-            );
-            // const { status, data } = { // Dummy
-            //     status: 200,
-            // };
-            // console.log("status", status);
-            // await console.log("get study mates");
-            // await console.log(data);
-            if (status === 200) {
-                const new_studymates = data.studymates.map((sm, i) => ({
-                    nickname: sm.nickname,
-                    concent_rate: sm.concent_rate,
-                    concent_time: sm.concent_time,
-                    play_time: sm.play_time,
-                }));
-                await console.log("new_studymates:", new_studymates);
-                await setStudymates(new_studymates);
-            } else {
-                await alert("네트워크 오류");
-            }
-        };
-        getStudymates();
+        console.log(location.pathname.split("/")[2]);
         setStudyMatesArrowColor();
+        // * 스터디 메이트 관련 데이터 수신 소켓 연결
+        const mate_url = "ws://13.209.194.64:8080/study/study_mate/";
+        mate_ws.current = new WebSocket(mate_url);
+        mate_ws.current.onopen = () => console.log("study mate socket opened");
+        mate_ws.current.onclose = () => console.log("study mate socket closed");
+        mate_ws.current.onmessage = async (event) => {
+            // 스터디 메이트 SOCKET(N초 주기)
+            const data = JSON.parse(event.data);
+            const new_studymates = await data.studymates.map((sm, i) => ({
+                nickname: sm.nickname,
+                concent_rate: sm.concent_rate,
+                concent_time: sm.concent_time,
+                play_time: sm.play_time,
+            }));
+            await console.log("new_studymates:", new_studymates);
+            await setStudymates(new_studymates);
+        };
+
+        return () => {
+            if (yolo_ws.current && yolo_ws.current.readyState === 1) {
+                yolo_ws.current.close(1000, "CLOSE YOLO WS");
+            }
+            if (mate_ws.current && mate_ws.current.readyState === 1) {
+                mate_ws.current.close(1000, "STUDY BUTTON OFF");
+            }
+            putOut();
+        };
     }, []);
 
+    /* 이미지 3초마다 캡처해서 소켓으로 전달 */
     useInterval(() => {
-        // * 0.5초마다 모델에 데이터 집어넣고 결과는 results에 저장
-        if (classifier && start) {
-            classifier.classify(videoRef.current, (error, results) => {
-                if (error) {
-                    console.error(error);
-                    return;
-                }
-                setResult(results);
-                resultlistRef.current[isConcentrate()] += 1;
-            });
-        }
+        if (yolo_ws.current && yolo_ws.current.readyState === 1 && start) {
+            const imageSrc = webcamRef.current.getScreenshot();
+            // console.log(imageSrc);
+            const msg = { message: imageSrc, token: authContext.state.token };
+            yolo_ws.current.send(JSON.stringify(msg));
+        } else return;
     }, MODEL_APPLY_TIME * 1000);
 
-    useInterval(() => {
-        // * 60초마다 저장된 결과값 중 최대 클래스(집중 or 딴짓)를 서버에 포스트. 이후 저장된 결과값 클리어
-        if (classifier && start) {
-            // 주석 처리해주기
-            const postModelResult = async () => {
-                const { status, data } = await postApi(
-                    {
-                        uid: authContext.state.uid,
-                        type:
-                            resultlistRef.current["C"] >
-                            resultlistRef.current["P"]
-                                ? "C"
-                                : "P",
-                        time: new Date().toString().split(" ")[4].substr(0, 5),
-                    },
-                    "/study/study_data/",
-                    authContext.state.token
+    /* 공부 시작하기/ 끝내기 버튼 클릭 시 호출 */
+    const toggle = async (isStudyStart) => {
+        if (isStudyStart) {
+            // * 모델 이미지 전송 소켓 연결
+            // TODO onopen, onclose 지우고 url 변경
+            const yolo_url = "ws://13.209.194.64:8080/yolo/getmessage/";
+            yolo_ws.current = new WebSocket(yolo_url);
+            // 디버깅 위한 코드
+            yolo_ws.current.onopen = () => console.log("model ws opened");
+            yolo_ws.current.onclose = (event) => {
+                console.log(
+                    "model ws closed",
+                    "\nis clean close?:",
+                    event.wasClean,
+                    "\nclosed reason:",
+                    event.reason
                 );
-                // const { status, data } = { // Dummy Dummy
-                //     status: 200,
-                // };
-                if (status === 200) {
-                    await setStudy_time(data);
-                    console.log(resultlistRef.current);
-                    resultlistRef.current["C"] = 0;
-                    resultlistRef.current["P"] = 0;
-                } else {
-                    await alert("네트워크 오류");
+            };
+            yolo_ws.current.onmessage = (event) => {
+                // 이미지 전달 후 C, P 데이터 받기
+                const { type } = JSON.parse(event.data);
+                resultDictRef.current[type] += 1;
+                if (resultList.length > 40) {
+                    // 최근 2분보다 더 오래된 타입의 데이터 abandon(버리기)
+                    const old_type = resultList.shift();
+                    resultDictRef.current[old_type] -= 1;
                 }
             };
-            // TODO post 시 이거 주석 처리 취소하기
-            postModelResult();
-        }
-    }, POST_RESULT_TIME * 1000);
-
-    const toggle = async () => {
-        // * start stop POST
-        // TODO TEST할 때 꼭 주석 처리 없애기
-        const { status } = await postApi(
-            {
-                uid: authContext.state.uid,
-                type: !start ? "start" : "stop",
-            },
-            "/study/studybutton/",
-            authContext.state.token
-        );
-        // const { status, data } = {
-        //     // Dummy Dummy
-        //     status: 200,
-        // };
-        if (status === 200) {
-            await console.log("바뀌기전 버튼값:", start);
-            await btnContext.dispatch({ type: "btnClick", payload: !start });
-            await setStart(!start); // start값 true <-> false 변경
-            await setResult([]);
-        } else {
-            await alert("네트워크 에러!");
+        } else if (yolo_ws.current && yolo_ws.current.readyState === 1) {
+            // * [공부 끝내기 버튼 클릭 시] 소켓 연결 끊기
+            yolo_ws.current.close(1000, "STUDY BUTTON OFF");
         }
     };
-    const getClassRate = (ch) => {
-        const concents = result.filter((c) => c.label[0] === ch);
-        let tot = 0;
-        for (let i = 0; i < concents.length; i++) {
-            tot += concents[i].confidence;
-        }
-        return String(tot * 100).substring(0, 4);
-    };
-    const isConcentrate = () => {
-        return getClassRate("C") > getClassRate("P") ? "C" : "P";
-    };
-
-    // 1분마다 studymates들 정보 받아오기
-    useInterval(() => {
-        const getStudymates = async () => {
-            const { status, data } = await getApi(
-                {
-                    room_id: match,
-                },
-                "/study/study_mate/",
-                authContext.state.token
-            );
-            // const { status, data } = { // Dummy
-            //     status: 200,
-            // };
-            await console.log(data);
-            if (status === 200) {
-                await setStudymates(
-                    data.studymates.map((sm, i) => ({
-                        nickname: sm.nickname,
-                        concent_rate: sm.concent_rate,
-                        concent_time: sm.concent_time,
-                        play_time: sm.play_time,
-                    }))
-                );
-            } else {
-                await alert("네트워크 오류");
-            }
-        };
-        getStudymates();
-        setStudyMatesArrowColor();
-    }, GET_STUDYMATES * 1000);
 
     const setStudyMatesArrowColor = () => {
         var leftBtn = document.getElementById("Studymates-leftbtn");
         var rightBtn = document.getElementById("Studymates-rightbtn");
-        if ((studymates.length > 2) && (matesIndex === 0)) {
+        if (studymates.length > 2 && matesIndex === 0) {
             rightBtn.style.color = "#030303";
         }
-        if (matesIndex === 0){
+        if (matesIndex === 0) {
             leftBtn.style.color = "#E1E5EA";
         }
     };
@@ -275,7 +180,7 @@ const RightStudyComp = ({ match }) => {
     const [matesIndex, setMatesIndex] = useState(0); // 좌우 화살표 변환에 필요한 matesIndex
     const StudyMatesBox = ({ data }) => {
         var crNum = data.concent_rate.slice(0, -1); // 집중도 % 떼고 숫자만 가져옴 = crNum
-        crNum *= 1; 
+        crNum *= 1;
         return (
             <div className="Studymates-box">
                 <div className="SM-box-col1">
@@ -284,13 +189,12 @@ const RightStudyComp = ({ match }) => {
                 </div>
                 <div className="SM-box-col2">
                     <div className={crNum > 50 ? "SM-box-cr-C" : "SM-box-cr-P"}>
-                        {data.concent_rate} </div>
+                        {data.concent_rate}{" "}
+                    </div>
                     <div className="SM-box-ct">
                         공부시간: {data.concent_time}{" "}
                     </div>
-                    <div className="SM-box-pt">
-                        딴짓시간: {data.play_time}
-                    </div>
+                    <div className="SM-box-pt">딴짓시간: {data.play_time}</div>
                 </div>
             </div>
         );
@@ -300,7 +204,8 @@ const RightStudyComp = ({ match }) => {
         // console.log("StudyMatesBox3", datas);
         return (
             <div className="Studymates-box3">
-                {((studymates.length === 1)||(matesIndex === studymates.length-1)) ? (
+                {studymates.length === 1 ||
+                matesIndex === studymates.length - 1 ? (
                     <StudyMatesBox data={datas[matesIndex]} />
                 ) : (
                     <div className="Studymates-box3">
@@ -355,21 +260,20 @@ const RightStudyComp = ({ match }) => {
         }
     };
 
-    const postOut = async () => {
-        const { status } = await postApi(
+    const putOut = async () => {
+        const room_id = location.pathname.split("/")[2];
+        const { status } = await putApi(
             {
                 uid: authContext.state.uid,
-                type: "stop",
+                room_id: room_id,
             },
             "/study/studybutton/",
             authContext.state.token
         );
-        // const { status, data } = {
-        //     // Dummy Dummy
-        //     status: 200,
-        // };
+
         if (status === 200) {
             console.log("잘됨");
+            history.push(`/main`);
         } else {
             alert("네트워크 에러!");
         }
@@ -379,17 +283,25 @@ const RightStudyComp = ({ match }) => {
         <div className="RightComp">
             <div className="VideoComp">
                 {/* <p>현재: {isConcentrate()}</p> */}
-                <video
+                <Webcam
+                    audio={false}
+                    ref={webcamRef}
+                    screenshotFormat="image/png"
                     className="CameraComp"
-                    ref={videoRef}
+                    videoConstraints={{
+                        height: 300,
+                        width: 416,
+                    }}
                     style={{
                         transform: "scale(-1,1)",
                         width: "100%",
                     }}
-                ></video>
+                />
+
                 <p className="StudyStatus">
                     <span className="undervideo-span1">
-                        현 집중도: {getClassRate("C")}%
+                        현 집중도: {getStudyRate(resultDictRef.current)}%
+                        {/* 현 집중도: {getStudyRate({ C: 19, P: 21 })}% */}
                     </span>
                     <span className="undervideo-span2">
                         공부시간: {study_time.tot_concent_time}
@@ -398,14 +310,15 @@ const RightStudyComp = ({ match }) => {
                         딴짓시간: {study_time.tot_play_time}
                     </span>
                 </p>
-                {loaded && (
-                    <button
-                        onClick={() => toggle()}
-                        className={start ? "EndButton" : "StartButton"}
-                    >
-                        {start ? "공부 끝내기" : "공부 시작하기"}
-                    </button>
-                )}
+                <button
+                    onClick={async () => {
+                        await setStart(!start);
+                        await toggle(start);
+                    }}
+                    className={start ? "EndButton" : "StartButton"}
+                >
+                    {start ? "공부 끝내기" : "공부 시작하기"}
+                </button>
             </div>
 
             <div className="RightComp-inner">
@@ -419,22 +332,24 @@ const RightStudyComp = ({ match }) => {
                             style={{ color: "#E1E5EA" }}
                         />
                     </div>
-                    {studymates ? (
+                    {studymates.length !== 0 ? (
                         <StudyMatesBox3 datas={studymates} />
                     ) : (
-                        <div>친구가 없어요</div>
+                        <div className={"RightComp-NoFriendText"}>
+                            친구가 없어요😭
+                        </div>
                     )}
                     <div className="RightComp-studymates-rightbtn">
                         <RiArrowRightSLine
                             id="Studymates-rightbtn"
                             size="2rem"
                             onClick={(e) => clickMatesRightBtn(e)}
-                            style={{ color: "#E1E5EA" }} 
+                            style={{ color: "#E1E5EA" }}
                         />
                     </div>
                 </div>
             </div>
-            <Link to={"/main"} className="GoOutBtn" onClick={() => postOut()}>
+            <Link to={"/main"} className="GoOutBtn" onClick={() => putOut()}>
                 {" "}
                 공부방 퇴장하기
             </Link>

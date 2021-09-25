@@ -33,8 +33,6 @@ const Socket = () => {
     function sendMessage() {
         const msg = { message: imgSrc, nickname: "우정짱" };
         if (!ws.current) return;
-        console.log("send할 꺼야아아ㅏ", msg);
-        // console.log(ws.current.send);
         ws.current.send(JSON.stringify(msg));
     }
     return (
