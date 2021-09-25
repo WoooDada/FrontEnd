@@ -102,7 +102,7 @@ const NewGraphComp = () => {
             }
         };
         // getGraphData();
-    }, [authContext.state.token, authContext.state.uid, xCategories]);
+    }, []);
     // const series = graphData;
 
     const options = useMemo(

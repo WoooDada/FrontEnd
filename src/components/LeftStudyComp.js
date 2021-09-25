@@ -85,7 +85,7 @@ const LeftStudyComp = ({ match }) => {
             }
         };
         getRoomInfo();
-    }, [authContext.state.token, authContext.state.uid, match]);
+    }, [match]);
 
     const clickManner = () => {
         setMannerMore(!mannerMore);
