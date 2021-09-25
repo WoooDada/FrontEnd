@@ -26,6 +26,7 @@ const Footer = () => {
 const Home = () => {
     const authContext = useContext(AuthContext);
     // authContext.state.uid 존재하면 /main, 존재하지않으면 /login으로.
+    console.log(authContext.state.uid);
     const path = authContext.state.uid ? "/main" : "/login";
     return (
         <div className="Home">
@@ -37,8 +38,10 @@ const Home = () => {
                 <div className="Home-middle">
                     <div className="Home-middle-leftbox"></div>
                     <div className="Home-middle-text">
-                        <p>공다다는 지금 당장 공부가 필요한, 당신을 위한
-                        플랫폼입니다. </p>
+                        <p>
+                            공다다는 지금 당장 공부가 필요한, 당신을 위한
+                            플랫폼입니다.{" "}
+                        </p>
                         <p>지금 당신의 의지와 열정을 보여주세요.</p>
                     </div>
                 </div>
@@ -51,8 +54,9 @@ const Home = () => {
                         <br></br>
                         <p className="p1">이제 핸드폰은 그만!</p>
                         <p className="p2">
-                            핸드폰을 만지면 공다다가 귀신같이 캐치해요! 
-                            <br></br>경고를 받지 않으려면 손에는 펜만 들어야겠죠?
+                            핸드폰을 만지면 공다다가 귀신같이 캐치해요!
+                            <br></br>경고를 받지 않으려면 손에는 펜만
+                            들어야겠죠?
                         </p>
                     </div>
                 </div>
@@ -76,7 +80,8 @@ const Home = () => {
                         </p>
                         <p className="p2">
                             공다다와 함께 성취 돋는 하루를 시작해 보세요!
-                            <br></br>공다다를 키면 무조건 공부 시작! 딴 짓은 엄금!
+                            <br></br>공다다를 키면 무조건 공부 시작! 딴 짓은
+                            엄금!
                         </p>
                     </div>
                 </div>

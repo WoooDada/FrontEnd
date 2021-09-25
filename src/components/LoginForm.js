@@ -12,22 +12,22 @@ function LoginForm({ history }) {
         e.preventDefault();
 
         // * 실제 데이터 가져오기: 성공(서버 켰을 때만 해야 함.)
-        // const { status, data } = await axios.post(
-        //     "http://13.209.194.64:8080/api/login/",
-        //     details,
-        //     {
-        //         headers: {
-        //             "Content-type": "application/json",
-        //             Accept: "application/json",
-        //         },
-        //     }
-        // );
+        const { status, data } = await axios.post(
+            "http://13.209.194.64:8080/api/login/",
+            details,
+            {
+                headers: {
+                    "Content-type": "application/json",
+                    Accept: "application/json",
+                },
+            }
+        );
 
         // * 허구(실험) 데이터
-        const { status, data } = {
-            status: 200,
-            data: { uid: "EXAMPLE", token: "haha" },
-        };
+        // const { status, data } = {
+        //     status: 200,
+        //     data: { uid: "EXAMPLE", token: "haha" },
+        // };
 
         // const { status, data } = {
         //     status: 400,
@@ -49,6 +49,7 @@ function LoginForm({ history }) {
         } else {
             // 실패 시
             // 에러 메시지 송출
+            alert("로그인 실패");
             if (data.message === "uid or pw wrong") {
                 // id가 없는 경우
                 setLoginErrorMsg("아이디나 비밀번호가 일치하지 않습니다.");

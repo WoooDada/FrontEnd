@@ -84,7 +84,7 @@ const LeftStudyComp = ({ match }) => {
                 alert("네트워크 불안정");
             }
         };
-        // getRoomInfo();
+        getRoomInfo();
     }, [authContext.state.token, authContext.state.uid, match]);
 
     const clickManner = () => {
@@ -98,7 +98,9 @@ const LeftStudyComp = ({ match }) => {
                     <div className="RoomTitle">
                         <h3>{roomData.room_name}</h3>
                         <AiFillLock className="LockIcon" />
-                        <h5 style={{marginLeft:'10px'}}>#{roomData.room_tag}</h5>
+                        <h5 style={{ marginLeft: "10px" }}>
+                            #{roomData.room_tag}
+                        </h5>
                     </div>
                     <h5>
                         <span className="RoomPpl">

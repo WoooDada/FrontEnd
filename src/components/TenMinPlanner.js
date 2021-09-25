@@ -87,7 +87,7 @@ const TenMinPlanner = () => {
                     //     status: 200,
                     // };
                     if (status === 200) {
-                        // await console.log('data.tenminlist',data.ten_min_list);
+                        await console.log("data.tenminlist", data.ten_min_list);
                         await setTenMinData(
                             data.ten_min_list.map((t) => ({
                                 stt_time: t.stt_time,

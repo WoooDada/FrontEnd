@@ -39,7 +39,7 @@ const getBadgeName = (badge) => {
         default:
             return "IRON";
     }
-}
+};
 
 const customStyles = {
     content: {
@@ -135,12 +135,8 @@ const BadgeComp = () => {
                             </p>
                         </div>
                     </Modal>
-                    <div className='badge-nickname'>
-                        {userData.nickname}
-                    </div>
-                    <div className='badge-name'>
-                        {userData.badge_name}
-                    </div>
+                    <div className="badge-nickname">{userData.nickname}</div>
+                    <div className="badge-name">{userData.badge_name}</div>
                 </div>
             </div>
         </div>

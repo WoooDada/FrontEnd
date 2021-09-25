@@ -23,7 +23,13 @@ import {
 // import Header from "./components/Header";
 import "./App.css";
 import Login from "./pages/Login";
-import { useReducer, createContext, useContext, useEffect } from "react";
+import {
+    useReducer,
+    createContext,
+    useContext,
+    useEffect,
+    useState,
+} from "react";
 import Logo from "./constants/imgs/newlogo.png";
 import { BadgeComp } from "../src/components";
 
@@ -172,12 +178,17 @@ function App() {
         uid: null,
         onLogin: false,
     });
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        console.log(JSON.parse(localStorage.getItem("loggedInfo")));
+
         const initUserInfo = async () => {
             const loggedInfo = await JSON.parse(
                 localStorage.getItem("loggedInfo")
             );
+            console.log("-------------새로 고침했다------------");
+            console.log(loggedInfo);
 
             if (loggedInfo) {
                 const { token, uid } = loggedInfo;
@@ -196,11 +207,14 @@ function App() {
                 //     await history.push("/login");
                 // }
             }
+            setLoading(false);
         };
         initUserInfo();
     }, [state.token]);
 
-    return (
+    return loading ? (
+        <div>loading...</div>
+    ) : (
         <div className="App">
             <AuthContext.Provider value={{ state, dispatch }}>
                 {/* <Header></Header> */}

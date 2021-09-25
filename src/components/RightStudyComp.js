@@ -4,7 +4,7 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import { BtnContext } from "../pages/Study";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import { Link, useLocation, useHistory } from "react-router-dom";
-import { postApi, getApi, putApi } from "../api";
+import { postApi, getApi, putApi, deleteApi } from "../api";
 import { AuthContext } from "../App";
 import { useContext } from "react";
 import Webcam from "react-webcam";
@@ -17,7 +17,7 @@ const MODEL_APPLY_TIME = 3;
 
 const RightStudyComp = ({ match }) => {
     const authContext = useContext(AuthContext);
-    const btnContext = useContext(BtnContext);
+    let room_id;
     const history = useHistory();
     const location = useLocation();
     const webcamRef = useRef(null);
@@ -25,12 +25,11 @@ const RightStudyComp = ({ match }) => {
     const mate_ws = useRef(null);
 
     const [start, setStart] = useState(false);
-    const [resultList, setResultList] = useState([]);
-    // TODO 이거 result -> resultList로 바꾸기
+    const resultListRef = useRef([]);
     const resultDictRef = useRef({ C: 0, P: 0 });
     const [study_time, setStudy_time] = useState({
-        tot_concent_time: "0:00",
-        tot_play_time: "0:00",
+        tot_concent_time: "00:00",
+        tot_play_time: "00:00",
     });
     const [studymates, setStudymates] = useState([]);
 
@@ -68,11 +67,10 @@ const RightStudyComp = ({ match }) => {
     ];
 
     const getStudyRate = (resultDict) => {
-        // TODO 로직 짜기
         /*
             --준비--
             resultDictRef : 딕셔너리 형태
-            resultList : 리스트 형태 
+            resultListRef : 리스트 형태 
             --로직--
             학습률: 3초마다 반영해줌
             resultDictRef.length >= 40
@@ -86,17 +84,51 @@ const RightStudyComp = ({ match }) => {
                 : result에서 1개 shift, resultDictRef 해당 타입 -1
         */
         const studyRate = resultDict.C / (resultDict.P + resultDict.C);
-        return studyRate ? String(studyRate * 100).substring(0, 4) : "0.00";
+        return studyRate ? String(studyRate * 100).substring(0, 4) : "00.00";
     };
 
     /* 페이지 진입 시 */
     useEffect(() => {
-        console.log(location.pathname.split("/")[2]);
+        room_id = location.pathname.split("/")[2];
+        const putIn = async () => {
+            console.log(authContext.state.token);
+            await postApi(
+                {
+                    room_id: room_id,
+                    type: "ON",
+                },
+                "/study/room/",
+                authContext.state.token
+            )
+                .then(({ status }) => {
+                    if (status === 200) {
+                        console.log("잘됨");
+                    }
+                })
+                .catch((e) => {
+                    alert("네트워크 에러!");
+                });
+
+            // if (status === 200) {
+            //     console.log("잘됨");
+            // } else {
+            //     alert("네트워크 에러!");
+            // }
+        };
+        putIn();
         setStudyMatesArrowColor();
         // * 스터디 메이트 관련 데이터 수신 소켓 연결
-        const mate_url = "ws://13.209.194.64:8080/study/study_mate/";
+        const mate_url = `ws://13.209.194.64:8080/study/study_mate/`;
         mate_ws.current = new WebSocket(mate_url);
-        mate_ws.current.onopen = () => console.log("study mate socket opened");
+        mate_ws.current.onopen = () => {
+            console.log("study mate socket opened");
+            mate_ws.current.send(
+                JSON.stringify({
+                    uid: authContext.state.uid,
+                    room_id: room_id,
+                })
+            );
+        };
         mate_ws.current.onclose = () => console.log("study mate socket closed");
         mate_ws.current.onmessage = async (event) => {
             // 스터디 메이트 SOCKET(N초 주기)
@@ -107,6 +139,10 @@ const RightStudyComp = ({ match }) => {
                 concent_time: sm.concent_time,
                 play_time: sm.play_time,
             }));
+            await setStudy_time({
+                tot_concent_time: data.myStatus.concent_time,
+                tot_play_time: data.myStatus.play_time,
+            });
             await console.log("new_studymates:", new_studymates);
             await setStudymates(new_studymates);
         };
@@ -127,17 +163,19 @@ const RightStudyComp = ({ match }) => {
         if (yolo_ws.current && yolo_ws.current.readyState === 1 && start) {
             const imageSrc = webcamRef.current.getScreenshot();
             // console.log(imageSrc);
-            const msg = { message: imageSrc, token: authContext.state.token };
+            const msg = { message: imageSrc };
             yolo_ws.current.send(JSON.stringify(msg));
         } else return;
     }, MODEL_APPLY_TIME * 1000);
 
     /* 공부 시작하기/ 끝내기 버튼 클릭 시 호출 */
-    const toggle = async (isStudyStart) => {
-        if (isStudyStart) {
+    const toggle = async () => {
+        const cur_state = !start;
+        await setStart(!start);
+        if (cur_state) {
             // * 모델 이미지 전송 소켓 연결
             // TODO onopen, onclose 지우고 url 변경
-            const yolo_url = "ws://13.209.194.64:8080/yolo/getmessage/";
+            const yolo_url = `ws://13.209.194.64:8080/yolo/getmessage/`;
             yolo_ws.current = new WebSocket(yolo_url);
             // 디버깅 위한 코드
             yolo_ws.current.onopen = () => console.log("model ws opened");
@@ -152,11 +190,12 @@ const RightStudyComp = ({ match }) => {
             };
             yolo_ws.current.onmessage = (event) => {
                 // 이미지 전달 후 C, P 데이터 받기
+                console.log(event.data);
                 const { type } = JSON.parse(event.data);
                 resultDictRef.current[type] += 1;
-                if (resultList.length > 40) {
+                if (resultListRef.current.length > 40) {
                     // 최근 2분보다 더 오래된 타입의 데이터 abandon(버리기)
-                    const old_type = resultList.shift();
+                    const old_type = resultListRef.current.shift();
                     resultDictRef.current[old_type] -= 1;
                 }
             };
@@ -261,13 +300,12 @@ const RightStudyComp = ({ match }) => {
     };
 
     const putOut = async () => {
-        const room_id = location.pathname.split("/")[2];
-        const { status } = await putApi(
+        const { status } = await deleteApi(
             {
-                uid: authContext.state.uid,
                 room_id: room_id,
+                type: "OFF",
             },
-            "/study/studybutton/",
+            "/study/room/",
             authContext.state.token
         );
 
@@ -311,9 +349,8 @@ const RightStudyComp = ({ match }) => {
                     </span>
                 </p>
                 <button
-                    onClick={async () => {
-                        await setStart(!start);
-                        await toggle(start);
+                    onClick={() => {
+                        toggle(start);
                     }}
                     className={start ? "EndButton" : "StartButton"}
                 >
@@ -336,7 +373,7 @@ const RightStudyComp = ({ match }) => {
                         <StudyMatesBox3 datas={studymates} />
                     ) : (
                         <div className={"RightComp-NoFriendText"}>
-                            친구가 없어요😭
+                            친구를 기다리는 중... 😭
                         </div>
                     )}
                     <div className="RightComp-studymates-rightbtn">

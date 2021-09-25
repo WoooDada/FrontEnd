@@ -217,18 +217,18 @@ const StudyRoom = () => {
             return emojis[Math.floor(Math.random() * 7)];
         };
         const getAllRooms = async () => {
-            // const params = { all: "T", keyword: keyword };
-            // const { status, data } = await getApi(
-            //     params,
-            //     "/studyroom/",
-            //     authContext.state.token
-            // );
-            const { status, data } = {
-                status: 200,
-                data: {
-                    data: roomsTemp,
-                },
-            };
+            const params = { all: "T", keyword: keyword };
+            const { status, data } = await getApi(
+                params,
+                "/studyroom/",
+                authContext.state.token
+            );
+            // const { status, data } = {
+            //     status: 200,
+            //     data: {
+            //         data: roomsTemp,
+            //     },
+            // };
 
             if (status === 200) {
                 // console.log(data.data);
