@@ -128,6 +128,7 @@ const MyProfileForm = () => {
         );
         if (status === 200) {
             await console.log("profile update success");
+            await alert('수정사항이 반영되었습니다.');
         } else {
             await console.log("profile update fail");
         }

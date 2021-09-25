@@ -73,7 +73,7 @@ const StudyRank = (srank) => {
             <div className="Rank-header">
                 <p>순위</p>
                 <p>닉네임</p>
-                <p>집중시간</p>
+                <p>공부시간</p>
             </div>
             <hr />
             {rendering()}

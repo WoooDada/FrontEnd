@@ -77,11 +77,11 @@ const CreateRoomForm = ({ history }) => {
             case "rc4": setColor("#CCF8A8"); break;
             default: setColor("#9F8FFF"); break;
         }
-        for (var i=1; i<=7; i++){
+        for (var i=1; i<=4; i++){
             var nowid = "rc" + i;
             var element = document.getElementById(nowid);
             if (nowid === id){
-                element.style.border = "solid 2px #727272";
+                element.style.border = "solid 2px #1C1C21";
                 element.style.width = "16px"; element.style.height = "16px";
             } else {
                 element.style.border = "none";

@@ -143,7 +143,7 @@ const LeftStudyComp = ({ match }) => {
                                         setWhichSchedule(btnType.en);
                                     }}
                                 >
-                                    {btnType.kr}
+                                    {btnType.en}
                                 </button>
                             ))}
                         </div>

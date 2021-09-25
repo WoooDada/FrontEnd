@@ -70,13 +70,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding-top: 5px;
 }
 
 .Studycard-studyroom .Studycard-upper {
     /* padding-bottom: 40px; */
     flex: 1;
     height: auto;
-    /* background-color: antiquewhite; */
 }
 
 .Studycard-upper .UpperHeader {

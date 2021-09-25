@@ -40,12 +40,12 @@ const TodayComp = () => {
     }, []);
     return (
         <div className="TodayComp">
-            <p className="small-title">오늘 당신의 학습력은...</p>
+            <p className="small-title">오늘 당신의 공부량은...</p>
             <p className="stitle">집중도</p>
             <p className="today-percent" style={{color: '#000000'}}>{todayStudy.tot_concent_rate}%</p>
-            <p className="stitle">집중 시간</p>
+            <p className="stitle">공부 시간</p>
             <p className="today-percent" style={{color: '#5F45FF'}}>{todayStudy.tot_concent_time}</p>
-            <p className="stitle">총 공부시간</p>
+            <p className="stitle">딴짓 시간</p>
             <p className="today-percent" style={{color: '#F68059'}}>{todayStudy.tot_time}</p>
         </div>
     );
