@@ -13,20 +13,19 @@
     align-items: stretch;
     justify-content: center;
     text-align: center;
-    padding: 5vh 12vh ;
-    margin-top: 5vh;
-    margin-left: 13vh;
+    padding: 50px 80px;
+    margin: 5vh 0 0 200px;
 }
 
 .MyProfile-formgroup1 {
     display: flex;
     flex-direction: row;
-    width: 40vh;
+    width: 300px;
 }
 .MyProfile-formgroup2 {
     display: flex;
     flex-direction: column;
-    width: 40vh;
+    width: 300px;
 }
 
 .MyProfile-formgorup1-title {

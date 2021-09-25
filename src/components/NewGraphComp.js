@@ -6,7 +6,7 @@ import { AuthContext } from "../App";
 
 const initialData = [
     {
-        name: "집중 시간(Hour)",
+        name: "공부 시간(Hour)",
         data: [10, 0, 3, 2.3, 0, 5.1, 3.2],
     },
     {
@@ -83,7 +83,7 @@ const NewGraphComp = () => {
                 // 무작위 월~일 데이터: 그 날 기준 6일 전까지로 정렬.
                 await setGraphData([
                     {
-                        name: "집중 시간(Hour)",
+                        name: "공부 시간(Hour)",
                         data: xCategories.map((x, i) => {
                             return data.graph.filter((v, _) => x === v.date)[0]
                                 .concent_time;

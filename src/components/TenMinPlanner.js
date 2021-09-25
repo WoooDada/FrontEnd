@@ -362,7 +362,8 @@ const TenMinPlanner = () => {
             <HeatMapGrid
                 yLabels={yLabels}
                 yLabelsStyle={() => ({
-                    fontSize: ".65rem",
+                    fontSize: "0.8rem",
+                    lineHeight: "1.23rem",
                 })}
                 yLabelWidth={15}
                 yLabelTextAlign="center"

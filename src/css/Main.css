@@ -44,13 +44,13 @@
 }
 
 .badge-nickname {
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-weight: 600;
     margin-top: 40px;
 }
 
 .badge-name {
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     color: #9893b7;
 }
 
@@ -150,7 +150,7 @@
     border-radius: 8px;
     margin: 40px;
     padding: 20px;
-    height: min-content;
+    min-height: 75vh;
 }
 
 .Main-MonthlyComp::-webkit-scrollbar {
@@ -210,6 +210,18 @@
     flex-direction: column;
 }
 
+.StudyPage .Main-MonthlyComp {/* StudyPage에서의 Monthlycomp */
+    padding: 0;
+    margin: 0 auto;
+    width: 35vw;
+}
+
+.StudyPage .Main-MonthlyComp .calendar-wrapper {
+    width: 30vw;
+    padding: 0 20px;
+}
+
+
 /********** WeeklyComp **********/
 .Main-WeeklyComp {
     width: 35vw;
@@ -218,11 +230,22 @@
     padding: 20px;
     background-color: white;
     border-radius: 8px;
+    min-height: 75vh;
+}
+
+.StudyPage .Main-WeeklyComp { /* StudyPage에서의 Weeklycomp */
+    padding: 0;
+    margin: 20px auto 0 auto;
+    width: 35vw;
+}
+
+.StudyPage .Main-WeeklyComp .small-title {
+    display: none;
 }
 
 .Main-WeeklyComp .small-title {
     margin: 28px 0 0 24px;
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-weight: 600;
 }
 
@@ -485,6 +508,10 @@
         width: min-content;
         margin-left: 30vw;
     }
+
+    /* .StudyPage .Main-WeeklyComp .DowComp {
+        width: 10px;
+    } */
 }
 @media screen and (max-width: 1200px) {
     .Main-Schedule {
@@ -507,4 +534,8 @@
         background-color: white;
         border-radius: 8px;
     }
+
+    /* .StudyPage .Main-WeeklyComp .DowComp {
+        width: 10px;
+    } */
 }
