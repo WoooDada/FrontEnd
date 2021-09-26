@@ -94,11 +94,14 @@ const CreateRoomForm = ({ history }) => {
     const onCreate = async (e) => {
         e.preventDefault();
         if (roomName === "" || secret === "" || category === "" || color === ""){
-            setMessage("필수 입력 항목을 모두 입력해주세요.")
+            setMessage("필수 입력 항목을 모두 입력해주세요.");
+        } 
+        else if (secret === "secret" && pwd === "") {
+            setMessage("비밀방을 선택하셨습니다. 비밀번호를 입력해주세요.");
         }
         else {
             // 공개방일 경우 비밀번호 "" 처리
-            if (secret === "not-secret") { setPwd("") }
+            if (secret === "not-secret") { setPwd(""); }
             const { status, data } = await postApi(
                 {
                     uid: authContext.state.uid,
@@ -123,8 +126,6 @@ const CreateRoomForm = ({ history }) => {
                 await console.log(data.room_id);
                 if (data.room_id === -1) {
                     setMessage("방명이 중복되었습니다. 다른 이름을 입력해주세요.");
-                } else if (data.room_id === -2) {
-                    setMessage("비밀방을 선택하셨습니다. 비밀번호를 입력해주세요.");
                 } else {
                     // 스터디룸으로 이동
                     history.push(`/study/${data.room_id}`);
@@ -166,7 +167,7 @@ const CreateRoomForm = ({ history }) => {
                 <input
                     className="form-input"
                     name="room_pwd"
-                    placeholder="(형식)으로 입력해주세요"
+                    placeholder="비밀방인 경우 입력해주세요"
                     disabled={secret === "secret" ? false : true}
                     onChange={(e) => inputPwd(e)}
                 />
