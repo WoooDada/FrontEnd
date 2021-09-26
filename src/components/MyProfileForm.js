@@ -152,13 +152,13 @@ const MyProfileForm = () => {
                 <div className="MyProfile-formgorup1-title"><h5>성별</h5></div>
                 <input type="radio" name="sex" id="woman"
                     onChange={(e) => sexChange(e)}></input>
-                <label for="woman"><p>여자</p></label>
+                <label htmlFor="woman"><p>여자</p></label>
                 <input type="radio" name="sex" id="man"
                     onChange={(e) => sexChange(e)}></input>
-                <label for="man"><p>남자</p></label>
+                <label htmlFor="man"><p>남자</p></label>
                 <input type="radio" name="sex" id="unknown"
                     onChange={(e) => sexChange(e)}></input>
-                <label for="unknown"><p>선택안함</p></label>
+                <label htmlFor="unknown"><p>선택안함</p></label>
             </div>
 
             <div className="MyProfile-formgroup1">

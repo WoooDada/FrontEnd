@@ -157,10 +157,10 @@ const CreateRoomForm = ({ history }) => {
                 <h5>방 공개 범위*</h5>
                 <input type="radio" name="is_secret" id="not-secret"
                     onChange={(e) => radioChange(e)}></input>
-                <label for="not-secret"><p>공개방</p></label>
+                <label htmlFor="not-secret"><p>공개방</p></label>
                 <input type="radio" name="is_secret" id="secret"
                     onChange={(e) => radioChange(e)}></input>
-                <label for="secret"><p>비밀방</p></label>
+                <label htmlFor="secret"><p>비밀방</p></label>
             </div>
             <div className="form-group">
                 <h5>비밀번호</h5>
