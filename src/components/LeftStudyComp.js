@@ -70,19 +70,22 @@ const LeftStudyComp = ({ match }) => {
     const authContext = useContext(AuthContext);
     useEffect(() => {
         const getRoomInfo = async () => {
-            const { status, data } = await getApi(
+            await getApi(
                 {
                     room_id: match,
                 },
                 "/study/room_info/",
                 authContext.state.token
-            );
-            if (status === 200) {
-                await console.log("room_info:", data);
-                await setRoomData(data);
-            } else {
-                alert("네트워크 불안정");
-            }
+            )
+                .then(({ status, data }) => {
+                    if (status === 200) {
+                        console.log("room_info:", data);
+                        setRoomData(data);
+                    }
+                })
+                .catch((e) => {
+                    alert("네트워크 불안정");
+                });
         };
         getRoomInfo();
     }, [match]);
