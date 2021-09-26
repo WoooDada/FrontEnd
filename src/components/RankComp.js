@@ -165,6 +165,7 @@ const RankComp = () => {
             )
                 .then(({ status, data }) => {
                     if (status === 200) {
+                        console.log(data.rank_study_list);
                         setStudyRankData(
                             data.rank_study_list.map((s) => ({
                                 rank: s.rank,

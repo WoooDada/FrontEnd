@@ -123,14 +123,24 @@ const RightStudyComp = ({ match }) => {
         mate_ws.current = new WebSocket(mate_url);
         mate_ws.current.onopen = () => {
             console.log("study mate socket opened");
-            mate_ws.current.send(
-                JSON.stringify({
-                    uid: authContext.state.uid,
-                    room_id: room_id,
-                })
+            if (mate_ws.current.readyState === 1) {
+                mate_ws.current.send(
+                    JSON.stringify({
+                        uid: authContext.state.uid,
+                        room_id: room_id,
+                    })
+                );
+            }
+        };
+        mate_ws.current.onclose = (event) => {
+            console.log(
+                "mate ws closed",
+                "\nis clean close?:",
+                event.wasClean,
+                "\nclosed reason:",
+                event.reason
             );
         };
-        mate_ws.current.onclose = () => console.log("study mate socket closed");
         mate_ws.current.onmessage = async (event) => {
             // 스터디 메이트 SOCKET(N초 주기)
             const data = JSON.parse(event.data);
@@ -144,7 +154,7 @@ const RightStudyComp = ({ match }) => {
                 tot_concent_time: data.myStatus.concent_time,
                 tot_play_time: data.myStatus.play_time,
             });
-            await console.log("new_studymates:", new_studymates);
+            await console.log("mate_ws onmessage:", data);
             await setStudymates(new_studymates);
         };
 

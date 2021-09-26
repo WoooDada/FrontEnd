@@ -92,6 +92,7 @@ const NewGraphComp = () => {
                 })
                 .catch((e) => {
                     alert("인터넷 연결이 불안정합니다.");
+                    console.log(e.response);
                 });
             // const data = {
             //     graph: [

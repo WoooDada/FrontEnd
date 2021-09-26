@@ -55,8 +55,8 @@ const PrintToday = () => {
 const initialRoomData = {
     room_name: "",
     room_tag: "",
-    room_manner:"",
-        // "홀로로로로로롤 들어오세요 안녕안녕 다들 안녕 공부하자구요 규칙: 1. 아침 10시 기상 2.숙제해오기 3번 어쩌구 지키기 4. 이거 다 안지키면 삼진아웃입니다잉 아셨죠? 아웃이라고요 아웃!!! ",
+    room_manner: "",
+    // "홀로로로로로롤 들어오세요 안녕안녕 다들 안녕 공부하자구요 규칙: 1. 아침 10시 기상 2.숙제해오기 3번 어쩌구 지키기 4. 이거 다 안지키면 삼진아웃입니다잉 아셨죠? 아웃이라고요 아웃!!! ",
     in_ppl: 1,
     max_ppl: 5,
 };
@@ -66,7 +66,7 @@ const LeftStudyComp = ({ match }) => {
     const [roomData, setRoomData] = useState(initialRoomData);
     const [mannerMore, setMannerMore] = useState(false); // 공부방 에티켓 더보기 버튼
     const RoomTag2Ko = (room_tag) => {
-        switch(room_tag){
+        switch (room_tag) {
             case "language":
                 return "어학";
                 break;
@@ -86,13 +86,13 @@ const LeftStudyComp = ({ match }) => {
                 return "자격증";
                 break;
             case "etc":
-                return "기타등등";
+                return "기타";
                 break;
             default:
-                return "열공"
+                return "열공";
                 break;
         }
-    }
+    };
 
     const authContext = useContext(AuthContext);
     useEffect(() => {
@@ -127,7 +127,9 @@ const LeftStudyComp = ({ match }) => {
                 <div className="Header">
                     <div className="RoomTitle">
                         <h3>{roomData.room_name}</h3>
-                        <AiFillLock className="LockIcon" />
+                        {roomData.room_issecret ? (
+                            <AiFillLock className="LockIcon" />
+                        ) : null}
                         <h5 style={{ marginLeft: "10px" }}>
                             #{RoomTag2Ko(roomData.room_tag)}
                         </h5>
