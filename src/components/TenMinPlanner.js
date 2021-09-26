@@ -122,6 +122,7 @@ const TenMinPlanner = () => {
                 )
                     .then(({ status, data }) => {
                         plususeRef(data.ten_min_list.concent_type); // useRef에 반영
+                        console.log(data); // 1분마다 C,P 받아옴
                     })
                     .catch((e) => {
                         console.log(e);
@@ -145,7 +146,7 @@ const TenMinPlanner = () => {
         // console.log('useRef:', concentTypeRef);
         if (isTenth()) {
             // 현재 시각 10n분이면, 11n분이라고 해보자.
-            // console.log('10분!');
+            console.log('10분!');
             if (concentTypeRef.current["C"] + concentTypeRef.current["P"] > 4) {
                 // 이거 개수 접근하는거 에러남
                 tendata.stt_time = moment()
@@ -346,6 +347,9 @@ const TenMinPlanner = () => {
         );
 
         const cellColor = (v) => {
+            // 하나만 있으면 v=1(보라) v=0(주황)
+            // 두가지 있으면 v=1(보라) v=0(주황) v=0.5(회색)
+            // console.log(v);
             if (v === 1) {
                 return "#9F8FFF";
             } else if (v === 0) {
@@ -368,8 +372,7 @@ const TenMinPlanner = () => {
                 data={data}
                 cellStyle={(_x, _y, ratio) => ({
                     background: cellColor(ratio),
-                    // fontSize: "1px",
-                    // color: FaBlackberry,
+                    
                 })}
                 cellHeight="1.2rem"
                 // onClick={(x, y) => alert(`Clicked (${x}, ${y})=${data[x][y]}`)}

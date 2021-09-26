@@ -146,7 +146,7 @@
 /********** MonthlyComp **********/
 .Main-MonthlyComp {
     overflow: auto;
-    background-color: white;
+    background-color: #ffffff;
     border-radius: 8px;
     margin: 40px;
     padding: 20px;
@@ -210,6 +210,11 @@
     flex-direction: column;
 }
 
+.Main-Monthly-changeBtn, 
+.Main-Monthly-deleteBtn {
+    white-space: nowrap;
+}
+
 .StudyPage .Main-MonthlyComp {/* StudyPage에서의 Monthlycomp */
     padding: 0;
     margin: 0 auto;
@@ -228,7 +233,7 @@
     height: min-content;
     margin: 40px 0;
     padding: 20px;
-    background-color: white;
+    background-color: #ffffff;
     border-radius: 8px;
     min-height: 75vh;
 }
@@ -375,7 +380,7 @@
 
 /* Rank */
 .Main-RankComp {
-    background-color: white;
+    background-color: #ffffff;
     border-radius: 8px;
     margin: 40px 40px 40px 0;
     padding: 20px;
@@ -391,7 +396,7 @@
 }
 
 .what-rank-btn {
-    background-color: white;
+    background-color: #ffffff;
     border: none;
     padding: 10px;
     font-size: 0.8rem;
@@ -537,7 +542,7 @@
         height: min-content;
         margin: 40px 0 40px 40px;
         padding: 20px;
-        background-color: white;
+        background-color: #ffffff;
         border-radius: 8px;
     }
 

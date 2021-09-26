@@ -53,19 +53,46 @@ const PrintToday = () => {
 };
 
 const initialRoomData = {
-    room_name: "수능 앞둔 고삼만 참여하는 방",
-    room_tag: "공무원",
-    room_manner:
-        "홀로로로로로롤 들어오세요 안녕안녕 다들 안녕 공부하자구요 규칙: 1. 아침 10시 기상 2.숙제해오기 3번 어쩌구 지키기 4. 이거 다 안지키면 삼진아웃입니다잉 아셨죠? 아웃이라고요 아웃!!! ",
-    in_ppl: 5,
-    max_ppl: 8,
+    room_name: "",
+    room_tag: "",
+    room_manner:"",
+        // "홀로로로로로롤 들어오세요 안녕안녕 다들 안녕 공부하자구요 규칙: 1. 아침 10시 기상 2.숙제해오기 3번 어쩌구 지키기 4. 이거 다 안지키면 삼진아웃입니다잉 아셨죠? 아웃이라고요 아웃!!! ",
+    in_ppl: 1,
+    max_ppl: 5,
 };
 
 const LeftStudyComp = ({ match }) => {
     const [whichSchedule, setWhichSchedule] = useState("daily");
     const [roomData, setRoomData] = useState(initialRoomData);
-    const [mannerMore, setMannerMore] = useState(false);
-    // 공부방 에티켓 더보기 버튼
+    const [mannerMore, setMannerMore] = useState(false); // 공부방 에티켓 더보기 버튼
+    const RoomTag2Ko = (room_tag) => {
+        switch(room_tag){
+            case "language":
+                return "어학";
+                break;
+            case "college":
+                return "대학";
+                break;
+            case "sat":
+                return "수능";
+                break;
+            case "gongmuwon":
+                return "공무원";
+                break;
+            case "employment":
+                return "취업 및 이직";
+                break;
+            case "certificate":
+                return "자격증";
+                break;
+            case "etc":
+                return "기타등등";
+                break;
+            default:
+                return "열공"
+                break;
+        }
+    }
 
     const authContext = useContext(AuthContext);
     useEffect(() => {
@@ -102,7 +129,7 @@ const LeftStudyComp = ({ match }) => {
                         <h3>{roomData.room_name}</h3>
                         <AiFillLock className="LockIcon" />
                         <h5 style={{ marginLeft: "10px" }}>
-                            #{roomData.room_tag}
+                            #{RoomTag2Ko(roomData.room_tag)}
                         </h5>
                     </div>
                     <h5>

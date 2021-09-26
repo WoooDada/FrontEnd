@@ -17,6 +17,7 @@ const MODEL_APPLY_TIME = 3;
 
 const RightStudyComp = ({ match }) => {
     const authContext = useContext(AuthContext);
+    const btnContext = useContext(BtnContext);
     let room_id;
     const history = useHistory();
     const location = useLocation();
@@ -171,6 +172,8 @@ const RightStudyComp = ({ match }) => {
     /* 공부 시작하기/ 끝내기 버튼 클릭 시 호출 */
     const toggle = async () => {
         const cur_state = !start;
+        await console.log("바뀌기전 버튼값:", start);
+        await btnContext.dispatch({ type: "btnClick", payload: !start });
         await setStart(!start);
         if (cur_state) {
             // * 모델 이미지 전송 소켓 연결
