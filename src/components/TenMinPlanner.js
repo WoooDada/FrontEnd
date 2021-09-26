@@ -74,7 +74,7 @@ const TenMinPlanner = () => {
             if (flag === false) {
                 setFlag(true);
                 const getTenmin = async () => {
-                    const { status, data } = await getApi(
+                    await getApi(
                         {
                             uid: authContext.state.uid,
                             update: btnContext.state.btnValue ? "T" : "F",
@@ -82,23 +82,22 @@ const TenMinPlanner = () => {
                         },
                         "/study/ten_min_data/",
                         authContext.state.token
-                    );
+                    )
+                        .then(({ status, data }) => {
+                            setTenMinData(
+                                data.ten_min_list.map((t) => ({
+                                    stt_time: t.stt_time,
+                                    end_time: t.end_time,
+                                    concent_type: t.concent_type,
+                                }))
+                            );
+                        })
+                        .catch((e) => {
+                            console.log(e);
+                        });
                     // const { status, data } = { // Dummy Dummy
                     //     status: 200,
                     // };
-                    if (status === 200) {
-                        await console.log("data.tenminlist", data.ten_min_list);
-                        await setTenMinData(
-                            data.ten_min_list.map((t) => ({
-                                stt_time: t.stt_time,
-                                end_time: t.end_time,
-                                concent_type: t.concent_type,
-                            }))
-                        );
-                        // await console.log("tenMinData:", tenMinData);
-                    } else {
-                        alert("인터넷 연결이 불안정합니다.");
-                    }
                 };
                 getTenmin();
                 // plususeRefWhenStop();
@@ -112,7 +111,7 @@ const TenMinPlanner = () => {
         // if RightStudyComp의 버튼 start되면,
         if (btnContext.state.btnValue === true) {
             const getTenmin = async () => {
-                const { status, data } = await getApi(
+                await getApi(
                     {
                         uid: authContext.state.uid,
                         update: btnContext.state.btnValue ? "T" : "F",
@@ -120,17 +119,16 @@ const TenMinPlanner = () => {
                     },
                     "/study/ten_min_data/",
                     authContext.state.token
-                );
+                )
+                    .then(({ status, data }) => {
+                        plususeRef(data.ten_min_list.concent_type); // useRef에 반영
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                    });
                 // const { status, data } = { // Dummy Dummy
                 //     status: 200,
                 // };
-                if (status === 200) {
-                    // await console.log('type무엇인가', data.ten_min_list.concent_type);
-                    // await setTenMinData(tenMinData.concat(data.ten_min_list));
-                    await plususeRef(data.ten_min_list.concent_type); // useRef에 반영
-                } else {
-                    alert("인터넷 연결이 불안정합니다.");
-                }
             };
             getTenmin();
         }

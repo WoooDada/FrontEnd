@@ -183,59 +183,58 @@ const StudyBoxComp = () => {
 
     useEffect(() => {
         const getAllRoomData = async () => {
-            const { status, data } = await getApi(
+            await getApi(
                 {
                     uid: authContext.state.uid,
                 },
                 "/main/random_rooms/",
                 authContext.state.token
-            );
-            if (status === 200) {
-                // await console.log("Get Study Rank :", data.all_room_list);
-                await setAllRoomData(
-                    data.all_room_list.map((s) => ({
-                        room_id: s.room_id,
-                        room_name: s.room_name,
-                        room_color: s.room_color,
-                        inppl: s.inppl,
-                        maxppl: s.maxppl,
-                        is_scret: s.is_scret,
-                        room_tag: s.room_tag,
-                    }))
-                );
-                // await console.log("Get complete: ", allRoomData);
-            } else {
-                await alert("인터넷 연결이 불안정합니다.");
-            }
+            )
+                .then(({ status, data }) => {
+                    setAllRoomData(
+                        data.all_room_list.map((s) => ({
+                            room_id: s.room_id,
+                            room_name: s.room_name,
+                            room_color: s.room_color,
+                            inppl: s.inppl,
+                            maxppl: s.maxppl,
+                            is_scret: s.is_scret,
+                            room_tag: s.room_tag,
+                        }))
+                    );
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
         };
         getAllRoomData();
     }, []);
 
     useEffect(() => {
         const getMyRoomData = async () => {
-            const { status, data } = await getApi(
+            await getApi(
                 {
                     uid: authContext.state.uid,
                 },
                 "/main/my_rooms/",
                 authContext.state.token
-            );
-            if (status === 200) {
-                await setMyRoomData(
-                    data.my_room_list.map((s) => ({
-                        room_id: s.room_id,
-                        room_name: s.room_name,
-                        room_color: s.room_color,
-                        inppl: s.inppl,
-                        maxppl: s.maxppl,
-                        room_tag: s.room_tag,
-                        is_scret: s.is_scret,
-                    }))
-                );
-                // await console.log("Get complete: ", myRoomData);
-            } else {
-                await alert("인터넷 연결이 불안정합니다.");
-            }
+            )
+                .then(({ status, data }) => {
+                    setMyRoomData(
+                        data.my_room_list.map((s) => ({
+                            room_id: s.room_id,
+                            room_name: s.room_name,
+                            room_color: s.room_color,
+                            inppl: s.inppl,
+                            maxppl: s.maxppl,
+                            room_tag: s.room_tag,
+                            is_scret: s.is_scret,
+                        }))
+                    );
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
         };
         getMyRoomData();
     }, []);

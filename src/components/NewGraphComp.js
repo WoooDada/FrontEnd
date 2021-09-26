@@ -59,13 +59,40 @@ const NewGraphComp = () => {
         const getGraphData = async () => {
             const weekxs = dowEn2Kr();
             setXCategories(weekxs);
-            const { status, data } = await getApi(
+            await getApi(
                 {
                     uid: authContext.state.uid,
                 },
                 "/home/concent_graph",
                 authContext.state.token
-            );
+            )
+                .then(({ status, data }) => {
+                    if (status === 200) {
+                        console.log(data.graph);
+                        // 무작위 월~일 데이터: 그 날 기준 6일 전까지로 정렬.
+                        setGraphData([
+                            {
+                                name: "공부 시간(Hour)",
+                                data: xCategories.map((x, i) => {
+                                    return data.graph.filter(
+                                        (v, _) => x === v.date
+                                    )[0].concent_time;
+                                }),
+                            },
+                            {
+                                name: "딴짓 시간(Hour)",
+                                data: xCategories.map((x, i) => {
+                                    return data.graph.filter(
+                                        (v, _) => x === v.date
+                                    )[0].play_time;
+                                }),
+                            },
+                        ]);
+                    }
+                })
+                .catch((e) => {
+                    alert("인터넷 연결이 불안정합니다.");
+                });
             // const data = {
             //     graph: [
             //         { date: "월", concent_time: 5, play_time: 5 },
@@ -78,30 +105,8 @@ const NewGraphComp = () => {
             //     ],
             // };
             // const status = 200;
-            if (status === 200) {
-                await console.log(data.graph);
-                // 무작위 월~일 데이터: 그 날 기준 6일 전까지로 정렬.
-                await setGraphData([
-                    {
-                        name: "공부 시간(Hour)",
-                        data: xCategories.map((x, i) => {
-                            return data.graph.filter((v, _) => x === v.date)[0]
-                                .concent_time;
-                        }),
-                    },
-                    {
-                        name: "딴짓 시간(Hour)",
-                        data: xCategories.map((x, i) => {
-                            return data.graph.filter((v, _) => x === v.date)[0]
-                                .play_time;
-                        }),
-                    },
-                ]);
-            } else {
-                await alert("인터넷 연결이 불안정합니다.");
-            }
         };
-        // getGraphData();
+        getGraphData();
     }, []);
     // const series = graphData;
 
