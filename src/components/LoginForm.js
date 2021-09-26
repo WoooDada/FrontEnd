@@ -3,6 +3,8 @@ import "../css/Login.css";
 import { AuthContext } from "../App";
 import axios from "axios";
 
+import { postApi } from "../api";
+
 function LoginForm({ history }) {
     const [details, setDetails] = useState({ uid: "", password: "" }); // useState 정보 : id, password
     const [loginErrorMsg, setLoginErrorMsg] = useState("");
@@ -12,16 +14,33 @@ function LoginForm({ history }) {
         e.preventDefault();
 
         // * 실제 데이터 가져오기: 성공(서버 켰을 때만 해야 함.)
-        const { status, data } = await axios.post(
-            "http://13.209.194.64:8080/api/login/",
-            details,
-            {
-                headers: {
-                    "Content-type": "application/json",
-                    Accept: "application/json",
-                },
-            }
-        );
+
+        await postApi(details, "/api/login/")
+            .then(({ status, data }) => {
+                authContext.dispatch({
+                    type: "login",
+                    token: data.token,
+                    uid: details.uid,
+                }); // useContext 처리
+                localStorage.setItem(
+                    "loggedInfo",
+                    JSON.stringify({ uid: details.uid, token: data.token })
+                );
+                history.push("/main"); // 성공 시 main으로 이동
+            })
+            .catch((e) => {
+                alert("로그인 실패");
+                console.log(e.response);
+                if (
+                    e.response &&
+                    e.response.data &&
+                    e.response.data.message &&
+                    e.response.data.message === "uid or pw wrong"
+                ) {
+                    // id가 없는 경우
+                    setLoginErrorMsg("아이디나 비밀번호가 일치하지 않습니다.");
+                }
+            });
 
         // * 허구(실험) 데이터
         // const { status, data } = {
@@ -33,28 +52,6 @@ function LoginForm({ history }) {
         //     status: 400,
         //     data: { message: "uid or pw wrong" },
         // };
-
-        if (status === 200) {
-            // 성공 시 useReducer에 넣어두기.
-            authContext.dispatch({
-                type: "login",
-                token: data.token,
-                uid: details.uid,
-            }); // useContext 처리
-            localStorage.setItem(
-                "loggedInfo",
-                JSON.stringify({ uid: details.uid, token: data.token })
-            );
-            history.push("/main"); // 성공 시 main으로 이동
-        } else {
-            // 실패 시
-            // 에러 메시지 송출
-            alert("로그인 실패");
-            if (data.message === "uid or pw wrong") {
-                // id가 없는 경우
-                setLoginErrorMsg("아이디나 비밀번호가 일치하지 않습니다.");
-            }
-        }
     };
 
     return (

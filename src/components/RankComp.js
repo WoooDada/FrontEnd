@@ -33,20 +33,26 @@ const initialPlayData = [
 ];
 
 const RankItem = ({ rank, nickname, tot }) => {
-    var rankcolor = '#727272';
+    var rankcolor = "#727272";
     switch (rank) {
         case 1:
-            rankcolor = '#FFCF23'; break;
+            rankcolor = "#FFCF23";
+            break;
         case 2:
-            rankcolor = '#D6D6D6'; break;
+            rankcolor = "#D6D6D6";
+            break;
         case 3:
-            rankcolor = '#CC9F5C'; break;
+            rankcolor = "#CC9F5C";
+            break;
         default:
-            rankcolor = '#727272'; break;
+            rankcolor = "#727272";
+            break;
     }
     return (
         <div className="rank-item">
-            <div className="rank-item1" style={{backgroundColor: rankcolor}}>{rank}</div>
+            <div className="rank-item1" style={{ backgroundColor: rankcolor }}>
+                {rank}
+            </div>
             <span className="rank-item2">{nickname}</span>
             <span className="rank-item3">{tot}</span>
         </div>
@@ -137,7 +143,7 @@ const setBtnColor = (btn) => {
         studyBtn.style.color = "#9893B7";
         playBtn.style.color = "#000000";
     }
-}
+};
 
 const RankComp = () => {
     const authContext = useContext(AuthContext);
@@ -146,48 +152,54 @@ const RankComp = () => {
 
     useEffect(() => {
         const getStudyRankData = async () => {
-            const { status, data } = await getApi(
+            await getApi(
                 {
                     uid: authContext.state.uid,
                 },
                 "/main/studyrank/",
                 authContext.state.token
-            );
-            if (status === 200) {
-                await setStudyRankData(
-                    data.rank_study_list.map((s) => ({
-                        rank: s.rank,
-                        nickname: s.nickname,
-                        tot_concent_time: s.tot_concent_time,
-                    }))
-                );
-            } else {
-                await alert("인터넷 연결이 불안정합니다.");
-            }
+            )
+                .then(({ status, data }) => {
+                    if (status === 200) {
+                        setStudyRankData(
+                            data.rank_study_list.map((s) => ({
+                                rank: s.rank,
+                                nickname: s.nickname,
+                                tot_concent_time: s.tot_concent_time,
+                            }))
+                        );
+                    }
+                })
+                .catch((e) => {
+                    alert("인터넷 연결이 불안정합니다.");
+                });
         };
         getStudyRankData();
     }, []);
 
     useEffect(() => {
         const getPlayRankData = async () => {
-            const { status, data } = await getApi(
+            await getApi(
                 {
                     uid: authContext.state.uid,
                 },
                 "/main/playrank/",
                 authContext.state.token
-            );
-            if (status === 200) {
-                await setPlayRankData(
-                    data.rank_play_list.map((p) => ({
-                        rank: p.rank,
-                        nickname: p.nickname,
-                        tot_concent_rate: p.tot_concent_rate,
-                    }))
-                );
-            } else {
-                await alert("인터넷 연결이 불안정합니다.");
-            }
+            )
+                .then(({ status, data }) => {
+                    if (status === 200) {
+                        setPlayRankData(
+                            data.rank_play_list.map((p) => ({
+                                rank: p.rank,
+                                nickname: p.nickname,
+                                tot_concent_rate: p.tot_concent_rate,
+                            }))
+                        );
+                    }
+                })
+                .catch((e) => {
+                    alert("인터넷 연결이 불안정합니다.");
+                });
         };
         getPlayRankData();
     }, []);
@@ -200,7 +212,7 @@ const RankComp = () => {
                     <button
                         className="what-rank-btn"
                         id="study-rank-btn"
-                        style={{color: "#000"}}
+                        style={{ color: "#000" }}
                         onClick={() => {
                             setWhatRank("study");
                             setBtnColor("study");
@@ -211,7 +223,7 @@ const RankComp = () => {
                     <button
                         className="what-rank-btn"
                         id="play-rank-btn"
-                        style={{color: "#9893B7"}}
+                        style={{ color: "#9893B7" }}
                         onClick={() => {
                             setWhatRank("play");
                             setBtnColor("play");

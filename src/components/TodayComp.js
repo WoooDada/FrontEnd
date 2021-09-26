@@ -19,22 +19,23 @@ const TodayComp = () => {
     useEffect(() => {
         const getTodayInfo = async () => {
             console.log("uid: ", authContext.state);
-            const { status, data } = await getApi(
+            await getApi(
                 {
                     uid: authContext.state.uid,
                 },
                 "/home/today_concent/",
                 authContext.state.token
-            );
-            if (status === 200) {
-                await setTodayStudy({
-                    tot_concent_rate: data.tot_concent_rate,
-                    tot_concent_time: make2hmForm(data.tot_concent_time),
-                    tot_time: make2hmForm(data.tot_time),
+            )
+                .then(({ status, data }) => {
+                    setTodayStudy({
+                        tot_concent_rate: data.tot_concent_rate,
+                        tot_concent_time: make2hmForm(data.tot_concent_time),
+                        tot_time: make2hmForm(data.tot_time),
+                    });
+                })
+                .catch((e) => {
+                    console.log(e);
                 });
-            } else {
-                await alert("네트워크 에러");
-            }
         };
         getTodayInfo();
     }, []);
@@ -42,11 +43,17 @@ const TodayComp = () => {
         <div className="TodayComp">
             <p className="small-title">오늘 당신의 공부량은...</p>
             <p className="stitle">집중도</p>
-            <p className="today-percent" style={{color: '#000000'}}>{todayStudy.tot_concent_rate}%</p>
+            <p className="today-percent" style={{ color: "#000000" }}>
+                {todayStudy.tot_concent_rate}%
+            </p>
             <p className="stitle">공부 시간</p>
-            <p className="today-percent" style={{color: '#5F45FF'}}>{todayStudy.tot_concent_time}</p>
+            <p className="today-percent" style={{ color: "#5F45FF" }}>
+                {todayStudy.tot_concent_time}
+            </p>
             <p className="stitle">딴짓 시간</p>
-            <p className="today-percent" style={{color: '#F68059'}}>{todayStudy.tot_time}</p>
+            <p className="today-percent" style={{ color: "#F68059" }}>
+                {todayStudy.tot_time}
+            </p>
         </div>
     );
 };

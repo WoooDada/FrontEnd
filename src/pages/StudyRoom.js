@@ -218,55 +218,50 @@ const StudyRoom = () => {
         };
         const getAllRooms = async () => {
             const params = { all: "T", keyword: keyword };
-            const { status, data } = await getApi(
-                params,
-                "/studyroom/",
-                authContext.state.token
-            );
+            await getApi(params, "/studyroom/", authContext.state.token)
+                .then(({ status, data }) => {
+                    const inp_rooms = data.data.map((d) => {
+                        var room_tag = "기타";
+                        switch (d.room_tag) {
+                            case "college":
+                                room_tag = "대학생";
+                                break;
+                            case "sat":
+                                room_tag = "수능";
+                                break;
+                            case "gongmuwon":
+                                room_tag = "공무원";
+                                break;
+                            case "employment":
+                                room_tag = "취업 및 이직";
+                                break;
+                            case "certificate":
+                                room_tag = "자격증";
+                                break;
+                            case "language":
+                                room_tag = "어학";
+                                break;
+                            default:
+                                room_tag = "기타";
+                                break;
+                        }
+                        return {
+                            ...d,
+                            room_tag: room_tag,
+                            emoji: getRandomEmoji(),
+                        };
+                    });
+                    setRooms(inp_rooms);
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
             // const { status, data } = {
             //     status: 200,
             //     data: {
             //         data: roomsTemp,
             //     },
             // };
-
-            if (status === 200) {
-                // console.log(data.data);
-                const inp_rooms = data.data.map((d) => {
-                    var room_tag = "기타";
-                    switch (d.room_tag) {
-                        case "college":
-                            room_tag = "대학생";
-                            break;
-                        case "sat":
-                            room_tag = "수능";
-                            break;
-                        case "gongmuwon":
-                            room_tag = "공무원";
-                            break;
-                        case "employment":
-                            room_tag = "취업 및 이직";
-                            break;
-                        case "certificate":
-                            room_tag = "자격증";
-                            break;
-                        case "language":
-                            room_tag = "어학";
-                            break;
-                        default:
-                            room_tag = "기타";
-                            break;
-                    }
-                    return {
-                        ...d,
-                        room_tag: room_tag,
-                        emoji: getRandomEmoji(),
-                    };
-                });
-                await setRooms(inp_rooms);
-            } else {
-                alert("네트워크 오류");
-            }
         };
         getAllRooms();
     }, []);
@@ -319,38 +314,34 @@ const StudyRoom = () => {
     const getisCorrectPwd = async (clicked_room_id) => {
         // * REAL
 
-        // const { status, data } = await postApi(
-        //     { room_id: clicked_room_id, password },
-        //     "/studyroom/password/",
-        //     authContext.state.token
-        // );
+        await postApi(
+            { room_id: clicked_room_id, password },
+            "/studyroom/password/",
+            authContext.state.token
+        )
+            .then(({ status, data }) => {
+                if (data.correct === "T") {
+                    setIsPwdCorrect(true);
+                    return true;
+                } else {
+                    // 비밀번호가 틀림: Link로 바로 /study 페이지로 넘어가면 안됨.
+                    setIsPwdCorrect(false);
+                    return false;
+                }
+            })
+            .catch((e) => {
+                console.log(e);
+                return false;
+            });
 
         // * dummy
 
-        const { status, data } = {
-            status: 200,
-            data: {
-                correct: "T",
-            },
-        };
-        await console.log(status);
-        if (status === 200) {
-            console.log(data.correct);
-            if (data.correct === "T") {
-                await setIsPwdCorrect(true);
-                return true;
-            } else {
-                // 비밀번호가 틀림: Link로 바로 /study 페이지로 넘어가면 안됨.
-                await setIsPwdCorrect(false);
-                return false;
-            }
-        } else {
-            alert("네트워크 오류");
-            return false;
-        }
-
-        // dummy
-        // console.log({ room_id: clicked_room_id, password });
+        // const { status, data } = {
+        //     status: 200,
+        //     data: {
+        //         correct: "T",
+        //     },
+        // };
     };
 
     /* 검색 관련 함수들 */
@@ -378,17 +369,13 @@ const StudyRoom = () => {
         console.log(params);
         // REAL
 
-        const { status, data } = await getApi(
-            params,
-            "/studyroom/",
-            authContext.state.token
-        );
-        if (status === 200) {
-            console.log(data.data);
-            await setRooms(data.data);
-        } else {
-            alert("네트워크 오류");
-        }
+        await getApi(params, "/studyroom/", authContext.state.token)
+            .then(({ status, data }) => {
+                setRooms(data.data);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
     };
 
     return (

@@ -300,21 +300,20 @@ const RightStudyComp = ({ match }) => {
     };
 
     const putOut = async () => {
-        const { status } = await deleteApi(
+        await deleteApi(
             {
                 room_id: room_id,
                 type: "OFF",
             },
             "/study/room/",
             authContext.state.token
-        );
-
-        if (status === 200) {
-            console.log("잘됨");
-            history.push(`/main`);
-        } else {
-            alert("네트워크 에러!");
-        }
+        )
+            .then(({ status }) => {
+                history.push(`/main`);
+            })
+            .catch((e) => {
+                alert("네트워크 에러!");
+            });
     };
 
     return (

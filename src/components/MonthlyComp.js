@@ -1,9 +1,4 @@
-import React, {
-    useEffect,
-    useState,
-    useContext,
-    useReducer,
-} from "react";
+import React, { useEffect, useState, useContext, useReducer } from "react";
 import "../css/Main.css";
 import { AuthContext } from "../App";
 import { getApi, postApi, putApi, deleteApi } from "../api";
@@ -58,27 +53,30 @@ const MonthlyComp = () => {
     // GET
     useEffect(() => {
         const getMtodos = async () => {
-            const { status, data } = await getApi(
+            await getApi(
                 {
                     uid: authContext.state.uid,
                 },
                 "/tdl/monthly/",
                 authContext.state.token
-            );
-            if (status === 200) {
-                // data : [m_todo_id, stt_date, end_date, m_content] 배열 여러개.
-                // map으로 각각 setMtodos로 id, start, end, title에 넣어주기
-                await setMtodos(
-                    data.m_todo_list.map((mdata, i) => ({
-                        id: mdata.m_todo_id,
-                        start: mdata.stt_date,
-                        end: mdata.end_date,
-                        title: mdata.m_content,
-                    }))
-                );
-            } else {
-                alert("인터넷 연결이 불안정합니다.");
-            }
+            )
+                .then(({ status, data }) => {
+                    if (status === 200) {
+                        // data : [m_todo_id, stt_date, end_date, m_content] 배열 여러개.
+                        // map으로 각각 setMtodos로 id, start, end, title에 넣어주기
+                        setMtodos(
+                            data.m_todo_list.map((mdata, i) => ({
+                                id: mdata.m_todo_id,
+                                start: mdata.stt_date,
+                                end: mdata.end_date,
+                                title: mdata.m_content,
+                            }))
+                        );
+                    }
+                })
+                .catch((e) => {
+                    alert("인터넷 연결이 불안정합니다.");
+                });
         };
         getMtodos();
     }, []);
@@ -87,7 +85,7 @@ const MonthlyComp = () => {
         // 일정 추가 함수
         e.preventDefault();
         // POST
-        const { status, data } = await postApi(
+        await postApi(
             {
                 uid: authContext.state.uid,
                 stt_date: start,
@@ -96,7 +94,19 @@ const MonthlyComp = () => {
             },
             "/tdl/monthly/",
             authContext.state.token
-        );
+        )
+            .then(({ status, data }) => {
+                if (status === 200) {
+                    const eventId = data.m_todo_id;
+                    const mtodo = { id: eventId, title, start, end };
+                    setMtodos(mtodos.concat(mtodo));
+                    console.log("mtdl post success");
+                }
+            })
+            .catch((e) => {
+                alert("일정 추가 실패. 네트워크를 확인해주세요.");
+                console.log("mtdl post fail");
+            });
         // * dummy code
         // const { status, data } = {
         //     status: 200,
@@ -106,14 +116,6 @@ const MonthlyComp = () => {
         //     status: 400,
         //     data: { message: "mtdl post fail" },
         // };
-        if (status === 200) {
-            const eventId = data.m_todo_id;
-            const mtodo = { id: eventId, title, start, end };
-            setMtodos(mtodos.concat(mtodo));
-            console.log("mtdl post success");
-        } else {
-            console.log("mtdl post fail");
-        }
 
         setInputs({
             title: "",
@@ -199,7 +201,7 @@ const MonthlyComp = () => {
         );
 
         //UPDATE
-        const { status, data } = await putApi(
+        await putApi(
             {
                 uid: authContext.state.uid,
                 m_todo_id: eventId,
@@ -209,7 +211,14 @@ const MonthlyComp = () => {
             },
             "/tdl/monthly/",
             authContext.state.token
-        );
+        )
+            .then(({ status, data }) => {
+                console.log("mtdl update success");
+            })
+            .catch((e) => {
+                console.log("mtdl update fail");
+                alert("월간 일정 수정 실패. 네트워크를 확인해주세요.");
+            });
         // * dummy date
         // const { status, data } = {
         //     status: 200,
@@ -219,11 +228,6 @@ const MonthlyComp = () => {
         //     status: 400,
         //     data: { message: "mtdl update fail" },
         // };
-        if (status === 200) {
-            console.log("mtdl update success");
-        } else {
-            console.log("mtdl update fail");
-        }
     };
 
     const handleEventResize = async (eventInfo) => {
@@ -258,7 +262,7 @@ const MonthlyComp = () => {
             )
         );
         //UPDATE
-        const { status, data } = await putApi(
+        await putApi(
             {
                 uid: authContext.state.uid,
                 m_todo_id: eventId,
@@ -268,7 +272,14 @@ const MonthlyComp = () => {
             },
             "/tdl/monthly/",
             authContext.state.token
-        );
+        )
+            .then(({ status, data }) => {
+                console.log("mtdl update success");
+            })
+            .catch((e) => {
+                console.log("mtdl update fail");
+                alert("월간 일정 수정 실패. 네트워크를 확인해주세요.");
+            });
         // * dummy date
         // const { status, data } = {
         //     status: 200,
@@ -278,11 +289,6 @@ const MonthlyComp = () => {
         //     status: 400,
         //     data: { message: "mtdl update fail" },
         // };
-        if (status === 200) {
-            console.log("mtdl update success");
-        } else {
-            console.log("mtdl update fail");
-        }
     };
 
     // 일정변경(UPDATE) : mtodos배열에서 해당 id의 event 변경해줌
@@ -303,7 +309,7 @@ const MonthlyComp = () => {
         );
 
         //UPDATE
-        const { status, data } = await putApi(
+        await putApi(
             {
                 uid: authContext.state.uid,
                 m_todo_id: state.eventId,
@@ -313,7 +319,14 @@ const MonthlyComp = () => {
             },
             "/tdl/monthly/",
             authContext.state.token
-        );
+        )
+            .then(({ status, data }) => {
+                console.log("update success");
+            })
+            .catch((e) => {
+                console.log("mtdl update fail");
+                alert("월간 일정 수정 실패. 네트워크를 확인해주세요.");
+            });
         // * dummy data
         // const { status, data } = {
         //     status: 200,
@@ -324,12 +337,6 @@ const MonthlyComp = () => {
         //     data: { message: "mtdl update fail" },
         // };
 
-        if (status === 200) {
-            console.log("update success");
-        } else {
-            console.log("mtdl update fail");
-        }
-
         setInputs({ title: "", start: "", end: "" });
         dispatch({ type: "event-not-click", payload: "" });
     };
@@ -339,14 +346,21 @@ const MonthlyComp = () => {
         e.preventDefault();
         setMtodos(mtodos.filter((mtodos) => mtodos.id !== state.eventId)); // mtodos 배열에 해당 event 삭제
         // DELETE
-        const { status, data } = await deleteApi(
+        await deleteApi(
             {
                 uid: authContext.state.uid,
                 m_todo_id: state.eventId,
             },
             "/tdl/monthly/",
             authContext.state.token
-        );
+        )
+            .then(({ status, data }) => {
+                console.log("mtdl delete success");
+            })
+            .catch((e) => {
+                console.log("mtdl delete fail");
+                alert("월간 일정 삭제 실패. 네트워크를 확인해주세요.");
+            });
         // * dummy date
         // const { status, data } = {
         //     status: 200,
@@ -356,11 +370,6 @@ const MonthlyComp = () => {
         //     status: 400,
         //     data: { message: "mtdl delete fail" },
         // };
-        if (status === 200) {
-            console.log("mtdl delete success");
-        } else {
-            console.log("mtdl delete fail");
-        }
 
         setInputs({ title: "", start: "", end: "" });
         dispatch({ type: "event-not-click", payload: "" });
@@ -391,7 +400,6 @@ const MonthlyComp = () => {
             </div>
             <div className="Main-Monthly-input">
                 <form className="Main-Monthly-inputform">
-                    
                     <input
                         className="input-title"
                         name="title"
@@ -400,7 +408,6 @@ const MonthlyComp = () => {
                         }
                         value={inputs.title}
                     />
-                    
                 </form>
                 <div className="Main-Monthly-Btns">
                     {state.isClicked ? (

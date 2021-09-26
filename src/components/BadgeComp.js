@@ -75,24 +75,26 @@ const BadgeComp = () => {
     });
     useEffect(() => {
         const getNickName = async () => {
-            const { status, data } = await getApi(
+            await getApi(
                 {
                     uid: authContext.state.uid,
                 },
                 "/home/badge_profile",
                 authContext.state.token
-            );
-
-            if (status === 200) {
-                console.log(data);
-                await setUserData({
-                    nickname: data.nickname,
-                    badge_color: getBadgeColor(data.badge),
-                    badge_name: getBadgeName(data.badge),
+            )
+                .then(({ status, data }) => {
+                    if (status === 200) {
+                        console.log(data);
+                        setUserData({
+                            nickname: data.nickname,
+                            badge_color: getBadgeColor(data.badge),
+                            badge_name: getBadgeName(data.badge),
+                        });
+                    }
+                })
+                .catch((e) => {
+                    alert("네트워크 불안정");
                 });
-            } else {
-                alert("네트워크 불안정");
-            }
         };
         getNickName();
     }, []);

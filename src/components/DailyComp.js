@@ -110,7 +110,7 @@ const DtodosInput = () => {
         } else {
             newcontent = inputs.content;
         }
-        const { status, data } = await postApi(
+        await postApi(
             {
                 uid: authContext.state.uid,
                 d_date: DateFormat(),
@@ -120,26 +120,29 @@ const DtodosInput = () => {
             },
             "/tdl/daily/",
             authContext.state.token
-        );
+        )
+            .then(({ status, data }) => {
+                if (status === 200) {
+                    dailyContext.dispatch({
+                        type: "CREATE_TODO",
+                        dtodo: {
+                            id: data.d_todo_id,
+                            // id: nextId.current,
+                            d_date: DateFormat(),
+                            d_content: inputs.content,
+                            d_tag: inputs.tag,
+                            d_check: false,
+                        },
+                    });
+                }
+            })
+            .catch((e) => {
+                alert("인터넷 연결이 불안정합니다.");
+            });
         // dummy data
         // const { status, data } = {
         //     status: 200,
         // };
-        if (status === 200) {
-            dailyContext.dispatch({
-                type: "CREATE_TODO",
-                dtodo: {
-                    id: data.d_todo_id,
-                    // id: nextId.current,
-                    d_date: DateFormat(),
-                    d_content: inputs.content,
-                    d_tag: inputs.tag,
-                    d_check: false,
-                },
-            });
-        } else {
-            alert("인터넷 연결이 불안정합니다.");
-        }
 
         setInputs({
             tag: "",
@@ -176,7 +179,7 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
     const authContext = useContext(AuthContext);
 
     const clickCheck = async () => {
-        const { status, data } = await putApi(
+        await putApi(
             {
                 uid: authContext.state.uid,
                 d_todo_id: id,
@@ -187,62 +190,77 @@ const DTodosItem = ({ id, d_date, d_content, d_tag, d_check }) => {
             },
             "/tdl/daily/",
             authContext.state.token
-        );
+        )
+            .then(({ status, data }) => {
+                if (status === 200) {
+                    dailyContext.dispatch({
+                        type: "CHECK_TODO",
+                        id,
+                    });
+                }
+            })
+            .catch((e) => {
+                alert("인터넷 연결 불안정");
+            });
         // const { status, data } = {
         //     status: 200,
         // };
-        if (status === 200) {
-            await dailyContext.dispatch({
-                type: "CHECK_TODO",
-                id,
-            });
-        } else {
-            alert("인터넷 연결 불안정");
-        }
     };
 
     const clickDelete = async () => {
-        const { status, data } = await deleteApi(
+        await deleteApi(
             {
                 uid: authContext.state.uid,
                 d_todo_id: id,
             },
             "/tdl/daily/",
             authContext.state.token
-        );
+        )
+            .then(({ status, data }) => {
+                if (status === 200) {
+                    dailyContext.dispatch({
+                        type: "DELETE_TODO",
+                        id,
+                    });
+                }
+            })
+            .catch((e) => {
+                alert("네트워크 불안정");
+            });
         // const { status, data } = {
         //     status: 200,
         // };
-        if (status === 200) {
-            await dailyContext.dispatch({
-                type: "DELETE_TODO",
-                id,
-            });
-        } else {
-            await alert("네트워크 불안정");
-        }
     };
 
     return (
         <div key={id} className="daily-todo-item">
-            <span style={{ width: "30%", textAlign:'center' }} className="daily-todo-item-tag">
+            <span
+                style={{ width: "30%", textAlign: "center" }}
+                className="daily-todo-item-tag"
+            >
                 {d_tag}
             </span>
-            <span style={{ width: "60%", textAlign:'center' }}>{d_content}</span>
+            <span style={{ width: "60%", textAlign: "center" }}>
+                {d_content}
+            </span>
             {d_check ? (
                 <GrCheckboxSelected
                     onClick={clickCheck}
                     className="daily-checkbox-true"
-                    style={{marginTop: '2px'}}
+                    style={{ marginTop: "2px" }}
                 />
             ) : (
                 <GrCheckbox
                     onClick={clickCheck}
                     className="daily-checkbox-false"
-                    style={{marginTop: '2px'}}
+                    style={{ marginTop: "2px" }}
                 />
             )}
-            <span className="daily-todo-item-x" onClick={clickDelete} style={{color: '#F68059', fontWeight:'600'}}>
+            <span
+                className="daily-todo-item-x"
+                onClick={clickDelete}
+                style={{ color: "#F68059", fontWeight: "600" }}
+            >
                 X
             </span>
         </div>
@@ -272,24 +290,25 @@ const DailyComp = () => {
 
     useEffect(() => {
         const getDailyData = async () => {
-            const { status, data } = await getApi(
+            await getApi(
                 {
                     uid: authContext.state.uid,
                     d_date: DateFormat(),
                 },
                 "/tdl/daily/",
                 authContext.state.token
-            );
-            
-            if (status === 200) {
-                await dispatch({
-                    type: "GET_TODO",
-                    dtodos: data.d_todo_list,
+            )
+                .then(({ status, data }) => {
+                    if (status === 200) {
+                        dispatch({
+                            type: "GET_TODO",
+                            dtodos: data.d_todo_list,
+                        });
+                    }
+                })
+                .catch((e) => {
+                    alert("인터넷 연결이 불안정합니다.");
                 });
-            } else {
-                // await console.log(status, data);
-                alert("인터넷 연결이 불안정합니다.");
-            }
         };
         getDailyData();
     }, []);

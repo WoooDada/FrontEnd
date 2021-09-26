@@ -166,7 +166,7 @@ const TaskItem = ({ dow, id, date, checked, content }) => {
     const [todo, setTodo] = useState(content);
     const handleCheck = async () => {
         // * 실제 api
-        const { status } = await putApi(
+        await putApi(
             {
                 uid: authContext.state.uid,
                 w_todo_id: id,
@@ -176,18 +176,20 @@ const TaskItem = ({ dow, id, date, checked, content }) => {
             },
             "/tdl/weekly/",
             authContext.state.token
-        );
-        if (status === 200) {
-            await weeklyContext.dispatch({ type: "UPDATE_CHECK", id, dow });
-        } else {
-            alert("인터넷 연결 불안정");
-        }
+        )
+            .then(({ status }) => {
+                weeklyContext.dispatch({ type: "UPDATE_CHECK", id, dow });
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+
         // * dummy
         // weeklyContext.dispatch({ type: "UPDATE_CHECK", id, dow });
     };
     const handleUpdateButton = async () => {
         // * 실제 api
-        const { status } = await putApi(
+        await putApi(
             {
                 uid: authContext.state.uid,
                 w_todo_id: id,
@@ -197,17 +199,19 @@ const TaskItem = ({ dow, id, date, checked, content }) => {
             },
             "/tdl/weekly/",
             authContext.state.token
-        );
-        if (status === 200) {
-            await weeklyContext.dispatch({
-                type: "UPDATE_CONTENT",
-                id,
-                dow,
-                content: todo,
+        )
+            .then(({ status }) => {
+                weeklyContext.dispatch({
+                    type: "UPDATE_CONTENT",
+                    id,
+                    dow,
+                    content: todo,
+                });
+            })
+            .catch((e) => {
+                alert("인터넷 연결 불안정");
             });
-        } else {
-            await alert("인터넷 연결 불안정");
-        }
+
         // * dummy data
         // weeklyContext.dispatch({
         //     type: "UPDATE_CONTENT",
@@ -217,22 +221,22 @@ const TaskItem = ({ dow, id, date, checked, content }) => {
         // });
     };
     const handleDeleteButton = async () => {
-        const { status } = await deleteApi(
+        await deleteApi(
             { uid: authContext.state.uid, w_todo_id: id },
             "/tdl/weekly/",
             authContext.state.token
-        );
-
-        if (status === 200) {
-            await weeklyContext.dispatch({
-                type: "DELETE",
-                id,
-                dow,
+        )
+            .then(({ status }) => {
+                weeklyContext.dispatch({
+                    type: "DELETE",
+                    id,
+                    dow,
+                });
+            })
+            .catch((e) => {
+                alert("네트워크 불안정, 삭제 실패");
             });
-        } else {
-            // console.log(data.message);
-            await alert("네트워크 불안정");
-        }
+
         // 더미
         // weeklyContext.dispatch({
         //     type: "DELETE",
@@ -268,7 +272,7 @@ const DayOfWeekComp = ({ dow, date, tasks }) => {
 
     const handleAddButtonClick = async () => {
         // * 실제 쓰이는 코드
-        const { status, data } = await postApi(
+        await postApi(
             {
                 uid: authContext.state.uid,
                 w_date: date,
@@ -277,17 +281,19 @@ const DayOfWeekComp = ({ dow, date, tasks }) => {
             },
             "/tdl/weekly/",
             authContext.state.token
-        );
-        if (status === 200) {
-            weeklyContext.dispatch({
-                type: "ADD_NEW",
-                dow,
-                newTodo,
-                id: data.w_todo_id,
+        )
+            .then(({ status, data }) => {
+                weeklyContext.dispatch({
+                    type: "ADD_NEW",
+                    dow,
+                    newTodo,
+                    id: data.w_todo_id,
+                });
+            })
+            .catch((e) => {
+                alert("네트워크 연결 불안정. 요청 실패.");
             });
-        } else {
-            alert("인터넷 연결이 불안정합니다.");
-        }
+
         // dummy code
         // weeklyContext.dispatch({
         //     type: "ADD_NEW",
@@ -342,24 +348,24 @@ const WeeklyComp = () => {
     const authContext = useContext(AuthContext);
     useEffect(() => {
         const getWeeklyData = async () => {
-            const { status, data } = await getApi(
+            await getApi(
                 {
                     uid: authContext.state.uid,
                     dates: calTheDates(),
                 },
                 "/tdl/weekly",
                 authContext.state.token
-            );
-            // await console.log("실패했나 안했나");
-            if (status === 200) {
-                await dispatch({
-                    type: "GET_ALL",
-                    w_todo_list: data.w_todo_list,
+            )
+                .then(({ status, data }) => {
+                    dispatch({
+                        type: "GET_ALL",
+                        w_todo_list: data.w_todo_list,
+                    });
+                })
+                .catch((e) => {
+                    alert("인터넷 연결이 불안정합니다.");
                 });
-            } else {
-                await console.log(status, data);
-                alert("인터넷 연결이 불안정합니다.");
-            }
+            // await console.log("실패했나 안했나");
         };
         getWeeklyData();
     }, []);
