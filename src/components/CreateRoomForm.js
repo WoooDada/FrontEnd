@@ -152,25 +152,22 @@ const CreateRoomForm = ({ history }) => {
                 authContext.state.token
             )
                 .then(({ status, data }) => {
+                    console.log(status);
                     if (status === 200) {
                         console.log("room create success");
-                        console.log(data.room_id);
-                        if (data.room_id === -1) {
-                            setMessage(
-                                "방명이 중복되었습니다. 다른 이름을 입력해주세요."
-                            );
-                        } else if (data.room_id === -2) {
-                            setMessage(
-                                "비밀방을 선택하셨습니다. 비밀번호를 입력해주세요."
-                            );
-                        } else {
-                            // 스터디룸으로 이동
-                            history.push(`/study/${data.room_id}`);
-                        }
+                        // 스터디룸으로 이동
+                        history.push(`/study/${data.room_id}`);
                     }
                 })
                 .catch((e) => {
+                    console.log(e.response.status);
+                    if (e.response.status === 400) {
+                        setMessage(
+                            "방명이 중복되었습니다. 다른 이름을 입력해주세요."
+                        );
+                    } else {
                     console.log("네트워크 오류. 잠시 후에 시도해주세요!");
+                    }
                 });
             // const { status, data } = {
             //     status: 200,
