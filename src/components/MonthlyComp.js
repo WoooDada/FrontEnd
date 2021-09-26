@@ -194,6 +194,7 @@ const MonthlyComp = () => {
                 console.log("mtdl update fail");
                 alert("월간 일정 수정 실패. 네트워크를 확인해주세요.");
             });
+        getMtodos();
     };
 
     const handleEventResize = async (eventInfo) => {
@@ -233,6 +234,7 @@ const MonthlyComp = () => {
                 console.log("mtdl update fail");
                 alert("월간 일정 수정 실패. 네트워크를 확인해주세요.");
             });
+        getMtodos();
     };
 
     // 일정변경(UPDATE) : mtodos배열에서 해당 id의 event 변경해줌
@@ -283,6 +285,7 @@ const MonthlyComp = () => {
             });
         setInputs({ title: "", start: "", end: "" });
         dispatch({ type: "event-not-click", payload: "" });
+        getMtodos();
     };
 
     return (
