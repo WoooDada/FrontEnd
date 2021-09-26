@@ -208,7 +208,7 @@ const CreateRoomForm = ({ history }) => {
                     id="not-secret"
                     onChange={(e) => radioChange(e)}
                 ></input>
-                <label for="not-secret">
+                <label htmlFor="not-secret">
                     <p>공개방</p>
                 </label>
                 <input
@@ -217,7 +217,7 @@ const CreateRoomForm = ({ history }) => {
                     id="secret"
                     onChange={(e) => radioChange(e)}
                 ></input>
-                <label for="secret">
+                <label htmlFor="secret">
                     <p>비밀방</p>
                 </label>
             </div>

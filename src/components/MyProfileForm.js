@@ -181,7 +181,7 @@ const MyProfileForm = () => {
                         id="woman"
                         onChange={(e) => sexChange(e)}
                     ></input>
-                    <label for="woman">
+                    <label htmlFor="woman">
                         <p>여자</p>
                     </label>
                     <input
@@ -190,7 +190,7 @@ const MyProfileForm = () => {
                         id="man"
                         onChange={(e) => sexChange(e)}
                     ></input>
-                    <label for="man">
+                    <label htmlFor="man">
                         <p>남자</p>
                     </label>
                     <input
@@ -199,7 +199,7 @@ const MyProfileForm = () => {
                         id="unknown"
                         onChange={(e) => sexChange(e)}
                     ></input>
-                    <label for="unknown">
+                    <label htmlFor="unknown">
                         <p>선택안함</p>
                     </label>
                 </div>
