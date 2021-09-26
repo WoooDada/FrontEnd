@@ -71,7 +71,7 @@ const BadgeComp = () => {
     const [userData, setUserData] = useState({
         nickname: "로그인해주세요",
         badge_color: "#000000",
-        badge_name: "IRON",
+        badge_name: "-",
     });
     useEffect(() => {
         const getNickName = async () => {

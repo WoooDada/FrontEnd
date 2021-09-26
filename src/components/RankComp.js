@@ -86,7 +86,7 @@ const StudyRank = (srank) => {
             <hr />
             <div>
                 <RankItem
-                    key={0}
+                    key={srank[0].rank}
                     rank={srank[0].rank}
                     nickname={srank[0].nickname}
                     tot={srank[0].tot_concent_time}
@@ -102,7 +102,7 @@ const PlayRank = (prank) => {
         for (let i = 1; i < Object.keys(prank).length; i++) {
             result.push(
                 <RankItem
-                    key={i}
+                    key={prank[i].rank}
                     rank={prank[i].rank}
                     nickname={prank[i].nickname}
                     tot={prank[i].tot_concent_rate}
@@ -147,8 +147,12 @@ const setBtnColor = (btn) => {
 
 const RankComp = () => {
     const authContext = useContext(AuthContext);
-    const [studyRankData, setStudyRankData] = useState(initialStudyData);
-    const [playRankData, setPlayRankData] = useState(initialPlayData);
+    const [studyRankData, setStudyRankData] = useState([
+        { rank: 0, nickname: "-", tot_concent_time: "-:-" },
+    ]);
+    const [playRankData, setPlayRankData] = useState([
+        { rank: 0, nickname: "-", tot_concent_rate: "-:-" },
+    ]);
 
     useEffect(() => {
         const getStudyRankData = async () => {

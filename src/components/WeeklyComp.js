@@ -308,7 +308,7 @@ const DayOfWeekComp = ({ dow, date, tasks }) => {
     };
     return (
         <div className="Dow-wrapper">
-            <div class="dot">
+            <div className="dot">
                 <span>{dow}</span>
             </div>
             <div className="Dow-todos">

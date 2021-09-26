@@ -44,7 +44,7 @@ const dowEn2Kr = () => {
     return left_ans.concat(right_ans);
 };
 const NewGraphComp = () => {
-    const [graphData, setGraphData] = useState(initialData);
+    const [graphData, setGraphData] = useState([]);
     const [xCategories, setXCategories] = useState([
         "월",
         "화",
