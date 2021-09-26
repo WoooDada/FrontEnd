@@ -31,11 +31,15 @@ function LoginForm({ history }) {
             .catch((e) => {
                 alert("로그인 실패");
                 console.log(e.response);
+                // setLoginErrorMsg("아이디나 비밀번호가 일치하지 않습니다.");
                 if (
                     e.response &&
                     e.response.data &&
                     e.response.data.message &&
-                    e.response.data.message === "uid or pw wrong"
+                    (e.response.data.message ===
+                        "check your id and password1" ||
+                        e.response.data.message ===
+                            "check your id and password")
                 ) {
                     // id가 없는 경우
                     setLoginErrorMsg("아이디나 비밀번호가 일치하지 않습니다.");
