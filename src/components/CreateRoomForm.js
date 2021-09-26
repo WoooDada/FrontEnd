@@ -130,6 +130,8 @@ const CreateRoomForm = ({ history }) => {
             color === ""
         ) {
             setMessage("필수 입력 항목을 모두 입력해주세요.");
+        } else if (secret === "secret" && pwd === "") {
+            setMessage("비밀방을 선택하셨습니다. 비밀번호를 입력해주세요.");
         } else {
             // 공개방일 경우 비밀번호 "" 처리
             if (secret === "not-secret") {
@@ -150,25 +152,22 @@ const CreateRoomForm = ({ history }) => {
                 authContext.state.token
             )
                 .then(({ status, data }) => {
+                    console.log(status);
                     if (status === 200) {
                         console.log("room create success");
-                        console.log(data.room_id);
-                        if (data.room_id === -1) {
-                            setMessage(
-                                "방명이 중복되었습니다. 다른 이름을 입력해주세요."
-                            );
-                        } else if (data.room_id === -2) {
-                            setMessage(
-                                "비밀방을 선택하셨습니다. 비밀번호를 입력해주세요."
-                            );
-                        } else {
-                            // 스터디룸으로 이동
-                            history.push(`/study/${data.room_id}`);
-                        }
+                        // 스터디룸으로 이동
+                        history.push(`/study/${data.room_id}`);
                     }
                 })
                 .catch((e) => {
+                    console.log(e.response.status);
+                    if (e.response.status === 400) {
+                        setMessage(
+                            "방명이 중복되었습니다. 다른 이름을 입력해주세요."
+                        );
+                    } else {
                     console.log("네트워크 오류. 잠시 후에 시도해주세요!");
+                    }
                 });
             // const { status, data } = {
             //     status: 200,
@@ -206,7 +205,7 @@ const CreateRoomForm = ({ history }) => {
                     id="not-secret"
                     onChange={(e) => radioChange(e)}
                 ></input>
-                <label for="not-secret">
+                <label htmlFor="not-secret">
                     <p>공개방</p>
                 </label>
                 <input
@@ -215,7 +214,7 @@ const CreateRoomForm = ({ history }) => {
                     id="secret"
                     onChange={(e) => radioChange(e)}
                 ></input>
-                <label for="secret">
+                <label htmlFor="secret">
                     <p>비밀방</p>
                 </label>
             </div>
@@ -224,7 +223,7 @@ const CreateRoomForm = ({ history }) => {
                 <input
                     className="form-input"
                     name="room_pwd"
-                    placeholder="(형식)으로 입력해주세요"
+                    placeholder="비밀방인 경우 입력해주세요"
                     disabled={secret === "secret" ? false : true}
                     onChange={(e) => inputPwd(e)}
                 />

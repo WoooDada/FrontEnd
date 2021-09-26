@@ -51,33 +51,33 @@ const MonthlyComp = () => {
     });
     const { title, start, end } = inputs;
     // GET
+    const getMtodos = async () => {
+        await getApi(
+            {
+                uid: authContext.state.uid,
+            },
+            "/tdl/monthly/",
+            authContext.state.token
+        )
+            .then(({ status, data }) => {
+                if (status === 200) {
+                    // data : [m_todo_id, stt_date, end_date, m_content] 배열 여러개.
+                    // map으로 각각 setMtodos로 id, start, end, title에 넣어주기
+                    setMtodos(
+                        data.m_todo_list.map((mdata, i) => ({
+                            id: mdata.m_todo_id,
+                            start: mdata.stt_date,
+                            end: mdata.end_date,
+                            title: mdata.m_content,
+                        }))
+                    );
+                }
+            })
+            .catch((e) => {
+                alert("인터넷 연결이 불안정합니다.");
+            });
+    };
     useEffect(() => {
-        const getMtodos = async () => {
-            await getApi(
-                {
-                    uid: authContext.state.uid,
-                },
-                "/tdl/monthly/",
-                authContext.state.token
-            )
-                .then(({ status, data }) => {
-                    if (status === 200) {
-                        // data : [m_todo_id, stt_date, end_date, m_content] 배열 여러개.
-                        // map으로 각각 setMtodos로 id, start, end, title에 넣어주기
-                        setMtodos(
-                            data.m_todo_list.map((mdata, i) => ({
-                                id: mdata.m_todo_id,
-                                start: mdata.stt_date,
-                                end: mdata.end_date,
-                                title: mdata.m_content,
-                            }))
-                        );
-                    }
-                })
-                .catch((e) => {
-                    alert("인터넷 연결이 불안정합니다.");
-                });
-        };
         getMtodos();
     }, []);
 
@@ -105,18 +105,7 @@ const MonthlyComp = () => {
             })
             .catch((e) => {
                 alert("일정 추가 실패. 네트워크를 확인해주세요.");
-                console.log("mtdl post fail");
             });
-        // * dummy code
-        // const { status, data } = {
-        //     status: 200,
-        //     data: { m_todo_id: "1" },
-        // };
-        // const { status, data } = {
-        //     status: 400,
-        //     data: { message: "mtdl post fail" },
-        // };
-
         setInputs({
             title: "",
             start: "",
@@ -186,20 +175,6 @@ const MonthlyComp = () => {
             end: newEnd,
         });
 
-        setMtodos(
-            // mtodos 배열에  반영
-            mtodos.map((mtodo) =>
-                mtodo.id === eventId
-                    ? {
-                          ...mtodo,
-                          title: eventInfo.oldEvent.title,
-                          start: newStart,
-                          end: newEnd,
-                      }
-                    : mtodo
-            )
-        );
-
         //UPDATE
         await putApi(
             {
@@ -219,15 +194,7 @@ const MonthlyComp = () => {
                 console.log("mtdl update fail");
                 alert("월간 일정 수정 실패. 네트워크를 확인해주세요.");
             });
-        // * dummy date
-        // const { status, data } = {
-        //     status: 200,
-        //     data: { m_todo_id: "1" },
-        // };
-        // const { status, data } = {
-        //     status: 400,
-        //     data: { message: "mtdl update fail" },
-        // };
+        getMtodos();
     };
 
     const handleEventResize = async (eventInfo) => {
@@ -248,19 +215,6 @@ const MonthlyComp = () => {
             start: eventInfo.oldEvent.startStr,
             end: newEnd,
         });
-        setMtodos(
-            // mtodos 배열에  반영
-            mtodos.map((mtodo) =>
-                mtodo.id === eventId
-                    ? {
-                          ...mtodo,
-                          title: eventInfo.oldEvent.title,
-                          start: eventInfo.oldEvent.startStr,
-                          end: newEnd,
-                      }
-                    : mtodo
-            )
-        );
         //UPDATE
         await putApi(
             {
@@ -280,34 +234,12 @@ const MonthlyComp = () => {
                 console.log("mtdl update fail");
                 alert("월간 일정 수정 실패. 네트워크를 확인해주세요.");
             });
-        // * dummy date
-        // const { status, data } = {
-        //     status: 200,
-        //     data: { m_todo_id: "1" },
-        // };
-        // const { status, data } = {
-        //     status: 400,
-        //     data: { message: "mtdl update fail" },
-        // };
+        getMtodos();
     };
 
     // 일정변경(UPDATE) : mtodos배열에서 해당 id의 event 변경해줌
     const handleClickUpdateBtn = async (e) => {
         e.preventDefault();
-
-        setMtodos(
-            mtodos.map((mtodo) =>
-                mtodo.id === state.eventId
-                    ? {
-                          ...mtodo,
-                          title: inputs.title,
-                          start: inputs.start,
-                          end: inputs.end,
-                      }
-                    : mtodo
-            )
-        );
-
         //UPDATE
         await putApi(
             {
@@ -327,16 +259,7 @@ const MonthlyComp = () => {
                 console.log("mtdl update fail");
                 alert("월간 일정 수정 실패. 네트워크를 확인해주세요.");
             });
-        // * dummy data
-        // const { status, data } = {
-        //     status: 200,
-        //     data: { m_todo_id: "1" },
-        // };
-        // const { status, data } = {
-        //     status: 400,
-        //     data: { message: "mtdl update fail" },
-        // };
-
+        getMtodos();
         setInputs({ title: "", start: "", end: "" });
         dispatch({ type: "event-not-click", payload: "" });
     };
@@ -344,7 +267,7 @@ const MonthlyComp = () => {
     // 일정삭제(DELETE) : mtodos배열에서 해당 id의 event 삭제
     const handleClickDeleteBtn = async (e) => {
         e.preventDefault();
-        setMtodos(mtodos.filter((mtodos) => mtodos.id !== state.eventId)); // mtodos 배열에 해당 event 삭제
+        setMtodos(mtodos.filter(mtodos => mtodos.id !== state.eventId)); // mtodos 배열에 해당 event 삭제
         // DELETE
         await deleteApi(
             {
@@ -358,33 +281,22 @@ const MonthlyComp = () => {
                 console.log("mtdl delete success");
             })
             .catch((e) => {
-                console.log("mtdl delete fail");
                 alert("월간 일정 삭제 실패. 네트워크를 확인해주세요.");
             });
-        // * dummy date
-        // const { status, data } = {
-        //     status: 200,
-        //     data: { m_todo_id: "2" },
-        // };
-        // const { status, data } = {
-        //     status: 400,
-        //     data: { message: "mtdl delete fail" },
-        // };
-
         setInputs({ title: "", start: "", end: "" });
         dispatch({ type: "event-not-click", payload: "" });
+        getMtodos();
     };
 
     return (
         <div className="Main-MonthlyComp">
-            {/* <p className="small-title">월간 스케줄</p> */}
             <div className="calendar-wrapper">
                 <br />
                 <FullCalendar
                     plugins={[dayGridPlugin, interactionPlugin]}
                     initialView="dayGridMonth"
                     events={mtodos}
-                    // editable='true' //eventStartEditable(dragging) & eventDurationEditable(기간 늘리기)
+                    editable='true' //eventStartEditable(dragging) & eventDurationEditable(기간 늘리기)
                     droppable="true"
                     eventStartEditable="true"
                     eventDurationEditable="true"
@@ -416,13 +328,13 @@ const MonthlyComp = () => {
                                 className="Main-Monthly-changeBtn"
                                 onClick={handleClickUpdateBtn}
                             >
-                                내용변경
+                                변경
                             </button>
                             <button
                                 className="Main-Monthly-deleteBtn"
                                 onClick={handleClickDeleteBtn}
                             >
-                                일정삭제
+                                삭제
                             </button>
                         </>
                     ) : (
