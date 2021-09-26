@@ -212,10 +212,6 @@ const StudyRoom = () => {
 
     /* useEffect */
     useEffect(() => {
-        const getRandomEmoji = () => {
-            const emojis = ["👍", "✊", "👊", "🤘", "🙏", "✋", "💪"];
-            return emojis[Math.floor(Math.random() * 7)];
-        };
         const getAllRooms = async () => {
             const params = { all: "T", keyword: keyword };
             await getApi(params, "/studyroom/", authContext.state.token)
@@ -248,7 +244,6 @@ const StudyRoom = () => {
                         return {
                             ...d,
                             room_tag: room_tag,
-                            emoji: getRandomEmoji(),
                         };
                     });
                     setRooms(inp_rooms);
@@ -371,7 +366,38 @@ const StudyRoom = () => {
 
         await getApi(params, "/studyroom/", authContext.state.token)
             .then(({ status, data }) => {
-                setRooms(data.data);
+                console.log(data.data);
+                const inp_rooms = data.data.map((d) => {
+                    var room_tag = "기타";
+                    switch (d.room_tag) {
+                        case "college":
+                            room_tag = "대학생";
+                            break;
+                        case "sat":
+                            room_tag = "수능";
+                            break;
+                        case "gongmuwon":
+                            room_tag = "공무원";
+                            break;
+                        case "employment":
+                            room_tag = "취업 및 이직";
+                            break;
+                        case "certificate":
+                            room_tag = "자격증";
+                            break;
+                        case "language":
+                            room_tag = "어학";
+                            break;
+                        default:
+                            room_tag = "기타";
+                            break;
+                    }
+                    return {
+                        ...d,
+                        room_tag: room_tag,
+                    };
+                });
+                setRooms(inp_rooms);
             })
             .catch((e) => {
                 console.log(e);
@@ -426,7 +452,6 @@ const StudyRoom = () => {
                                 room_color={r.room_color}
                                 is_scret={r.is_secret}
                                 room_tag={r.room_tag}
-                                emoji={r.emoji}
                                 page={"studyroom"}
                                 openModal={openModal}
                                 alertOverflow={alertOverflow}

@@ -16,16 +16,18 @@ const Studycard = ({
     room_tag,
     page,
     openModal,
-    emoji,
+
     alertOverflow,
     setClickedRoomId,
 }) => {
     const history = useHistory();
 
+    const emojis = ["👍", "✊", "👊", "🤘", "🙏", "✋", "💪"];
+
     const style = {
         backgroundColor: room_color,
     };
-    
+
     return (
         <div
             className={page === "main" ? "Studycard" : "Studycard-studyroom"}
@@ -56,7 +58,9 @@ const Studycard = ({
                     </div>
                 </div>
 
-                <div className="Studycard-emoji">{emoji}</div>
+                <div className="Studycard-emoji">
+                    {emojis[room_id % emojis.length]}
+                </div>
             </div>
             <div style={style} className="Studycard-lower">
                 <div className="Studycard-roomname">{room_name}</div>
