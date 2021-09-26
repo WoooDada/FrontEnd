@@ -163,7 +163,7 @@ const RightStudyComp = ({ match }) => {
         if (yolo_ws.current && yolo_ws.current.readyState === 1 && start) {
             const imageSrc = webcamRef.current.getScreenshot();
             // console.log(imageSrc);
-            const msg = { message: imageSrc };
+            const msg = { message: imageSrc, uid: authContext.state.uid };
             yolo_ws.current.send(JSON.stringify(msg));
         } else return;
     }, MODEL_APPLY_TIME * 1000);
