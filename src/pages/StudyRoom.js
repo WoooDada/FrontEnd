@@ -451,7 +451,7 @@ const StudyRoom = () => {
                                 inppl={r.inppl}
                                 maxppl={r.maxppl}
                                 room_color={r.room_color}
-                                is_scret={r.is_secret}
+                                is_scret={r.room_issecret}
                                 room_tag={r.room_tag}
                                 page={"studyroom"}
                                 openModal={openModal}

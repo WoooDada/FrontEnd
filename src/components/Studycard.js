@@ -76,7 +76,7 @@ const Studycard = ({
             onClick={() => {
                 if (inppl >= maxppl) {
                     alert("입장인원이 다 찼습니다. 다른 방에 접속해주세요!");
-                } else if (is_scret === "T") {
+                } else if (is_scret) {
                     setCardType("PWDINPUT");
                 } else {
                     history.push(`/study/${room_id}`);
@@ -87,7 +87,7 @@ const Studycard = ({
                 <div className="Studycard-upper">
                     <div className={"UpperHeader"}>
                         <AiFillLock
-                            color={is_scret === "T" ? "#9893B7" : "#ffffff"}
+                            color={is_scret ? "#9893B7" : "#ffffff"}
                             style={{
                                 marginLeft: "5px",
                                 // backgroundColor: "aqua",
