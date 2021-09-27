@@ -26,8 +26,8 @@ const RightStudyComp = ({ match }) => {
     const mate_ws = useRef(null);
 
     const [start, setStart] = useState(false);
+    const [resultDict, setResultDict] = useState({ C: 0, P: 0 });
     const resultListRef = useRef([]);
-    const resultDictRef = useRef({ C: 0, P: 0 });
     const [study_time, setStudy_time] = useState({
         tot_concent_time: "00:00",
         tot_play_time: "00:00",
@@ -70,27 +70,28 @@ const RightStudyComp = ({ match }) => {
     const getStudyRate = (resultDict) => {
         /*
             --준비--
-            resultDictRef : 딕셔너리 형태
+            resultDict : 딕셔너리 형태
             resultListRef : 리스트 형태 
             --로직--
             학습률: 3초마다 반영해줌
-            resultDictRef.length >= 40
+            resultDict.length >= 20
                 : 누적된 근 40개의 C, P의 비율로 계산(즉, 최근 2분간의 데이터로 계산)
             
-            resultDictRef.length < 40
-                : 누적된 근 resultDictRef.length개의 C, P의 비율로 계산
+            resultDict.length < 20
+                : 누적된 근 resultDict.length개의 C, P의 비율로 계산
 
             3초마다: 
-            resultDictRef.length > 40
-                : result에서 1개 shift, resultDictRef 해당 타입 -1
+            resultDict.length > 20
+                : result에서 1개 shift, resultDict 해당 타입 -1
         */
         const studyRate = resultDict.C / (resultDict.P + resultDict.C);
-        return studyRate ? String(studyRate * 100).substring(0, 4) : "00.00";
+        return studyRate ? String(studyRate * 100).substring(0, 4) : "00.0";
     };
 
     /* 페이지 진입 시 */
     useEffect(() => {
-        // Webcam 안될 경우: 직접 webcam 만들기..
+        resultListRef.current = [];
+
         room_id = location.pathname.split("/")[2];
         const putIn = async () => {
             console.log(authContext.state.token);
@@ -206,15 +207,28 @@ const RightStudyComp = ({ match }) => {
                 // 이미지 전달 후 C, P 데이터 받기
                 console.log(event.data);
                 const { type } = JSON.parse(event.data);
-                resultDictRef.current[type] += 1;
-                if (resultListRef.current.length > 40) {
+
+                setResultDict((prev) => {
+                    let rst = Object.assign({}, prev);
+                    rst[type] = prev[type] + 1;
+                    return rst;
+                });
+                resultListRef.current.push(type);
+                if (resultListRef.current.length > 20) {
                     // 최근 2분보다 더 오래된 타입의 데이터 abandon(버리기)
                     const old_type = resultListRef.current.shift();
-                    resultDictRef.current[old_type] -= 1;
+
+                    setResultDict((prev) => {
+                        let rst = Object.assign({}, prev);
+                        rst[old_type] = prev[old_type] - 1;
+
+                        return rst;
+                    });
                 }
             };
         } else if (yolo_ws.current && yolo_ws.current.readyState === 1) {
             // * [공부 끝내기 버튼 클릭 시] 소켓 연결 끊기
+            setResultDict({ C: 0, P: 0 });
             yolo_ws.current.close(1000, "STUDY BUTTON OFF");
         }
     };
@@ -352,8 +366,7 @@ const RightStudyComp = ({ match }) => {
 
                 <p className="StudyStatus">
                     <span className="undervideo-span1">
-                        현 집중도: {getStudyRate(resultDictRef.current)}%
-                        {/* 현 집중도: {getStudyRate({ C: 19, P: 21 })}% */}
+                        현 집중도: {getStudyRate(resultDict)}%
                     </span>
                     <span className="undervideo-span2">
                         공부시간: {study_time.tot_concent_time}
