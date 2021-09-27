@@ -249,6 +249,7 @@ const RightStudyComp = ({ match, setRoomInPpl }) => {
     const StudyMatesBox = ({ data }) => {
         var crNum = data.concent_rate.slice(0, -1); // 집중도 % 떼고 숫자만 가져옴 = crNum
         crNum *= 1;
+        console.log(crNum);
         return (
             <div className="Studymates-box">
                 <div className="SM-box-col1">
@@ -257,7 +258,7 @@ const RightStudyComp = ({ match, setRoomInPpl }) => {
                 </div>
                 <div className="SM-box-col2">
                     <div className={crNum > 50 ? "SM-box-cr-C" : "SM-box-cr-P"}>
-                        {data.concent_rate}{" "}
+                        {data.concent_rate.substring(0, 4)}{" "}
                     </div>
                     <div className="SM-box-ct">
                         공부시간: {data.concent_time}{" "}
