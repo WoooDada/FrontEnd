@@ -91,13 +91,6 @@ const RightStudyComp = ({ match }) => {
     /* 페이지 진입 시 */
     useEffect(() => {
         // Webcam 안될 경우: 직접 webcam 만들기..
-        navigator.mediaDevices
-            .getUserMedia({ video: true, audio: false })
-            .then((stream) => {
-                webcamRef.current.srcObject = stream;
-                webcamRef.current.play();
-            });
-
         room_id = location.pathname.split("/")[2];
         const putIn = async () => {
             console.log(authContext.state.token);
@@ -341,28 +334,21 @@ const RightStudyComp = ({ match }) => {
         <div className="RightComp">
             <div className="VideoComp">
                 {/* <p>현재: {isConcentrate()}</p> */}
-                <video
-                    className="CameraComp"
+
+                <Webcam
+                    audio={false}
                     ref={webcamRef}
+                    screenshotFormat="image/png"
+                    className="CameraComp"
+                    videoConstraints={{
+                        height: 300,
+                        width: 416,
+                    }}
                     style={{
                         transform: "scale(-1,1)",
                         width: "100%",
                     }}
-                ></video>
-                {/* // <Webcam
-                //     audio={false}
-                //     ref={webcamRef}
-                //     screenshotFormat="image/png"
-                //     className="CameraComp"
-                //     videoConstraints={{
-                //         height: 300,
-                //         width: 416,
-                //     }}
-                //     style={{
-                //         transform: "scale(-1,1)",
-                //         width: "100%",
-                //     }}
-                // /> */}
+                />
 
                 <p className="StudyStatus">
                     <span className="undervideo-span1">
