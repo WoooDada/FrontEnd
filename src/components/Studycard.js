@@ -18,10 +18,6 @@ const Studycard = ({
     is_scret,
     room_tag,
     page,
-    openModal,
-
-    alertOverflow,
-    setClickedRoomId,
 }) => {
     const history = useHistory();
     const authContext = useContext(AuthContext);
@@ -33,6 +29,25 @@ const Studycard = ({
 
     const style = {
         backgroundColor: room_color,
+    };
+
+    const en2KrRoomTag = (room_tag) => {
+        switch (room_tag) {
+            case "college":
+                return "대학생";
+            case "sat":
+                return "수능";
+            case "gongmuwon":
+                return "공무원";
+            case "employment":
+                return "취업 및 이직";
+            case "certificate":
+                return "자격증";
+            case "language":
+                return "어학";
+            default:
+                return "기타";
+        }
     };
 
     const onChangePwd = (e) => {
@@ -107,7 +122,9 @@ const Studycard = ({
                 {cardType === "NORMAL" ? (
                     <div style={style} className="Studycard-lower">
                         <div className="Studycard-roomname">{room_name}</div>
-                        <div className="Studycard-roomtag">#{room_tag}</div>
+                        <div className="Studycard-roomtag">
+                            #{en2KrRoomTag(room_tag)}
+                        </div>
                     </div>
                 ) : (
                     <div className="Pwdcard-lower" style={style}>

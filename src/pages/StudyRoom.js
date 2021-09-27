@@ -216,38 +216,7 @@ const StudyRoom = () => {
             const params = { all: "T", keyword: keyword };
             await getApi(params, "/studyroom/", authContext.state.token)
                 .then(({ status, data }) => {
-                    const inp_rooms = data.data.map((d) => {
-                        var room_tag = "기타";
-                        switch (d.room_tag) {
-                            case "college":
-                                room_tag = "대학생";
-                                break;
-                            case "sat":
-                                room_tag = "수능";
-                                break;
-                            case "gongmuwon":
-                                room_tag = "공무원";
-                                break;
-                            case "employment":
-                                room_tag = "취업 및 이직";
-                                break;
-                            case "certificate":
-                                room_tag = "자격증";
-                                break;
-                            case "language":
-                                room_tag = "어학";
-                                break;
-                            default:
-                                room_tag = "기타";
-                                break;
-                        }
-                        return {
-                            ...d,
-                            room_tag: room_tag,
-                        };
-                    });
-                    console.log(inp_rooms);
-                    setRooms(inp_rooms);
+                    setRooms(data.data);
                 })
                 .catch((e) => {
                     console.log(e);

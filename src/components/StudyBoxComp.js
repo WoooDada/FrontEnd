@@ -185,6 +185,7 @@ const StudyBoxComp = () => {
                 authContext.state.token
             )
                 .then(({ status, data }) => {
+                    console.log(data.all_room_list);
                     setAllRoomData(
                         data.all_room_list.map((s) => ({
                             room_id: s.room_id,
@@ -192,7 +193,7 @@ const StudyBoxComp = () => {
                             room_color: s.room_color,
                             inppl: s.inppl,
                             maxppl: s.maxppl,
-                            is_scret: s.is_scret,
+                            is_scret: s.is_secret,
                             room_tag: s.room_tag,
                         }))
                     );
@@ -214,6 +215,7 @@ const StudyBoxComp = () => {
                 authContext.state.token
             )
                 .then(({ status, data }) => {
+                    console.log(data.my_room_list);
                     setMyRoomData(
                         data.my_room_list.map((s) => ({
                             room_id: s.room_id,
@@ -222,7 +224,7 @@ const StudyBoxComp = () => {
                             inppl: s.inppl,
                             maxppl: s.maxppl,
                             room_tag: s.room_tag,
-                            is_scret: s.is_scret,
+                            is_scret: s.is_secret,
                         }))
                     );
                 })
