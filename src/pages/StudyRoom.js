@@ -201,8 +201,8 @@ const TagItem = ({ id, krname, clicked, handleClicked }) => {
 const StudyRoom = () => {
     const [keyword, setKeyword] = useState("");
     const [tags, setTags] = useState(initTags);
-    // const [rooms, setRooms] = useState([]);
-    const [rooms, setRooms] = useState(roomsTemp);
+    const [rooms, setRooms] = useState([]);
+    // const [rooms, setRooms] = useState(roomsTemp);
     const [clickedRoomId, setClickedRoomId] = useState(undefined);
     const [password, setPassword] = useState("");
     const authContext = useContext(AuthContext);
@@ -259,7 +259,7 @@ const StudyRoom = () => {
             //     },
             // };
         };
-        // getAllRooms();
+        getAllRooms();
     }, []);
 
     /* modal 관련 함수들 */
