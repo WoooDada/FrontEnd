@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useReducer, createContext, useContext } from "react";
 
 import { LeftStudyComp, RightStudyComp } from "../components";
@@ -21,12 +21,19 @@ const Study = ({ match }) => {
     const [state, dispatch] = useReducer(reducer, {
         btnValue: false,
     });
+    const [roomInPpl, setRoomInPpl] = useState("-");
 
     return (
         <BtnContext.Provider value={{ state, dispatch }}>
             <div className="StudyPage">
-                <LeftStudyComp match={match.params.roomid}></LeftStudyComp>
-                <RightStudyComp match={match.params.roomid}></RightStudyComp>
+                <LeftStudyComp
+                    match={match.params.roomid}
+                    roomInPpl={roomInPpl}
+                ></LeftStudyComp>
+                <RightStudyComp
+                    match={match.params.roomid}
+                    setRoomInPpl={setRoomInPpl}
+                ></RightStudyComp>
             </div>
         </BtnContext.Provider>
     );

@@ -15,7 +15,7 @@ import useInterval from "@use-it/interval";
 const MODEL_APPLY_TIME = 3;
 //////////////////////////////////////////////////////////////////////////////
 
-const RightStudyComp = ({ match }) => {
+const RightStudyComp = ({ match, setRoomInPpl }) => {
     const authContext = useContext(AuthContext);
     const btnContext = useContext(BtnContext);
     let room_id;
@@ -158,6 +158,7 @@ const RightStudyComp = ({ match }) => {
             });
             await console.log("mate_ws onmessage:", data);
             await setStudymates(new_studymates);
+            await setRoomInPpl(data.studymates.length + 1);
         };
 
         return async () => {

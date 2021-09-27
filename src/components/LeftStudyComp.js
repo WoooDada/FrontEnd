@@ -61,7 +61,7 @@ const initialRoomData = {
     max_ppl: 5,
 };
 
-const LeftStudyComp = ({ match }) => {
+const LeftStudyComp = ({ match, roomInPpl }) => {
     const [whichSchedule, setWhichSchedule] = useState("daily");
     const [roomData, setRoomData] = useState(initialRoomData);
     const [mannerMore, setMannerMore] = useState(false); // 공부방 에티켓 더보기 버튼
@@ -137,7 +137,7 @@ const LeftStudyComp = ({ match }) => {
                     <h5>
                         <span className="RoomPpl">
                             <BsFillPersonFill />
-                            {roomData.in_ppl}/{roomData.max_ppl}
+                            {roomInPpl}/{roomData.max_ppl}
                         </span>
                     </h5>
                 </div>
