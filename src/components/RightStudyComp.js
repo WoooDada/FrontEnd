@@ -159,14 +159,14 @@ const RightStudyComp = ({ match }) => {
             await setStudymates(new_studymates);
         };
 
-        return () => {
+        return async () => {
             if (yolo_ws.current && yolo_ws.current.readyState === 1) {
-                yolo_ws.current.close(1000, "CLOSE YOLO WS");
+                await yolo_ws.current.close(1000, "CLOSE YOLO WS");
             }
             if (mate_ws.current && mate_ws.current.readyState === 1) {
-                mate_ws.current.close(1000, "STUDY BUTTON OFF");
+                await mate_ws.current.close(1000, "STUDY BUTTON OFF");
             }
-            putOut();
+            await putOut();
         };
     }, []);
 
