@@ -35,7 +35,7 @@ const roomsTemp = [
     {
         room_id: "2",
         room_name: "공부하자비밀방이건두줄이지롱",
-        inppl: "5",
+        inppl: "4",
         maxppl: "5",
         room_tag: "college",
         room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
@@ -62,86 +62,86 @@ const roomsTemp = [
         is_secret: "T",
         room_color: "#C0C0C0",
     },
-    {
-        room_id: "5",
-        room_name: "공부하자3",
-        inppl: "0",
-        maxppl: "5",
-        room_tag: "sat",
-        room_comment: "수능 공부할 사람만 들어와",
-        is_secret: "F",
-        room_color: "#E9B2BC",
-    },
-    {
-        room_id: "6",
-        room_name: "공부하자비밀방3이것도두줄이지롱",
-        inppl: "0",
-        maxppl: "5",
-        room_tag: "college",
-        room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
-        is_secret: "T",
-        room_color: "#9F8FFF",
-    },
-    {
-        room_id: "7",
-        room_name: "공부하자4",
-        inppl: "0",
-        maxppl: "5",
-        room_tag: "sat",
-        room_comment: "수능 공부할 사람만 들어와",
-        is_secret: "F",
-        room_color: "#9F8FFF",
-    },
-    {
-        room_id: "8",
-        room_name: "공부하자비밀방4",
-        inppl: "0",
-        maxppl: "5",
-        room_tag: "college",
-        room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
-        is_secret: "T",
-        room_color: "#FAB39B",
-    },
-    {
-        room_id: "9",
-        room_name: "공부하자3",
-        inppl: "0",
-        maxppl: "5",
-        room_tag: "sat",
-        room_comment: "수능 공부할 사람만 들어와",
-        is_secret: "F",
-        room_color: "#E9B2BC",
-    },
-    {
-        room_id: "10",
-        room_name: "공부하자비밀방3이것도두줄이지롱",
-        inppl: "0",
-        maxppl: "5",
-        room_tag: "college",
-        room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
-        is_secret: "T",
-        room_color: "#9F8FFF",
-    },
-    {
-        room_id: "11",
-        room_name: "공부하자4",
-        inppl: "0",
-        maxppl: "5",
-        room_tag: "sat",
-        room_comment: "수능 공부할 사람만 들어와",
-        is_secret: "F",
-        room_color: "#9F8FFF",
-    },
-    {
-        room_id: "12",
-        room_name: "공부하자비밀방4",
-        inppl: "0",
-        maxppl: "5",
-        room_tag: "college",
-        room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
-        is_secret: "T",
-        room_color: "#FAB39B",
-    },
+    // {
+    //     room_id: "5",
+    //     room_name: "공부하자3",
+    //     inppl: "0",
+    //     maxppl: "5",
+    //     room_tag: "sat",
+    //     room_comment: "수능 공부할 사람만 들어와",
+    //     is_secret: "F",
+    //     room_color: "#E9B2BC",
+    // },
+    // {
+    //     room_id: "6",
+    //     room_name: "공부하자비밀방3이것도두줄이지롱",
+    //     inppl: "0",
+    //     maxppl: "5",
+    //     room_tag: "college",
+    //     room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
+    //     is_secret: "T",
+    //     room_color: "#9F8FFF",
+    // },
+    // {
+    //     room_id: "7",
+    //     room_name: "공부하자4",
+    //     inppl: "0",
+    //     maxppl: "5",
+    //     room_tag: "sat",
+    //     room_comment: "수능 공부할 사람만 들어와",
+    //     is_secret: "F",
+    //     room_color: "#9F8FFF",
+    // },
+    // {
+    //     room_id: "8",
+    //     room_name: "공부하자비밀방4",
+    //     inppl: "0",
+    //     maxppl: "5",
+    //     room_tag: "college",
+    //     room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
+    //     is_secret: "T",
+    //     room_color: "#FAB39B",
+    // },
+    // {
+    //     room_id: "9",
+    //     room_name: "공부하자3",
+    //     inppl: "0",
+    //     maxppl: "5",
+    //     room_tag: "sat",
+    //     room_comment: "수능 공부할 사람만 들어와",
+    //     is_secret: "F",
+    //     room_color: "#E9B2BC",
+    // },
+    // {
+    //     room_id: "10",
+    //     room_name: "공부하자비밀방3이것도두줄이지롱",
+    //     inppl: "0",
+    //     maxppl: "5",
+    //     room_tag: "college",
+    //     room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
+    //     is_secret: "T",
+    //     room_color: "#9F8FFF",
+    // },
+    // {
+    //     room_id: "11",
+    //     room_name: "공부하자4",
+    //     inppl: "0",
+    //     maxppl: "5",
+    //     room_tag: "sat",
+    //     room_comment: "수능 공부할 사람만 들어와",
+    //     is_secret: "F",
+    //     room_color: "#9F8FFF",
+    // },
+    // {
+    //     room_id: "12",
+    //     room_name: "공부하자비밀방4",
+    //     inppl: "0",
+    //     maxppl: "5",
+    //     room_tag: "college",
+    //     room_comment: "쉿 대학생 중에 공부할 사람만 들어와",
+    //     is_secret: "T",
+    //     room_color: "#FAB39B",
+    // },
 ];
 
 const customStyles = {
@@ -202,7 +202,7 @@ const StudyRoom = () => {
     const [keyword, setKeyword] = useState("");
     const [tags, setTags] = useState(initTags);
     // const [rooms, setRooms] = useState([]);
-    const [rooms, setRooms] = useState([]);
+    const [rooms, setRooms] = useState(roomsTemp);
     const [clickedRoomId, setClickedRoomId] = useState(undefined);
     const [password, setPassword] = useState("");
     const authContext = useContext(AuthContext);
@@ -246,6 +246,7 @@ const StudyRoom = () => {
                             room_tag: room_tag,
                         };
                     });
+                    console.log(inp_rooms);
                     setRooms(inp_rooms);
                 })
                 .catch((e) => {
@@ -258,7 +259,7 @@ const StudyRoom = () => {
             //     },
             // };
         };
-        getAllRooms();
+        // getAllRooms();
     }, []);
 
     /* modal 관련 함수들 */
