@@ -249,7 +249,6 @@ const RightStudyComp = ({ match, setRoomInPpl }) => {
     const StudyMatesBox = ({ data }) => {
         var crNum = data.concent_rate.slice(0, -1); // 집중도 % 떼고 숫자만 가져옴 = crNum
         crNum *= 1;
-        console.log(crNum);
         return (
             <div className="Studymates-box">
                 <div className="SM-box-col1">
