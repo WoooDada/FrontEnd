@@ -50,7 +50,7 @@ const TodayComp = () => {
             <p className="today-percent" style={{ color: "#5F45FF" }}>
                 {todayStudy.tot_concent_time}
             </p>
-            <p className="stitle">딴짓 시간</p>
+            <p className="stitle">총 공부 시간</p>
             <p className="today-percent" style={{ color: "#F68059" }}>
                 {todayStudy.tot_time}
             </p>
