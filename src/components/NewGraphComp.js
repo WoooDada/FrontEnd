@@ -6,18 +6,20 @@ import { AuthContext } from "../App";
 
 const initialData = [
     {
-        name: "공부 시간(Hour)",
+        name: "공부 시간(Minute)",
         data: [10, 0, 3, 2.3, 0, 5.1, 3.2],
     },
     {
-        name: "딴짓 시간(Hour)",
+        name: "딴짓 시간(Minute)",
         data: [1, 0, 0.2, 0.5, 1, 0.2, 1],
     },
 ];
 const dowEn2Kr = () => {
     const dow_seq_list = ["월", "화", "수", "목", "금", "토", "일"];
+    const id_right_ans = [];
     const right_ans = [];
     let i;
+    const id_left_ans = [];
     const left_ans = [];
     const enDow_list = {
         Fri: "금",
@@ -31,6 +33,7 @@ const dowEn2Kr = () => {
     const enDow = new Date().toDateString().split(" ")[0];
     const today = enDow_list[enDow];
     for (i = 0; i < dow_seq_list.length; i++) {
+        id_right_ans.push(i);
         right_ans.push(dow_seq_list[i]);
         if (dow_seq_list[i] === today) {
             break;
@@ -38,10 +41,14 @@ const dowEn2Kr = () => {
     }
     i++;
     while (i < dow_seq_list.length) {
+        id_left_ans.push(i);
         left_ans.push(dow_seq_list[i]);
         i++;
     }
-    return left_ans.concat(right_ans);
+    return {
+        weekxs: left_ans.concat(right_ans),
+        weekid: id_left_ans.concat(id_right_ans),
+    };
 };
 const NewGraphComp = () => {
     const [graphData, setGraphData] = useState([]);
@@ -57,7 +64,8 @@ const NewGraphComp = () => {
     const authContext = useContext(AuthContext);
     useEffect(() => {
         const getGraphData = async () => {
-            const weekxs = dowEn2Kr();
+            const { weekxs } = dowEn2Kr();
+            // console.log(weekxs);
             setXCategories(weekxs);
             await getApi(
                 {
@@ -72,20 +80,12 @@ const NewGraphComp = () => {
                         // 무작위 월~일 데이터: 그 날 기준 6일 전까지로 정렬.
                         setGraphData([
                             {
-                                name: "공부 시간(Hour)",
-                                data: xCategories.map((x, i) => {
-                                    return data.graph.filter(
-                                        (v, _) => x === v.date
-                                    )[0].concent_time;
-                                }),
+                                name: "공부 시간(Minute)",
+                                data: data.graph.concent_time_list,
                             },
                             {
-                                name: "딴짓 시간(Hour)",
-                                data: xCategories.map((x, i) => {
-                                    return data.graph.filter(
-                                        (v, _) => x === v.date
-                                    )[0].play_time;
-                                }),
+                                name: "딴짓 시간(Minute)",
+                                data: data.graph.play_time_list,
                             },
                         ]);
                     }
@@ -129,7 +129,7 @@ const NewGraphComp = () => {
             dataLabels: {
                 enabled: false,
                 formatter: function (val) {
-                    return val + "Hour";
+                    return val + "Minute";
                 },
                 offsetY: 0,
                 style: {
@@ -174,7 +174,7 @@ const NewGraphComp = () => {
                 labels: {
                     show: false,
                     formatter: function (val) {
-                        return val + "Hour";
+                        return val + "Minute";
                     },
                 },
             },
