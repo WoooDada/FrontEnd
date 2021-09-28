@@ -32,6 +32,7 @@ const Studycard = ({
     };
 
     const en2KrRoomTag = (room_tag) => {
+        console.log(room_tag);
         switch (room_tag) {
             case "college":
                 return "대학생";
