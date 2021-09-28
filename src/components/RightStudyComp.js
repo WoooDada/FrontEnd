@@ -257,7 +257,7 @@ const RightStudyComp = ({ match, setRoomInPpl }) => {
                 </div>
                 <div className="SM-box-col2">
                     <div className={crNum > 50 ? "SM-box-cr-C" : "SM-box-cr-P"}>
-                        {data.concent_rate === "100"
+                        {data.concent_rate.substring(0, 3) === "100"
                             ? "100"
                             : data.concent_rate.substring(0, 4)}
                         {" %"}
