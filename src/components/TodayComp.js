@@ -10,7 +10,7 @@ const TodayComp = () => {
     const [todayStudy, setTodayStudy] = useState({
         tot_concent_rate: 0,
         tot_concent_time: "0h 00m",
-        tot_time: "0h 00m",
+        tot_play_time: "0h 00m",
     });
     const make2hmForm = (data) => {
         const l = data.split(":");
@@ -27,10 +27,11 @@ const TodayComp = () => {
                 authContext.state.token
             )
                 .then(({ status, data }) => {
+                    console.log(data);
                     setTodayStudy({
                         tot_concent_rate: data.tot_concent_rate,
                         tot_concent_time: make2hmForm(data.tot_concent_time),
-                        tot_time: make2hmForm(data.tot_time),
+                        tot_play_time: make2hmForm(data.tot_play_time),
                     });
                 })
                 .catch((e) => {
@@ -50,9 +51,9 @@ const TodayComp = () => {
             <p className="today-percent" style={{ color: "#5F45FF" }}>
                 {todayStudy.tot_concent_time}
             </p>
-            <p className="stitle">총 공부 시간</p>
+            <p className="stitle">딴짓 시간</p>
             <p className="today-percent" style={{ color: "#F68059" }}>
-                {todayStudy.tot_time}
+                {todayStudy.tot_play_time}
             </p>
         </div>
     );
