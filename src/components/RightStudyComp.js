@@ -12,7 +12,8 @@ import logo from "../constants/imgs/newlogo.png";
 import useInterval from "@use-it/interval";
 
 // 초 단위
-const MODEL_APPLY_TIME = 3;
+const MODEL_APPLY_TIME = 5;
+const GET_MATE_INFO_TIME = 30;
 //////////////////////////////////////////////////////////////////////////////
 
 const RightStudyComp = ({ match, setRoomInPpl }) => {
@@ -22,8 +23,6 @@ const RightStudyComp = ({ match, setRoomInPpl }) => {
     const history = useHistory();
     const location = useLocation();
     const webcamRef = useRef();
-    const yolo_ws = useRef(null);
-    const mate_ws = useRef(null);
 
     const [start, setStart] = useState(false);
     const [resultDict, setResultDict] = useState({ C: 0, P: 0 });
@@ -93,23 +92,38 @@ const RightStudyComp = ({ match, setRoomInPpl }) => {
         resultListRef.current = [];
 
         room_id = location.pathname.split("/")[2];
-        const putIn = async () => {
-            console.log(authContext.state.token);
+
+        /* 공부방 입장 알림 */
+        const postRoomIn = async () => {
+            console.log("post", room_id);
             await postApi(
                 {
                     room_id: room_id,
-                    type: "ON",
+                    uid: authContext.state.uid,
                 },
                 "/study/room/",
                 authContext.state.token
             )
-                .then(({ status }) => {
+                .then(({ status, data }) => {
                     if (status === 200) {
-                        console.log("잘됨");
+                        console.log("/study/room/", status);
+                        console.log(data);
+                        const new_studymates = data.studymates.map((sm, i) => ({
+                            nickname: sm.nickname,
+                            concent_rate: sm.concent_rate,
+                            concent_time: sm.concent_time,
+                            play_time: sm.play_time,
+                        }));
+                        setStudy_time({
+                            tot_concent_time: data.myStatus.concent_time,
+                            tot_play_time: data.myStatus.play_time,
+                        });
+                        setStudymates(new_studymates);
+                        setRoomInPpl(data.studymates.length + 1);
                     }
                 })
                 .catch((e) => {
-                    alert("네트워크 에러!");
+                    alert("공부방 입장 네트워크 에러!");
                 });
 
             // if (status === 200) {
@@ -118,119 +132,102 @@ const RightStudyComp = ({ match, setRoomInPpl }) => {
             //     alert("네트워크 에러!");
             // }
         };
-        putIn();
+        postRoomIn();
         setStudyMatesArrowColor();
-        // * 스터디 메이트 관련 데이터 수신 소켓 연결
-        const mate_url = `ws://13.209.194.64:8080/study/study_mate/`;
-        mate_ws.current = new WebSocket(mate_url);
-        mate_ws.current.onopen = () => {
-            console.log("study mate socket opened");
-            if (mate_ws.current.readyState === 1) {
-                mate_ws.current.send(
-                    JSON.stringify({
-                        uid: authContext.state.uid,
-                        room_id: room_id,
-                    })
-                );
-            }
-        };
-        mate_ws.current.onclose = (event) => {
-            console.log(
-                "mate ws closed",
-                "\nis clean close?:",
-                event.wasClean,
-                "\nclosed reason:",
-                event.reason
-            );
-        };
-        mate_ws.current.onmessage = async (event) => {
-            // 스터디 메이트 SOCKET(N초 주기)
-            const data = JSON.parse(event.data);
-            const new_studymates = await data.studymates.map((sm, i) => ({
-                nickname: sm.nickname,
-                concent_rate: sm.concent_rate,
-                concent_time: sm.concent_time,
-                play_time: sm.play_time,
-            }));
-            await setStudy_time({
-                tot_concent_time: data.myStatus.concent_time,
-                tot_play_time: data.myStatus.play_time,
-            });
-            await console.log("mate_ws onmessage:", data);
-            await setStudymates(new_studymates);
-            await setRoomInPpl(data.studymates.length + 1);
-        };
 
         return async () => {
-            if (yolo_ws.current && yolo_ws.current.readyState === 1) {
-                await yolo_ws.current.close(1000, "CLOSE YOLO WS");
-            }
-            if (mate_ws.current && mate_ws.current.readyState === 1) {
-                await mate_ws.current.close(1000, "STUDY BUTTON OFF");
-            }
             await putOut();
         };
     }, []);
 
-    /* 이미지 3초마다 캡처해서 소켓으로 전달 */
+    /* 스터디 메이트 30초마다 GET으로 정보 가져오기 */
     useInterval(() => {
-        if (yolo_ws.current && yolo_ws.current.readyState === 1 && start) {
+        const getMateInfo = async () => {
+            room_id = location.pathname.split("/")[2];
+            console.log("get mate info:", room_id);
+            await getApi(
+                {
+                    room_id: room_id,
+                    uid: authContext.state.uid,
+                },
+                "/study/study_mate",
+                authContext.state.token
+            )
+                .then(({ state, data }) => {
+                    console.log(data);
+                    const new_studymates = data.studymates.map((sm, i) => ({
+                        nickname: sm.nickname,
+                        concent_rate: sm.concent_rate,
+                        concent_time: sm.concent_time,
+                        play_time: sm.play_time,
+                    }));
+                    setStudy_time({
+                        tot_concent_time: data.myStatus.concent_time,
+                        tot_play_time: data.myStatus.play_time,
+                    });
+                    setStudymates(new_studymates);
+                    setRoomInPpl(data.studymates.length + 1);
+                })
+                .catch((e) => {
+                    alert("네트워크 에러!");
+                });
+        };
+        getMateInfo();
+    }, GET_MATE_INFO_TIME * 1000);
+
+    /* 이미지 5초마다 캡처해서 GET REST API으로 전달 */
+    const getImgCP = async (msg, token) => {
+        await postApi(msg, "/yolo/getmessage/", token)
+            .then(({ status, data }) => {
+                return { status, data };
+            })
+            .catch((e) => {
+                return { status: 400 };
+            });
+    };
+
+    useInterval(() => {
+        if (start) {
             const imageSrc = webcamRef.current.getScreenshot();
-            // console.log(imageSrc);
             const msg = { message: imageSrc, uid: authContext.state.uid };
-            yolo_ws.current.send(JSON.stringify(msg));
+            const getImgCP = async () => {
+                await postApi(msg, "/yolo/getmessage/", authContext.state.token)
+                    .then(({ status, data }) => {
+                        const { type } = data;
+                        console.log(type);
+                        setResultDict((prev) => {
+                            let rst = Object.assign({}, prev);
+                            rst[type] = prev[type] + 1;
+                            return rst;
+                        });
+                        resultListRef.current.push(type);
+                        if (resultListRef.current.length > 12) {
+                            // 최근 1분보다 더 오래된 타입의 데이터 abandon(버리기)
+                            const old_type = resultListRef.current.shift();
+
+                            setResultDict((prev) => {
+                                let rst = Object.assign({}, prev);
+                                rst[old_type] = prev[old_type] - 1;
+
+                                return rst;
+                            });
+                        }
+                    })
+                    .catch((e) => {
+                        return { status: 400 };
+                    });
+            };
+            getImgCP();
         } else return;
     }, MODEL_APPLY_TIME * 1000);
 
     /* 공부 시작하기/ 끝내기 버튼 클릭 시 호출 */
     const toggle = async () => {
         const cur_state = !start;
-        await console.log("바뀌기전 버튼값:", start);
         await btnContext.dispatch({ type: "btnClick", payload: !start });
-        await setStart(!start);
-        if (cur_state) {
-            // * 모델 이미지 전송 소켓 연결
-            // TODO onopen, onclose 지우고 url 변경
-            const yolo_url = `ws://13.209.194.64:8080/yolo/getmessage/`;
-            yolo_ws.current = new WebSocket(yolo_url);
-            // 디버깅 위한 코드
-            yolo_ws.current.onopen = () => console.log("model ws opened");
-            yolo_ws.current.onclose = (event) => {
-                console.log(
-                    "model ws closed",
-                    "\nis clean close?:",
-                    event.wasClean,
-                    "\nclosed reason:",
-                    event.reason
-                );
-            };
-            yolo_ws.current.onmessage = (event) => {
-                // 이미지 전달 후 C, P 데이터 받기
-                console.log(event.data);
-                const { type } = JSON.parse(event.data);
-
-                setResultDict((prev) => {
-                    let rst = Object.assign({}, prev);
-                    rst[type] = prev[type] + 1;
-                    return rst;
-                });
-                resultListRef.current.push(type);
-                if (resultListRef.current.length > 20) {
-                    // 최근 2분보다 더 오래된 타입의 데이터 abandon(버리기)
-                    const old_type = resultListRef.current.shift();
-
-                    setResultDict((prev) => {
-                        let rst = Object.assign({}, prev);
-                        rst[old_type] = prev[old_type] - 1;
-
-                        return rst;
-                    });
-                }
-            };
-        } else if (yolo_ws.current && yolo_ws.current.readyState === 1) {
-            // * [공부 끝내기 버튼 클릭 시] 소켓 연결 끊기
+        await setStart(cur_state);
+        if (!cur_state) {
             setResultDict({ C: 0, P: 0 });
-            yolo_ws.current.close(1000, "STUDY BUTTON OFF");
         }
     };
 
@@ -344,7 +341,7 @@ const RightStudyComp = ({ match, setRoomInPpl }) => {
                 history.push(`/main`);
             })
             .catch((e) => {
-                alert("네트워크 에러!");
+                console.log("바로 삭제 안됨");
             });
     };
 

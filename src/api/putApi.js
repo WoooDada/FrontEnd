@@ -1,6 +1,5 @@
 import axios from "axios";
 const putApi = async (data, end_url, token) => {
-    console.log("token:", token);
     const config = {
         headers: {
             "Content-type": "application/json",
