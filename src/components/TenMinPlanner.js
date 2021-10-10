@@ -51,21 +51,21 @@ const TenMinPlanner = () => {
     const authContext = useContext(AuthContext);
     const btnContext = useContext(BtnContext);
     const concentTypeRef = useRef({ C: 0, P: 0 });
-    const [tenMinData, setTenMinData] = useState([]);
+    // const [tenMinData, setTenMinData] = useState([]);
     const [flag, setFlag] = useState(false);
-    // const [tenMinData, setTenMinData] = useState([
-    // {
-    //     stt_time: "07:40",
-    //     end_time: "11:29",
-    //     concent_type: "C", // c: concentrate & p: play
-    // },
-    // {
-    //     stt_time: "14:00",
-    //     end_time: "14:29",
-    //     concent_type: "P",
-    // },
-    // ]);
-
+    const [tenMinData, setTenMinData] = useState([
+        // {
+        //     stt_time: "07:40",
+        //     end_time: "11:29",
+        //     concent_type: "C", // c: concentrate & p: play
+        // },
+        // {
+        //     stt_time: "14:00",
+        //     end_time: "14:29",
+        //     concent_type: "P",
+        // },
+    ]);
+    
     useEffect(() => {
         // 첨에 접속했을때 update=F로, 한꺼번에 받아옴
         // console.log('flag:', flag);
@@ -84,6 +84,7 @@ const TenMinPlanner = () => {
                         authContext.state.token
                     )
                         .then(({ status, data }) => {
+                            console.log('TenMinData 한꺼번에 GET:',data);
                             setTenMinData(
                                 data.ten_min_list.map((t) => ({
                                     stt_time: t.stt_time,
@@ -122,7 +123,7 @@ const TenMinPlanner = () => {
                 )
                     .then(({ status, data }) => {
                         plususeRef(data.ten_min_list.concent_type); // useRef에 반영
-                        console.log(data); // 1분마다 C,P 받아옴
+                        // console.log(data); // 1분마다 C,P 받아옴
                     })
                     .catch((e) => {
                         console.log(e);
@@ -299,11 +300,11 @@ const TenMinPlanner = () => {
         }
     };
 
-    const typetoInt = (type) => {
+    const typetoInt = (type) => { 
         if (type === "C") {
-            return 100;
+            return 2;
         } else if (type === "P") {
-            return -100;
+            return 1;
         }
     };
 
@@ -318,7 +319,7 @@ const TenMinPlanner = () => {
             .fill(0)
             .map(() => new Array(xLabels.length).fill(0)); // 0 으로 초기화
 
-        const DrawCell = (x, y, len, type) => {
+        const DrawCell = (x, y, len, type) => { // 해당 좌표의 칸에 해당 type 값 할당
             var l = 0;
             var i = 0;
             while (l < len) {
@@ -339,24 +340,46 @@ const TenMinPlanner = () => {
                 t,
                 i // tenMinData에 들어있는 데이터 Grid에 그리기 위한 작업
             ) => (
-                (value = typetoInt(t.concent_type)),
+                (value = typetoInt(t.concent_type)), // C:100, P:-100으로 value 할당
                 (returns = timeToIndex(t.stt_time, t.end_time)), // 시간 매개변수. 들어갈 칸 인덱스 배열로 반환
                 // console.log(returns.x, returns.y, returns.len),
                 DrawCell(returns.x, returns.y, returns.len, value)
             )
         );
 
-        const cellColor = (v) => {
-            // 하나만 있으면 v=1(보라) v=0(주황)
-            // 두가지 있으면 v=1(보라) v=0(주황) v=0.5(회색)
-            // console.log(v);
-            if (v === 1) {
-                return "#9F8FFF";
-            } else if (v === 0) {
-                return "#FAB39B";
+        const isTenmindataOnlyP = () => {
+            let onlyP = 0
+            tenMinData.map(
+                tm => {
+                    if (tm.concent_type === 'C'){
+                        onlyP += 1;
+                    } else {
+                        onlyP += 0;
+                    }
+                }
+            )
+            if (onlyP === 0) { // is
+                return true 
             } else {
-                // ratio = Nan
-                return "rgb(225,229,234,0.5)";
+                return false
+            }
+        }
+
+        const cellColor = (v) => {
+            if (isTenmindataOnlyP() === true) { // P만 존재한다면
+                if (v === 1) {
+                    return "#FAB39B"; // 주황
+                } else {
+                    return "rgb(225,229,234,0.5)"; // 회색
+                }
+            } else { 
+                if (v === 1) {
+                    return "#9F8FFF"; // 보라
+                } else if (v === 0.5) {
+                    return "#FAB39B"; // 주황
+                } else {
+                    return "rgb(225,229,234,0.5)"; // 회색
+                }
             }
         };
 
@@ -370,9 +393,8 @@ const TenMinPlanner = () => {
                 yLabelWidth={15}
                 yLabelTextAlign="center"
                 data={data}
-                cellStyle={(_x, _y, ratio) => ({
+                cellStyle={(x, y, ratio, value) => ({ //value : undefined
                     background: cellColor(ratio),
-                    
                 })}
                 cellHeight="1.2rem"
                 // onClick={(x, y) => alert(`Clicked (${x}, ${y})=${data[x][y]}`)}
